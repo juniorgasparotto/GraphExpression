@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace EntityGraph 
+{
+    internal class Iteration<T>
+    {
+        public IEnumerator<T> Enumerator { get; set; }
+        public T DataIterationForDebug { get; set; }
+        public int Level { get; set; }
+        public Iteration<T> IterationParent { get; set; }
+        public bool Finished { get; set; }
+        public int CountIteration { get; set; }
+
+        public override string ToString()
+        {
+            if (DataIterationForDebug == null) 
+                return "";
+
+            return DataIterationForDebug.ToString();
+        }
+    }
+}
