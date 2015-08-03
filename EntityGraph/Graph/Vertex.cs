@@ -12,11 +12,12 @@ namespace EntityGraph
     {
         private HashSet<Vertex<T>> predecessors;
         private HashSet<Vertex<T>> successors;
+        private List<TokenValue> tokens;
+        private List<List<TokenValue>> tokensOfSuccessors;
 
         public T Data { get; private set; }
         public int InternalId { get; private set; }
         public int CountVisited { get; internal set; }
-        public List<TokenValue> Tokens { get; internal set; }
 
         // parents
         public IEnumerable<Vertex<T>> Predecessors
@@ -38,22 +39,13 @@ namespace EntityGraph
 
         public IEnumerable<TokenValue> GetTokens()
         {
-            var list = new List<TokenValue>();
-
-            if (this.successors.Count > 0)
-            { 
-                var tokenValue = new TokenValue(this, null);
-                list.Add(tokenValue);
-
-                foreach(var successor in this.successors)
+            foreach(var tokens in this.tokensOfSuccessors)
+            {
+                foreach (var token in tokens)
                 {
-                    list.Add(TokenValuePlus.Instance);
-                    tokenValue = new TokenValue(successor, null);
-                    list.Add(tokenValue);
+                    yield return (token.Value as Vertex<T>).GetTokens();
                 }
             }
-
-            return list;
         }
 
         // parent and children
@@ -142,17 +134,27 @@ namespace EntityGraph
             this.InternalId = internalId;
             this.predecessors = new HashSet<Vertex<T>>();
             this.successors = new HashSet<Vertex<T>>();
+            this.tokens = new List<TokenValue>();
+            this.tokensOfSuccessors = new List<List<TokenValue>>();
 
-            this.Tokens = new List<TokenValue>();
-            this.Tokens.Add(new TokenValue(this, null));
+            this.tokens.Add(new TokenValue(this, null));
         }
 
         internal void AddIndegree(Vertex<T> parent)
         {
             this.predecessors.Add(parent);
             parent.successors.Add(this);
-            parent.Tokens.Add(TokenValuePlus.Instance);
-            parent.Tokens.Add(new TokenValue(this, null));
+
+            //********
+            // Tokens feature
+            //********
+
+            // set new child in parent
+            parent.tokens.Add(TokenValuePlus.Instance);
+            parent.tokens.Add(new TokenValue(this, null));
+            
+            // set in parent the child's tokens and any changes is apply in parent
+            parent.tokensOfSuccessors.Add(this.tokens) ;
         }
 
         #region Overrides
