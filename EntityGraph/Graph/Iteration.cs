@@ -10,8 +10,11 @@ namespace EntityGraph
         public T DataIterationForDebug { get; set; }
         public int Level { get; set; }
         public Iteration<T> IterationParent { get; set; }
-        public bool Finished { get; set; }
+        public bool HasOpenParenthesis { get; set; }
         public int CountIteration { get; set; }
+
+        //public bool Finished { get; set; }
+        //public int CountItems { get; set; }
 
         public override string ToString()
         {
@@ -20,5 +23,8 @@ namespace EntityGraph
 
             return DataIterationForDebug.ToString();
         }
+
+
+
     }
 }

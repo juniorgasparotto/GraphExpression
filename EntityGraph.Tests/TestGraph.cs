@@ -12,9 +12,33 @@ namespace Graph.Tests
         [TestMethod]
         public void Teste()
         {
+            var a = Utils.FromExpression("A+B+(C+(D+(J+I)+P)+I)", "C+B").ToGraphs(f => f.Children, f => f.Weight = 1); ;
+
+            var stra = "";
+            foreach (var i in a.ElementAt(0).Tokens)
+                stra += i.ToString();
+
+            var c = Utils.FromExpression("A+(B+C)").ToGraphs(f => f.Children, f => f.Weight = 1);
+
+            var strc = "";
+            foreach (var i in c.ElementAt(0).Tokens)
+                strc += i.ToString();
+
+            var d = Utils.FromExpression("A+(J+P+(O+I))").ToGraphs(f => f.Children, f => f.Weight = 1, true); ;
+
+            stra = "";
+            foreach (var i in d.ElementAt(0).Tokens)
+                stra += i.ToString();
+
+            var b = Utils.FromExpression("A+B", "C+B").ToGraphs(f => f.Children, f => f.Weight = 1);;
+
             var vertexesSources = Utils.FromExpression("A+(B+Q+(C+H))+(G+H)");
             var ex = Utils.ToExpression(vertexesSources, f=>f.ToString());
             var graphs = vertexesSources.ToGraphs(f => f.Children, f => f.Weight = 1);
+            var str = "";
+            foreach (var i in graphs.ElementAt(0).Tokens)
+                str += i.ToString();
+
             var paths = graphs.ToPaths().RemoveCoexistents();
             //var vertexes = paths.SelectMany(f => f).SelectMany(f => f.Edge.Target);
 
@@ -34,7 +58,7 @@ namespace Graph.Tests
             var vertexesSources = Utils.FromExpression("A+(B+C+D)+A+(I+(J+C)+A)");
             var graphs = vertexesSources.ToGraphs(f => f.Children);
             var graph = graphs.ElementAt(0);
-            var a = graph.Vertexes.ElementAt(0).GetTokens();
+            //var a = graph.Vertexes.ElementAt(0).GetTokens();
 
             var graph1 = graphs.ElementAt(1);
             var graph2 = graphs.ElementAt(2);
@@ -43,7 +67,7 @@ namespace Graph.Tests
             var graph5 = graphs.ElementAt(5);
 
             var testCount = 1;
-            Assert.IsTrue(graph.CountIteration == 10, testCount++.ToString());
+            Assert.IsTrue(graph.CountIteration == 9, testCount++.ToString());
             Assert.IsTrue(graph.SequenceIteration == "[A].[B].[C].[D].[A].[I].[J].[C].[A]", testCount++.ToString());
             Assert.IsTrue(graph.IsHamiltonian == false, testCount++.ToString());
             Assert.IsTrue(graph.Edges.Count() == 9, testCount++.ToString());

@@ -13,6 +13,7 @@ namespace EntityGraph
         private HashSet<Vertex<T>> predecessors;
         private HashSet<Vertex<T>> successors;
         private List<TokenValue> tokens;
+        public List<TokenValue> Tokens = new List<TokenValue>();
         private List<List<TokenValue>> tokensOfSuccessors;
 
         public T Data { get; private set; }
@@ -37,16 +38,16 @@ namespace EntityGraph
             }
         }
 
-        public IEnumerable<TokenValue> GetTokens()
-        {
-            foreach(var tokens in this.tokensOfSuccessors)
-            {
-                foreach (var token in tokens)
-                {
-                    yield return (token.Value as Vertex<T>).GetTokens();
-                }
-            }
-        }
+        //public IEnumerable<TokenValue> GetTokens()
+        //{
+        //    foreach(var tokens in this.tokensOfSuccessors)
+        //    {
+        //        foreach (var token in tokens)
+        //        {
+        //            yield return (token.Value as Vertex<T>).GetTokens();
+        //        }
+        //    }
+        //}
 
         // parent and children
         public IEnumerable<Vertex<T>> PredecessorsAndSuccessors

@@ -10,9 +10,9 @@ namespace EntityGraph
     {
         #region Graph extensions
 
-        public static IEnumerable<Graph<T>> ToGraphs<T>(this IEnumerable<T> source, Func<T, List<T>> nextVertexCallback, Action<Edge<T>> edgeCreatedCallback = null)
+        public static IEnumerable<Graph<T>> ToGraphs<T>(this IEnumerable<T> source, Func<T, List<T>> nextVertexCallback, Action<Edge<T>> edgeCreatedCallback = null, bool encloseRootTokenInParenthesis = false)
         {
-            return Graph<T>.ToGraphs(source, nextVertexCallback, edgeCreatedCallback);
+            return Graph<T>.ToGraphs(source, nextVertexCallback, edgeCreatedCallback, encloseRootTokenInParenthesis);
         }
 
         public static IEnumerable<Graph<T>> RemoveCoexistents<T>(this IEnumerable<Graph<T>> source)

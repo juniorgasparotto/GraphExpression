@@ -14,6 +14,7 @@ namespace EntityGraph
 
         public int CountIteration { get; private set; }
         public string SequenceIteration { get; private set; }
+        public List<TokenValue> Tokens = new List<TokenValue>();
 
         //private bool? isHamiltonian = null;
         public bool IsHamiltonian
@@ -83,7 +84,7 @@ namespace EntityGraph
         }
 
         // Not accept multigraph
-        public static List<Graph<T>> ToGraphs(IEnumerable<T> source, Func<T, List<T>> nextVertexCallback, Action<Edge<T>> edgeCreatedCallback = null)
+        public static List<Graph<T>> ToGraphs(IEnumerable<T> source, Func<T, List<T>> nextVertexCallback, Action<Edge<T>> edgeCreatedCallback = null, bool encloseRootTokenInParenthesis = false)
         {
             Graph<T> graph = new Graph<T>();
             var graphs = new List<Graph<T>>();
@@ -94,7 +95,8 @@ namespace EntityGraph
                 Enumerator = source.Distinct().GetEnumerator(),
                 Level = 0,
                 CountIteration = 0,
-                Finished = false
+                //Finished = false,
+                //CountItems = source.Count()
             };
 
             var iterations = new List<Iteration<T>>();
@@ -105,8 +107,6 @@ namespace EntityGraph
 
             while (true)
             {
-                bool executed = false;
-
                 while (iteration.Enumerator.MoveNext())
                 {
                     // New graph
@@ -119,8 +119,6 @@ namespace EntityGraph
                     // Count iterations
                     iteration.CountIteration++;
                     graph.CountIteration++;
-                    //countIterationForAll++;
-                    executed = true;
 
                     var data = iteration.Enumerator.Current;
                     var dataParent = iteration.IterationParent != null ? iteration.IterationParent.Enumerator.Current : default(T);
@@ -157,10 +155,7 @@ namespace EntityGraph
                     }
                     
                     graph.AddInCurrentPath(iteration, edge);
-                    
-                    // Specify sequencial iteration
-                    graph.SequenceIteration += (string.IsNullOrWhiteSpace(graph.SequenceIteration) ? "" : ".") + "[" + vertex.ToString() + "]";
-
+                     
                     // Prevent recursion, infinite loop. eg: "A + B + [A]" where [A] already exists in path
                     var exists = graph.ExistsVertexInPrevious(iteration, vertex);
 
@@ -170,34 +165,51 @@ namespace EntityGraph
                     if (!exists)
                         nexts = nextVertexCallback(data);
 
-                    if (nexts != null && nexts.Count > 0)
+                    var hasNext = nexts != null && nexts.Count > 0;
+
+                    // Specify sequencial iteration
+                    graph.SequenceIteration += (string.IsNullOrWhiteSpace(graph.SequenceIteration) ? "" : ".") + "[" + vertex.ToString() + "]";
+
+                    // if exists any token, add "+" in sequence
+                    if (graph.Tokens.Count > 0)
+                        graph.Tokens.Add(TokenValuePlus.Instance);
+
+                    if (hasNext)
                     {
+                        // add tokens "(A" with parenthesis (when encloseRootTokenInParenthesis = true)
+                        // because exists children
+                        var addParenthesis = true;
+
+                        // can't add in root when encloseRootTokenInParenthesis = false
+                        if (!encloseRootTokenInParenthesis && iteration.Level == 0)
+                            addParenthesis = false;
+
+                        if (addParenthesis)
+                            graph.Tokens.Add(TokenValueOpenParenthesis.Instance);
+
+                        graph.Tokens.Add(new TokenValue(vertex, null));
+
                         iteration = new Iteration<T>()
                         {
                             Enumerator = nexts.GetEnumerator(),
                             Level = iteration.Level + 1,
                             DataIterationForDebug = iteration.Enumerator.Current,
-                            IterationParent = iteration
+                            IterationParent = iteration,
+                            HasOpenParenthesis = addParenthesis
                         };
 
                         iterations.Add(iteration);
                     }
                     else
                     {
+                        // add single token "A"
+                        graph.Tokens.Add(new TokenValue(vertex, null));
                         graph.ClosePath();
                     }
                 }
 
-                if (!executed)
-                {
-                    //allCountAlreadyFinishedIterationForAll++;
-                    iteration.Finished = true;
-                    iteration.CountIteration++;
-                    
-                    // Prevent empty items in 'source' parameters
-                    if (graph != null)
-                        graph.CountIteration++;
-                }
+                if (iteration.HasOpenParenthesis)
+                    graph.Tokens.Add(TokenValueCloseParenthesis.Instance);
 
                 // Remove iteration because is empty
                 iterations.Remove(iteration);
@@ -208,8 +220,12 @@ namespace EntityGraph
                 iteration = iterations.LastOrDefault();
             }
 
-            //var debug = countIterationForAll + allCountAlreadyFinishedIterationForAll;
             return graphs;
+        }
+
+        private void EndIteration(Vertex<T> vertex, List<T> nexts)
+        {
+            this.Tokens.Add(TokenValueCloseParenthesis.Instance);
         }
 
         private void AddInCurrentPath(Iteration<T> iteration, Edge<T> edge)
