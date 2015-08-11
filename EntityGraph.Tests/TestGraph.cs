@@ -12,32 +12,42 @@ namespace Graph.Tests
         [TestMethod]
         public void Teste()
         {
-            var a = Utils.FromExpression("A+B+(C+(D+(J+I)+P)+I)", "C+B").ToGraphs(f => f.Children, f => f.Weight = 1); ;
+            var configuration = new GraphConfiguration<HierarchicalEntity>
+            (
+                assignEdgeWeightCallback: (current, parent) => 1, 
+                encloseRootTokenInParenthesis: false,
+                entityToStringCallback: f=>f.ToString()
+            );
 
-            var stra = "";
-            foreach (var i in a.ElementAt(0).Tokens)
-                stra += i.ToString();
+            var a = Utils.FromExpression("A+B+(C+(D+(J+I)+P)+I)", "C+B").ToGraphs(f => f.Children, configuration);
 
-            var c = Utils.FromExpression("A+(B+C)").ToGraphs(f => f.Children, f => f.Weight = 1);
+            var stra = a.ElementAt(0).Expression.ToDebug();
 
-            var strc = "";
-            foreach (var i in c.ElementAt(0).Tokens)
-                strc += i.ToString();
+            configuration = new GraphConfiguration<HierarchicalEntity>
+            (
+                assignEdgeWeightCallback: (current, parent) => 1,
+                encloseRootTokenInParenthesis: true
+            );
 
-            var d = Utils.FromExpression("A+(J+P+(O+I))").ToGraphs(f => f.Children, f => f.Weight = 1, true); ;
+            var c = Utils.FromExpression("A+(B+C)").ToGraphs(f => f.Children, configuration);
+            var strc = c.ElementAt(0).Expression.ToDebug();
 
-            stra = "";
-            foreach (var i in d.ElementAt(0).Tokens)
-                stra += i.ToString();
+            var g = Utils.FromExpression("A").ToGraphs(f => f.Children, configuration);
+            var strg = g.ElementAt(0).Expression.ToDebug();
 
-            var b = Utils.FromExpression("A+B", "C+B").ToGraphs(f => f.Children, f => f.Weight = 1);;
+            var e = Utils.FromExpression("A+B").ToGraphs(f => f.Children, configuration);
+            var stre = e.ElementAt(0).Expression.ToDebug();
+
+            var d = Utils.FromExpression("A+(J+P+(O+I))").ToGraphs(f => f.Children);
+
+            var strd = d.ElementAt(0).Expression.DefaultIfEmpty();
+
+            var b = Utils.FromExpression("A+B", "C+B").ToGraphs(f => f.Children);;
 
             var vertexesSources = Utils.FromExpression("A+(B+Q+(C+H))+(G+H)");
             var ex = Utils.ToExpression(vertexesSources, f=>f.ToString());
-            var graphs = vertexesSources.ToGraphs(f => f.Children, f => f.Weight = 1);
-            var str = "";
-            foreach (var i in graphs.ElementAt(0).Tokens)
-                str += i.ToString();
+            var graphs = vertexesSources.ToGraphs(f => f.Children);
+            var str = graphs.ElementAt(0).Expression.ToDebug();
 
             var paths = graphs.ToPaths().RemoveCoexistents();
             //var vertexes = paths.SelectMany(f => f).SelectMany(f => f.Edge.Target);
@@ -67,9 +77,6 @@ namespace Graph.Tests
             var graph5 = graphs.ElementAt(5);
 
             var testCount = 1;
-            Assert.IsTrue(graph.CountIteration == 9, testCount++.ToString());
-            Assert.IsTrue(graph.SequenceIteration == "[A].[B].[C].[D].[A].[I].[J].[C].[A]", testCount++.ToString());
-            Assert.IsTrue(graph.IsHamiltonian == false, testCount++.ToString());
             Assert.IsTrue(graph.Edges.Count() == 9, testCount++.ToString());
             Assert.IsTrue(graph.Edges.ElementAt(0).ToString() == ", A", testCount++.ToString());
             Assert.IsTrue(graph.Edges.ElementAt(1).ToString() == "A, B", testCount++.ToString());

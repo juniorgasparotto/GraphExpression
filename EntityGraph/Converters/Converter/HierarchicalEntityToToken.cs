@@ -34,7 +34,7 @@ namespace EntityGraph.Converter
                 var res2 = new TokenGroupCollection();
                 foreach (var edge in graph.Edges)
                 {
-                    var group = new TokenGroup(edge.Target.Data);
+                    var group = new TokenGroup(edge.Target.Entity);
                 }
             }
 
@@ -52,7 +52,7 @@ namespace EntityGraph.Converter
                 var res2 = new TokenGroupCollection();
                 foreach (var edge in graph.Edges)
                 {
-                    var group = new TokenGroup(edge.Target.Data);
+                    var group = new TokenGroup(edge.Target.Entity);
                 }
             }
 

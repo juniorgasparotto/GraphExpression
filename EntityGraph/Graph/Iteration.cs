@@ -7,7 +7,7 @@ namespace EntityGraph
     internal class Iteration<T>
     {
         public IEnumerator<T> Enumerator { get; set; }
-        public T DataIterationForDebug { get; set; }
+        public T EntityRootOfTheIterationForDebug { get; set; }
         public int Level { get; set; }
         public Iteration<T> IterationParent { get; set; }
         public bool HasOpenParenthesis { get; set; }
@@ -18,13 +18,10 @@ namespace EntityGraph
 
         public override string ToString()
         {
-            if (DataIterationForDebug == null) 
+            if (EntityRootOfTheIterationForDebug == null) 
                 return "";
 
-            return DataIterationForDebug.ToString();
+            return EntityRootOfTheIterationForDebug.ToString();
         }
-
-
-
     }
 }

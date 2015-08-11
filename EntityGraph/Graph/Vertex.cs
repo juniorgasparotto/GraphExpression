@@ -12,12 +12,11 @@ namespace EntityGraph
     {
         private HashSet<Vertex<T>> predecessors;
         private HashSet<Vertex<T>> successors;
-        private List<TokenValue> tokens;
-        public List<TokenValue> Tokens = new List<TokenValue>();
-        private List<List<TokenValue>> tokensOfSuccessors;
 
-        public T Data { get; private set; }
+        public T Entity { get; private set; }
         public int InternalId { get; private set; }
+        public Graph<T> Graph { get; private set; }
+
         public int CountVisited { get; internal set; }
 
         // parents
@@ -37,17 +36,6 @@ namespace EntityGraph
                 return successors;
             }
         }
-
-        //public IEnumerable<TokenValue> GetTokens()
-        //{
-        //    foreach(var tokens in this.tokensOfSuccessors)
-        //    {
-        //        foreach (var token in tokens)
-        //        {
-        //            yield return (token.Value as Vertex<T>).GetTokens();
-        //        }
-        //    }
-        //}
 
         // parent and children
         public IEnumerable<Vertex<T>> PredecessorsAndSuccessors
@@ -98,15 +86,6 @@ namespace EntityGraph
             }
         }
 
-        // folha = acima = (só tem um pai ou um filho)
-        //public bool IsLeaf
-        //{
-        //    get
-        //    {
-        //        
-        //    }
-        //}
-
         // Fonte (sem pais)
         public bool IsSource
         {
@@ -129,33 +108,19 @@ namespace EntityGraph
             }
         }
 
-        internal Vertex(T data, int internalId)
+        internal Vertex(Graph<T> graph, T entity, int internalId)
         {
-            this.Data = data;            
+            this.Entity = entity;            
             this.InternalId = internalId;
             this.predecessors = new HashSet<Vertex<T>>();
             this.successors = new HashSet<Vertex<T>>();
-            this.tokens = new List<TokenValue>();
-            this.tokensOfSuccessors = new List<List<TokenValue>>();
-
-            this.tokens.Add(new TokenValue(this, null));
+            this.Graph = graph;
         }
 
         internal void AddIndegree(Vertex<T> parent)
         {
             this.predecessors.Add(parent);
             parent.successors.Add(this);
-
-            //********
-            // Tokens feature
-            //********
-
-            // set new child in parent
-            parent.tokens.Add(TokenValuePlus.Instance);
-            parent.tokens.Add(new TokenValue(this, null));
-            
-            // set in parent the child's tokens and any changes is apply in parent
-            parent.tokensOfSuccessors.Add(this.tokens) ;
         }
 
         #region Overrides
@@ -186,21 +151,23 @@ namespace EntityGraph
                 return false;
 
             if (obj is T)
-                return this.Data.Equals(obj);
+                return this.Entity.Equals(obj);
             else if (obj is Vertex<T>)
-                return this.Data.Equals((obj as Vertex<T>).Data);
+                return this.Entity.Equals((obj as Vertex<T>).Entity);
 
             return false;
         }
 
         public override int GetHashCode()
         {
-            return this.Data.GetHashCode();
+            return this.Entity.GetHashCode();
         }
 
         public override string ToString()
         {
-            return Data.ToString();
+            if (Graph.Configuration.EntityToStringCallback != null)
+                return Graph.Configuration.EntityToStringCallback(this.Entity);
+            return Entity.ToString();
         }
 
         #endregion

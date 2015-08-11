@@ -7,7 +7,15 @@ namespace EntityGraph
     public class Path<T> : IEnumerable<PathItem<T>>
     {
         private List<PathItem<T>> pathItems;
-        
+
+        public PathItem<T> this[int i]
+        {
+            get
+            {
+                return pathItems[i];
+            }
+        }
+
         public string Identity { get; private set; }
         public PathType PathType { get; private set; }
 

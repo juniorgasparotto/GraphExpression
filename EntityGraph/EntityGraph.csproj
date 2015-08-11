@@ -46,8 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\Converter\HierarchicalEntityToToken - Copy.cs" />
+    <Compile Include="Graph\GraphExpression.cs" />
+    <Compile Include="Graph\GraphConfiguration.cs" />
     <Compile Include="Graph\Edge.cs" />
     <Compile Include="Graph\Graph.cs" />
+    <Compile Include="Graph\GraphExpressionItem.cs" />
     <Compile Include="Graph\GraphExtension.cs" />
     <Compile Include="Graph\Iteration.cs" />
     <Compile Include="Graph\Path.cs" />
