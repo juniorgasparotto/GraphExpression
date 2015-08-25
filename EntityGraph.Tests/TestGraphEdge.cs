@@ -10,7 +10,7 @@ namespace Graph.Tests
     public class TestGraphEdge
     {
         [TestMethod]
-        public void TestEdgeAntiparallel()
+        public void TestGraphEdgeAntiparallel()
         {
             var vertexesSources = Utils.FromExpression("A+(B+C+D)+A+(I+(J+C)+A)");
             var graphs = vertexesSources.ToGraphs(f => f.Children);
@@ -32,7 +32,7 @@ namespace Graph.Tests
         }
 
         [TestMethod]
-        public void TestEdgeLoop()
+        public void TestGraphEdgeLoop()
         {
             var vertexesSources = Utils.FromExpression("A+(B+C+D)+A+(I+(J+C)+A)");
             var graphs = vertexesSources.ToGraphs(f => f.Children);

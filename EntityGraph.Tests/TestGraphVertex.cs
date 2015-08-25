@@ -12,7 +12,7 @@ namespace Graph.Tests
     public class TestGraphVertex
     {
         [TestMethod]
-        public void TestVertexPropertiesG1()
+        public void TestGraphVertexPropertiesG1()
         {
             var vertexesSources = Utils.FromExpression("SPL+(COR+PAL)+(SAN+PAL+COR)");
             var graphs = vertexesSources.ToGraphs(f => f.Children);
@@ -33,12 +33,12 @@ namespace Graph.Tests
             Assert.IsTrue(spl.IsIsolated == false, testCount++.ToString());
 
             // verify all parents
-            Assert.IsTrue(spl.Predecessors.Count() == 0, testCount++.ToString());
+            Assert.IsTrue(spl.Parents.Count() == 0, testCount++.ToString());
 
             // verify all children
-            Assert.IsTrue(spl.Successors.Count() == 2, testCount++.ToString());
-            Assert.IsTrue(spl.Successors.ElementAt(0).ToString() == "COR", testCount++.ToString());
-            Assert.IsTrue(spl.Successors.ElementAt(1).ToString() == "SAN", testCount++.ToString());
+            Assert.IsTrue(spl.Children.Count() == 2, testCount++.ToString());
+            Assert.IsTrue(spl.Children.ElementAt(0).ToString() == "COR", testCount++.ToString());
+            Assert.IsTrue(spl.Children.ElementAt(1).ToString() == "SAN", testCount++.ToString());
 
             var cor = graph.Vertexes.ElementAt(1);
 
@@ -55,13 +55,13 @@ namespace Graph.Tests
             Assert.IsTrue(cor.IsIsolated == false, testCount++.ToString());
 
             // verify all parents
-            Assert.IsTrue(cor.Predecessors.Count() == 2, testCount++.ToString());
-            Assert.IsTrue(cor.Predecessors.ElementAt(0).ToString() == "SPL", testCount++.ToString());
-            Assert.IsTrue(cor.Predecessors.ElementAt(1).ToString() == "SAN", testCount++.ToString());
+            Assert.IsTrue(cor.Parents.Count() == 2, testCount++.ToString());
+            Assert.IsTrue(cor.Parents.ElementAt(0).ToString() == "SPL", testCount++.ToString());
+            Assert.IsTrue(cor.Parents.ElementAt(1).ToString() == "SAN", testCount++.ToString());
 
             // verify all children
-            Assert.IsTrue(cor.Successors.Count() == 1, testCount++.ToString());
-            Assert.IsTrue(cor.Successors.ElementAt(0).ToString() == "PAL", testCount++.ToString());
+            Assert.IsTrue(cor.Children.Count() == 1, testCount++.ToString());
+            Assert.IsTrue(cor.Children.ElementAt(0).ToString() == "PAL", testCount++.ToString());
 
             var pal = graph.Vertexes.ElementAt(2);
 
@@ -78,12 +78,12 @@ namespace Graph.Tests
             Assert.IsTrue(pal.IsIsolated == false, testCount++.ToString());
 
             // verify all parents
-            Assert.IsTrue(pal.Predecessors.Count() == 2, testCount++.ToString());
-            Assert.IsTrue(pal.Predecessors.ElementAt(0).ToString() == "COR", testCount++.ToString());
-            Assert.IsTrue(pal.Predecessors.ElementAt(1).ToString() == "SAN", testCount++.ToString());
+            Assert.IsTrue(pal.Parents.Count() == 2, testCount++.ToString());
+            Assert.IsTrue(pal.Parents.ElementAt(0).ToString() == "COR", testCount++.ToString());
+            Assert.IsTrue(pal.Parents.ElementAt(1).ToString() == "SAN", testCount++.ToString());
 
             // verify all children
-            Assert.IsTrue(pal.Successors.Count() == 0, testCount++.ToString());
+            Assert.IsTrue(pal.Children.Count() == 0, testCount++.ToString());
 
             var san = graph.Vertexes.ElementAt(3);
 
@@ -100,13 +100,13 @@ namespace Graph.Tests
             Assert.IsTrue(san.IsIsolated == false, testCount++.ToString());
 
             // verify all parents
-            Assert.IsTrue(san.Predecessors.Count() == 1, testCount++.ToString());
-            Assert.IsTrue(san.Predecessors.ElementAt(0).ToString() == "SPL", testCount++.ToString());
+            Assert.IsTrue(san.Parents.Count() == 1, testCount++.ToString());
+            Assert.IsTrue(san.Parents.ElementAt(0).ToString() == "SPL", testCount++.ToString());
 
             // verify all children
-            Assert.IsTrue(san.Successors.Count() == 2, testCount++.ToString());
-            Assert.IsTrue(san.Successors.ElementAt(0).ToString() == "PAL", testCount++.ToString());
-            Assert.IsTrue(san.Successors.ElementAt(1).ToString() == "COR", testCount++.ToString());
+            Assert.IsTrue(san.Children.Count() == 2, testCount++.ToString());
+            Assert.IsTrue(san.Children.ElementAt(0).ToString() == "PAL", testCount++.ToString());
+            Assert.IsTrue(san.Children.ElementAt(1).ToString() == "COR", testCount++.ToString());
         }
     }
 }

@@ -18,7 +18,7 @@ namespace EntityGraph
 
         #region Public properties
 
-        public GraphExpression<T> Expression { get; private set; }
+        public Expression<T> Expression { get; private set; }
         public GraphConfiguration<T> Configuration { get; private set; }
 
         //public int CountIteration { get; private set; }
@@ -68,27 +68,12 @@ namespace EntityGraph
             this.currentPath = new Path<T>();
             this.vertexes = new List<Vertex<T>>();
             this.edges = new List<Edge<T>>();
-            this.Expression = new GraphExpression<T>();
+            this.Expression = new Expression<T>();
             this.Configuration = configuration;
         }
 
-        public bool ContainsGraph(Graph<T> graph)
-        {
-            var countExist = 0;
-            foreach (var pathTest in graph.paths)
-            {
-                if (this.paths.Exists(f => f.ContainsPath(pathTest)))
-                    countExist++;
-            }
-
-            if (countExist == graph.paths.Count)
-                return true;
-
-            return false;
-        }
-
         // Not accept multigraph
-        public static List<Graph<T>> ToGraphs(IEnumerable<T> source, Func<T, List<T>> nextVertexCallback, GraphConfiguration<T> configuration = null)
+        public static List<Graph<T>> ToGraphs(IEnumerable<T> source, Func<T, List<T>> childrenCallback, GraphConfiguration<T> configuration = null)
         {
             // set configuration or default
             configuration = configuration ?? new GraphConfiguration<T>();
@@ -160,36 +145,36 @@ namespace EntityGraph
                     // Prevent recursion, infinite loop. eg: "A + B + [A]" where [A] already exists in path
                     var exists = graph.ExistsVertexInPrevious(iteration, vertex);
 
-                    List<T> nexts = null;
+                    List<T> children = null;
 
-                    // Get nexts vertexes if vertex does not exists in current path
+                    // Get vertexes children if vertex does not exists in current path
                     if (!exists)
-                        nexts = nextVertexCallback(entity);
+                        children = childrenCallback(entity);
 
-                    var hasNext = nexts != null && nexts.Count > 0;
+                    var hasChildren = children != null && children.Count > 0;
 
                     // Specify sequencial iteration
                     //graph.SequenceIteration += (string.IsNullOrWhiteSpace(graph.SequenceIteration) ? "" : ".") + "[" + vertex.ToString() + "]";
 
                     // if exists any token, add "+" in sequence
-                    var parentLevel = iteration.IterationParent != null ? iteration.IterationParent.Level : 1;
+                    //var parentLevel = iteration.IterationParent != null ? iteration.IterationParent.Level : 1;
 
-                    if (iteration.IterationParent != null)
-                        graph.Expression.Add(new GraphExpressionItemPlus(parentLevel));
+                    //if (iteration.IterationParent != null)
+                    //    graph.Expression.Add(new GraphExpressionItemPlus<T>(parentLevel));
 
-                    if (hasNext)
+                    if (hasChildren)
                     {
                         // add parenthesis "(A" because exists children or when is the root level and encloseRootTokenInParenthesis = true
-                        var addParenthesis = iteration.Level > 1 || graph.Configuration.EncloseRootTokenInParenthesis;
+                        var addParenthesis = iteration.Level > 1 || graph.Configuration.EncloseRootInParenthesis;
 
                         if (addParenthesis)
-                            graph.Expression.Add(new GraphExpressionItemOpenParenthesis(iteration.Level));
+                            graph.Expression.OpenParenthesis();
 
-                        graph.Expression.Add(new GraphExpressionItem<T>(pathItem, iteration.Level));
+                        graph.Expression.AddItem(vertex.Entity);
 
                         iteration = new Iteration<T>()
                         {
-                            Enumerator = nexts.GetEnumerator(),
+                            Enumerator = children.GetEnumerator(),
                             Level = iteration.Level + 1,
                             EntityRootOfTheIterationForDebug = iteration.Enumerator.Current,
                             IterationParent = iteration,
@@ -200,13 +185,13 @@ namespace EntityGraph
                     }
                     else
                     {
-                        graph.Expression.Add(new GraphExpressionItem<T>(pathItem, parentLevel));
+                        graph.Expression.AddItem(vertex.Entity);
                         graph.ClosePath();
                     }
                 }
 
                 if (iteration.HasOpenParenthesis)
-                    graph.Expression.Add(new GraphExpressionItemCloseParenthesis(iteration.IterationParent.Level));
+                    graph.Expression.CloseParenthesis();
 
                 // Remove iteration because is empty
                 iterations.Remove(iteration);
@@ -218,6 +203,21 @@ namespace EntityGraph
             }
 
             return graphs;
+        }
+
+        public bool ContainsGraph(Graph<T> graph)
+        {
+            var countExist = 0;
+            foreach (var pathTest in graph.paths)
+            {
+                if (this.paths.Exists(f => f.ContainsPath(pathTest)))
+                    countExist++;
+            }
+
+            if (countExist == graph.paths.Count)
+                return true;
+
+            return false;
         }
 
         private PathItem<T> AddInCurrentPath(Iteration<T> iteration, Edge<T> edge)

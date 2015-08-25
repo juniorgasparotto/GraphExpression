@@ -10,8 +10,8 @@ namespace EntityGraph
     // Or node
     public class Vertex<T>
     {
-        private HashSet<Vertex<T>> predecessors;
-        private HashSet<Vertex<T>> successors;
+        private HashSet<Vertex<T>> parents;
+        private HashSet<Vertex<T>> children;
 
         public T Entity { get; private set; }
         public int InternalId { get; private set; }
@@ -20,40 +20,40 @@ namespace EntityGraph
         public int CountVisited { get; internal set; }
 
         // parents
-        public IEnumerable<Vertex<T>> Predecessors
+        public IEnumerable<Vertex<T>> Parents
         { 
             get 
             {
-                return predecessors;
+                return parents;
             }
         }
 
         // children
-        public IEnumerable<Vertex<T>> Successors
+        public IEnumerable<Vertex<T>> Children
         {
             get
             {
-                return successors;
+                return children;
             }
         }
 
         // parent and children
-        public IEnumerable<Vertex<T>> PredecessorsAndSuccessors
-        {
-            get
-            {
-                var list = this.predecessors.ToList();
-                list.AddRange(successors);
-                return list;
-            }
-        }
+        //public IEnumerable<Vertex<T>> ParentsAndChildren
+        //{
+        //    get
+        //    {
+        //        var list = this.parents.ToList();
+        //        list.AddRange(successors);
+        //        return list;
+        //    }
+        //}
 
         // Grau de entrada (numero de parents)
         public int Indegrees
         {
             get
             {
-                return predecessors.Count;
+                return parents.Count;
             }
         }
 
@@ -62,7 +62,7 @@ namespace EntityGraph
         {
             get
             {
-                return successors.Count;
+                return children.Count;
             }
         }
 
@@ -75,12 +75,12 @@ namespace EntityGraph
             }
         }
 
-        // Folha (Leaf), Sorvedouro (sem filhos)
+        // Folha (Leaf), Sorvedouro (no children)
         public bool IsSink
         {
             get
             {
-                if (this.successors.Count == 0)
+                if (this.children.Count == 0)
                     return true;
                 return false;
             }
@@ -91,7 +91,7 @@ namespace EntityGraph
         {
             get
             {
-                if (this.predecessors.Count == 0)
+                if (this.parents.Count == 0)
                     return true;
                 return false;
             }
@@ -102,7 +102,7 @@ namespace EntityGraph
         {
             get
             {
-                if (this.predecessors.Count == 0 && this.successors.Count == 0)
+                if (this.parents.Count == 0 && this.children.Count == 0)
                     return true;
                 return false;
             }
@@ -112,15 +112,15 @@ namespace EntityGraph
         {
             this.Entity = entity;            
             this.InternalId = internalId;
-            this.predecessors = new HashSet<Vertex<T>>();
-            this.successors = new HashSet<Vertex<T>>();
+            this.parents = new HashSet<Vertex<T>>();
+            this.children = new HashSet<Vertex<T>>();
             this.Graph = graph;
         }
 
         internal void AddIndegree(Vertex<T> parent)
         {
-            this.predecessors.Add(parent);
-            parent.successors.Add(this);
+            this.parents.Add(parent);
+            parent.children.Add(this);
         }
 
         #region Overrides

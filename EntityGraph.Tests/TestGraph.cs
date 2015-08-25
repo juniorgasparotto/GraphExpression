@@ -10,59 +10,6 @@ namespace Graph.Tests
     public class TestGraph
     {
         [TestMethod]
-        public void Teste()
-        {
-            var configuration = new GraphConfiguration<HierarchicalEntity>
-            (
-                assignEdgeWeightCallback: (current, parent) => 1, 
-                encloseRootTokenInParenthesis: false,
-                entityToStringCallback: f=>f.ToString()
-            );
-
-            var a = Utils.FromExpression("A+B+(C+(D+(J+I)+P)+I)", "C+B").ToGraphs(f => f.Children, configuration);
-
-            var stra = a.ElementAt(0).Expression.ToDebug();
-
-            configuration = new GraphConfiguration<HierarchicalEntity>
-            (
-                assignEdgeWeightCallback: (current, parent) => 1,
-                encloseRootTokenInParenthesis: true
-            );
-
-            var c = Utils.FromExpression("A+(B+C)").ToGraphs(f => f.Children, configuration);
-            var strc = c.ElementAt(0).Expression.ToDebug();
-
-            var g = Utils.FromExpression("A").ToGraphs(f => f.Children, configuration);
-            var strg = g.ElementAt(0).Expression.ToDebug();
-
-            var e = Utils.FromExpression("A+B").ToGraphs(f => f.Children, configuration);
-            var stre = e.ElementAt(0).Expression.ToDebug();
-
-            var d = Utils.FromExpression("A+(J+P+(O+I))").ToGraphs(f => f.Children);
-
-            var strd = d.ElementAt(0).Expression.DefaultIfEmpty();
-
-            var b = Utils.FromExpression("A+B", "C+B").ToGraphs(f => f.Children);;
-
-            var vertexesSources = Utils.FromExpression("A+(B+Q+(C+H))+(G+H)");
-            var ex = Utils.ToExpression(vertexesSources, f=>f.ToString());
-            var graphs = vertexesSources.ToGraphs(f => f.Children);
-            var str = graphs.ElementAt(0).Expression.ToDebug();
-
-            var paths = graphs.ToPaths().RemoveCoexistents();
-            //var vertexes = paths.SelectMany(f => f).SelectMany(f => f.Edge.Target);
-
-            foreach(var path in paths)
-            {
-                foreach (var pathItem in path)
-                {
-                }
-            }
-
-            var output = this.GetOutputPaths(graphs.ToPaths());
-        }
-
-        [TestMethod]
         public void TestGraph1()
         {
             var vertexesSources = Utils.FromExpression("A+(B+C+D)+A+(I+(J+C)+A)");
