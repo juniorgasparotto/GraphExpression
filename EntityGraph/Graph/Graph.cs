@@ -165,7 +165,7 @@ namespace EntityGraph
                     if (hasChildren)
                     {
                         // add parenthesis "(A" because exists children or when is the root level and encloseRootTokenInParenthesis = true
-                        var addParenthesis = iteration.Level > 1 || graph.Configuration.EncloseRootInParenthesis;
+                        var addParenthesis = iteration.Level > 1;
 
                         if (addParenthesis)
                             graph.Expression.OpenParenthesis();

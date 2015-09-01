@@ -10,16 +10,18 @@ namespace EntityGraph
     {
         //public PathItem<T> PathItem { get; private set; }
         public T Entity { get; private set; }
+        public int LevelInExpression { get; private set; }
         public int Level { get; private set; }
         public int Index { get; private set; }
 
         public ExpressionItem<T> Previous { get; internal set; }
         public ExpressionItem<T> Next { get; internal set; }
 
-        internal ExpressionItem(T entity, int level, int index)
+        internal ExpressionItem(T entity, int level, int levelInExpression, int index)
         {
             this.Entity = entity;
             this.Level = level;
+            this.LevelInExpression = levelInExpression;
             this.Index = index;
         }
 
@@ -31,8 +33,8 @@ namespace EntityGraph
 
     public class ExpressionItemPlus<T> : ExpressionItem<T>
     {
-        internal ExpressionItemPlus(int level, int index)
-            : base(default(T), level, index)
+        internal ExpressionItemPlus(int level, int levelInExpression, int index)
+            : base(default(T), level, levelInExpression, index)
         {
         }
 
@@ -44,8 +46,8 @@ namespace EntityGraph
 
     public class ExpressionItemOpenParenthesis<T> : ExpressionItem<T>
     {
-        internal ExpressionItemOpenParenthesis(int level, int index)
-            : base(default(T), level, index)
+        internal ExpressionItemOpenParenthesis(int level, int levelInExpression, int index)
+            : base(default(T), level, levelInExpression, index)
         {
         }
 
@@ -57,8 +59,8 @@ namespace EntityGraph
 
     public class ExpressionItemCloseParenthesis<T> : ExpressionItem<T>
     {
-        internal ExpressionItemCloseParenthesis(int level, int index)
-            : base(default(T), level, index)
+        internal ExpressionItemCloseParenthesis(int level, int levelInExpression, int index)
+            : base(default(T), level, levelInExpression, index)
         {
         }
 

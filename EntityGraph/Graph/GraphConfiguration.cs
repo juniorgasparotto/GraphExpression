@@ -11,18 +11,15 @@ namespace EntityGraph
     {
         public AssignEdgeWeightDelegate<T> AssignEdgeWeightCallback { get; private set; }
         public EntityToStringDelegate<T> EntityToStringCallback { get; private set; }
-        public bool EncloseRootInParenthesis { get; private set; }
 
         public GraphConfiguration
         (
             AssignEdgeWeightDelegate<T> assignEdgeWeightCallback = null,
-            EntityToStringDelegate<T> entityToStringCallback = null,
-            bool encloseRootInParenthesis = false
+            EntityToStringDelegate<T> entityToStringCallback = null
         )
         {
             this.AssignEdgeWeightCallback = assignEdgeWeightCallback;
             this.EntityToStringCallback = entityToStringCallback;
-            this.EncloseRootInParenthesis = encloseRootInParenthesis;
         }
     }
 }

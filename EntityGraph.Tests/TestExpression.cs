@@ -10,44 +10,62 @@ namespace Graph.Tests
     public class TestExpression
     {
         [TestMethod]
+        public void TestExpressionDescendents()
+        {
+            var configuration = new GraphConfiguration<HierarchicalEntity>
+            (
+                assignEdgeWeightCallback: (current, parent) => 1,
+                entityToStringCallback: f => f.ToString()
+            );
+
+            var expressionIn = "A+B+(C+B+(D+(J+I)+P)+I)";
+            var entities = Utils.FromExpression(expressionIn);
+            var graph = entities.ToGraphs(f => f.Children, configuration);
+            var expression = graph.ElementAt(0).Expression;
+            var result = expression.DescendantsOf(entities.GetByIdentity("A"), 0);
+            result = expression.DescendantsOf(entities.GetByIdentity("A"), 1);
+            result = expression.DescendantsOf(entities.GetByIdentity("A"), 2);
+            result = expression.DescendantsOf(entities.GetByIdentity("A"), 3);
+            result = expression.DescendantsOf(entities.GetByIdentity("A"), 4);
+            result = expression.DescendantsOf(entities.GetByIdentity("A"), 5);
+        }
+
+        [TestMethod]
         public void TestExpressionMultiple()
         {
             var configWithNotStartParenthesis = new GraphConfiguration<HierarchicalEntity>
             (
                 assignEdgeWeightCallback: (current, parent) => 1,
-                encloseRootInParenthesis: false,
                 entityToStringCallback: f => f.ToString()
             );
 
             var configWithStartParenthesis = new GraphConfiguration<HierarchicalEntity>
             (
                 assignEdgeWeightCallback: (current, parent) => 1,
-                encloseRootInParenthesis: true,
                 entityToStringCallback: f => f.ToString()
             );
 
             var expressionIn = "A+B+(C+B+(D+(J+I)+P)+I)";
             var expressionOut = "A+B+(C+B+(D+(J+I)+P)+I)";
             var descendentsTest = new List<dynamic>();
-            descendentsTest.Add(new { EntityTest = "A", Items = "B,C,D,J,I,P" });
-            descendentsTest.Add(new { EntityTest = "B", Items = "" });
-            descendentsTest.Add(new { EntityTest = "C", Items = "B,D,J,I,P" });
-            descendentsTest.Add(new { EntityTest = "D", Items = "J,I,P" });
-            descendentsTest.Add(new { EntityTest = "J", Items = "I" });
-            descendentsTest.Add(new { EntityTest = "I", Items = "" });
-            descendentsTest.Add(new { EntityTest = "P", Items = "" });
+            descendentsTest.Add(new { EntityTest = "A", Items = "B,C,D,J,I,P", Depths = new[] { "B,C", "B,C,D,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            descendentsTest.Add(new { EntityTest = "B", Items = "", Depths = default(string[]) });
+            descendentsTest.Add(new { EntityTest = "C", Items = "B,D,J,I,P", Depths = new[] { "B,I", "B,D,P,I", "B,D,J,I,P" } });
+            descendentsTest.Add(new { EntityTest = "D", Items = "J,I,P", Depths = new[] { "P", "J,I,P", "I" } });
+            descendentsTest.Add(new { EntityTest = "J", Items = "I", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            descendentsTest.Add(new { EntityTest = "I", Items = "", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            descendentsTest.Add(new { EntityTest = "P", Items = "", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
 
             var ancestorsTest = new List<dynamic>();
-            ancestorsTest.Add(new { EntityTest = "A", Items = "" });
-            ancestorsTest.Add(new { EntityTest = "B", Items = "A,C" });
-            ancestorsTest.Add(new { EntityTest = "C", Items = "A" });
-            ancestorsTest.Add(new { EntityTest = "D", Items = "C,A" });
-            ancestorsTest.Add(new { EntityTest = "J", Items = "D,C,A" });
-            ancestorsTest.Add(new { EntityTest = "I", Items = "J,D,C,A" });
-            ancestorsTest.Add(new { EntityTest = "P", Items = "D,C,A" });
+            ancestorsTest.Add(new { EntityTest = "A", Items = "", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            ancestorsTest.Add(new { EntityTest = "B", Items = "A,C", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            ancestorsTest.Add(new { EntityTest = "C", Items = "A", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            ancestorsTest.Add(new { EntityTest = "D", Items = "C,A", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            ancestorsTest.Add(new { EntityTest = "J", Items = "D,C,A", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            ancestorsTest.Add(new { EntityTest = "I", Items = "J,D,C,A", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
+            ancestorsTest.Add(new { EntityTest = "P", Items = "D,C,A", Depths = new[] { "B,I", "B,C,I", "B,C,D,P,I", "B,C,D,J,I,P" } });
 
             this.ExecuteTestAuto(configWithNotStartParenthesis, expressionIn, expressionOut, descendentsTest, ancestorsTest);
-            this.ExecuteTestAuto(configWithStartParenthesis, expressionIn, "(" + expressionOut + ")", descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -64,7 +82,6 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "C", Items = "B,A" });
 
             this.ExecuteTestAuto(configWithNotStartParenthesis, expressionIn, expressionOut, descendentsTest, ancestorsTest);
-            this.ExecuteTestAuto(configWithStartParenthesis, expressionIn, "(" + expressionOut + ")", descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -77,7 +94,6 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "A", Items = "" });
 
             this.ExecuteTestAuto(configWithNotStartParenthesis, expressionIn, expressionOut, descendentsTest, ancestorsTest);
-            this.ExecuteTestAuto(configWithStartParenthesis, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -92,7 +108,6 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "B", Items = "A" });
 
             this.ExecuteTestAuto(configWithNotStartParenthesis, expressionIn, expressionOut, descendentsTest, ancestorsTest);
-            this.ExecuteTestAuto(configWithStartParenthesis, expressionIn, "(" + expressionOut + ")", descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -125,8 +140,6 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "M", Items = "A" });
 
             this.ExecuteTestAuto(configWithNotStartParenthesis, expressionIn, expressionOut, descendentsTest, ancestorsTest);
-            this.ExecuteTestAuto(configWithStartParenthesis, expressionIn, "(" + expressionOut + ")", descendentsTest, ancestorsTest);
-
 
             // 
             // "A+B", "C+B"
@@ -167,7 +180,8 @@ namespace Graph.Tests
                 {
                     Name = current,
                     Index = i,
-                    Level = level,
+                    Level = (expressionTests.Count > 0 && (current == "(" || current == ")" || previous == "(")) ? level - 1 : level,
+                    LevelInExpression = level,
                     Previous = previous,
                     Next = next
                 };
@@ -180,13 +194,15 @@ namespace Graph.Tests
 
             var debug1 = "";
             var debug2 = "";
+            var debug3 = "";
             foreach(var itemDebug in expressionTests)
             {
                 debug1 += itemDebug.Name + " ";
-                debug2 += itemDebug.Level + " ";
+                debug2 += itemDebug.LevelInExpression + " ";
+                debug3 += itemDebug.Level + " ";
             }
 
-            var outputDebugTest = debug1 + "\r\n" + debug2;
+            var outputDebugTest = debug1 + "\r\n" + debug2 + "\r\n" + debug3;
             var outputDebugExpression = expression.ToDebug();
 
             Assert.IsTrue(outputDebugTest == outputDebugExpression, "Test ToDebug function");
@@ -203,15 +219,20 @@ namespace Graph.Tests
             for (var e = 0; e < entities.Count; e++)
             {
                 var test = descendentsTest[e];
-                var descendants = expression.DescendantsOf(entities[e]).ToList();
-                var items = string.IsNullOrWhiteSpace(test.Items) ? new string[0] : test.Items.Split(',');
+                var expressionItem = expression[e];
 
-                Assert.IsTrue(descendants.Count == items.Length, string.Format("Count of descendants not match for entity {0}.", test.EntityTest));
-                
-                for (var i = 0; i < descendants.Count; i++)
-                {
-                    Assert.IsTrue(descendants[i].ToString() == items[i].Trim(), string.Format("Items {0} and {1} not match.", test.EntityTest, descendants[i].ToString()));
-                }
+                //for (var depth = 0; depth < test.Depths.Length; depth++)
+                //{
+                    var descendants = expression.DescendantsOf(entities[e]).ToList();
+                    var items = string.IsNullOrWhiteSpace(test.Items) ? new string[0] : test.Items.Split(',');
+
+                    Assert.IsTrue(descendants.Count == items.Length, string.Format("Count of descendants not match for entity {0}.", test.EntityTest));
+
+                    for (var i = 0; i < descendants.Count; i++)
+                    {
+                        Assert.IsTrue(descendants[i].ToString() == items[i].Trim(), string.Format("Items {0} and {1} not match.", test.EntityTest, descendants[i].ToString()));
+                    }
+                //}
             }
 
             for (var e = 0; e < entities.Count; e++)
