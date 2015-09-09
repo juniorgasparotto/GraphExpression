@@ -14,6 +14,8 @@ namespace EntityGraph
         public int Level { get; private set; }
         public int Index { get; private set; }
 
+        public ExpressionItem<T> Root { get; internal set; }
+        public ExpressionItem<T> Parent { get; internal set; }
         public ExpressionItem<T> Previous { get; internal set; }
         public ExpressionItem<T> Next { get; internal set; }
 
