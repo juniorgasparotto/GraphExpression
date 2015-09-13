@@ -18,6 +18,32 @@ namespace EntityGraph
         public ExpressionItem<T> Parent { get; internal set; }
         public ExpressionItem<T> Previous { get; internal set; }
         public ExpressionItem<T> Next { get; internal set; }
+        
+        public ExpressionItem<T> Next2
+        {
+            get 
+            {
+                var next = this.Next;
+
+                while (next != null && next.GetType() != typeof(ExpressionItem<T>))
+                    next = next.Next;
+
+                return next;
+            } 
+        }
+
+        public ExpressionItem<T> Previous2
+        {
+            get
+            {
+                var previous = this.Previous;
+
+                while (previous != null && previous.GetType() != typeof(ExpressionItem<T>))
+                    previous = previous.Next;
+
+                return previous;
+            }
+        }
 
         internal ExpressionItem(T entity, int level, int levelInExpression, int index)
         {

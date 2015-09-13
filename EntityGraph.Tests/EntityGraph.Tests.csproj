@@ -52,6 +52,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestExpressionSiblings.cs" />
+    <Compile Include="TestExpressionPrevious.cs" />
+    <Compile Include="TestExpressionNexts.cs" />
+    <Compile Include="TestExpressionDescendants.cs" />
+    <Compile Include="TestExpressionAncestors.cs" />
     <Compile Include="TestExpression.cs" />
     <Compile Include="TestGraph.cs" />
     <Compile Include="TestGraphEdge.cs" />

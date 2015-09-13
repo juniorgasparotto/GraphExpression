@@ -7,7 +7,7 @@ using EntityGraph;
 namespace Graph.Tests
 {
     [TestClass]
-    public class TestExpression
+    public partial class TestExpression
     {
         private GraphConfiguration<HierarchicalEntity> GetConfig()
         {
@@ -60,133 +60,6 @@ namespace Graph.Tests
 
             mixed = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Parents().ToList();
             Assert.IsTrue(ToStringExpressionItems(mixed) == "J,P", "Mixed Parents");
-        }
-
-        [TestMethod]
-        public void TestExpressionAncestorsDepthStartAndDepthEnd()
-        {
-            ListOfHierarchicalEntity entities;
-            var expressionIn = "A+(B+C+(J+(I+O)))+K+(D+E+(P+(U+Y)))";
-            var expression = GetExpression(expressionIn, out entities);
-
-            List<ExpressionItem<HierarchicalEntity>> result;
-
-            try
-            {
-                result = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Ancestors(0, 0).ToList();
-            }
-            catch (Exception ex)
-            {
-                Assert.IsTrue(ex.Message == "The 'depthStart' parameter can not be lower than 1.");
-            }
-
-            result = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Ancestors(1, 1).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "J,P", "Test: DepthStart = 1, DepthEnd = 1");
-
-            result = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Ancestors(1, 2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "J,B,P,D", "Test: DepthStart = 1, DepthEnd = 2");
-
-            result = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Ancestors(2, 2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,D", "Test: DepthStart = 2, DepthEnd = 2");
-
-            result = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Ancestors(2, 3).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,A,D,A", "Test: DepthStart = 2, DepthEnd = 3");
-
-            result = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Ancestors(3, 3).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "A,A", "Test: DepthStart = 3, DepthEnd = 3");
-
-            result = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Ancestors(3, 4).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "A,A", "Test: DepthStart = 3, DepthEnd = 4");
-        }
-
-        [TestMethod]
-        public void TestExpressionAncestorsWithFilter()
-        {
-            ListOfHierarchicalEntity entities;
-            var expressionIn = "A+(B+C+(J+(I+(O+(R+T)))))+K+(D+E+(P+(U+(Y+(L+N)))))";
-            var expression = GetExpression(expressionIn, out entities);
-
-            List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
-
-            /*
-             * return depths that are mod of 2.
-             * 
-                    A+(B+C+(J+(I+(O+(R+T)))))+K+(D+E+(P+(U+(Y+(L+N)))))
-                T = 6  5    4  3  2  1
-                T = ^       ^     ^
-                N = 6                            5    4  3  2  1
-                N = ^                                 ^     ^
-            *
-            */
-
-            filter = (ancestor, depthAncestor) => depthAncestor % 2 == 0;
-            result = expression.Find(f => f.ToString() == "T" || f.ToString() == "N").Ancestors(filter).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "O,J,A,Y,P,A", "Test: return all depth that are pair - with mod of 2");
-        }
-
-        [TestMethod]
-        public void TestExpressionAncestorsWithStopAndFilter()
-        {
-            ListOfHierarchicalEntity entities;
-            var expressionIn = "A+(B+C+(J+(I+(O+(R+T)))))+K+(D+E+(P+(U+(Y+(L+N)))))";
-            var expression = GetExpression(expressionIn, out entities);
-
-            List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> stop;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
-
-            stop = (ancestor, depthAncestor) => ancestor.ToString() == "J" || ancestor.ToString() == "P";
-            result = expression.Find(f => f.ToString() == "T" || f.ToString() == "N").AncestorsUntil(stop).ToList();
-
-            Assert.IsTrue(ToStringExpressionItems(result) == "R,O,I,J,L,Y,U,P", "Test: return items until 'stop delegate' return false");
-        }
-
-        [TestMethod]
-        public void TestExpressionDescendentsWithDepth()
-        {
-            ListOfHierarchicalEntity entities;
-            var expression = GetExpression("A+(B+C+(J+I))+K+(D+E+(P+U))", out entities);
-
-            var debug = expression.ToDebug();
-            var result = expression.Find(entities.GetByIdentity("A")).Descendants(0).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,C,J,I,K,D,E,P,U", "level 0");
-            result = expression.Find(entities.GetByIdentity("A")).Descendants(1).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,K,D", "level 1");
-            result = expression.Find(entities.GetByIdentity("A")).Descendants(2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,C,J,K,D,E,P", "level 2");
-            result = expression.Find(entities.GetByIdentity("A")).Descendants(3).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,C,J,I,K,D,E,P,U", "level 3");
-            result = expression.Find(entities.GetByIdentity("A")).Descendants(4).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,C,J,I,K,D,E,P,U", "level 4");
-        }
-
-        [TestMethod]
-        public void TestExpressionAncestorsWithDepth()
-        {
-            ListOfHierarchicalEntity entities;
-            var expression = GetExpression("A+(B+C+(J+I))+K+(D+E+(P+U))", out entities);
-
-            var debug = expression.ToDebug();
-            List<ExpressionItem<HierarchicalEntity>> result;
-
-            try
-            { 
-                result = expression.Find(entities.GetByIdentity("I")).Ancestors(0).ToList();
-            }
-            catch(Exception ex)
-            {
-                Assert.IsTrue(ex.Message == "The 'depthEnd' parameter can not be lower than 1.");
-            }
-
-            result = expression.Find(entities.GetByIdentity("I")).Ancestors(1).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "J", "level 1");
-            result = expression.Find(entities.GetByIdentity("I")).Ancestors(2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "J,B", "level 2");
-            result = expression.Find(entities.GetByIdentity("I")).Ancestors(3).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "J,B,A", "level 3");
-            result = expression.Find(entities.GetByIdentity("I")).Ancestors(4).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "J,B,A", "level 4");
         }
 
         [TestMethod]
