@@ -92,7 +92,7 @@ namespace EntityGraph
             var descendant = reference.Next2;
 
             var position = 1;
-            while (descendant != null)
+            while (descendant != null && reference.Level <= descendant.Level)
             {
                 var depth = descendant.Level - reference.Level;
                 if (depth == 0)
@@ -107,9 +107,9 @@ namespace EntityGraph
 
                         if (stopResult)
                             break;
-
-                        position++;
                     }
+
+                    position++;
                 }
 
                 descendant = descendant.Next2;

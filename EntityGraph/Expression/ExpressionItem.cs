@@ -39,7 +39,7 @@ namespace EntityGraph
                 var previous = this.Previous;
 
                 while (previous != null && previous.GetType() != typeof(ExpressionItem<T>))
-                    previous = previous.Next;
+                    previous = previous.Previous;
 
                 return previous;
             }

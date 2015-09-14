@@ -12,31 +12,29 @@ namespace Graph.Tests
         public void TestExpressionNextsDepthStartAndDepthEnd()
         {
             ListOfHierarchicalEntity entities;
-            var expressionIn = "A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G)";
+            var expressionIn = "A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G+R)";
             var expression = GetExpression(expressionIn, out entities);
 
             /*
-                A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G+S)
-             *A=   ^                        ^  ^
-             *J=        
-             *C=        ^                ^
-             *K=                               ^
-             *O=                 ^ ^                             ^ ^ ^
+                A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G+R)
+             *B=                            ^  ^
+             *O=                 ^ ^                             
+             *O=                                                 ^ ^ ^
             */
 
             List<ExpressionItem<HierarchicalEntity>> result;
 
             try
             {
-                result = expression.Find(f => f.ToString() == "A").Descendants(0, 0).ToList();
+                result = expression.Find(f => f.ToString() == "A").Nexts(0, 0).ToList();
             }
             catch (Exception ex)
             {
                 Assert.IsTrue(ex.Message == "The 'positionStart' parameter can not be lower than 1.");
             }
 
-            result = expression.Find(f => f.ToString() == "A").Nexts(1, 2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,K", "Test: positionStart = 1, positionStart = 2");
+            result = expression.Find(f => f.ToString() == "B").Nexts(1, 2).ToList();
+            Assert.IsTrue(ToStringExpressionItems(result) == "K,D", "Test: positionStart = 1, positionStart = 2");
 
             result = expression.Find(f => f.ToString() == "O").Nexts(1, 1).ToList();
             Assert.IsTrue(ToStringExpressionItems(result) == "W,Q", "Test: positionStart = 1, positionStart = 1");
@@ -60,16 +58,18 @@ namespace Graph.Tests
         [TestMethod]
         public void TestExpressionNextsWithFilter()
         {
-
             ListOfHierarchicalEntity entities;
             var expressionIn = "A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G+S+J)";
             var expression = GetExpression(expressionIn, out entities);
 
             /*
-                A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G+S+J)
-             *A=   1                        2  3
-             *I=        
-             *O=                 1 2                             1 2 3 4
+                A + ( B + C + ( J + ( I + H + O + W + Y ) + L ) + S ) + K + ( D + E + ( P + ( U + Y ) + R ) + O + Q + G + S + ( J + ( I + H + O + W + Y ) + L ) ) 
+             *B=                                                        1     2
+             *B=                                                              ^
+             *                                    1   2                                                           1   2   3     4                 1   2    
+             *O=                                      ^                                                           
+             *O=                                                                                                      ^         ^                 
+             *O=                                                                                                                                      ^
             */
 
             List<ExpressionItem<HierarchicalEntity>> result;
@@ -77,13 +77,13 @@ namespace Graph.Tests
 
             filter = (next, posNext) => posNext % 2 == 0;
             result = expression.Find(f => f.ToString() == "O").Nexts(filter).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "Y,G,J", "Test O: return all depth that are pair - with mod of 2");
+            Assert.IsTrue(ToStringExpressionItems(result) == "Y,G,J,Y", "Test O: return all depth that are pair - with mod of 2");
 
             result = expression.Find(f => f.ToString() == "I").Nexts(filter).ToList();
             Assert.IsTrue(ToStringExpressionItems(result) == "", "Test I: return all depth that are pair - with mod of 2");
 
-            result = expression.Find(f => f.ToString() == "A").Nexts(filter).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "K", "Test A: return all depth that are pair - with mod of 2");
+            result = expression.Find(f => f.ToString() == "B").Nexts(filter).ToList();
+            Assert.IsTrue(ToStringExpressionItems(result) == "D", "Test B: return all depth that are pair - with mod of 2");
         }
 
         [TestMethod]
@@ -94,10 +94,13 @@ namespace Graph.Tests
             var expression = GetExpression(expressionIn, out entities);
 
             /*
-                A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G+S+J)
-             *A=   1                        2  3
-             *I=        
-             *O=                 1 2                             1 2 3 4
+                A + ( B + C + ( J + ( I + H + O + W + Y ) + L ) + S ) + K + ( D + E + ( P + ( U + Y ) + R ) + O + Q + G + S + ( J + ( I + H + O + W + Y ) + L ) ) 
+             *B=                                                        1     2
+             *B=                                                              ^
+             *                                    1   2                                                           1   2   3     4                 1   2    
+             *O=                                      ^                                                           
+             *O=                                                                                                      ^                           
+             *O=                                                                                                                                      ^
             */
 
             List<ExpressionItem<HierarchicalEntity>> result;
@@ -105,15 +108,15 @@ namespace Graph.Tests
             Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
 
             stop = (next, posNext) => posNext == 2;
-            result = expression.Find(f => f.ToString() == "A").NextsUntil(stop).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,K", "Test A: return items until 'stop delegate' return false");
+            result = expression.Find(f => f.ToString() == "B").NextsUntil(stop).ToList();
+            Assert.IsTrue(ToStringExpressionItems(result) == "K,D", "Test D: return items until 'stop delegate' return false");
 
             result = expression.Find(f => f.ToString() == "O").NextsUntil(stop).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "W,Y,Q,G", "Test O: return items until 'stop delegate' return false");
+            Assert.IsTrue(ToStringExpressionItems(result) == "W,Y,Q,G,W,Y", "Test O: return items until 'stop delegate' return false");
 
-            filter = (descendant, depthDescendant) => descendant.ToString() != "Q" && descendant.ToString() != "W";
+            filter = (descendant, depthDescendant) => descendant.ToString() != "G";
             result = expression.Find(f => f.ToString() == "O").NextsUntil(stop, filter).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "Y,G", "Test O: return items until 'stop delegate' return false and filter items");
+            Assert.IsTrue(ToStringExpressionItems(result) == "W,Y,Q,W,Y", "Test O: return items until 'stop delegate' return false and filter items");
         }
 
         [TestMethod]
@@ -124,9 +127,11 @@ namespace Graph.Tests
             var expression = GetExpression(expressionIn, out entities);
 
             /*
-                A+(B+C+(J+(I+H+O+W+Y)+L)+S)+K+(D+E+(P+(U+Y)+R)+O+Q+G+S+J)
-             *A=   1                        2  3
-             *O=                 1 2                             1 2 3 4
+                A + ( B + C + ( J + ( I + H + O + W + Y ) + L ) + S ) + K + ( D + E + ( P + ( U + Y ) + R ) + O + Q + G + S + ( J + ( I + H + O + W + Y ) + L ) ) 
+                1 1 2 2 2 2 2 3 3 3 4 4 4 4 4 4 4 4 4 4 4 3 3 3 2 2 2 1 1 1 2 2 2 2 2 3 3 3 4 4 4 4 4 3 3 3 2 2 2 2 2 2 2 2 2 3 3 3 4 4 4 4 4 4 4 4 4 4 4 3 3 3 2 
+             *O=                                  ^   ^                                                           
+             *O=                                                                                                  ^   ^   ^     ^                 
+             *O=                                                                                                                                  ^   ^
             */
 
             List<ExpressionItem<HierarchicalEntity>> result;
@@ -140,17 +145,17 @@ namespace Graph.Tests
                 Assert.IsTrue(ex.Message == "The 'positionEnd' parameter can not be lower than 1.");
             }
 
-            result = expression.Find(entities.GetByIdentity("A")).Nexts().ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,K,D", "A: all");
+            result = expression.Find(entities.GetByIdentity("B")).Nexts().ToList();
+            Assert.IsTrue(ToStringExpressionItems(result) == "K,D", "A: all");
 
-            result = expression.Find(entities.GetByIdentity("A")).Nexts(2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,K", "A: get max 2 items");
+            result = expression.Find(entities.GetByIdentity("B")).Nexts(2).ToList();
+            Assert.IsTrue(ToStringExpressionItems(result) == "K,D", "A: get max 2 items");
             
-            result = expression.Find(entities.GetByIdentity("O")).Nexts().ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "W,Y,Q,G,S,J", "O: all");
-
             result = expression.Find(entities.GetByIdentity("O")).Nexts(3).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "W,Y,Q,G,S", "O: max 3 items");
+            Assert.IsTrue(ToStringExpressionItems(result) == "W,Y,Q,G,S,W,Y", "O: max 3 items");
+
+            result = expression.Find(entities.GetByIdentity("O")).Nexts(4).ToList();
+            Assert.IsTrue(ToStringExpressionItems(result) == "W,Y,Q,G,S,J,W,Y", "O: all");
         }
     }
 }
