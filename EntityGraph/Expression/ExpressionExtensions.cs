@@ -159,7 +159,7 @@ namespace EntityGraph
             var previous = reference.Previous2;
 
             var position = 1;
-            while (previous != null)
+            while (previous != null && reference.Level <= previous.Level)
             {
                 var depth = previous.Level - reference.Level;
                 if (depth == 0)
@@ -174,9 +174,9 @@ namespace EntityGraph
 
                         if (stopResult)
                             break;
-
-                        position++;
                     }
+
+                    position++;
                 }
 
                 previous = previous.Previous2;

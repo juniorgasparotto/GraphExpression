@@ -34,10 +34,10 @@ namespace Graph.Tests
             }
 
             result = expression.Find(f => f.ToString() == "S").Siblings(1, 1).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Q,V", "Test S: positionStart = 1, positionStart = 1");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,J,Q,V", "Test S: positionStart = 1, positionStart = 1");
 
             result = expression.Find(f => f.ToString() == "S").Siblings(1, 2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,O,Q,V", "Test S: positionStart = 1, positionStart = 2");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,Q,O,V", "Test S: positionStart = 1, positionStart = 2");
 
             result = expression.Find(f => f.ToString() == "S").Siblings(2, 2).ToList();
             Assert.IsTrue(ToStringExpressionItems(result) == "Y,C,O", "Test S: positionStart = 2, positionStart = 2");
@@ -49,7 +49,7 @@ namespace Graph.Tests
             Assert.IsTrue(ToStringExpressionItems(result) == "P", "Test S: positionStart = 3, positionStart = 3");
 
             result = expression.Find(f => f.ToString() == "S").Siblings(1, 4).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,O,Q,P,E,V", "Test S: positionStart = 1, positionStart = 4");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,Q,O,P,E,V", "Test S: positionStart = 1, positionStart = 4");
         }
 
         [TestMethod]
@@ -126,17 +126,17 @@ namespace Graph.Tests
                 Assert.IsTrue(ex.Message == "The 'positionEnd' parameter can not be lower than 1.");
             }
 
-            result = expression.Find(entities.GetByIdentity("A")).Siblings().ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "B,K,D", "A: Siblings");
+            result = expression.Find(entities.GetByIdentity("B")).Siblings().ToList();
+            Assert.IsTrue(ToStringExpressionItems(result) == "K,D", "A: Siblings");
 
             result = expression.Find(entities.GetByIdentity("S")).Siblings(2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,O,Q,V", "S: get max 2 items");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,Q,O,V", "S: get max 2 items");
 
             result = expression.Find(entities.GetByIdentity("S")).Siblings(3).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,O,Q,P,V", "S: all");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,Q,O,P,V", "S: all");
 
             result = expression.Find(f => f.ToString() == "S").Siblings().ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,O,Q,P,E,V", "Test S: all");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,W,Y,J,C,Q,O,P,E,V", "Test S: all");
         }
     }
 }

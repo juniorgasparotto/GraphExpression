@@ -47,14 +47,11 @@ namespace Graph.Tests
             result = expression.Find(f => f.ToString() == "D").Previous(1, 2).ToList();
             Assert.IsTrue(ToStringExpressionItems(result) == "K,B", "Test D: positionStart = 1, positionStart = 2");
 
-            result = expression.Find(f => f.ToString() == "D").Previous(1, 2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "K,B,A", "Test D: positionStart = 1, positionStart = 3");
-
             result = expression.Find(f => f.ToString() == "G").Previous(1, 1).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "Q,H", "Test D: positionStart = 1, positionStart = 3");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,Q", "Test D: positionStart = 1, positionStart = 3");
 
             result = expression.Find(f => f.ToString() == "G").Previous(1, 2).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "Q,O,H", "Test D: positionStart = 1, positionStart = 2");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,Q,O", "Test D: positionStart = 1, positionStart = 2");
 
             result = expression.Find(f => f.ToString() == "G").Previous(2, 2).ToList();
             Assert.IsTrue(ToStringExpressionItems(result) == "O", "Test D: positionStart = 2, positionStart = 2");
@@ -66,7 +63,7 @@ namespace Graph.Tests
             Assert.IsTrue(ToStringExpressionItems(result) == "P", "Test D: positionStart = 3, positionStart = 3");
 
             result = expression.Find(f => f.ToString() == "G").Previous(1, 4).ToList();
-            Assert.IsTrue(ToStringExpressionItems(result) == "Q,O,H,P,E", "Test D: positionStart = 1, positionStart = 4");
+            Assert.IsTrue(ToStringExpressionItems(result) == "H,Q,O,P,E", "Test D: positionStart = 1, positionStart = 4");
         }
 
         [TestMethod]
