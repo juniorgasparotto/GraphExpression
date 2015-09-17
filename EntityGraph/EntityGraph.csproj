@@ -46,8 +46,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\Converter\HierarchicalEntityToToken - Copy.cs" />
-    <Compile Include="Expression\ExpressionExtensions.cs" />
-    <Compile Include="Expression\Expression.cs" />
+    <Compile Include="Expression\ExpressionItemPlus.cs" />
+    <Compile Include="Expression\ExpressionItemOpenParenthesis.cs" />
+    <Compile Include="Expression\ExpressionItemCloseParenthesis.cs" />
+    <Compile Include="Expression\IEnumerable\AncestorsExtensions.cs" />
+    <Compile Include="Expression\IEnumerable\DescendantsExtensions.cs" />
+    <Compile Include="Expression\IEnumerable\FindExtensions.cs" />
+    <Compile Include="Expression\IEnumerable\NextsOrPreviousOrSiblingsExtensions.cs" />
+    <Compile Include="Expression\IEnumerable\ConvertersExtensions.cs" />
+    <Compile Include="Expression\ExpressionBuilder.cs" />
     <Compile Include="Graph\GraphConfiguration.cs" />
     <Compile Include="Graph\Edge.cs" />
     <Compile Include="Graph\Graph.cs" />

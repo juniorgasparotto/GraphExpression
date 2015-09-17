@@ -26,7 +26,7 @@ namespace Graph.Tests
             return str;
         }
 
-        private Expression<HierarchicalEntity> GetExpression(string expressionIn, out ListOfHierarchicalEntity entities)
+        private ExpressionBuilder<HierarchicalEntity> GetExpression(string expressionIn, out ListOfHierarchicalEntity entities)
         {
             entities = Utils.FromExpression(expressionIn);
             var graphs = entities.ToGraphs(f => f.Children, GetConfig());
@@ -241,7 +241,7 @@ namespace Graph.Tests
         {
             var entities = Utils.FromExpression(expressionIn);
             var graph = entities.ToGraphs(f => f.Children, configuration);
-            var expression = graph.ElementAt(0).Expression;
+            ExpressionBuilder<HierarchicalEntity> expression = graph.ElementAt(0).Expression;
             var testNumberDesc = "Test " + iTest.ToString() + ": ";
 
             var expressionTests = new List<dynamic>();
@@ -351,8 +351,8 @@ namespace Graph.Tests
                 Assert.IsTrue(test.LevelInExpression == expression[test.Index].LevelInExpression, testNumberDesc + debugLevelExpression);
                 Assert.IsTrue(test.Parent == (expression[test.Index].Parent == null ? "-" : expression[test.Index].Parent.ToString().Trim()), testNumberDesc + ":" + debugParent);
                 Assert.IsTrue(test.Root == expression[test.Index].Root.ToString().Trim(), "Output test:" + debugRoot);
-                Assert.IsTrue(test.Previous == (expression[test.Index].Previous == null ? null : expression[test.Index].Previous.ToString().Trim()), testNumberDesc + ":" + debugName);
-                Assert.IsTrue(test.Next == (expression[test.Index].Next == null ? null : expression[test.Index].Next.ToString().Trim()), testNumberDesc + debugName);
+                Assert.IsTrue(test.Previous == (expression[test.Index].PreviousInExpression == null ? null : expression[test.Index].PreviousInExpression.ToString().Trim()), testNumberDesc + ":" + debugName);
+                Assert.IsTrue(test.Next == (expression[test.Index].NextInExpression == null ? null : expression[test.Index].NextInExpression.ToString().Trim()), testNumberDesc + debugName);
             }
 
             for (var e = 0; e < entities.Count; e++)

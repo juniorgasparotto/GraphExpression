@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EntityGraph
 {
-    public class Expression<T> : IEnumerable<ExpressionItem<T>>
+    public class ExpressionBuilder<T> : IEnumerable<ExpressionItem<T>>
     {
         private static Type TypeOpenParenthesis = typeof(ExpressionItemOpenParenthesis<T>);
         private static Type TypeCloseParenthesis = typeof(ExpressionItemCloseParenthesis<T>);
@@ -33,7 +33,7 @@ namespace EntityGraph
             }
         }
 
-        internal Expression()
+        internal ExpressionBuilder()
         {
             this.items = new List<ExpressionItem<T>>();
         }
@@ -153,23 +153,23 @@ namespace EntityGraph
                 var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
                 this.items.Add(plus);
 
-                plus.Previous = this.lastItem;
+                plus.PreviousInExpression = this.lastItem;
                 plus.Root = this.items[0];
                 plus.Parent = this.currentParent;
 
-                this.lastItem.Next = plus;
+                this.lastItem.NextInExpression = plus;
                 this.lastItem = plus;
             }
 
             var current = new ExpressionItem<T>(item, this.level, this.levelInExpression, this.items.Count);
             this.items.Add(current);
 
-            current.Previous = this.lastItem;
+            current.PreviousInExpression = this.lastItem;
             current.Root = this.items[0];
             current.Parent = this.currentParent;
 
             if (this.lastItem != null)
-                this.lastItem.Next = current;
+                this.lastItem.NextInExpression = current;
 
             this.lastItem = current;
 
@@ -188,11 +188,11 @@ namespace EntityGraph
                 var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
                 this.items.Add(plus);
 
-                plus.Previous = this.lastItem;
+                plus.PreviousInExpression = this.lastItem;
                 plus.Root = this.items[0];
                 plus.Parent = this.currentParent;
 
-                this.lastItem.Next = plus;
+                this.lastItem.NextInExpression = plus;
                 this.lastItem = plus;
                 
                 this.levelInExpression++;
@@ -201,12 +201,12 @@ namespace EntityGraph
             var current = new ExpressionItemOpenParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
             this.items.Add(current);
 
-            current.Previous = lastItem;
+            current.PreviousInExpression = lastItem;
             current.Root = this.items[0];
             current.Parent = this.currentParent;
 
             if (this.lastItem != null)
-                this.lastItem.Next = current;
+                this.lastItem.NextInExpression = current;
 
             lastItem = current;
         }
@@ -219,12 +219,12 @@ namespace EntityGraph
             var current = new ExpressionItemCloseParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
             this.items.Add(current);
 
-            current.Previous = lastItem;
+            current.PreviousInExpression = lastItem;
             current.Root = this.items[0];
             current.Parent = this.currentParent;
 
             if (this.lastItem != null)
-                this.lastItem.Next = current;
+                this.lastItem.NextInExpression = current;
 
             lastItem = current;
             this.levelInExpression--;

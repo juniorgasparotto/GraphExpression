@@ -18,7 +18,7 @@ namespace EntityGraph
 
         #region Public properties
 
-        public Expression<T> Expression { get; private set; }
+        public ExpressionBuilder<T> Expression { get; private set; }
         public GraphConfiguration<T> Configuration { get; private set; }
 
         //public int CountIteration { get; private set; }
@@ -68,7 +68,7 @@ namespace EntityGraph
             this.currentPath = new Path<T>();
             this.vertexes = new List<Vertex<T>>();
             this.edges = new List<Edge<T>>();
-            this.Expression = new Expression<T>();
+            this.Expression = new ExpressionBuilder<T>();
             this.Configuration = configuration;
         }
 
