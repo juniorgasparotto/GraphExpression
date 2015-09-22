@@ -8,6 +8,8 @@ namespace EntityGraph
 {
     public class ExpressionItem<T>
     {
+        internal Func<T, string> ToStringCallBack { get; set; }
+
         public T Entity { get; private set; }
         public int Level { get; private set; }
         public int Index { get; private set; }
@@ -55,6 +57,9 @@ namespace EntityGraph
 
         public override string ToString()
         {
+            if (ToStringCallBack != null)
+                return ToStringCallBack(this.Entity);
+
             return this.Entity.ToString();
         }
     }

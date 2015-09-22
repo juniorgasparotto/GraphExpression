@@ -6,7 +6,6 @@ using EntityGraph;
 
 namespace Graph.Tests
 {
-    [TestClass]
     public partial class TestExpression
     {
         private GraphConfiguration<HierarchicalEntity> GetConfig()
@@ -26,8 +25,11 @@ namespace Graph.Tests
             return str;
         }
 
-        private ExpressionBuilder<HierarchicalEntity> GetExpression(string expressionIn, out ListOfHierarchicalEntity entities)
+        private Expression<HierarchicalEntity> GetExpression(string expressionIn, out ListOfHierarchicalEntity entities)
         {
+            entities = Utils.FromExpression(expressionIn);
+            return ExpressionBuilder<HierarchicalEntity>.Build(entities, f => f.Children).FirstOrDefault();
+
             entities = Utils.FromExpression(expressionIn);
             var graphs = entities.ToGraphs(f => f.Children, GetConfig());
             var graph = graphs.FirstOrDefault(f => f.Vertexes.ElementAt(0).ToString() == expressionIn[0].ToString());
@@ -63,10 +65,76 @@ namespace Graph.Tests
         }
 
         [TestMethod]
+        public void TestExpressionRecursion()
+        {
+            ListOfHierarchicalEntity entities;
+
+            var debug = GetExpression("A+(B+(C+C)+B)+A", out entities).ToString();
+            var test = @"A + (B + (C + C) + B) + A";
+            Assert.IsTrue(test == debug, "Test 0 - error");
+
+            debug = GetExpression("A+A", out entities).ToString();
+            test = @"A + A";
+            Assert.IsTrue(test == debug, "Test 1 - error");
+
+            debug = GetExpression("A+(B+B+A)", out entities).ToString();
+            test = @"A + (B + B + A)";
+            Assert.IsTrue(test == debug, "Test 2 - error");
+
+            debug = GetExpression("A+(A+B)", out entities).ToString();
+            test = @"A + B + A";
+            Assert.IsTrue(test == debug, "Test 3 - error");
+
+            debug = GetExpression("A+(B+C)+A+A+F", out entities).ToString();
+            test = @"A + (B + C) + A + F";
+            Assert.IsTrue(test == debug, "Test 4 - error");
+
+            debug = GetExpression("A+(B+C)+A+V+F", out entities).ToString();
+            test = @"A + (B + C) + A + V + F";
+            Assert.IsTrue(test == debug, "Test 5 - error");
+
+            debug = GetExpression("A+(B+K+(C+B+P))+A+V+F", out entities).ToString();
+            test = @"A + (B + K + (C + B + P)) + A + V + F";
+            Assert.IsTrue(test == debug, "Test 6 - error");
+
+            debug = GetExpression("A+(B+C+D)+D+(E+B)+F+G(G+G+C)+(H+C)", out entities).ToString();
+            test = @"A + (B + C + D) + D + (E + (B + C + D)) + F + (G + G + C) + (H + C)";
+            Assert.IsTrue(test == debug, "Test 7 - error");
+            
+            debug = GetExpression("A+B+A", out entities).ToString();
+            test = @"A + B + A";
+            Assert.IsTrue(test == debug, "Test 8 - error");
+
+            debug = GetExpression("A+(B+A)", out entities).ToString();
+            test = @"A + (B + A)";
+            Assert.IsTrue(test == debug, "Test 9 - error");
+
+            debug = GetExpression("A+(B+A+(B+A))", out entities).ToString();
+            test = @"A + (B + A + B)";
+            Assert.IsTrue(test == debug, "Test 10 - error");
+
+            debug = GetExpression("A+(B+A)+B+A", out entities).ToString();
+            test = @"A + (B + A) + A";
+            Assert.IsTrue(test == debug, "Test 11 - error");
+
+            debug = GetExpression("A+(B+A)+A+B", out entities).ToString();
+            test = @"A + (B + A) + A";
+            Assert.IsTrue(test == debug, "Test 12 - error");
+
+            debug = GetExpression("A+(B+A)+A+(C+B)", out entities).ToString();
+            test = @"A + (B + A) + A + (C + (B + A))";
+            Assert.IsTrue(test == debug, "Test 13 - error");
+
+            debug = GetExpression("A+(B+A)+(I+A+D+B+D)+(C+B)", out entities).ToString();
+            test = @"A + (B + A) + (I + A + D + (B + A)) + (C + (B + A))";
+            Assert.IsTrue(test == debug, "Test 14 - error");
+        }
+
+        [TestMethod]
         public void TestExpressionMultiple()
         {
             var config = GetConfig();
-            var iTest = 0;
+            var iTest = 1;
 
             var expressionIn = "A+(B+C+(J+I))+(D+B)";
             var expressionOut = "A+(B+C+(J+I))+(D+(B+C+(J+I)))";
@@ -86,6 +154,7 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "I", Items = "J,B,A,D", Parents = "J" });
             ancestorsTest.Add(new { EntityTest = "D", Items = "A", Parents = "A" });
 
+            // 1
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
@@ -116,6 +185,7 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "P", Items = "D,A", Parents = "D" });
             ancestorsTest.Add(new { EntityTest = "U", Items = "P,D,A", Parents = "P" });
 
+            // 2
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
@@ -140,6 +210,7 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "I", Items = "J,D,C,A", Parents = "J,C" });
             ancestorsTest.Add(new { EntityTest = "P", Items = "D,C,A", Parents = "D" });
 
+            // 3
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
@@ -156,6 +227,7 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "B", Items = "A", Parents = "A" });
             ancestorsTest.Add(new { EntityTest = "C", Items = "B,A", Parents = "B" });
 
+            // 4
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
@@ -168,6 +240,7 @@ namespace Graph.Tests
             ancestorsTest = new List<dynamic>();
             ancestorsTest.Add(new { EntityTest = "A", Items = "", Parents = "" });
 
+            // 5
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
@@ -182,6 +255,7 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "A", Items = "", Parents = "" });
             ancestorsTest.Add(new { EntityTest = "B", Items = "A", Parents = "A" });
 
+            // 6
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
@@ -214,6 +288,7 @@ namespace Graph.Tests
             ancestorsTest.Add(new { EntityTest = "I", Items = "B,A", Parents = "B" });
             ancestorsTest.Add(new { EntityTest = "M", Items = "A", Parents = "A" });
 
+            // 7
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
@@ -226,6 +301,7 @@ namespace Graph.Tests
             ancestorsTest = new List<dynamic>();
             ancestorsTest.Add(new { EntityTest = "A", Items = "A", Parents = "A" });
 
+            // 8
             this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
         }
 
@@ -239,9 +315,8 @@ namespace Graph.Tests
             List<dynamic> ancestorsTest
         )
         {
-            var entities = Utils.FromExpression(expressionIn);
-            var graph = entities.ToGraphs(f => f.Children, configuration);
-            ExpressionBuilder<HierarchicalEntity> expression = graph.ElementAt(0).Expression;
+            ListOfHierarchicalEntity entities;
+            Expression<HierarchicalEntity> expression = this.GetExpression(expressionIn, out entities);
             var testNumberDesc = "Test " + iTest.ToString() + ": ";
 
             var expressionTests = new List<dynamic>();

@@ -95,18 +95,28 @@ namespace Graph.Tests
         }
 
         [TestMethod]
-        public void TestGraphMultiplesRecursive()
+        public void TestGraphRecursive()
         {
-            var list = Utils.FromExpression("A+(B+C+D)+D+(E+B)+F+G(G+G+C)+(H+C)").ToGraphs(f => f.Children);
-            var list1 = Utils.FromExpression("A+A").ToGraphs(f => f.Children);
-            var list2 = Utils.FromExpression("A+B+A").ToGraphs(f => f.Children);
-            var list3 = Utils.FromExpression("A+(B+A)").ToGraphs(f => f.Children);
-            var list4 = Utils.FromExpression("A+(B+B+A)").ToGraphs(f => f.Children);
-            var list5 = Utils.FromExpression("A+(B+A(B+A))").ToGraphs(f => f.Children);
-            var list6 = Utils.FromExpression("A+(B+A)+B+A").ToGraphs(f => f.Children);
-            var list7 = Utils.FromExpression("A+(B+A)+A+B").ToGraphs(f => f.Children);
-            var list8 = Utils.FromExpression("A+(B+A)+A+(C+B)").ToGraphs(f => f.Children);
-            var list9 = Utils.FromExpression("A+(B+A)+(I+A+D+B+D)+(C+B)").ToGraphs(f => f.Children);
+            var debug = Utils.FromExpression("A+(B+C+D)+D+(E+B)+F+G(G+G+C)+(H+C)").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + C + D) + D + (E + (B + C + D)) + F + (G + G + C) + (H + C)" == debug);
+            debug = Utils.FromExpression("A+A").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + A" == debug);
+            debug = Utils.FromExpression("A+B+A").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + B + A" == debug);
+            debug = Utils.FromExpression("A+(B+A)").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + A)" == debug);
+            debug = Utils.FromExpression("A+(B+B+A)").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + B + A)" == debug);
+            debug = Utils.FromExpression("A+(B+A(B+A))").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + A + B)" == debug);
+            debug = Utils.FromExpression("A+(B+A)+B+A").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + A) + A" == debug);
+            debug = Utils.FromExpression("A+(B+A)+A+B").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + A) + A" == debug);
+            debug = Utils.FromExpression("A+(B+A)+A+(C+B)").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + A) + A + (C + (B + A))" == debug);
+            debug = Utils.FromExpression("A+(B+A)+(I+A+D+B+D)+(C+B)").ToGraphs(f => f.Children).ElementAt(0).ToString();
+            Assert.IsTrue("A + (B + A) + (I + A + D + (B + A)) + (C + (B + A))" == debug);
         }
 
         private string GetOutputPaths(IEnumerable<Path<HierarchicalEntity>> paths)

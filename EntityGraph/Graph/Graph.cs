@@ -18,7 +18,7 @@ namespace EntityGraph
 
         #region Public properties
 
-        public ExpressionBuilder<T> Expression { get; private set; }
+        public Expression<T> Expression { get; private set; }
         public GraphConfiguration<T> Configuration { get; private set; }
 
         //public int CountIteration { get; private set; }
@@ -68,7 +68,12 @@ namespace EntityGraph
             this.currentPath = new Path<T>();
             this.vertexes = new List<Vertex<T>>();
             this.edges = new List<Edge<T>>();
-            this.Expression = new ExpressionBuilder<T>();
+            
+            if (configuration.EntityToStringCallback != null)
+                this.Expression = new Expression<T>(true, true, f => configuration.EntityToStringCallback(f));
+            else
+                this.Expression = new Expression<T>(true, true);
+
             this.Configuration = configuration;
         }
 
@@ -152,19 +157,10 @@ namespace EntityGraph
                         children = childrenCallback(entity);
 
                     var hasChildren = children != null && children.Count > 0;
-
-                    // Specify sequencial iteration
-                    //graph.SequenceIteration += (string.IsNullOrWhiteSpace(graph.SequenceIteration) ? "" : ".") + "[" + vertex.ToString() + "]";
-
-                    // if exists any token, add "+" in sequence
-                    //var parentLevel = iteration.IterationParent != null ? iteration.IterationParent.Level : 1;
-
-                    //if (iteration.IterationParent != null)
-                    //    graph.Expression.Add(new GraphExpressionItemPlus<T>(parentLevel));
-
+                    
                     if (hasChildren)
                     {
-                        // add parenthesis "(A" because exists children or when is the root level and encloseRootTokenInParenthesis = true
+                        // add parenthesis "(A" because exists children
                         var addParenthesis = iteration.Level > 1;
 
                         if (addParenthesis)

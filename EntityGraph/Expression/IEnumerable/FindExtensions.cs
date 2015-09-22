@@ -7,12 +7,17 @@ namespace EntityGraph
 {
     public static class FindExtensions
     {
-        public static IEnumerable<ExpressionItem<T>> Find<T>(this ExpressionBuilder<T> expression, T entity)
+        public static IEnumerable<ExpressionItem<T>> Find<T>(this Expression<T> expression, T entity)
         {
             return expression.Where(f => f.Entity != null && f.Entity.Equals(entity));
         }
+        
+        public static IEnumerable<ExpressionItem<T>> Find<T>(this Expression<T> expression, ExpressionItem<T> item)
+        {
+            return expression.Where(f => f == item);
+        }
 
-        public static IEnumerable<ExpressionItem<T>> Find<T>(this ExpressionBuilder<T> expression, Func<ExpressionItem<T>, bool> filter)
+        public static IEnumerable<ExpressionItem<T>> Find<T>(this Expression<T> expression, Func<ExpressionItem<T>, bool> filter)
         {
             return expression.Where(filter);
         }

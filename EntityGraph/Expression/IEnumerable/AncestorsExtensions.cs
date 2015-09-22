@@ -47,14 +47,14 @@ namespace EntityGraph
                     yield return item;
         }
 
-        public static IEnumerable<ExpressionItem<T>> Ancestors<T>(this IEnumerable<ExpressionItem<T>> references, int depthStart, int depthEnd)
-        {
-            return Ancestors(references, (ancestor, depth) => depth >= depthStart && depth <= depthEnd);
-        }
-
         public static IEnumerable<ExpressionItem<T>> Ancestors<T>(this IEnumerable<ExpressionItem<T>> references, int depthEnd)
         {
             return Ancestors(references, 1, depthEnd);
+        }
+
+        public static IEnumerable<ExpressionItem<T>> Ancestors<T>(this IEnumerable<ExpressionItem<T>> references, int depthStart, int depthEnd)
+        {
+            return Ancestors(references, null, null, depthStart, depthEnd);
         }
 
         public static IEnumerable<ExpressionItem<T>> AncestorsUntil<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> stop, Func<ExpressionItem<T>, int, bool> filter = null)

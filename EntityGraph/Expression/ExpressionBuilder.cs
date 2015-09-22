@@ -5,309 +5,92 @@ using System.Linq;
 
 namespace EntityGraph
 {
-    public class ExpressionBuilder<T> : IEnumerable<ExpressionItem<T>>
+    public class ExpressionBuilder<T>
     {
-        private static Type TypeOpenParenthesis = typeof(ExpressionItemOpenParenthesis<T>);
-        private static Type TypeCloseParenthesis = typeof(ExpressionItemCloseParenthesis<T>);
-
-        private List<ExpressionItem<T>> items;
-        private ExpressionItem<T> currentParent;
-        private ExpressionItem<T> lastItem;
-
-        private int levelInExpression = 1;
-        private int level = 1;
-
-        public ExpressionItem<T> this[int i]
+        // Not accept multigraph
+        public static IEnumerable<Expression<T>> Build(IEnumerable<T> source, Func<T, List<T>> childrenCallback, bool enableParenthesis = true, bool enablePlus = true, Func<T, string> entityToStringCallback = null)
         {
-            get
+            Expression<T> expression = null;
+            var expressions = new List<Expression<T>>();
+
+            var iteration = new Iteration<T>()
             {
-                return items[i];
-            }
-        }
+                Enumerator = source.Distinct().GetEnumerator(),
+                Level = 1,
+            };
 
-        public int Count
-        { 
-            get
+            var iterations = new List<Iteration<T>>();
+            iterations.Add(iteration);
+
+            while (true)
             {
-                return this.items.Count;
-            }
-        }
+                while (iteration.Enumerator.MoveNext())
+                {
+                    // New graph
+                    if (iteration.Level == 1)
+                    {
+                        expression = new Expression<T>(enableParenthesis, enablePlus, entityToStringCallback);
+                        expressions.Add(expression);
+                    }
 
-        internal ExpressionBuilder()
-        {
-            this.items = new List<ExpressionItem<T>>();
-        }
+                    var entity = iteration.Enumerator.Current;
 
-        //public IEnumerable<T> AncestorsOf(T entity)
-        //{
-        //    var hashSet = new HashSet<T>();
+                    // Prevent recursion, infinite loop. eg: "A + B + [A]" where [A] already exists in path
+                    var last = expression.LastOrDefault();
 
-        //    var itemsFound = this.items.Where(f => f.Entity != null && f.Entity.Equals(entity)).ToList();
-        //    foreach (var itemFound in itemsFound)
-        //    {
-        //        for (var i = itemFound.Index - 1; i > 0; i--)
-        //        {
-        //            // Identifies an ancestor when the left neighbor is a closed parenthesis 
-        //            // AND his level is less than or equal to the item found. This is to prevent the situation:
-        //            // A+(B+(C+D)+E)
-        //            // 1122233333222
-        //            //       ^ <- E : The ancestor is "C" if don't exists "this.items[i].Level <= itemFound.Level"
-        //            if (this.items[i].GetType() == typeof(ExpressionItemOpenParenthesis<T>) && this.items[i].LevelInExpression <= itemFound.LevelInExpression)
-        //            {
-        //                var openParenthesis = this.items[i];
-        //                var parent = this.items[i + 1];
+                    var exists = last != null && last.Entity != null && last.Entity.Equals(entity);
+                    if (!exists)
+                        exists = expression.Find(last)
+                                           .AncestorsUntil((f,level) => f.Entity.Equals(entity))
+                                           .Count(f=>f.Entity.Equals(entity)) == 0 ? false : true;
 
-        //                if (parent.Index != itemFound.Index)
-        //                    hashSet.Add(parent.Entity);
+                    List<T> children = null;
+                    
+                    if (!exists)
+                        children = childrenCallback(entity);
 
-        //                if (openParenthesis.LevelInExpression == 2)
-        //                    break;
-        //            }
-        //        }
+                    var hasChildren = children != null && children.Count > 0;
 
-        //        ExpressionItem<T> root = this.items[0] ;
+                    if (hasChildren)
+                    {
+                        // add parenthesis "(A" because exists children
+                        var addParenthesis = iteration.Level > 1;
 
-        //        // Add root when 'itemFound' the highest index than 'root'
-        //        if (itemFound.Index > root.Index)
-        //            hashSet.Add(root.Entity);
-        //    }
+                        if (addParenthesis)
+                            expression.OpenParenthesis();
 
-        //    return hashSet;
-        //}
+                        expression.AddItem(entity);
 
-        //public IEnumerable<T> DescendantsOf(T entity, int depth = 0)
-        //{
-        //    var hashSet = new HashSet<T>();
+                        iteration = new Iteration<T>()
+                        {
+                            Enumerator = children.GetEnumerator(),
+                            Level = iteration.Level + 1,
+                            EntityRootOfTheIterationForDebug = iteration.Enumerator.Current,
+                            IterationParent = iteration,
+                            HasOpenParenthesis = addParenthesis
+                        };
 
-        //    var itemFound = this.items.FirstOrDefault(f =>
-        //    {
-        //        if (f.Entity != null && f.Entity.Equals(entity))
-        //        {
-        //            // is root or has children
-        //            if (f.Previous == null || f.Previous.GetType() == typeof(ExpressionItemOpenParenthesis<T>))
-        //                return true;
-        //        }
+                        iterations.Add(iteration);
+                    }
+                    else
+                    {
+                        expression.AddItem(entity);
+                    }
+                }
 
-        //        return false;
-        //    }
-        //    );
+                if (iteration.HasOpenParenthesis)
+                    expression.CloseParenthesis();
 
-        //    if (itemFound != null)
-        //    {
-        //        for (var i = itemFound.Index + 1; i < this.items.Count; i++)
-        //        {
-        //            var curItem = this.items[i];
-        //            if (curItem.GetType() == typeof(ExpressionItem<T>) && (depth == 0 || itemFound.Level >= curItem.Level - depth))
-        //                hashSet.Add(curItem.Entity);
-        //            else if (curItem.LevelInExpression == itemFound.LevelInExpression && curItem.GetType() == typeof(ExpressionItemCloseParenthesis<T>))
-        //                break;
-        //        }
-        //    }
+                // Remove iteration because is empty
+                iterations.Remove(iteration);
 
-        //    return hashSet;
-        //}
+                if (iterations.Count == 0)
+                    break;
 
-        //public IEnumerable<T> ParentsOf(T entity)
-        //{
-        //    var hashSet = new HashSet<T>();
-
-        //    var itemsFound = this.items.Where(f => f.Entity != null && f.Entity.Equals(entity)).ToList();
-        //    foreach (var itemFound in itemsFound)
-        //    {
-        //        for (var i = itemFound.Index - 1; i > 0; i--)
-        //        {
-        //            if (this.items[i].GetType() == typeof(ExpressionItemOpenParenthesis<T>) && this.items[i].LevelInExpression <= itemFound.LevelInExpression)
-        //            {
-        //                var openParenthesis = this.items[i];
-        //                var parent = this.items[i + 1];
-
-        //                if (parent.Index != itemFound.Index)
-        //                    hashSet.Add(parent.Entity);
-
-        //                if (openParenthesis.LevelInExpression == 2 || openParenthesis.Level == itemFound.Level)
-        //                    break;
-        //            }
-        //        }
-
-        //        ExpressionItem<T> root = this.items[0];
-
-        //        // Add root when 'itemFound' the highest index than 'root'
-        //        if (itemFound.Index > root.Index)
-        //            hashSet.Add(root.Entity);
-        //    }
-
-        //    return hashSet;
-        //}
-
-        //public IEnumerable<T> ChildrenOf(T entity)
-        //{
-        //    return this.DescendantsOf(entity, 1);
-        //}
-
-        public void AddItem(T item)
-        {
-            var lastItemIsOpenParenthesis = this.lastItem != null && this.lastItem.GetType() == TypeOpenParenthesis;
-
-            if (this.items.Count > 0 && !lastItemIsOpenParenthesis)
-            {
-                var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
-                this.items.Add(plus);
-
-                plus.PreviousInExpression = this.lastItem;
-                plus.Root = this.items[0];
-                plus.Parent = this.currentParent;
-
-                this.lastItem.NextInExpression = plus;
-                this.lastItem = plus;
+                iteration = iterations.LastOrDefault();
             }
 
-            var current = new ExpressionItem<T>(item, this.level, this.levelInExpression, this.items.Count);
-            this.items.Add(current);
-
-            current.PreviousInExpression = this.lastItem;
-            current.Root = this.items[0];
-            current.Parent = this.currentParent;
-
-            if (this.lastItem != null)
-                this.lastItem.NextInExpression = current;
-
-            this.lastItem = current;
-
-            // if exists only root or last item, in init function, is a open parentheisis
-            if (this.items.Count == 1 || lastItemIsOpenParenthesis)
-            { 
-                this.level++;
-                this.currentParent = current;
-            }
+            return expressions;
         }
-
-        public void OpenParenthesis()
-        {
-            if (this.items.Count > 0)
-            {
-                var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
-                this.items.Add(plus);
-
-                plus.PreviousInExpression = this.lastItem;
-                plus.Root = this.items[0];
-                plus.Parent = this.currentParent;
-
-                this.lastItem.NextInExpression = plus;
-                this.lastItem = plus;
-                
-                this.levelInExpression++;
-            }
-
-            var current = new ExpressionItemOpenParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
-            this.items.Add(current);
-
-            current.PreviousInExpression = lastItem;
-            current.Root = this.items[0];
-            current.Parent = this.currentParent;
-
-            if (this.lastItem != null)
-                this.lastItem.NextInExpression = current;
-
-            lastItem = current;
-        }
-
-        public void CloseParenthesis()
-        {
-            this.level--;
-            this.currentParent = this.currentParent.Parent;
-
-            var current = new ExpressionItemCloseParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
-            this.items.Add(current);
-
-            current.PreviousInExpression = lastItem;
-            current.Root = this.items[0];
-            current.Parent = this.currentParent;
-
-            if (this.lastItem != null)
-                this.lastItem.NextInExpression = current;
-
-            lastItem = current;
-            this.levelInExpression--;
-        }
-
-        public int IndexOf(ExpressionItem<T> item)
-        {
-            return this.items.IndexOf(item);
-        }
-
-        public IEnumerator<ExpressionItem<T>> GetEnumerator()
-        {
-            return items.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return items.GetEnumerator();
-        }
-
-        #region Overrides
-
-        public override string ToString()
-        {
-            var str = "";
-            foreach (var i in items)
-                str += i.ToString();
-            return str;
-        }
-
-        public string ToDebug()
-        {
-            var str = "";
-            foreach (var i in items)
-                str += i.ToString().Trim() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += i.LevelInExpression.ToString() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += i.Level.ToString() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += (i.Parent == null) ? "- " : i.Parent.ToString() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += i.Root.ToString() + " ";
-
-            return str;
-        }
-
-        #endregion
-
-        #region Temp
-
-        //public static bool operator ==(Path<T> a, Path<T> b)
-        //{
-        //    return Equals(a, b);
-        //}
-
-        //public static bool operator !=(Path<T> a, Path<T> b)
-        //{
-        //    return !Equals(a, b);
-        //}
-
-        //public override bool Equals(object obj)
-        //{
-        //    if (ReferenceEquals(obj, null) || this.GetType() != obj.GetType())
-        //        return false;
-
-        //    var converted = (Path<T>)obj;
-        //    return (this.Identity == converted.Identity);
-        //}
-
-        //public override int GetHashCode()
-        //{
-        //    return 0;
-        //}
-
-        #endregion
     }
 }
