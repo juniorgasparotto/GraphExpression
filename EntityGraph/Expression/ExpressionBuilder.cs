@@ -26,7 +26,7 @@ namespace EntityGraph
             {
                 while (iteration.Enumerator.MoveNext())
                 {
-                    // New graph
+                    // New expression
                     if (iteration.Level == 1)
                     {
                         expression = new Expression<T>(enableParenthesis, enablePlus, entityToStringCallback);
@@ -36,7 +36,8 @@ namespace EntityGraph
                     var entity = iteration.Enumerator.Current;
 
                     // Prevent recursion, infinite loop. eg: "A + B + [A]" where [A] already exists in path
-                    var last = expression.LastOrDefault();
+                    //var last = expression.LastOrDefault();
+                    var last = expression.LastOrDefault(f => f.Level == iteration.Level - 1);
 
                     var exists = last != null && last.Entity != null && last.Entity.Equals(entity);
                     if (!exists)
@@ -53,7 +54,7 @@ namespace EntityGraph
 
                     if (hasChildren)
                     {
-                        // add parenthesis "(A" because exists children
+                        // add parenthesis "(B" because exists children
                         var addParenthesis = iteration.Level > 1;
 
                         if (addParenthesis)

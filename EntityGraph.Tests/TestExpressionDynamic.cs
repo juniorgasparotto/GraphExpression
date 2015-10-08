@@ -44,8 +44,10 @@ namespace Graph.Tests
             dynamic c = new { Name = "C", Items = new List<dynamic>() };
 
             a.Items.Add(b);
+            b.Items.Add(c);
             b.Items.Add(b);
             b.Items.Add(b);
+            b.Items.Add(c);
             a.Items.Add(b);
             a.Items.Add(c);
             a.Items.Add(c);
@@ -54,18 +56,16 @@ namespace Graph.Tests
             entities.Add(a);
 
             var expression1 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, false, false, f => f.Name).FirstOrDefault();
-            var debug1 = expression1.ToString();
+            Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression1.ToString(), "Test 12");
 
             var expression2 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, false, f => f.Name).FirstOrDefault();
-            var debug2 = expression2.ToString();
+            Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression2.ToString(), "Test 13");
 
             var expression3 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, false, true, f => f.Name).FirstOrDefault();
-            var debug3 = expression3.ToString();
+            Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression3.ToString(), "Test 14");
 
             var expression4 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, true, f => f.Name).FirstOrDefault();
-            var debug4 = expression4.ToString();
-            var test = @"A + (B + B + B) + (B + B + B) + C + C";
-            Assert.IsTrue(test == debug4, "Test 2 - error");
+            Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression4.ToString(), "Test 15");
         }
     }
 }

@@ -50,11 +50,12 @@
     <Compile Include="Expression\ExpressionItemPlus.cs" />
     <Compile Include="Expression\ExpressionItemOpenParenthesis.cs" />
     <Compile Include="Expression\ExpressionItemCloseParenthesis.cs" />
-    <Compile Include="Expression\IEnumerable\AncestorsExtensions.cs" />
-    <Compile Include="Expression\IEnumerable\DescendantsExtensions.cs" />
-    <Compile Include="Expression\IEnumerable\FindExtensions.cs" />
-    <Compile Include="Expression\IEnumerable\NextsOrPreviousOrSiblingsExtensions.cs" />
-    <Compile Include="Expression\IEnumerable\ConvertersExtensions.cs" />
+    <Compile Include="Expression\Extensions\AncestorsExtensions.cs" />
+    <Compile Include="Expression\Extensions\DebugExtensions.cs" />
+    <Compile Include="Expression\Extensions\DescendantsExtensions.cs" />
+    <Compile Include="Expression\Extensions\FindExtensions.cs" />
+    <Compile Include="Expression\Extensions\NextsOrPreviousOrSiblingsExtensions.cs" />
+    <Compile Include="Expression\Extensions\ConvertersExtensions.cs" />
     <Compile Include="Expression\Expression.cs" />
     <Compile Include="Expression\Iteration.cs" />
     <Compile Include="Expression\Path.cs" />

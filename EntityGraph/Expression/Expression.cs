@@ -11,6 +11,7 @@ namespace EntityGraph
         private static Type TypeCloseParenthesis = typeof(ExpressionItemCloseParenthesis<T>);
         private static Type TypePlus = typeof(ExpressionItemPlus<T>);
         private Func<T, string> toStringCallBack;
+        private bool isLastOpenParenthesis = false;
 
         private List<ExpressionItem<T>> items;
         private ExpressionItem<T> currentParent;
@@ -18,7 +19,6 @@ namespace EntityGraph
 
         private int levelInExpression = 1;
         private int level = 1;
-
 
         public bool EnableParenthesis { get; private set; }
         public bool EnablePlus { get; private set; }
@@ -49,15 +49,17 @@ namespace EntityGraph
 
         public void AddItem(T item)
         {
-            var lastItemIsOpenParenthesis = this.lastItem != null && this.lastItem.GetType() == TypeOpenParenthesis;
+            //var lastItemIsOpenParenthesis = this.lastItem != null && this.lastItem.GetType() == TypeOpenParenthesis;
+            //var lastItemIsOpenParenthesis = this.isOpenParenthesis;
+
             var lastItemIsPlus = this.lastItem != null && this.lastItem.GetType() == TypePlus;
 
-            if (this.EnablePlus && this.items.Count > 0 && !lastItemIsOpenParenthesis && !lastItemIsPlus)
+            if (this.EnablePlus && this.items.Count > 0 && !this.isLastOpenParenthesis && !lastItemIsPlus)
             {
                 var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
                 this.items.Add(plus);
 
-                plus.PreviousInExpression = this.lastItem;
+                plus.PrevInExpression = this.lastItem;
                 plus.Root = this.items[0];
                 plus.Parent = this.currentParent;
 
@@ -67,9 +69,10 @@ namespace EntityGraph
 
             var current = new ExpressionItem<T>(item, this.level, this.levelInExpression, this.items.Count);
             current.ToStringCallBack = this.toStringCallBack;
+
             this.items.Add(current);
 
-            current.PreviousInExpression = this.lastItem;
+            current.PrevInExpression = this.lastItem;
             current.Root = this.items[0];
             current.Parent = this.currentParent;
 
@@ -79,15 +82,19 @@ namespace EntityGraph
             this.lastItem = current;
 
             // if exists only root or last item, in init function, is a open parentheisis
-            if (this.items.Count == 1 || lastItemIsOpenParenthesis)
+            if (this.items.Count == 1 || this.isLastOpenParenthesis)
             { 
                 this.level++;
                 this.currentParent = current;
             }
+
+            this.isLastOpenParenthesis = false;
         }
 
         public void OpenParenthesis()
         {
+            this.isLastOpenParenthesis = true;
+
             if (this.items.Count > 0)
             {
                 if (this.EnablePlus)
@@ -95,7 +102,7 @@ namespace EntityGraph
                     var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
                     this.items.Add(plus);
 
-                    plus.PreviousInExpression = this.lastItem;
+                    plus.PrevInExpression = this.lastItem;
                     plus.Root = this.items[0];
                     plus.Parent = this.currentParent;
 
@@ -111,14 +118,14 @@ namespace EntityGraph
                 var current = new ExpressionItemOpenParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
                 this.items.Add(current);
 
-                current.PreviousInExpression = lastItem;
+                current.PrevInExpression = lastItem;
                 current.Root = this.items[0];
                 current.Parent = this.currentParent;
 
                 if (this.lastItem != null)
                     this.lastItem.NextInExpression = current;
 
-                lastItem = current;
+                this.lastItem = current;
             }
         }
 
@@ -132,7 +139,7 @@ namespace EntityGraph
                 var current = new ExpressionItemCloseParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
                 this.items.Add(current);
 
-                current.PreviousInExpression = lastItem;
+                current.PrevInExpression = lastItem;
                 current.Root = this.items[0];
                 current.Parent = this.currentParent;
 
@@ -164,72 +171,33 @@ namespace EntityGraph
 
         public override string ToString()
         {
-            var str = "";
-            ExpressionItem<T> last = null;
-            foreach (var item in items)
-            {
-                if (!this.EnableParenthesis && last != null && item.Level < last.Level)
-                    str += ")";
+            var output = "";
 
-                if (!this.EnablePlus 
-                    && last != null
-                    && last.GetType() != typeof(ExpressionItemOpenParenthesis<T>)
-                    && item.GetType() != typeof(ExpressionItemCloseParenthesis<T>)
-                   )
-                { 
-                    str += " + ";
-                }
-
-                if (!this.EnableParenthesis
-                    && last != null
-                    && item.Level > last.Level
-                   )
-                {
-                    if (item.GetType() != typeof(ExpressionItemPlus<T>))
-                    { 
-                        str += "(";
-                        str += item.ToString();
-                    }
-                    else
+            this.items.FirstOrDefault().IterationAll
+                (
+                    itemWhenStart =>
                     {
-                        str += item.ToString();
-                        str += "(";
+                        if (itemWhenStart.IsRoot())
+                        {
+                            output = itemWhenStart.ToString();
+                        }
+                        else
+                        {
+                            output += " + ";
+                            if (itemWhenStart.HasChildren())
+                                output += "(";
+
+                            output += itemWhenStart.ToString();
+                        }
+                    },
+                    itemWhenEnd =>
+                    {
+                        if (!itemWhenEnd.IsRoot())
+                            output += ")";
                     }
-                }
-                else
-                {
-                    str += item.ToString();
-                }
+                );
 
-                last = item;
-            }
-
-            return str;
-        }
-
-        public string ToDebug()
-        {
-            var str = "";
-            foreach (var i in items)
-                str += i.ToString().Trim() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += i.LevelInExpression.ToString() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += i.Level.ToString() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += (i.Parent == null) ? "- " : i.Parent.ToString() + " ";
-
-            str += "\r\n";
-            foreach (var i in items)
-                str += i.Root.ToString() + " ";
-
-            return str;
+            return output;
         }
 
         #endregion

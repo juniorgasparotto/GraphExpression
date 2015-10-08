@@ -7,52 +7,6 @@ namespace EntityGraph
 {
     public static class NextsOrPreviousOrSiblingsExtensions
     {
-        private enum ExpressionFindDirection
-        {
-            Next,
-            Previous
-        }
-
-        #region Next and previous - commom
-
-        private static IEnumerable<ExpressionItem<T>> NextsOrPrevious<T>(ExpressionItem<T> reference, ExpressionFindDirection direction, Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
-        {
-            ExpressionItem<T> item;
-            if (direction == ExpressionFindDirection.Previous)
-                item = reference.Previous;
-            else
-                item = reference.Next;
-
-            var position = 1;
-            while (item != null && reference.Level <= item.Level)
-            {
-                var depth = Math.Abs(item.Level - reference.Level);
-                if (depth == 0)
-                {
-                    if (!positionStart.HasValue || !positionEnd.HasValue || (position >= positionStart && position <= positionEnd))
-                    {
-                        var filterResult = (filter == null || filter(item, position));
-                        var stopResult = (stop != null && stop(item, position));
-
-                        if (filterResult)
-                            yield return item;
-
-                        if (stopResult)
-                            break;
-                    }
-
-                    position++;
-                }
-
-                if (direction == ExpressionFindDirection.Previous)
-                    item = item.Previous;
-                else
-                    item = item.Next;
-            }
-        }
-        
-        #endregion
-
         #region Nexts Methods
 
         public static IEnumerable<ExpressionItem<T>> Nexts<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
@@ -67,7 +21,7 @@ namespace EntityGraph
                 throw new ArgumentException("The 'positionStart' parameter can not be greater than the 'depthEnd' parameter.");
 
             foreach (var reference in references)
-                foreach (var item in NextsOrPrevious(reference, ExpressionFindDirection.Next, filter, stop, positionStart, positionEnd))
+                foreach (var item in reference.Nexts(filter, stop, positionStart, positionEnd))
                     yield return item;
         }
 
@@ -105,7 +59,7 @@ namespace EntityGraph
                 throw new ArgumentException("The 'positionStart' parameter can not be greater than the 'depthEnd' parameter.");
 
             foreach (var reference in references)
-                foreach (var item in NextsOrPrevious(reference, ExpressionFindDirection.Previous, filter, stop, positionStart, positionEnd))
+                foreach (var item in reference.Previous(filter, stop, positionStart, positionEnd))
                     yield return item;
         }
 
@@ -144,10 +98,10 @@ namespace EntityGraph
 
             foreach (var reference in references)
             {
-                foreach (var item in NextsOrPrevious(reference, ExpressionFindDirection.Previous, filter, stop, positionStart, positionEnd))
+                foreach (var item in reference.Previous(filter, stop, positionStart, positionEnd))
                     yield return item;
 
-                foreach (var item in NextsOrPrevious(reference, ExpressionFindDirection.Next, filter, stop, positionStart, positionEnd))
+                foreach (var item in reference.Nexts(filter, stop, positionStart, positionEnd))
                     yield return item;
             }
         }

@@ -28,7 +28,7 @@ namespace Graph.Tests
         private Expression<HierarchicalEntity> GetExpression(string expressionIn, out ListOfHierarchicalEntity entities)
         {
             entities = Utils.FromExpression(expressionIn);
-            return ExpressionBuilder<HierarchicalEntity>.Build(entities, f => f.Children).FirstOrDefault();
+            return ExpressionBuilder<HierarchicalEntity>.Build(entities, f => f.Children, false, false).FirstOrDefault();
 
             entities = Utils.FromExpression(expressionIn);
             var graphs = entities.ToGraphs(f => f.Children, GetConfig());
@@ -62,6 +62,34 @@ namespace Graph.Tests
 
             mixed = expression.Find(f => f.ToString() == "I" || f.ToString() == "U").Parents().ToList();
             Assert.IsTrue(ToStringExpressionItems(mixed) == "J,P", "Mixed Parents");
+        }
+
+        [TestMethod]
+        public void TestExpressionBuilderToString()
+        {
+            var debug = "";
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+C))"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + C))" == debug, "Test 1");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+C)+D)"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + C) + D)" == debug, "Test 2");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+C)+C)"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + C))" == debug, "Test 3");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+C))+D"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + C)) + D" == debug, "Test 4");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+C))+C"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + C)) + (C + C)" == debug, "Test 5");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+(D+C)))+C"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + (D + C))) + (C + (D + C))" == debug, "Test 6");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+(D+C))+I)+C"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + (D + C)) + I) + (C + (D + C))" == debug, "Test 7");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+(D+C)+P)+I)+C"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + (D + C) + P) + I) + (C + (D + C) + P)" == debug, "Test 8");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+(D+C)+P)+I+P)+C"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + (D + C) + P) + I + P) + (C + (D + C) + P)" == debug, "Test 9");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+(D+C)+P+G)+I+P)+C"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + (D + C) + P + G) + I + P) + (C + (D + C) + P + G)" == debug, "Test 10");
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(Utils.FromExpression("A+(B+(C+(D+C)+P+G))+C"), f => f.Children, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            Assert.IsTrue("A + (B + (C + (D + C) + P + G)) + (C + (D + C) + P + G)" == debug, "Test 11");
         }
 
         [TestMethod]
