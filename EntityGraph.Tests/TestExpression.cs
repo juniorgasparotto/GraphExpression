@@ -25,10 +25,10 @@ namespace Graph.Tests
             return str;
         }
 
-        private Expression<HierarchicalEntity> GetExpression(string expressionIn, out ListOfHierarchicalEntity entities)
+        private Expression<HierarchicalEntity> GetExpression(string expressionIn, out ListOfHierarchicalEntity entities, bool usePlus = true, bool useParenthesis = true)
         {
             entities = Utils.FromExpression(expressionIn);
-            return ExpressionBuilder<HierarchicalEntity>.Build(entities, f => f.Children, false, false).FirstOrDefault();
+            return ExpressionBuilder<HierarchicalEntity>.Build(entities, f => f.Children, usePlus, useParenthesis).FirstOrDefault();
 
             entities = Utils.FromExpression(expressionIn);
             var graphs = entities.ToGraphs(f => f.Children, GetConfig());
@@ -343,156 +343,168 @@ namespace Graph.Tests
             List<dynamic> ancestorsTest
         )
         {
-            ListOfHierarchicalEntity entities;
-            Expression<HierarchicalEntity> expression = this.GetExpression(expressionIn, out entities);
-            var testNumberDesc = "Test " + iTest.ToString() + ": ";
+            dynamic combinations = new[]
+            {
+                new { usePlus = true, useParenthesis = true },
+                new { usePlus = false, useParenthesis = false },
+                new { usePlus = true, useParenthesis = false },
+                new { usePlus = false, useParenthesis = true }
+            };
 
-            //var expressionTests = new List<dynamic>();
-            //var level = 1;
-            //var levelInExpression = 1;
+            foreach(var comb in combinations)
+            {
+                ListOfHierarchicalEntity entities;
+                Expression<HierarchicalEntity> expression = this.GetExpression(expressionIn, out entities, comb.usePlus, comb.useParenthesis);
+                var testNumberDesc = "Test " + iTest.ToString() + ": ";
 
-            //var parent = "-";
-            //var parentOrder = new Dictionary<int, string>();
+                //var expressionTests = new List<dynamic>();
+                //var level = 1;
+                //var levelInExpression = 1;
+
+                //var parent = "-";
+                //var parentOrder = new Dictionary<int, string>();
             
-            //for(var i = 0; i < expressionOut.Length; i++)
-            //{
-            //    var previous = default(string);
-            //    var next = default(string);
-            //    var current = expressionOut[i].ToString();
+                //for(var i = 0; i < expressionOut.Length; i++)
+                //{
+                //    var previous = default(string);
+                //    var next = default(string);
+                //    var current = expressionOut[i].ToString();
 
-            //    if (i + 1 < expressionOut.Length)
-            //        next = expressionOut[i + 1].ToString();
+                //    if (i + 1 < expressionOut.Length)
+                //        next = expressionOut[i + 1].ToString();
 
-            //    if (i - 1 >= 0)
-            //        previous = expressionOut[i - 1].ToString();
+                //    if (i - 1 >= 0)
+                //        previous = expressionOut[i - 1].ToString();
 
-            //    if (current == "(" && i > 0)
-            //    { 
-            //        levelInExpression++;
-            //        level++;
-            //    }
+                //    if (current == "(" && i > 0)
+                //    { 
+                //        levelInExpression++;
+                //        level++;
+                //    }
 
-            //    if (i == 1)
-            //    {
-            //        parentOrder.Add(level, expressionOut[0].ToString());
-            //        parent = expressionOut[0].ToString();
-            //    }
+                //    if (i == 1)
+                //    {
+                //        parentOrder.Add(level, expressionOut[0].ToString());
+                //        parent = expressionOut[0].ToString();
+                //    }
                 
-            //    if (current == ")")
-            //    {
-            //        parent = parentOrder[level-1];
-            //    }
+                //    if (current == ")")
+                //    {
+                //        parent = parentOrder[level-1];
+                //    }
 
-            //    var dynTest = new
-            //    {
-            //        Name = current,
-            //        Index = i,
-            //        Level = (expressionTests.Count > 0 && (current == "(" || current == ")" || previous == "(")) ? level - 1 : level,
-            //        LevelInExpression = levelInExpression,
-            //        Previous = previous,
-            //        Next = next,
-            //        Parent = parent,
-            //        Root = expressionOut[0].ToString()
-            //    };
+                //    var dynTest = new
+                //    {
+                //        Name = current,
+                //        Index = i,
+                //        Level = (expressionTests.Count > 0 && (current == "(" || current == ")" || previous == "(")) ? level - 1 : level,
+                //        LevelInExpression = levelInExpression,
+                //        Previous = previous,
+                //        Next = next,
+                //        Parent = parent,
+                //        Root = expressionOut[0].ToString()
+                //    };
 
-            //    if (current == ")")
-            //    { 
-            //        levelInExpression--;
-            //        level--;
-            //    }
+                //    if (current == ")")
+                //    { 
+                //        levelInExpression--;
+                //        level--;
+                //    }
 
-            //    if (previous == "(")
-            //    {
-            //        if (parentOrder.ContainsKey(level))
-            //            parentOrder[level] = current;
-            //        else
-            //            parentOrder.Add(level, current);
+                //    if (previous == "(")
+                //    {
+                //        if (parentOrder.ContainsKey(level))
+                //            parentOrder[level] = current;
+                //        else
+                //            parentOrder.Add(level, current);
 
-            //        parent = current;
-            //    }
+                //        parent = current;
+                //    }
 
-            //    if (i == 0)
-            //    {
-            //        level++;
-            //    }
+                //    if (i == 0)
+                //    {
+                //        level++;
+                //    }
 
-            //    expressionTests.Add(dynTest);
-            //}
+                //    expressionTests.Add(dynTest);
+                //}
 
-            //var debug1 = "";
-            //var debug2 = "";
-            //var debug3 = "";
-            //var debug4 = "";
-            //var debug5 = "";
-            //foreach (var itemDebug in expressionTests)
-            //{
-            //    debug1 += itemDebug.Name + " ";
-            //    debug2 += itemDebug.LevelInExpression + " ";
-            //    debug3 += itemDebug.Level + " ";
-            //    debug4 += itemDebug.Parent + " ";
-            //    debug5 += itemDebug.Root + " ";
-            //}
+                //var debug1 = "";
+                //var debug2 = "";
+                //var debug3 = "";
+                //var debug4 = "";
+                //var debug5 = "";
+                //foreach (var itemDebug in expressionTests)
+                //{
+                //    debug1 += itemDebug.Name + " ";
+                //    debug2 += itemDebug.LevelInExpression + " ";
+                //    debug3 += itemDebug.Level + " ";
+                //    debug4 += itemDebug.Parent + " ";
+                //    debug5 += itemDebug.Root + " ";
+                //}
 
-            //var outputDebugTest = debug1 + "\r\n" + debug2 + "\r\n" + debug3 + "\r\n" + debug4 + "\r\n" + debug5;
-            //var outputDebugExpression = expression.ToDebug();
+                //var outputDebugTest = debug1 + "\r\n" + debug2 + "\r\n" + debug3 + "\r\n" + debug4 + "\r\n" + debug5;
+                //var outputDebugExpression = expression.ToDebug();
 
-            //Assert.IsTrue(outputDebugTest == outputDebugExpression, testNumberDesc + "ToDebug function test");
-            //Assert.IsTrue(debug1.Replace(" ", "") == expression.ToString().Replace(" ", ""), "ToString function test");
+                //Assert.IsTrue(outputDebugTest == outputDebugExpression, testNumberDesc + "ToDebug function test");
+                //Assert.IsTrue(debug1.Replace(" ", "") == expression.ToString().Replace(" ", ""), "ToString function test");
 
-            //foreach (var test in expressionTests)
-            //{
-            //    var debugIndex = string.Format("Expected Index[{0}] == Index[{1}]; ", test.Index, expression[test.Index].Index);
-            //    var debugName = string.Format("Expected Name[{0}] == Name[{1}]; ", test.Name, expression[test.Index].ToString().Trim());
-            //    var debugParent = string.Format("Expected Parent[{0}] == Parent[{1}]; ", test.Parent, (expression[test.Index].Parent == null ? "" : expression[test.Index].Parent.ToString().Trim()));
-            //    var debugRoot = string.Format("Expected Root[{0}] == Root[{1}]; ", test.Root, expression[test.Index].Root.ToString().Trim());
-            //    var debugLevel = string.Format("Expected Level[{0}] == Level[{1}]; ", test.Level, expression[test.Index].Level);
-            //    var debugLevelExpression = string.Format("Expected LevelExpression[{0}] == LevelExpression[{1}]; ", test.LevelInExpression, expression[test.Index].LevelInExpression);
+                //foreach (var test in expressionTests)
+                //{
+                //    var debugIndex = string.Format("Expected Index[{0}] == Index[{1}]; ", test.Index, expression[test.Index].Index);
+                //    var debugName = string.Format("Expected Name[{0}] == Name[{1}]; ", test.Name, expression[test.Index].ToString().Trim());
+                //    var debugParent = string.Format("Expected Parent[{0}] == Parent[{1}]; ", test.Parent, (expression[test.Index].Parent == null ? "" : expression[test.Index].Parent.ToString().Trim()));
+                //    var debugRoot = string.Format("Expected Root[{0}] == Root[{1}]; ", test.Root, expression[test.Index].Root.ToString().Trim());
+                //    var debugLevel = string.Format("Expected Level[{0}] == Level[{1}]; ", test.Level, expression[test.Index].Level);
+                //    var debugLevelExpression = string.Format("Expected LevelExpression[{0}] == LevelExpression[{1}]; ", test.LevelInExpression, expression[test.Index].LevelInExpression);
 
-            //    Assert.IsTrue(test.Index == expression[test.Index].Index, testNumberDesc + debugIndex);
-            //    Assert.IsTrue(test.Name == expression[test.Index].ToString().Trim(), testNumberDesc + debugName);
-            //    Assert.IsTrue(test.Level == expression[test.Index].Level, testNumberDesc + ":" + debugLevel);
-            //    Assert.IsTrue(test.LevelInExpression == expression[test.Index].LevelInExpression, testNumberDesc + debugLevelExpression);
-            //    Assert.IsTrue(test.Parent == (expression[test.Index].Parent == null ? "-" : expression[test.Index].Parent.ToString().Trim()), testNumberDesc + ":" + debugParent);
-            //    Assert.IsTrue(test.Root == expression[test.Index].Root.ToString().Trim(), "Output test:" + debugRoot);
-            //    Assert.IsTrue(test.Previous == (expression[test.Index].PrevInExpression == null ? null : expression[test.Index].PrevInExpression.ToString().Trim()), testNumberDesc + ":" + debugName);
-            //    Assert.IsTrue(test.Next == (expression[test.Index].NextInExpression == null ? null : expression[test.Index].NextInExpression.ToString().Trim()), testNumberDesc + debugName);
-            //}
+                //    Assert.IsTrue(test.Index == expression[test.Index].Index, testNumberDesc + debugIndex);
+                //    Assert.IsTrue(test.Name == expression[test.Index].ToString().Trim(), testNumberDesc + debugName);
+                //    Assert.IsTrue(test.Level == expression[test.Index].Level, testNumberDesc + ":" + debugLevel);
+                //    Assert.IsTrue(test.LevelInExpression == expression[test.Index].LevelInExpression, testNumberDesc + debugLevelExpression);
+                //    Assert.IsTrue(test.Parent == (expression[test.Index].Parent == null ? "-" : expression[test.Index].Parent.ToString().Trim()), testNumberDesc + ":" + debugParent);
+                //    Assert.IsTrue(test.Root == expression[test.Index].Root.ToString().Trim(), "Output test:" + debugRoot);
+                //    Assert.IsTrue(test.Previous == (expression[test.Index].PrevInExpression == null ? null : expression[test.Index].PrevInExpression.ToString().Trim()), testNumberDesc + ":" + debugName);
+                //    Assert.IsTrue(test.Next == (expression[test.Index].NextInExpression == null ? null : expression[test.Index].NextInExpression.ToString().Trim()), testNumberDesc + debugName);
+                //}
 
-            Assert.IsTrue(expression.ToString().Replace(" ", "") == expressionOut.Trim(), testNumberDesc + " check toString()");
+                Assert.IsTrue(expression.ToString().Replace(" ", "") == expressionOut.Trim(), testNumberDesc + " check toString()");
 
-            for (var e = 0; e < entities.Count; e++)
-            {
-                var test = descendentsTest[e];
-                var descendants = expression.Find(entities[e]).Descendants().ToEntities().ToList();
-                var descendantsExpected = string.IsNullOrWhiteSpace(test.Items) ? new string[0] : test.Items.Split(',');
+                for (var e = 0; e < entities.Count; e++)
+                {
+                    var test = descendentsTest[e];
+                    var descendants = expression.Find(entities[e]).Descendants().ToEntities().ToList();
+                    var descendantsExpected = string.IsNullOrWhiteSpace(test.Items) ? new string[0] : test.Items.Split(',');
 
-                var children = expression.Find(entities[e]).Children().ToEntities().ToList();
-                var childrenExpected = string.IsNullOrWhiteSpace(test.Children) ? new string[0] : test.Children.Split(',');
+                    var children = expression.Find(entities[e]).Children().ToEntities().ToList();
+                    var childrenExpected = string.IsNullOrWhiteSpace(test.Children) ? new string[0] : test.Children.Split(',');
 
-                Assert.IsTrue(descendants.Count == descendantsExpected.Length, testNumberDesc + string.Format("Descendants of '{0}': Count of descendants not match for entity.", test.EntityTest));
-                for (var i = 0; i < descendants.Count; i++)
-                    Assert.IsTrue(descendants[i].ToString() == descendantsExpected[i].Trim(), testNumberDesc + string.Format("Descendants of '{0}': Item {1} and {2} not match.", test.EntityTest, descendants[i].ToString(), descendantsExpected[i].Trim()));
+                    Assert.IsTrue(descendants.Count == descendantsExpected.Length, testNumberDesc + string.Format("Descendants of '{0}': Count of descendants not match for entity.", test.EntityTest));
+                    for (var i = 0; i < descendants.Count; i++)
+                        Assert.IsTrue(descendants[i].ToString() == descendantsExpected[i].Trim(), testNumberDesc + string.Format("Descendants of '{0}': Item {1} and {2} not match.", test.EntityTest, descendants[i].ToString(), descendantsExpected[i].Trim()));
 
-                Assert.IsTrue(children.Count == childrenExpected.Length, testNumberDesc + string.Format("Children of '{0}': Count of children not match for entity.", test.EntityTest));
-                for (var i = 0; i < children.Count; i++)
-                    Assert.IsTrue(children[i].ToString() == childrenExpected[i].Trim(), testNumberDesc + string.Format("Children of '{0}': Item {1} and {2} not match.", test.EntityTest, children[i].ToString(), childrenExpected[i].Trim()));
-            }
+                    Assert.IsTrue(children.Count == childrenExpected.Length, testNumberDesc + string.Format("Children of '{0}': Count of children not match for entity.", test.EntityTest));
+                    for (var i = 0; i < children.Count; i++)
+                        Assert.IsTrue(children[i].ToString() == childrenExpected[i].Trim(), testNumberDesc + string.Format("Children of '{0}': Item {1} and {2} not match.", test.EntityTest, children[i].ToString(), childrenExpected[i].Trim()));
+                }
 
-            for (var e = 0; e < entities.Count; e++)
-            {
-                var test = ancestorsTest[e];
-                var ancestors = expression.Find(entities[e]).Ancestors().ToEntities().ToList();
-                var ancestorsExpected = string.IsNullOrWhiteSpace(test.Items) ? new string[0] : test.Items.Split(',');
-                var parents = expression.Find(entities[e]).Parents().ToEntities().ToList();
-                var parentsExpected = string.IsNullOrWhiteSpace(test.Parents) ? new string[0] : test.Parents.Split(',');
+                for (var e = 0; e < entities.Count; e++)
+                {
+                    var test = ancestorsTest[e];
+                    var ancestors = expression.Find(entities[e]).Ancestors().ToEntities().ToList();
+                    var ancestorsExpected = string.IsNullOrWhiteSpace(test.Items) ? new string[0] : test.Items.Split(',');
+                    var parents = expression.Find(entities[e]).Parents().ToEntities().ToList();
+                    var parentsExpected = string.IsNullOrWhiteSpace(test.Parents) ? new string[0] : test.Parents.Split(',');
 
-                Assert.IsTrue(ancestors.Count == ancestorsExpected.Length, testNumberDesc + string.Format("Ancestors of '{0}': Count of ancestors not match.", test.EntityTest));
-                for (var i = 0; i < ancestors.Count; i++)
-                    Assert.IsTrue(ancestors[i].ToString() == ancestorsExpected[i].Trim(), testNumberDesc + string.Format("Ancestors of '{0}': Item {1} and {2} not match.", test.EntityTest, ancestors[i].ToString(), ancestorsExpected[i].Trim()));
+                    Assert.IsTrue(ancestors.Count == ancestorsExpected.Length, testNumberDesc + string.Format("Ancestors of '{0}': Count of ancestors not match.", test.EntityTest));
+                    for (var i = 0; i < ancestors.Count; i++)
+                        Assert.IsTrue(ancestors[i].ToString() == ancestorsExpected[i].Trim(), testNumberDesc + string.Format("Ancestors of '{0}': Item {1} and {2} not match.", test.EntityTest, ancestors[i].ToString(), ancestorsExpected[i].Trim()));
 
-                Assert.IsTrue(parents.Count == parentsExpected.Length, testNumberDesc + string.Format("Parents of '{0}': Count of ancestors not match.", test.EntityTest));
-                for (var i = 0; i < parents.Count; i++)
-                    Assert.IsTrue(parents[i].ToString() == parentsExpected[i].Trim(), testNumberDesc + string.Format("Parents of '{0}': Item {1} and {2} not match.", test.EntityTest, parents[i].ToString(), parentsExpected[i].Trim()));
+                    Assert.IsTrue(parents.Count == parentsExpected.Length, testNumberDesc + string.Format("Parents of '{0}': Count of ancestors not match.", test.EntityTest));
+                    for (var i = 0; i < parents.Count; i++)
+                        Assert.IsTrue(parents[i].ToString() == parentsExpected[i].Trim(), testNumberDesc + string.Format("Parents of '{0}': Item {1} and {2} not match.", test.EntityTest, parents[i].ToString(), parentsExpected[i].Trim()));
+                }
+
             }
         }
     }
