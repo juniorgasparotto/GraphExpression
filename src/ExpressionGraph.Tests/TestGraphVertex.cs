@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Dynamic;
 using System.IO;
+using ExpressionGraph.Graph;
 
 namespace ExpressionGraph.Tests
 {

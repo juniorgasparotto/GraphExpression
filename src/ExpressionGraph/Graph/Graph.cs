@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ExpressionGraph
+namespace ExpressionGraph.Graph
 {
     public class Graph<T>
     {

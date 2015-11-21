@@ -52,6 +52,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestClass.cs" />
+    <Compile Include="TestExpressionReflection.cs" />
     <Compile Include="TestExpressionDynamic.cs" />
     <Compile Include="TestExpressionSiblings.cs" />
     <Compile Include="TestExpressionPrevious.cs" />
@@ -64,6 +66,10 @@
     <Compile Include="TestGraphVertex.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj">
+      <Project>{eeea67f9-9089-481d-a4dc-0966dec9fd7d}</Project>
+      <Name>Newtonsoft.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExpressionGraph.Serialization\ExpressionGraph.Serialization.csproj">
       <Project>{dc183878-b594-4bab-b79d-bc775ca9579f}</Project>
       <Name>ExpressionGraph.Serialization</Name>

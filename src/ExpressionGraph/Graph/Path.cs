@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ExpressionGraph
+namespace ExpressionGraph.Graph
 {
     public class Path<T> : IEnumerable<PathItem<T>>
     {
@@ -44,7 +44,7 @@ namespace ExpressionGraph
         internal void SetType()
         {
             if (this.pathItems.First().Edge.Target == this.pathItems.Last().Edge.Target)
-                this.PathType = ExpressionGraph.PathType.Circuit;
+                this.PathType = PathType.Circuit;
             else
             {
                 PathItem<T> last = null;

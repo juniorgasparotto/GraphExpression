@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ExpressionGraph
+namespace ExpressionGraph.Graph
 {
     // Or node
     public class Vertex<T>

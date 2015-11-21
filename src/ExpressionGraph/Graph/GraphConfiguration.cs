@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ExpressionGraph
+namespace ExpressionGraph.Graph
 {
     public delegate decimal AssignEdgeWeightDelegate<T>(T entity, T entityParent);
     public delegate string EntityToStringDelegate<T>(T entity);
