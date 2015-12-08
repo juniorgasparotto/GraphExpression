@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph.Reflection
 {
-    public interface IPropertyRead
+    public interface IMethodReader
     {
-        bool CanRead(object obj, PropertyInfo property);
-        IEnumerable<MethodValue> GetValues(object obj, PropertyInfo property);
+        bool CanRead(object obj, MethodInfo methodInfo);
+        IEnumerable<MethodValue> GetValues(object obj, MethodInfo methodInfo);
     }
 }

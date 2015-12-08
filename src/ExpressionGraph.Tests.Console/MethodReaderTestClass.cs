@@ -9,7 +9,7 @@ using ExpressionGraph.Reflection;
 
 namespace ExpressionGraph.Tests.Console
 {
-    public class MethodReaderTestClass : IMethodRead
+    public class MethodReaderTestClass : IMethodReader
     {
 
         public bool CanRead(object obj, MethodInfo methodInfo)

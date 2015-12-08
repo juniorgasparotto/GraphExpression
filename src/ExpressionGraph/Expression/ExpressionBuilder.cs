@@ -63,7 +63,7 @@ namespace ExpressionGraph
                     }
                     else
                     {
-                        exists = expression.Count(f => f.Entity.Equals(entity)) == 0 ? false : true;
+                        exists = expression.Count(f => f.Entity != null && f.Entity.Equals(entity)) == 0 ? false : true;
                     }
 
                     IEnumerable<T> children = null;

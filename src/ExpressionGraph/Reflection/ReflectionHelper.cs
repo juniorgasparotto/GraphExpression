@@ -33,15 +33,18 @@ namespace ExpressionGraph.Reflection
             }
         }
 
-        public static T GetPropertyValue<T>(object source, string property)
+        public static bool TryGetPropertyValue<T>(object source, string property, out T value)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
+
+            value = default(T);
 
             var sourceType = source.GetType();
             var sourceProperties = sourceType.GetProperties();
             var properties = sourceProperties
                 .Where(s => s.Name.Equals(property));
+
             if (properties.Count() == 0)
             {
                 sourceProperties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic);
@@ -54,10 +57,27 @@ namespace ExpressionGraph.Reflection
                     .Select(s => s.GetValue(source, null))
                     .FirstOrDefault();
 
-                return propertyValue != null ? (T)propertyValue : default(T);
+                if (propertyValue != null)
+                {
+                   value = (T)propertyValue;
+                   return true;
+                }
             }
 
-            return default(T);
+            return false;
+        }
+
+        public static string CSharpName(this Type type)
+        {
+            var sb = new StringBuilder();
+            var name = type.Name;
+            if (!type.IsGenericType) return name;
+            sb.Append(name.Substring(0, name.IndexOf('`')));
+            sb.Append("<");
+            sb.Append(string.Join(", ", type.GetGenericArguments()
+                                            .Select(t => t.CSharpName())));
+            sb.Append(">");
+            return sb.ToString();
         }
     }
 }

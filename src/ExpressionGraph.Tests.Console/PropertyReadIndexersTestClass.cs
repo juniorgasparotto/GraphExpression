@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph.Tests.Console
 {
-    public class PropertyReadIndexersTestClass : IPropertyRead
+    public class PropertyReadIndexersTestClass : IPropertyReader
     {
         public bool CanRead(object obj, PropertyInfo property)
         {

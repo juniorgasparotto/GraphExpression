@@ -221,7 +221,8 @@ namespace ExpressionGraph.Tests
                 return list;
             }
         }
-        
+
+        [System.Runtime.CompilerServices.IndexerName("TesteIndexer")]
         public string this[int index]
         {
             get
@@ -230,6 +231,7 @@ namespace ExpressionGraph.Tests
             }
         }
 
+        [System.Runtime.CompilerServices.IndexerName("TesteIndexer")]
         public string this[int index, int index2]
         {
             get
@@ -238,6 +240,7 @@ namespace ExpressionGraph.Tests
             }
         }
 
+        [System.Runtime.CompilerServices.IndexerName("TesteIndexer")]
         public string this[string contains]
         {
             get

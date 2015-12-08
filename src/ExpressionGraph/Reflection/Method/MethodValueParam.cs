@@ -22,9 +22,20 @@ namespace ExpressionGraph.Reflection
 
         public override string ToString()
         {
-            if (Value != null)
-                return Name + " = [" + Value.ToString() + "]";
-            return Name + " = null";
+            return GetParameterToString(true, false, "[]");
+        }
+
+        public string GetParameterToString(bool showName = false, bool showType = false, string encloseValueChars = "\"\"")
+        {
+            var toString = default(string);
+            var hasEnclose = !string.IsNullOrWhiteSpace(encloseValueChars) && encloseValueChars.Length == 2;
+            var open = hasEnclose ? encloseValueChars[0].ToString() : "";
+            var close = hasEnclose ? encloseValueChars[1].ToString() : "";
+
+            toString += showType ? ReflectionHelper.CSharpName(ParameterInfo.ParameterType) + " " : "";
+            toString += showName ? this.Name + "=" : "";
+            toString += this.Value == null ? "null" : open + this.Value.ToString() + close;
+            return toString;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph.Reflection
 {
-    public class PropertyReadDefault : IPropertyRead
+    public class PropertyReaderDefault : IPropertyReader
     {
         public bool CanRead(object obj, PropertyInfo property)
         {

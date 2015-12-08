@@ -30,7 +30,7 @@ namespace ExpressionGraph.Reflection
 
         public override string ToString()
         {
-            if (this.Value != null)
+            if (this.Value == null)
                 return FieldInfo.Name + " = null";
 
             return FieldInfo.Name + " = [" + Value.ToString() + "]";

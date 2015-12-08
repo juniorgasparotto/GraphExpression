@@ -34,15 +34,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Expression\ExpressionBuilder.cs" />
-    <Compile Include="Expression\Iteration.cs" />
+    <Compile Include="Iteration.cs" />
+    <Compile Include="Reflection\Class\ClassReaderWithoutPrimitives.cs" />
+    <Compile Include="Reflection\Class\IClassReader.cs" />
+    <Compile Include="Reflection\Instance - Copy.cs" />
     <Compile Include="Reflection\InstanceType.cs" />
-    <Compile Include="Reflection\Method\IMethodRead.cs" />
-    <Compile Include="Reflection\Property\IPropertyRead.cs" />
+    <Compile Include="Reflection\Method\IMethodReader.cs" />
+    <Compile Include="Reflection\Class\ClassReaderDefault.cs" />
+    <Compile Include="Reflection\Property\IPropertyReader.cs" />
     <Compile Include="Reflection\Field\Field.cs" />
-    <Compile Include="Reflection\Method\MethodReadDefault.cs" />
+    <Compile Include="Reflection\Method\MethodReaderDefault.cs" />
+    <Compile Include="Reflection\NameAndValue.cs" />
     <Compile Include="Reflection\Property\Property.cs" />
-    <Compile Include="Reflection\Property\PropertyReadDefault.cs" />
-    <Compile Include="Reflection\Property\PropertyReadIndexerIList.cs" />
+    <Compile Include="Reflection\Property\PropertyReaderDefault.cs" />
+    <Compile Include="Reflection\Property\PropertyReaderArray.cs" />
+    <Compile Include="Reflection\Property\PropertyReaderIndexerItemInt32.cs" />
     <Compile Include="Reflection\Method\MethodValueParam.cs" />
     <Compile Include="Reflection\Instance.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
@@ -64,7 +70,6 @@
     <Compile Include="Expression\ExpressionItem.cs" />
     <Compile Include="Graph\IEnumerable\PathExtension.cs" />
     <Compile Include="Graph\IEnumerable\GraphExtension.cs" />
-    <Compile Include="Graph\Iteration.cs" />
     <Compile Include="Graph\Path.cs" />
     <Compile Include="Graph\PathItem.cs" />
     <Compile Include="Graph\PathType.cs" />

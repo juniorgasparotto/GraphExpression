@@ -10,7 +10,7 @@ namespace ExpressionGraph.Reflection
     /// <summary>
     /// Without parameters
     /// </summary>
-    public class MethodReadDefault : IMethodRead
+    public class MethodReaderDefault : IMethodReader
     {
         public bool CanRead(object obj, MethodInfo methodInfo)
         {
