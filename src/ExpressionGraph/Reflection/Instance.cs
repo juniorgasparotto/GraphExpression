@@ -13,7 +13,7 @@ namespace ExpressionGraph.Reflection
         public string Name { get; private set; }
         public object Object { get; private set; }
         public Type ObjectType { get; private set; }
-        public string Source { get; private set; }
+        public string ContainerName { get; private set; }
         public List<InstanceType> InstanceTypes { get; private set; }
         public List<IPropertyReader> PropertyReaders { get; private set; }
         public List<IMethodReader> MethodReaders { get; private set; }
@@ -23,21 +23,22 @@ namespace ExpressionGraph.Reflection
         public Func<object, Type, List<PropertyInfo>> FilterProperties { get; set; }
         public Func<object, Type, List<MethodInfo>> FilterMethods { get; set; }
 
-        public Instance(object obj, string name = null, string source = null)
+        public Instance(object obj, string name = null, string containerName = null)
         {
             if (obj == null)
                 throw new ArgumentNullException("obj");
 
             this.ObjectType = obj.GetType();
             this.Name = name ?? this.ObjectType.Name + "_" + obj.GetHashCode();
-            this.Source = source;
+            this.ContainerName = containerName;
             this.Object = obj;
             this.InstanceTypes = new List<InstanceType>();
 
             this.PropertyReaders = new List<IPropertyReader>();
             this.PropertyReaders.Add(new PropertyReaderDefault());
-            this.PropertyReaders.Add(new PropertyReaderIndexerItemInt32());
-            this.PropertyReaders.Add(new PropertyReaderArray());
+            this.PropertyReaders.Add(new PropertyReaderIndexerInt32InAnyClass());
+            this.PropertyReaders.Add(new PropertyReaderIndexerInArray());
+            this.PropertyReaders.Add(new PropertyReaderIndexerInDictionary());
 
             this.MethodReaders = new List<IMethodReader>();
             //this.MethodReaders.Add(new MethodReaderDefault());

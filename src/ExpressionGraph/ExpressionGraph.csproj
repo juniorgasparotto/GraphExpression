@@ -44,11 +44,12 @@
     <Compile Include="Reflection\Property\IPropertyReader.cs" />
     <Compile Include="Reflection\Field\Field.cs" />
     <Compile Include="Reflection\Method\MethodReaderDefault.cs" />
-    <Compile Include="Reflection\NameAndValue.cs" />
+    <Compile Include="Reflection\ArrayKey.cs" />
     <Compile Include="Reflection\Property\Property.cs" />
     <Compile Include="Reflection\Property\PropertyReaderDefault.cs" />
-    <Compile Include="Reflection\Property\PropertyReaderArray.cs" />
-    <Compile Include="Reflection\Property\PropertyReaderIndexerItemInt32.cs" />
+    <Compile Include="Reflection\Property\PropertyReaderIndexerInDictionary.cs" />
+    <Compile Include="Reflection\Property\PropertyReaderIndexerInArray.cs" />
+    <Compile Include="Reflection\Property\PropertyReaderIndexerInt32InAnyClass.cs" />
     <Compile Include="Reflection\Method\MethodValueParam.cs" />
     <Compile Include="Reflection\Instance.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />

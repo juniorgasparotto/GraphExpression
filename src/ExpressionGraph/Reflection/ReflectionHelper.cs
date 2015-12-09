@@ -79,5 +79,38 @@ namespace ExpressionGraph.Reflection
             sb.Append(">");
             return sb.ToString();
         }
+
+        public static Dictionary<ArrayKey, object> ArrayToDictionary(Array inObject)
+        {
+            var outObject = new Dictionary<ArrayKey, object>();
+            ArrayToDictionary(inObject, outObject, new int[0]);
+            return outObject;
+        }
+
+        private static void ArrayToDictionary(Array inObject, Dictionary<ArrayKey, object> outObject, int[] indices)
+        {
+            int dimension = indices.Length;
+            int[] newIndices = new int[dimension + 1];
+
+            for (int i = 0; i < dimension; i++)
+            {
+                newIndices[i] = indices[i];
+            }
+
+            for (int i = inObject.GetLowerBound(dimension); i <= inObject.GetUpperBound(dimension); i++)
+            {
+                newIndices[dimension] = i;
+                bool isTopLevel = (newIndices.Length == inObject.Rank);
+
+                if (isTopLevel)
+                {
+                    outObject.Add(new ArrayKey(newIndices), inObject.GetValue(newIndices));
+                }
+                else
+                {
+                    ArrayToDictionary(inObject, outObject, newIndices);
+                }
+            }
+        }
     }
 }

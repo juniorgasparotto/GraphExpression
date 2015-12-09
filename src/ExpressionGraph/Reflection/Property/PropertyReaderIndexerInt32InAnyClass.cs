@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph.Reflection
 {
-    public class PropertyReaderIndexerItemInt32 : IPropertyReader
+    public class PropertyReaderIndexerInt32InAnyClass : IPropertyReader
     {
         public bool CanRead(object obj, PropertyInfo property)
         {
-            // verify if property is "this[int i]", in real use is: "myList[0]'
+            // verify if property is "this[int i]", in real use is: "myList[0]', exclude array objects 
+            // because if array is multidimensional will happen a error when call 
+            // "property.GetValue(obj, new object[] { 0, 0 });" the class "PropertyReaderIndexerInArray" fix it.
             var parameters = property.GetIndexParameters();
             //
             return !(obj is Array) && (parameters.Length == 1)
