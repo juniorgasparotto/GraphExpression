@@ -47,7 +47,7 @@ namespace ExpressionGraph
             this.EnablePlus = enablePlus;
         }
 
-        public void AddItem(T item)
+        internal void AddItem(T item)
         {
             //var lastItemIsOpenParenthesis = this.lastItem != null && this.lastItem.GetType() == TypeOpenParenthesis;
             //var lastItemIsOpenParenthesis = this.isOpenParenthesis;
@@ -91,7 +91,7 @@ namespace ExpressionGraph
             this.isLastOpenParenthesis = false;
         }
 
-        public void OpenParenthesis()
+        internal void OpenParenthesis()
         {
             this.isLastOpenParenthesis = true;
 
@@ -129,7 +129,7 @@ namespace ExpressionGraph
             }
         }
 
-        public void CloseParenthesis()
+        internal void CloseParenthesis()
         {
             this.level--;
             this.currentParent = this.currentParent.Parent;

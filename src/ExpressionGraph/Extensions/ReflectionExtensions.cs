@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ExpressionGraph.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExpressionGraph.Reflection
+namespace ExpressionGraph
 {
     public static class ReflectionHelper
     {
@@ -67,15 +68,16 @@ namespace ExpressionGraph.Reflection
             return false;
         }
 
-        public static string CSharpName(this Type type)
+        public static string CSharpName(Type type, bool showFullName = false)
         {
             var sb = new StringBuilder();
-            var name = type.Name;
+            var name = showFullName ? type.FullName : type.Name;
+            //return name;
             if (!type.IsGenericType) return name;
             sb.Append(name.Substring(0, name.IndexOf('`')));
             sb.Append("<");
             sb.Append(string.Join(", ", type.GetGenericArguments()
-                                            .Select(t => t.CSharpName())));
+                                            .Select(t => CSharpName(t, showFullName))));
             sb.Append(">");
             return sb.ToString();
         }

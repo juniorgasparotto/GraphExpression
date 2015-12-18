@@ -9,7 +9,7 @@ namespace ExpressionGraph.Reflection
 {
     public interface IPropertyReader
     {
-        bool CanRead(object obj, PropertyInfo property);
-        IEnumerable<MethodValue> GetValues(object obj, PropertyInfo property);
+        bool CanRead(UnitReflaction obj, Type type, PropertyInfo property);
+        IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, PropertyInfo property);
     }
 }

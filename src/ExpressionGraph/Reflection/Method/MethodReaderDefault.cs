@@ -12,14 +12,14 @@ namespace ExpressionGraph.Reflection
     /// </summary>
     public class MethodReaderDefault : IMethodReader
     {
-        public bool CanRead(object obj, MethodInfo methodInfo)
+        public bool CanRead(UnitReflaction obj, Type type, MethodInfo methodInfo)
         {
             return methodInfo.GetParameters().Length == 0;
         }
 
-        public IEnumerable<MethodValue> GetValues(object obj, MethodInfo methodInfo)
+        public IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, MethodInfo methodInfo)
         {
-            var value = methodInfo.Invoke(obj, null);
+            var value = methodInfo.Invoke(obj.Object, null);
             yield return new MethodValue(value, null);
         }
     }

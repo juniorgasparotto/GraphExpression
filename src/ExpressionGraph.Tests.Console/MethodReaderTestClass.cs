@@ -12,12 +12,12 @@ namespace ExpressionGraph.Tests.Console
     public class MethodReaderTestClass : IMethodReader
     {
 
-        public bool CanRead(object obj, MethodInfo methodInfo)
+        public bool CanRead(UnitReflaction obj, Type type, MethodInfo methodInfo)
         {
-            return obj is TestClass && methodInfo.GetParameters().Length > 0;
+            return obj.Object is TestClass && methodInfo.GetParameters().Length > 0;
         }
 
-        public IEnumerable<MethodValue> GetValues(object obj, MethodInfo methodInfo)
+        public IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, MethodInfo methodInfo)
         {
             if (methodInfo.Name == "Beep")
             {

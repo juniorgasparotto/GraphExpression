@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph.Reflection
 {
-    public class Instance
+    public class UnitReflaction
     {
+        private Func<object, IEnumerable<Type>> _typesReader;
+        private Func<object, Type, IEnumerable<FieldInfo>> _fieldsReader;
+        private Func<object, Type, IEnumerable<PropertyInfo>> _propertiesReader;
+        private Func<object, Type, IEnumerable<MethodInfo>> _methodsReader;
+        private List<DefinitionOfMethodValueReader<PropertyInfo>> _propertyValueReaders;
+        private List<DefinitionOfMethodValueReader<MethodInfo>> _methodValueReaders;
+
         public string Name { get; private set; }
         public object Object { get; private set; }
         public Type ObjectType { get; private set; }
         public string ContainerName { get; private set; }
         public List<InstanceType> InstanceTypes { get; private set; }
-        public List<IPropertyReader> PropertyReaders { get; private set; }
-        public List<IMethodReader> MethodReaders { get; private set; }
 
-        public Func<object, Type, List<Type>> FilterTypes { get; set; }
-        public Func<object, Type, List<FieldInfo>> FilterFields { get; set; }
-        public Func<object, Type, List<PropertyInfo>> FilterProperties { get; set; }
-        public Func<object, Type, List<MethodInfo>> FilterMethods { get; set; }
-
-        public Instance(object obj, string name = null, string containerName = null)
+        public UnitReflaction(object obj, string name = null, string containerName = null)
         {
             if (obj == null)
                 throw new ArgumentNullException("obj");
@@ -34,77 +34,41 @@ namespace ExpressionGraph.Reflection
             this.Object = obj;
             this.InstanceTypes = new List<InstanceType>();
 
-            this.PropertyReaders = new List<IPropertyReader>();
-            this.PropertyReaders.Add(new PropertyReaderDefault());
-            this.PropertyReaders.Add(new PropertyReaderIndexerInt32InAnyClass());
-            this.PropertyReaders.Add(new PropertyReaderIndexerInArray());
-            this.PropertyReaders.Add(new PropertyReaderIndexerInDictionary());
+            // set defaults to reader members
+            this._typesReader = this.GetAllTypesDefault;
+            this._fieldsReader = this.GetAllFieldInfoDefault;
+            this._propertiesReader = this.GetAllPropertiesDefault;
+            this._methodsReader = this.GetAllMethodsDefault;
 
-            this.MethodReaders = new List<IMethodReader>();
-            //this.MethodReaders.Add(new MethodReaderDefault());
+            // set defaults to reader values of methods. Empty for methods
+            this._methodValueReaders = new List<DefinitionOfMethodValueReader<MethodInfo>>();
 
-            //this.ClassReaders = new List<IClassReader>();
-            //this.ClassReaders.Add(new ClassReaderDefault());
-            //this.ClassReader = new ClassReaderDefault();
-
-            this.FilterTypes = this.GetTypes;
-            this.FilterFields = this.GetFields;
-            this.FilterProperties = this.GetProperties;
-            this.FilterMethods = this.GetMethods;
+            // set defaults to reader values of properties.
+            this._propertyValueReaders = new List<DefinitionOfMethodValueReader<PropertyInfo>>();
+            this.AddValueReaderForProperties(new PropertyReaderDefault());
+            this.AddValueReaderForProperties(new PropertyReaderIndexerInt32InAnyClass());
+            this.AddValueReaderForProperties(new PropertyReaderIndexerInArray());
+            this.AddValueReaderForProperties(new PropertyReaderIndexerInDictionary());
         }
 
-        public void Reflect()
+        public IEnumerable<Property> GetAllProperties()
         {
-            if (this.FilterTypes == null)
-                throw new NullReferenceException("The property 'FilterInstanceTypes' can't be null");
-
-            //var classReader = this.ClassReaders.Last(f => f.CanRead(this.Object, this.ObjectType));
-            //var classReader = this.ClassReader;
-            var typesParents = this.FilterTypes(this.Object, this.ObjectType).Distinct().ToList();
-            
-            var propertiesAll = new List<Property>();
-            var methodsAll = new List<Method>();
-            var fieldsAll = new List<Field>();
-
-            foreach (var typeParent in typesParents)
-            {
-                var instanceType = new InstanceType(typeParent);
-
-                if (this.FilterProperties != null)
-                    this.ParseProperties(this.FilterProperties(this.Object, typeParent), instanceType, propertiesAll);
-
-                if (this.FilterMethods != null)
-                    this.ParseMethods(this.FilterMethods(this.Object, typeParent), instanceType, methodsAll);
-
-                if (this.FilterFields != null)
-                    this.ParseFields(this.FilterFields(this.Object, typeParent), instanceType, fieldsAll);
-
-                this.InstanceTypes.Add(instanceType);
-
-                propertiesAll.AddRange(instanceType.Properties);
-                methodsAll.AddRange(instanceType.Methods);
-                fieldsAll.AddRange(instanceType.Fields);
-            }
+            return this.InstanceTypes.SelectMany(f => f.Properties);
         }
 
-        public IEnumerable<Property> GetProperties()
+        public IEnumerable<Method> GetAllMethods()
         {
-            return InstanceTypes.SelectMany(f => f.Properties);
+            return this.InstanceTypes.SelectMany(f => f.Methods);
         }
 
-        public IEnumerable<Method> GetMethods()
+        public IEnumerable<Field> GetAllFields()
         {
-            return InstanceTypes.SelectMany(f => f.Methods);
-        }
-
-        public IEnumerable<Field> GetFields()
-        {
-            return InstanceTypes.SelectMany(f => f.Fields);
+            return this.InstanceTypes.SelectMany(f => f.Fields);
         }
 
         #region Privates
 
-        private void ParseProperties(List<PropertyInfo> properties, InstanceType instanceType, List<Property> propertiesAddeds)
+        private void ParseProperties(IEnumerable<PropertyInfo> properties, InstanceType instanceType, List<Property> propertiesAddeds)
         {
             if (properties == null) return;
 
@@ -114,42 +78,12 @@ namespace ExpressionGraph.Reflection
 
                 if (property.GetMethod != null)
                 { 
-                    var read = this.PropertyReaders.LastOrDefault(f => f.CanRead(this.Object, property));
+                    var read = this._propertyValueReaders.LastOrDefault(f => f.CanRead(this, instanceType.Type, property));
                     if (read != null)
-                        values = read.GetValues(this.Object, property).ToList();
+                        values = read.GetValues(this, instanceType.Type, property).ToList();
                     else 
                         throw new Exception("No reader has been found for the Property '" + property.Name + "'");
                 }
-
-                //var nameUnique = property.Name;
-                //var originalName = property.Name;
-                //var paramsStr = "";
-
-                //// Prevent duplicate indexer (Item) "this[int32 index]" or "this[int32 index, int32 index2]"
-                //var parameters = property.GetIndexParameters();
-                //if (parameters.Length > 0)
-                //{
-                //    foreach (var param in parameters)
-                //    {
-                //        paramsStr += paramsStr == "" ? "" : ", ";
-                //        paramsStr += string.Format("{0} {1}", ReflectionHelper.CSharpName(param.ParameterType), param.Name);
-                //    }
-
-                //    nameUnique += " [" + paramsStr + "]";
-                //}
-
-                //if (propertiesAddeds != null)
-                //{
-                //    var propDuplicated = propertiesAddeds.FirstOrDefault(f => f.NameUnique == nameUnique);
-
-                //    if (propDuplicated != null)
-                //    {
-                //        if (propDuplicated.ParentType != objType)
-                //            nameUnique = ReflectionHelper.CSharpName(objType) + "." + nameUnique;
-                //    }
-                //}
-
-                //var propertyConverted = new Property(originalName, nameUnique, objType, property, values);
 
                 var name = property.Name;
                 
@@ -201,7 +135,7 @@ namespace ExpressionGraph.Reflection
             }
         }
 
-        private void ParseMethods(List<MethodInfo> methods, InstanceType instanceType, List<Method> methodsAddeds)
+        private void ParseMethods(IEnumerable<MethodInfo> methods, InstanceType instanceType, List<Method> methodsAddeds)
         {
             if (methods == null) return;
 
@@ -212,9 +146,9 @@ namespace ExpressionGraph.Reflection
 
                 if (method.ReturnType != typeof(void))
                 {
-                    var read = this.MethodReaders.LastOrDefault(f => f.CanRead(this.Object, method));
+                    var read = this._methodValueReaders.LastOrDefault(f => f.CanRead(this, instanceType.Type, method));
                     if (read != null)
-                        values = read.GetValues(this.Object, method).ToList();
+                        values = read.GetValues(this, instanceType.Type, method).ToList();
                 }
 
                 var name = method.Name;
@@ -264,7 +198,7 @@ namespace ExpressionGraph.Reflection
             }
         }
 
-        private void ParseFields(List<FieldInfo> fields, InstanceType instanceType, List<Field> fieldsAddeds)
+        private void ParseFields(IEnumerable<FieldInfo> fields, InstanceType instanceType, List<Field> fieldsAddeds)
         {
             if (fields == null) return;
 
@@ -304,7 +238,10 @@ namespace ExpressionGraph.Reflection
 
         public override string ToString()
         {
-            return Name;
+            if (this.Object != null)
+                return this.Object.ToString();
+
+            return null;
         }
 
         public override bool Equals(object obj)
@@ -312,12 +249,15 @@ namespace ExpressionGraph.Reflection
             if (ReferenceEquals(obj, null) || this.GetType() != obj.GetType())
                 return false;
 
-            var converted = obj as Instance;
+            var converted = obj as UnitReflaction;
             return (this.Object.Equals(converted.Object));
         }
 
         public override int GetHashCode()
         {
+            if (this.Object != null)
+                return this.Object.GetHashCode();
+
             return 0;
         }
 
@@ -325,29 +265,202 @@ namespace ExpressionGraph.Reflection
 
         #region Operators
 
-        public static bool operator ==(Instance a, Instance b)
+        public static bool operator ==(UnitReflaction a, UnitReflaction b)
         {
             return Equals(a, b);
         }
 
-        public static bool operator !=(Instance a, Instance b)
+        public static bool operator !=(UnitReflaction a, UnitReflaction b)
         {
             return !Equals(a, b);
         }
 
         #endregion
 
-        #region Methods like delegates
+        #region Fluent
 
-        private List<Type> GetTypes(object obj, Type type)
+        /// <summary>
+        /// Do reflection
+        /// </summary>
+        /// <returns></returns>
+        public UnitReflaction Reflect()
+        {
+            var typesParents = this._typesReader(this.Object).Distinct().ToList();
+
+            var propertiesAll = new List<Property>();
+            var methodsAll = new List<Method>();
+            var fieldsAll = new List<Field>();
+
+            foreach (var typeParent in typesParents)
+            {
+                var instanceType = new InstanceType(typeParent);
+
+                if (this._propertiesReader != null)
+                    this.ParseProperties(this._propertiesReader(this.Object, typeParent), instanceType, propertiesAll);
+
+                if (this._methodsReader != null)
+                    this.ParseMethods(this._methodsReader(this.Object, typeParent), instanceType, methodsAll);
+
+                if (this._fieldsReader != null)
+                    this.ParseFields(this._fieldsReader(this.Object, typeParent), instanceType, fieldsAll);
+
+                this.InstanceTypes.Add(instanceType);
+
+                propertiesAll.AddRange(instanceType.Properties);
+                methodsAll.AddRange(instanceType.Methods);
+                fieldsAll.AddRange(instanceType.Fields);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a IPropertyReader class to reader values to a specific property
+        /// </summary>
+        /// <param name="reader">Instance of IPropertyReader</param>
+        /// <returns></returns>
+        public UnitReflaction AddValueReaderForProperties(IPropertyReader reader)
+        {
+            var reader2 = new DefinitionOfMethodValueReader<PropertyInfo>();
+            reader2.CanRead = reader.CanRead;
+            reader2.GetValues = reader.GetValues;
+            this._propertyValueReaders.Add(reader2);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a custom filter and reader to get values to a specific properties
+        /// </summary>
+        /// <param name="filter">Specify the filter to apply selector</param>
+        /// <param name="valuesGetter">Selector of the values</param>
+        /// <returns></returns>
+        public UnitReflaction AddValueReaderForProperties(Func<UnitReflaction, Type, PropertyInfo, bool> filter, Func<UnitReflaction, Type, PropertyInfo, IEnumerable<MethodValue>> valuesGetter)
+        {
+            var reader2 = new DefinitionOfMethodValueReader<PropertyInfo>();
+            reader2.CanRead = filter;
+            reader2.GetValues = valuesGetter;
+            this._propertyValueReaders.Add(reader2);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a IMethodReader class to reader values to a specific property
+        /// </summary>
+        /// <param name="reader">Instance of IMethodReader</param>
+        /// <returns></returns>
+        public UnitReflaction AddValueReaderForMethods(IMethodReader reader)
+        {
+            var reader2 = new DefinitionOfMethodValueReader<MethodInfo>();
+            reader2.CanRead = reader.CanRead;
+            reader2.GetValues = reader.GetValues;
+            this._methodValueReaders.Add(reader2);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a custom filter and reader to get values to a specific methods
+        /// </summary>
+        /// <param name="filter">Specify the filter to apply selector</param>
+        /// <param name="valuesGetter">Selector of the values</param>
+        /// <returns></returns>
+        public UnitReflaction AddValueReaderForMethods(Func<UnitReflaction, Type, MethodInfo, bool> filter, Func<UnitReflaction, Type, MethodInfo, IEnumerable<MethodValue>> valuesGetter)
+        {
+            var reader2 = new DefinitionOfMethodValueReader<MethodInfo>();
+            reader2.CanRead = filter;
+            reader2.GetValues = valuesGetter;
+            this._methodValueReaders.Add(reader2);
+            return this;
+        }
+
+        /// <summary>
+        /// Set the custom selector to get types of object
+        /// </summary>
+        /// <param name="selector">Selector of the types</param>
+        /// <returns></returns>
+        public UnitReflaction SelectTypes(Func<object, IEnumerable<Type>> selector)
+        {
+            this._typesReader = selector;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the custom selector to get fields
+        /// </summary>
+        /// <param name="selector">Selector of the fields</param>
+        /// <returns></returns>
+        public UnitReflaction SelectFields(Func<object, Type, IEnumerable<FieldInfo>> selector)
+        {
+            this._fieldsReader = selector;
+            return this;
+        }
+
+        /// <summary>
+        /// Set bindingAttr to get fields
+        /// </summary>
+        /// <param name="bindingAttr">Specific binding to return fields</param>
+        /// <returns></returns>
+        public UnitReflaction SelectFields(BindingFlags bindingAttr)
+        {
+            this._fieldsReader = (instance, type) => type.GetFields(bindingAttr);
+            return this;
+        }
+
+        /// <summary>
+        /// Set the custom selector to get properties
+        /// </summary>
+        /// <param name="selector">Selector of the properties</param>
+        /// <returns></returns>
+        public UnitReflaction SelectProperties(Func<object, Type, IEnumerable<PropertyInfo>> selector)
+        {
+            this._propertiesReader = selector;
+            return this;
+        }
+
+        /// <summary>
+        /// Set bindingAttr to get properties
+        /// </summary>
+        /// <param name="bindingAttr">Specific binding to return properties</param>
+        /// <returns></returns>
+        public UnitReflaction SelectProperties(BindingFlags bindingAttr)
+        {
+            this._propertiesReader = (instance, type) => type.GetProperties(bindingAttr);
+            return this;
+        }
+
+        /// <summary>
+        /// Set the custom selector to get properties
+        /// </summary>
+        /// <param name="selector">Selector of the properties</param>
+        /// <returns></returns>
+        public UnitReflaction SelectMethods(Func<object, Type, IEnumerable<MethodInfo>> selector)
+        {
+            this._methodsReader = selector;
+            return this;
+        }
+
+        /// <summary>
+        /// Set bindingAttr to get properties
+        /// </summary>
+        /// <param name="bindingAttr">Specific binding to return properties</param>
+        /// <returns></returns>
+        public UnitReflaction SelectMethods(BindingFlags bindingAttr)
+        {
+            this._methodsReader = (instance, type) => type.GetMethods(bindingAttr).Where(f => !f.IsSpecialName);
+            return this;
+        }
+
+        #region Default settings
+
+        private List<Type> GetAllTypesDefault(object obj)
         {
             var typesParents = new List<Type>();
+            var type = obj.GetType();
             typesParents.Add(type);
             typesParents.AddRange(ReflectionHelper.GetAllParentTypes(type, true).Distinct());
             return typesParents;
         }
 
-        private List<PropertyInfo> GetProperties(object obj, Type type)
+        private List<PropertyInfo> GetAllPropertiesDefault(object obj, Type type)
         {
             var propsPublics = type.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
             var propsPrivates = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.Name.Contains(".")).ToList();
@@ -365,7 +478,7 @@ namespace ExpressionGraph.Reflection
             return properties;
         }
 
-        private List<MethodInfo> GetMethods(object obj, Type type)
+        private List<MethodInfo> GetAllMethodsDefault(object obj, Type type)
         {
             var propsPublics = type.GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(f => !f.IsSpecialName);
             var propsPrivates = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.IsSpecialName && !f.Name.Contains(".")).ToList();
@@ -383,7 +496,7 @@ namespace ExpressionGraph.Reflection
             return methods;
         }
 
-        private List<FieldInfo> GetFields(object obj, Type type)
+        private List<FieldInfo> GetAllFieldInfoDefault(object obj, Type type)
         {
             var fieldsPublics = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
             var fieldsPrivates = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
@@ -398,6 +511,8 @@ namespace ExpressionGraph.Reflection
 
             return fields;
         }
+
+        #endregion
 
         #endregion
     }

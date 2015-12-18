@@ -61,7 +61,7 @@ namespace ExpressionGraph.Reflection
 
         public override int GetHashCode()
         {
-            return 0;
+            return base.GetHashCode();
         }
 
         public IEnumerator<int> GetEnumerator()

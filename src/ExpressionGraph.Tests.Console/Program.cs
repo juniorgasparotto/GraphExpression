@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ExpressionGraph;
 
 namespace ExpressionGraph.Tests.Console
 {
@@ -13,6 +14,9 @@ namespace ExpressionGraph.Tests.Console
     {
         static void Main(string[] args)
         {
+            var testClass = new TestClass();
+            var entities = testClass.AsReflection().ReflectTree();
+
             var testInt = GetEntityGraph(4);
             var testIntStr = testInt.ToString();
 
@@ -61,9 +65,11 @@ namespace ExpressionGraph.Tests.Console
             var testDictionary = GetEntityGraph(dic);
             var testDictionaryStr = testDictionary.ToString();
 
-            var dic2 = new Dictionary<TestClass, char[, ,]>();
-            dic2.Add(new TestClass(), chars3D);
-            dic2.Add(new TestClass(), chars3D);
+            var dic2 = new Dictionary<TestClass, decimal[, ,]>();
+            dic2.Add(new TestClass(), new decimal[,,] { { { 0.12m }, { 1000.99999m } } });
+            dic2.Add(new TestClass(), new decimal[,,] { { { 1.12m }, { 2000.99999m } } });
+            dic2.Add(new TestClass(), new decimal[,,] { { { 2.12m }, { 3000.99999m } } });
+            dic2.Add(new TestClass(), new decimal[,,] { { { 3.12m }, { 4000.99999m } } });
             var testDictionary2 = GetEntityGraph(dic2);
             var testDictionary2Str = testDictionary2.ToString();
             var outputNewtonsoft2 = JsonConvert.SerializeObject(dic2, Formatting.Indented);
@@ -76,169 +82,27 @@ namespace ExpressionGraph.Tests.Console
             //var outputNewtonsoft = JsonConvert.SerializeObject(obj);
         }
 
-        public static Expression<Instance> GetEntityGraph(object obj)
+        private static Expression<UnitReflaction> GetEntityGraph(object obj)
         {
-            var instanceRoot = GetInstance(obj, "");
-            var graph = ExpressionBuilder<Instance>.Build(
-                new List<Instance>() { instanceRoot },
-                f =>
-                {
-                    return GetChildren(f);
-                }
-                , true, true, true,
-                f => GetInstanceString(f)
-            ).FirstOrDefault();
-
-            return graph;
-        }
-
-        public static List<Instance> GetChildren(Instance instance)
-        {
-            var list = new List<Instance>();
-
-            var fields = instance.GetFields().ToList();
-            foreach (var field in fields)
-            { 
-                list.Add(GetInstance(field.Value, field.Name));
-            }
-  
-            var properties = instance.GetProperties().ToList();
-            foreach (var property in properties)
-            { 
-                foreach (var value in property.Values)
-                {
-                    var parameterStr = "";
-                    if (value.Parameters != null)
-                    {
-                        foreach (var param in value.Parameters)
-                        {
-                            parameterStr += parameterStr == "" ? "" : ", ";
-                            parameterStr += param.Value.ToString();
-                        }
-
-                        parameterStr = "[" + parameterStr + "]";
-                    }
-
-                    list.Add(GetInstance(value.Value, property.Name + parameterStr));
-                }
-            }
-
-            return list;
-        }
-
-        public static string GetInstanceString(Instance instance)
-        {
-            //return instance.ObjectType.ToString() + ":" + instance.Source + ":" + instance.Object.ToString();
-            var objString = "";
-            if (CanGetChildren(instance.Object, instance.ObjectType))
-                objString = instance.ToString();
-            else
-                objString = instance.Object.ToString();
-
-            if (instance.ContainerName == "")
-                return objString;
-
-            return instance.ContainerName + ":" + objString;
-        }
-
-        public static Instance GetInstance(object obj, string containerName)
-        {
-            var instance = new Instance(obj, null, containerName);
-            instance.MethodReaders.Clear();
-            instance.MethodReaders.Add(new MethodReaderTestClass());
-
-            instance.FilterTypes = (value, type) =>
-            {
-                var typesParents = new List<Type>();
-                typesParents.Add(type);
-                typesParents.AddRange(ReflectionHelper.GetAllParentTypes(type, true).Distinct());
-                return typesParents;
-            };
-
-            instance.FilterMethods = (value, type) =>
-            {
-                List<MethodInfo> methods = null;
-                //if (!type.IsPrimitive)
-                //    methods = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static).Where(f => !f.IsSpecialName).ToList();
-
-                return methods;
-            }; ;
-
-            instance.FilterFields = (value, type) =>
-            {
-                List<FieldInfo> fields = null;
-                if (CanGetChildren(value, type) && !(value is Array) && !(value is System.Collections.IDictionary))
-                    fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static).ToList();
-
-                return fields;
-            };
-
-            instance.FilterProperties = (value, type) =>
-            {
-                List<PropertyInfo> properties = null;
-
-                if (value is Array)
-                { 
-                    if (type ==  typeof(System.Collections.IList))
-                        properties = typeof(System.Collections.IList).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(f => f.GetIndexParameters().Length > 0).ToList();
-                }
-                else if (value is System.Collections.IDictionary)
-                { 
-                    if (type == typeof(System.Collections.IDictionary))
-                        properties = typeof(System.Collections.IDictionary).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(f => f.GetIndexParameters().Length > 0).ToList();
-                }
-                else if (CanGetChildren(value, type))
-                { 
-                    properties = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static).ToList();
-                }
-
-                return properties;
-            };
-
-            instance.Reflect();
-
-            return instance;
-        }
-
-        public static bool CanGetChildren(object value, Type type)
-        {
-            if (value is Array || value is System.Collections.IDictionary)
-                return true;
-
-            return (!type.IsPrimitive && !type.Namespace.Equals("System") && !type.Namespace.StartsWith("System."));
-        }
-
-        public static bool GetMembers(object value, Type type)
-        {
-            if (value is Array)
-                return true;
-
-            return (!type.IsPrimitive && !type.Namespace.Equals("System") && !type.Namespace.StartsWith("System."));
+            return obj.AsExpressionQuery()
+                //.Settings(SettingsFlags.ShowFullNameOfType | SettingsFlags.ShowParameterName)
+                //.Settings(SettingsFlags.ShowParameterName)
+                //.Settings(SettingsFlags.ShowFullNameOfType)
+                .Settings(SettingsFlags.Default)
+                .SelectFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+                .SelectProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+                .Query();
         }
 
         public static void TestCustomClass()
         {
             var obj = new TestClass();
-            var instanceRoot = new Instance(obj);
-            instanceRoot.PropertyReaders.Add(new PropertyReadIndexersTestClass());
-            instanceRoot.MethodReaders.Add(new MethodReaderTestClass());
-            instanceRoot.Reflect();
+            var instanceRoot = new UnitReflaction(obj);
+            //instanceRoot._propertyValueReaders.Add(new PropertyReadIndexersTestClass());
+            //instanceRoot._methodValueReaders.Add(new MethodReaderTestClass());
+            //instanceRoot.Reflect();
 
-            var build = ExpressionBuilder<Instance>.Build(
-                new List<Instance>() { instanceRoot },
-                f =>
-                {
-                    var list = new List<Instance>();
-                    foreach (var field in f.GetFields())
-                        list.Add(GetInstance(field.Value, field.Name));
-
-                    return list;
-                }
-                , true, true, true,
-                f =>
-                {
-                    return f.ContainerName + "_" + f.Name;
-                }).FirstOrDefault();
+            var build = GetEntityGraph(instanceRoot);
         }
     }
 }
