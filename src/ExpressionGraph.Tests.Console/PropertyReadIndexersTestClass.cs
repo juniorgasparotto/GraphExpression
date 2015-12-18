@@ -10,14 +10,14 @@ namespace ExpressionGraph.Tests.Console
 {
     public class PropertyReadIndexersTestClass : IPropertyReader
     {
-        public bool CanRead(UnitReflaction obj, Type type, PropertyInfo property)
+        public bool CanRead(ReflectInstance value, Type type, PropertyInfo property)
         {
-            return obj.Object is TestClass && property.GetIndexParameters().Length > 0;
+            return value.Object is TestClass && property.GetIndexParameters().Length > 0;
         }
 
-        public IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, PropertyInfo property)
+        public IEnumerable<MethodValue> GetValues(ReflectInstance value, Type type, PropertyInfo property)
         {
-            var converted = obj.Object as TestClass;
+            var converted = value.Object as TestClass;
             var len = converted.List.Count;
             var parameters = property.GetIndexParameters();
 
@@ -26,9 +26,9 @@ namespace ExpressionGraph.Tests.Console
             {
                 for (int i = 0; i < len; i++)
                 {
-                    var value = property.GetValue(obj.Object, new object[] { i });
+                    var propValue = property.GetValue(value.Object, new object[] { i });
                     var parameter = new MethodValueParam(parameters[0].Name, parameters[0], i);
-                    yield return new MethodValue(value, parameter);
+                    yield return new MethodValue(propValue, parameter);
                 }
             }
 
@@ -37,10 +37,10 @@ namespace ExpressionGraph.Tests.Console
             {
                 for (int i = 0; i < len; i++)
                 {
-                    var value = property.GetValue(obj.Object, new object[] { i, 0 });
+                    var propValue = property.GetValue(value.Object, new object[] { i, 0 });
                     var parameter1 = new MethodValueParam(parameters[0].Name, parameters[0], i);
                     var parameter2 = new MethodValueParam(parameters[1].Name, parameters[1], 0);
-                    yield return new MethodValue(value, parameter1, parameter2);
+                    yield return new MethodValue(propValue, parameter1, parameter2);
                 }
             }
 
@@ -49,9 +49,9 @@ namespace ExpressionGraph.Tests.Console
             {
                 for (int i = 0; i < len; i++)
                 {
-                    var value = property.GetValue(obj.Object, new object[] { "list " + i });
+                    var propValue = property.GetValue(value.Object, new object[] { "list " + i });
                     var parameter1 = new MethodValueParam(parameters[0].Name, parameters[0], "list " + i);
-                    yield return new MethodValue(value, parameter1);
+                    yield return new MethodValue(propValue, parameter1);
                 }
             }
         }

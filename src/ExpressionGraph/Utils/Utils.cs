@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph
 {
-    internal static class UtilsExtensions
+    internal static class Utils
     {
         public static string TrimAll(string str)
         {

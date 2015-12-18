@@ -10,16 +10,16 @@ namespace ExpressionGraph.Reflection
 {
     public class PropertyReaderIndexerInDictionary : IPropertyReader
     {
-        public bool CanRead(UnitReflaction obj, Type type, PropertyInfo property)
+        public bool CanRead(ReflectInstance value, Type type, PropertyInfo property)
         {
             // verify if property is "this[object key]"
             var parameters = property.GetIndexParameters();
-            return (obj.Object is IDictionary) && (parameters.Length == 1);
+            return (value.Object is IDictionary) && (parameters.Length == 1);
         }
 
-        public IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, PropertyInfo property)
+        public IEnumerable<MethodValue> GetValues(ReflectInstance value, Type type, PropertyInfo property)
         {
-            var dictionary = obj.Object as IDictionary;
+            var dictionary = value.Object as IDictionary;
             var parameters = property.GetIndexParameters();
 
             foreach (var key in dictionary.Keys)

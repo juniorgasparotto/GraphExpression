@@ -12,12 +12,12 @@ namespace ExpressionGraph.Tests.Console
     public class MethodReaderTestClass : IMethodReader
     {
 
-        public bool CanRead(UnitReflaction obj, Type type, MethodInfo methodInfo)
+        public bool CanRead(ReflectInstance value, Type type, MethodInfo methodInfo)
         {
-            return obj.Object is TestClass && methodInfo.GetParameters().Length > 0;
+            return value.Object is TestClass && methodInfo.GetParameters().Length > 0;
         }
 
-        public IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, MethodInfo methodInfo)
+        public IEnumerable<MethodValue> GetValues(ReflectInstance value, Type type, MethodInfo methodInfo)
         {
             if (methodInfo.Name == "Beep")
             {
@@ -43,10 +43,10 @@ namespace ExpressionGraph.Tests.Console
                 var parameters = methodInfo.GetParameters();
                 foreach (var note in melody)
                 {
-                    var value = methodInfo.Invoke("Beep", new object[] { note.Frequency, note.Duration });
+                    var methodValue = methodInfo.Invoke("Beep", new object[] { note.Frequency, note.Duration });
                     var parameter = new MethodValueParam(parameters[0].Name, parameters[0], note.Frequency);
                     var parameter1 = new MethodValueParam(parameters[1].Name, parameters[1], note.Duration);
-                    yield return new MethodValue(value, parameter, parameter1);
+                    yield return new MethodValue(methodValue, parameter, parameter1);
                 }
             }
         }

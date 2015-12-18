@@ -15,7 +15,13 @@ namespace ExpressionGraph.Tests.Console
         static void Main(string[] args)
         {
             var testClass = new TestClass();
-            var entities = testClass.AsReflection().ReflectTree();
+            var tree = testClass
+                .AsReflection()
+                .AddValueReaderForProperties(new PropertyReadIndexersTestClass())
+                .SelectTypes((value) => value is string, (value) => ReflectionUtils.GetAllParentTypes(value.GetType(), true))
+                .ReflectTree();
+
+            var entities = tree.ToEntities().ToList();
 
             var testInt = GetEntityGraph(4);
             var testIntStr = testInt.ToString();
@@ -82,22 +88,22 @@ namespace ExpressionGraph.Tests.Console
             //var outputNewtonsoft = JsonConvert.SerializeObject(obj);
         }
 
-        private static Expression<UnitReflaction> GetEntityGraph(object obj)
+        private static Expression<ReflectInstance> GetEntityGraph(object obj)
         {
-            return obj.AsExpressionQuery()
+            return obj.AsReflection()
                 //.Settings(SettingsFlags.ShowFullNameOfType | SettingsFlags.ShowParameterName)
                 //.Settings(SettingsFlags.ShowParameterName)
                 //.Settings(SettingsFlags.ShowFullNameOfType)
                 .Settings(SettingsFlags.Default)
                 .SelectFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
                 .SelectProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
-                .Query();
+                .ReflectTree();
         }
 
         public static void TestCustomClass()
         {
             var obj = new TestClass();
-            var instanceRoot = new UnitReflaction(obj);
+            var instanceRoot = new ReflectInstance(obj);
             //instanceRoot._propertyValueReaders.Add(new PropertyReadIndexersTestClass());
             //instanceRoot._methodValueReaders.Add(new MethodReaderTestClass());
             //instanceRoot.Reflect();

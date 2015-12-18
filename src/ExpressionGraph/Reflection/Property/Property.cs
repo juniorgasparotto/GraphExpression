@@ -67,7 +67,7 @@ namespace ExpressionGraph.Reflection
                 foreach (var param in parameters)
                 {
                     parametersDefinition += parametersDefinition == null ? "" : ", ";
-                    parametersDefinition += showType ? ReflectionHelper.CSharpName(param.ParameterType) + " " : "";
+                    parametersDefinition += showType ? ReflectionUtils.CSharpName(param.ParameterType) + " " : "";
                     parametersDefinition += param.Name;
                 }
 

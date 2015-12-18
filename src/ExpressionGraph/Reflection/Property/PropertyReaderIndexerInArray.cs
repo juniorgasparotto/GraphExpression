@@ -9,18 +9,18 @@ namespace ExpressionGraph.Reflection
 {
     public class PropertyReaderIndexerInArray : IPropertyReader
     {
-        public bool CanRead(UnitReflaction obj, Type type, PropertyInfo property)
+        public bool CanRead(ReflectInstance value, Type type, PropertyInfo property)
         {
             // verify if property is "this[int i]", in real use is: "array[0]" or multi "array[0,0,0,0]"
             var parameters = property.GetIndexParameters();
-            return (obj.Object is Array) && (parameters.Length == 1)
+            return (value.Object is Array) && (parameters.Length == 1)
                 && (parameters[0].ParameterType == typeof(int));
         }
 
-        public IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, PropertyInfo property)
+        public IEnumerable<MethodValue> GetValues(ReflectInstance value, Type type, PropertyInfo property)
         {
-            var array = obj.Object as Array;
-            var keysValues = ReflectionHelper.ArrayToDictionary(array);
+            var array = value.Object as Array;
+            var keysValues = ReflectionUtils.ArrayToDictionary(array);
             var parameters = property.GetIndexParameters();
 
             foreach(var keyValue in keysValues)

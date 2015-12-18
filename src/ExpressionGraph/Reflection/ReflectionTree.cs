@@ -6,9 +6,9 @@ using System.Reflection;
 
 namespace ExpressionGraph.Reflection
 {
-    public class InstanceTree
+    public class ReflectionTree
     {
-        private Expression<UnitReflaction> _expressions;
+        private Expression<ReflectInstance> _expressions;
         private SettingsFlags _settingsAttributes;
         private object _object;
 
@@ -22,52 +22,54 @@ namespace ExpressionGraph.Reflection
         private List<DefinitionOfMethodValueReader<PropertyInfo>> _propertyValueReaders;
         private List<DefinitionOfMethodValueReader<MethodInfo>> _methodValueReaders;
 
-        public InstanceTree(object obj)
+        public ReflectionTree(object obj)
         {
             this._object = obj;
 
-            // Readers for types and member
+            // Readers for types and member AND Add the default selectors
             this._typesReaders = new List<DefinitionOfTypeReader>();
-            this._fieldsReaders = new List<DefinitionOfClassMemberReader<FieldInfo>>();
-            this._propertysReaders = new List<DefinitionOfClassMemberReader<PropertyInfo>>();
-            this._methodsReaders = new List<DefinitionOfClassMemberReader<MethodInfo>>();
-
-            // Add the default selectors
             this._typesReaders.Add(new DefinitionOfTypeReader() { CanRead = (objParam) => true, Get = null });
+
+            this._fieldsReaders = new List<DefinitionOfClassMemberReader<FieldInfo>>();
             this._fieldsReaders.Add(new DefinitionOfClassMemberReader<FieldInfo>() { CanRead = (objParam, type) => true, Get = null });
+
+            this._propertysReaders = new List<DefinitionOfClassMemberReader<PropertyInfo>>();
             this._propertysReaders.Add(new DefinitionOfClassMemberReader<PropertyInfo>() { CanRead = (objParam, type) => true, Get = null });
+
+            this._methodsReaders = new List<DefinitionOfClassMemberReader<MethodInfo>>();
             this._methodsReaders.Add(new DefinitionOfClassMemberReader<MethodInfo>() { CanRead = (objParam, type) => true, Get = null });
 
             // Readers for get values
             this._propertyValueReaders = new List<DefinitionOfMethodValueReader<PropertyInfo>>();
             this._methodValueReaders = new List<DefinitionOfMethodValueReader<MethodInfo>>();
 
+            this.DefaultSettingsToTypes();
             this.DefaultSettingsToFields();
             this.DefaultSettingsToProperties();
             this.DefaultSettingsToMethods();
         }
 
-        public InstanceTree Settings(SettingsFlags settingsAttr)
+        public ReflectionTree Settings(SettingsFlags settingsAttr)
         {
             this._settingsAttributes = settingsAttr;
             return this;
         }
 
-        public UnitReflaction Reflect()
+        public ReflectInstance Reflect()
         {
             return this.GetInstance(this._object, "");
         }
 
-        public Expression<UnitReflaction> ReflectTree()
+        public Expression<ReflectInstance> ReflectTree()
         {
-            var instanceRoot = new List<UnitReflaction>() { GetInstance(this._object, "") };
-            this._expressions = ExpressionBuilder<UnitReflaction>
+            var instanceRoot = new List<ReflectInstance>() { GetInstance(this._object, "") };
+            this._expressions = ExpressionBuilder<ReflectInstance>
             .Build
             (
                 instanceRoot,
                 f => GetChildren(f),
                 true,
-                false, 
+                false,
                 false,
                 f => ObjectToString(f.Object, f.ObjectType, f.ContainerName)
             )
@@ -76,9 +78,9 @@ namespace ExpressionGraph.Reflection
             return _expressions;
         }
 
-        private List<UnitReflaction> GetChildren(UnitReflaction instance)
+        private List<ReflectInstance> GetChildren(ReflectInstance instance)
         {
-            var list = new List<UnitReflaction>();
+            var list = new List<ReflectInstance>();
 
             var fields = instance.GetAllFields().ToList();
             foreach (var field in fields)
@@ -120,7 +122,7 @@ namespace ExpressionGraph.Reflection
             var showFullName = _settingsAttributes.HasFlag(SettingsFlags.ShowFullNameOfType);
 
             if (CanGetAnyMembers(obj, type))
-                objString = ReflectionHelper.CSharpName(type, showFullName) + "_" + obj.GetHashCode();
+                objString = ReflectionUtils.CSharpName(type, showFullName) + "_" + obj.GetHashCode();
             else
                 objString = obj.ToString();
             
@@ -130,11 +132,10 @@ namespace ExpressionGraph.Reflection
             return containerName + ":" + objString;
         }
 
-        private UnitReflaction GetInstance(object obj, string containerName)
+        private ReflectInstance GetInstance(object obj, string containerName)
         {
-            var instance = new UnitReflaction(obj, null, containerName);
-
-            instance.SelectTypes(
+            var reflectionUnit = new ReflectionUnit();
+            reflectionUnit.TypesReader = 
                 (objParam) =>
                 {
                     IEnumerable<Type> types = null;
@@ -143,14 +144,9 @@ namespace ExpressionGraph.Reflection
                         types = selector.Get(objParam);
 
                     return types;
-                }
-            ).SelectMethods(
-                (objParam, type) =>
-                {
-                    List<MethodInfo> methods = null;
-                    return methods;
-                }
-            ).SelectFields(
+                };
+
+            reflectionUnit.FieldsReader = 
                 (objParam, type) =>
                 {
                     IEnumerable<FieldInfo> fields = null;
@@ -159,8 +155,9 @@ namespace ExpressionGraph.Reflection
                         fields = selector.Get(objParam, type);
 
                     return fields;
-                }
-            ).SelectProperties(
+                };
+            
+            reflectionUnit.PropertiesReader = 
                 (objParam, type) =>
                 {
                     IEnumerable<PropertyInfo> properties = null;
@@ -169,16 +166,19 @@ namespace ExpressionGraph.Reflection
                         properties = selector.Get(objParam, type);
 
                     return properties;
-                }
-            );
+                };
 
-            foreach (var propertyValueReader in _propertyValueReaders)
-                instance.AddValueReaderForProperties(propertyValueReader.CanRead, propertyValueReader.GetValues);
+            reflectionUnit.MethodsReader = 
+                (objParam, type) =>
+                {
+                    List<MethodInfo> methods = null;
+                    return methods;
+                };
 
-            foreach (var methodValueReader in _methodValueReaders)
-                instance.AddValueReaderForMethods(methodValueReader.CanRead, methodValueReader.GetValues);
-            
-            return instance.Reflect();
+            reflectionUnit.PropertyValueReaders = _propertyValueReaders;
+            reflectionUnit.MethodValueReaders = _methodValueReaders;
+
+            return reflectionUnit.GetInstance(obj, containerName);
         }
 
         #region Fluent - Get types and members and values
@@ -188,7 +188,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="selector">Selector of the fields</param>
         /// <returns></returns>
-        public InstanceTree SelectTypes(Func<object, IEnumerable<Type>> selector)
+        public ReflectionTree SelectTypes(Func<object, IEnumerable<Type>> selector)
         {
             this._typesReaders[0].Get = selector;
             return this;
@@ -200,7 +200,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="selector">Selector of the fields</param>
         /// <returns></returns>
-        public InstanceTree SelectTypes(Func<object, bool> filter, Func<object, IEnumerable<Type>> selector)
+        public ReflectionTree SelectTypes(Func<object, bool> filter, Func<object, IEnumerable<Type>> selector)
         {
             var reader = new DefinitionOfTypeReader();
             reader.CanRead = filter;
@@ -214,7 +214,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="bindingAttr">Specific binding to return fields</param>
         /// <returns></returns>
-        public InstanceTree SelectFields(BindingFlags bindingAttr)
+        public ReflectionTree SelectFields(BindingFlags bindingAttr)
         {
             this._fieldsReaders[0].Get = (value, type) => type.GetFields(bindingAttr);
             return this;
@@ -225,7 +225,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="selector">Selector of the fields</param>
         /// <returns></returns>
-        public InstanceTree SelectFields(Func<object, Type, FieldInfo[]> selector)
+        public ReflectionTree SelectFields(Func<object, Type, FieldInfo[]> selector)
         {
             this._fieldsReaders[0].Get = selector;
             return this;
@@ -237,7 +237,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="selector">Selector of the fields</param>
         /// <returns></returns>
-        public InstanceTree SelectFields(Func<object, Type, bool> filter, Func<object, Type, IEnumerable<FieldInfo>> selector)
+        public ReflectionTree SelectFields(Func<object, Type, bool> filter, Func<object, Type, IEnumerable<FieldInfo>> selector)
         {
             var reader = new DefinitionOfClassMemberReader<FieldInfo>();
             reader.CanRead = filter;
@@ -251,7 +251,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="bindingAttr">Specific binding to return properties</param>
         /// <returns></returns>
-        public InstanceTree SelectProperties(BindingFlags bindingAttr)
+        public ReflectionTree SelectProperties(BindingFlags bindingAttr)
         {
             this._propertysReaders[0].Get = (value, type) => type.GetProperties(bindingAttr);
             return this;
@@ -262,7 +262,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="selector">Selector of the properties</param>
         /// <returns></returns>
-        public InstanceTree SelectProperties(Func<object, Type, IEnumerable<FieldInfo>> selector)
+        public ReflectionTree SelectProperties(Func<object, Type, IEnumerable<FieldInfo>> selector)
         {
             this._fieldsReaders[0].Get = selector;
             return this;
@@ -274,7 +274,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="selector">Selector of the properties</param>
         /// <returns></returns>
-        public InstanceTree SelectProperties(Func<object, Type, bool> filter, Func<object, Type, IEnumerable<PropertyInfo>> selector)
+        public ReflectionTree SelectProperties(Func<object, Type, bool> filter, Func<object, Type, IEnumerable<PropertyInfo>> selector)
         {
             var reader = new DefinitionOfClassMemberReader<PropertyInfo>();
             reader.CanRead = filter;
@@ -288,7 +288,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="bindingAttr">Specific binding to return methods</param>
         /// <returns></returns>
-        public InstanceTree SelectMethods(BindingFlags bindingAttr)
+        public ReflectionTree SelectMethods(BindingFlags bindingAttr)
         {
             this._methodsReaders[0].Get = (value, type) => type.GetMethods(bindingAttr);
             return this;
@@ -299,7 +299,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="selector">Selector of the methods</param>
         /// <returns></returns>
-        public InstanceTree SelectMethods(Func<object, Type, IEnumerable<MethodInfo>> selector)
+        public ReflectionTree SelectMethods(Func<object, Type, IEnumerable<MethodInfo>> selector)
         {
             this._methodsReaders[0].Get = selector;
             return this;
@@ -311,7 +311,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="selector">Selector of the methods</param>
         /// <returns></returns>
-        public InstanceTree SelectMethods(Func<object, Type, bool> filter, Func<object, Type, IEnumerable<MethodInfo>> selector)
+        public ReflectionTree SelectMethods(Func<object, Type, bool> filter, Func<object, Type, IEnumerable<MethodInfo>> selector)
         {
             var reader = new DefinitionOfClassMemberReader<MethodInfo>();
             reader.CanRead = filter;
@@ -325,7 +325,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="reader">Instance of IPropertyReader</param>
         /// <returns></returns>
-        public InstanceTree AddValueReaderForProperties(IPropertyReader reader)
+        public ReflectionTree AddValueReaderForProperties(IPropertyReader reader)
         {
             var reader2 = new DefinitionOfMethodValueReader<PropertyInfo>();
             reader2.CanRead = reader.CanRead;
@@ -340,7 +340,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="valuesGetter">Selector of the values</param>
         /// <returns></returns>
-        public InstanceTree AddValueReaderForProperties(Func<UnitReflaction, Type, PropertyInfo, bool> filter, Func<object, Type, PropertyInfo, IEnumerable<MethodValue>> valuesGetter)
+        public ReflectionTree AddValueReaderForProperties(Func<ReflectInstance, Type, PropertyInfo, bool> filter, Func<object, Type, PropertyInfo, IEnumerable<MethodValue>> valuesGetter)
         {
             var reader2 = new DefinitionOfMethodValueReader<PropertyInfo>();
             reader2.CanRead = filter;
@@ -354,7 +354,7 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="reader">Instance of IMethodReader</param>
         /// <returns></returns>
-        public InstanceTree AddValueReaderForMethods(IMethodReader reader)
+        public ReflectionTree AddValueReaderForMethods(IMethodReader reader)
         {
             var reader2 = new DefinitionOfMethodValueReader<MethodInfo>();
             reader2.CanRead = reader.CanRead;
@@ -369,7 +369,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="valuesGetter">Selector of the values</param>
         /// <returns></returns>
-        public InstanceTree AddValueReaderForMethods(Func<UnitReflaction, Type, MethodInfo, bool> filter, Func<object, Type, MethodInfo, IEnumerable<MethodValue>> valuesGetter)
+        public ReflectionTree AddValueReaderForMethods(Func<ReflectInstance, Type, MethodInfo, bool> filter, Func<object, Type, MethodInfo, IEnumerable<MethodValue>> valuesGetter)
         {
             var reader2 = new DefinitionOfMethodValueReader<MethodInfo>();
             reader2.CanRead = filter;
@@ -379,6 +379,19 @@ namespace ExpressionGraph.Reflection
         }
 
         #region Default settings
+
+        private void DefaultSettingsToTypes()
+        {
+            this.SelectTypes(
+                (obj) =>
+                {
+                    var typesParents = new List<Type>();
+                    var type = obj.GetType();
+                    typesParents.Add(type);
+                    //typesParents.AddRange(ReflectionHelper.GetAllParentTypes(type, true).Distinct());
+                    return typesParents;
+                });
+        }
 
         private void DefaultSettingsToFields()
         {
@@ -445,6 +458,12 @@ namespace ExpressionGraph.Reflection
                     return null;
                 }
             );
+
+            // set default valuesGetters
+            this.AddValueReaderForProperties(new PropertyReaderDefault());
+            this.AddValueReaderForProperties(new PropertyReaderIndexerInt32InAnyClass());
+            this.AddValueReaderForProperties(new PropertyReaderIndexerInArray());
+            this.AddValueReaderForProperties(new PropertyReaderIndexerInDictionary());
         }
 
         private void DefaultSettingsToMethods()

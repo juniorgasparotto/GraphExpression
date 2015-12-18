@@ -32,7 +32,7 @@ namespace ExpressionGraph.Reflection
             var open = hasEnclose ? encloseValueChars[0].ToString() : "";
             var close = hasEnclose ? encloseValueChars[1].ToString() : "";
 
-            toString += showType ? ReflectionHelper.CSharpName(ParameterInfo.ParameterType) + " " : "";
+            toString += showType ? ReflectionUtils.CSharpName(ParameterInfo.ParameterType) + " " : "";
             toString += showName ? this.Name + "=" : "";
             toString += this.Value == null ? "null" : open + this.Value.ToString() + close;
             return toString;

@@ -9,15 +9,15 @@ namespace ExpressionGraph.Reflection
 {
     public class PropertyReaderDefault : IPropertyReader
     {
-        public bool CanRead(UnitReflaction obj, Type type, PropertyInfo property)
+        public bool CanRead(ReflectInstance value, Type type, PropertyInfo property)
         {
             return property.GetIndexParameters().Length == 0;
         }
 
-        public IEnumerable<MethodValue> GetValues(UnitReflaction obj, Type type, PropertyInfo property)
+        public IEnumerable<MethodValue> GetValues(ReflectInstance value, Type type, PropertyInfo property)
         {
-            var value = property.GetValue(obj.Object, null);
-            yield return new MethodValue(value, null);
+            var propValue = property.GetValue(value.Object, null);
+            yield return new MethodValue(propValue, null);
         }
     }
 }

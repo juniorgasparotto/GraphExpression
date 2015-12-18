@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph
 {
-    public static class ReflectionHelper
+    public static class ReflectionUtils
     {
         public static IEnumerable<Type> GetAllParentTypes(Type type, bool includeInterfaces)
         {
