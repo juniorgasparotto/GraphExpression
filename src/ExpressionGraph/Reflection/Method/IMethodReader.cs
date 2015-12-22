@@ -9,7 +9,7 @@ namespace ExpressionGraph.Reflection
 {
     public interface IMethodReader
     {
-        bool CanRead(ReflectInstance value, Type type, MethodInfo methodInfo);
-        IEnumerable<MethodValue> GetValues(ReflectInstance value, Type type, MethodInfo methodInfo);
+        bool CanRead(InstanceReflected value, Type type, MethodInfo methodInfo);
+        IEnumerable<MethodValue> GetValues(InstanceReflected value, Type type, MethodInfo methodInfo);
     }
 }

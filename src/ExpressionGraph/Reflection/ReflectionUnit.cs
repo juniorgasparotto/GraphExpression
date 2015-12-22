@@ -26,9 +26,9 @@ namespace ExpressionGraph.Reflection
         /// Do reflection
         /// </summary>
         /// <returns></returns>
-        public ReflectInstance GetInstance(object obj, string containerName)
+        public InstanceReflected GetInstance(object obj, string containerName)
         {
-            var instance = new ReflectInstance(obj, null, containerName);
+            var instance = new InstanceReflected(obj, null, containerName);
             IEnumerable<Type> typesParents = null;
 
             if (this.TypesReader != null)
@@ -65,7 +65,7 @@ namespace ExpressionGraph.Reflection
             return instance;
         }
 
-        private void ParseProperties(ReflectInstance instance, IEnumerable<PropertyInfo> properties, InstanceReflectedType instanceType, List<Property> propertiesAddeds)
+        private void ParseProperties(InstanceReflected instance, IEnumerable<PropertyInfo> properties, InstanceReflectedType instanceType, List<Property> propertiesAddeds)
         {
             if (properties == null) return;
 
@@ -132,7 +132,7 @@ namespace ExpressionGraph.Reflection
             }
         }
 
-        private void ParseMethods(ReflectInstance instance, IEnumerable<MethodInfo> methods, InstanceReflectedType instanceType, List<Method> methodsAddeds)
+        private void ParseMethods(InstanceReflected instance, IEnumerable<MethodInfo> methods, InstanceReflectedType instanceType, List<Method> methodsAddeds)
         {
             if (methods == null) return;
 
@@ -195,7 +195,7 @@ namespace ExpressionGraph.Reflection
             }
         }
 
-        private void ParseFields(ReflectInstance instance, IEnumerable<FieldInfo> fields, InstanceReflectedType instanceType, List<Field> fieldsAddeds)
+        private void ParseFields(InstanceReflected instance, IEnumerable<FieldInfo> fields, InstanceReflectedType instanceType, List<Field> fieldsAddeds)
         {
             if (fields == null) return;
 

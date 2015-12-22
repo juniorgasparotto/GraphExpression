@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json", "..\..\..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests.Console", "ExpressionGraph.Tests.Console\ExpressionGraph.Tests.Console.csproj", "{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests.Reflection", "ExpressionGraph.Tests.Reflection\ExpressionGraph.Tests.Reflection.csproj", "{0193621B-3B15-4A97-9090-17FE0AA8B90E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0193621B-3B15-4A97-9090-17FE0AA8B90E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0193621B-3B15-4A97-9090-17FE0AA8B90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0193621B-3B15-4A97-9090-17FE0AA8B90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0193621B-3B15-4A97-9090-17FE0AA8B90E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@ namespace ExpressionGraph.Reflection
 {
     public class ReflectionTree
     {
-        private Expression<ReflectInstance> _expressions;
+        private Expression<InstanceReflected> _expressions;
         private SettingsFlags _settingsAttributes;
         private object _object;
 
@@ -55,15 +55,20 @@ namespace ExpressionGraph.Reflection
             return this;
         }
 
-        public ReflectInstance Reflect()
+        public InstanceReflected Reflect()
         {
             return this.GetInstance(this._object, "");
         }
 
-        public Expression<ReflectInstance> ReflectTree()
+        public IEnumerable<InstanceReflected> ReflectTree()
         {
-            var instanceRoot = new List<ReflectInstance>() { GetInstance(this._object, "") };
-            this._expressions = ExpressionBuilder<ReflectInstance>
+            return this.Query().ToEntities();
+        }
+
+        public Expression<InstanceReflected> Query()
+        {
+            var instanceRoot = new List<InstanceReflected>() { GetInstance(this._object, "") };
+            this._expressions = ExpressionBuilder<InstanceReflected>
             .Build
             (
                 instanceRoot,
@@ -78,9 +83,9 @@ namespace ExpressionGraph.Reflection
             return _expressions;
         }
 
-        private List<ReflectInstance> GetChildren(ReflectInstance instance)
+        private List<InstanceReflected> GetChildren(InstanceReflected instance)
         {
-            var list = new List<ReflectInstance>();
+            var list = new List<InstanceReflected>();
 
             var fields = instance.GetAllFields().ToList();
             foreach (var field in fields)
@@ -132,7 +137,7 @@ namespace ExpressionGraph.Reflection
             return containerName + ":" + objString;
         }
 
-        private ReflectInstance GetInstance(object obj, string containerName)
+        private InstanceReflected GetInstance(object obj, string containerName)
         {
             var reflectionUnit = new ReflectionUnit();
             reflectionUnit.TypesReader = 
@@ -340,7 +345,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="valuesGetter">Selector of the values</param>
         /// <returns></returns>
-        public ReflectionTree AddValueReaderForProperties(Func<ReflectInstance, Type, PropertyInfo, bool> filter, Func<object, Type, PropertyInfo, IEnumerable<MethodValue>> valuesGetter)
+        public ReflectionTree AddValueReaderForProperties(Func<InstanceReflected, Type, PropertyInfo, bool> filter, Func<object, Type, PropertyInfo, IEnumerable<MethodValue>> valuesGetter)
         {
             var reader2 = new DefinitionOfMethodValueReader<PropertyInfo>();
             reader2.CanRead = filter;
@@ -369,7 +374,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="valuesGetter">Selector of the values</param>
         /// <returns></returns>
-        public ReflectionTree AddValueReaderForMethods(Func<ReflectInstance, Type, MethodInfo, bool> filter, Func<object, Type, MethodInfo, IEnumerable<MethodValue>> valuesGetter)
+        public ReflectionTree AddValueReaderForMethods(Func<InstanceReflected, Type, MethodInfo, bool> filter, Func<object, Type, MethodInfo, IEnumerable<MethodValue>> valuesGetter)
         {
             var reader2 = new DefinitionOfMethodValueReader<MethodInfo>();
             reader2.CanRead = filter;

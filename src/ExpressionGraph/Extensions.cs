@@ -18,10 +18,22 @@ namespace ExpressionGraph
             return query;
         }
 
-        public static IEnumerable<object> Objects(this Expression<ReflectInstance> expression)
+        public static IEnumerable<object> Objects(this IEnumerable<InstanceReflected> instanceReflecteds)
         {
-            foreach (var r in expression)
-                yield return r.Entity.Object;
+            foreach (var r in instanceReflecteds)
+                yield return r.Object;
         }
+
+        //public static IEnumerable<object> Objects(this Expression<InstanceReflected> expression)
+        //{
+        //    foreach (var r in expression.ToEntities())
+        //        yield return r.Entity.Object;
+        //}
+
+        //public static IEnumerable<InstanceReflected> ReflectTree(this Expression<InstanceReflected> expression)
+        //{
+        //    foreach (var r in expression.ToEntities())
+        //        yield return r.Entity;
+        //}
     }
 }

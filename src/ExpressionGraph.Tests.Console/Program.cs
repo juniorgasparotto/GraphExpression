@@ -15,13 +15,17 @@ namespace ExpressionGraph.Tests.Console
         static void Main(string[] args)
         {
             var testClass = new TestClass();
-            var tree = testClass
+            var reflection = testClass
                 .AsReflection()
                 .AddValueReaderForProperties(new PropertyReadIndexersTestClass())
-                .SelectTypes((value) => value is string, (value) => ReflectionUtils.GetAllParentTypes(value.GetType(), true))
-                .ReflectTree();
+                .SelectTypes((value) => value is string, (value) => ReflectionUtils.GetAllParentTypes(value.GetType(), true));
 
-            var entities = tree.ToEntities().ToList();
+            var instanceReflecteds = reflection.ReflectTree().ToList();
+            var objects = reflection.ReflectTree().Objects().ToList();
+
+            var query = reflection.Query();
+            var instanceReflectedsByQuery = query.Where(f=>f.Entity.ObjectType == typeof(string)).ToEntities();
+            //var objectsByQuery = query.Objects().ToList();
 
             var testInt = GetEntityGraph(4);
             var testIntStr = testInt.ToString();
@@ -88,7 +92,7 @@ namespace ExpressionGraph.Tests.Console
             //var outputNewtonsoft = JsonConvert.SerializeObject(obj);
         }
 
-        private static Expression<ReflectInstance> GetEntityGraph(object obj)
+        private static Expression<InstanceReflected> GetEntityGraph(object obj)
         {
             return obj.AsReflection()
                 //.Settings(SettingsFlags.ShowFullNameOfType | SettingsFlags.ShowParameterName)
@@ -97,13 +101,13 @@ namespace ExpressionGraph.Tests.Console
                 .Settings(SettingsFlags.Default)
                 .SelectFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
                 .SelectProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
-                .ReflectTree();
+                .Query();
         }
 
         public static void TestCustomClass()
         {
             var obj = new TestClass();
-            var instanceRoot = new ReflectInstance(obj);
+            var instanceRoot = new InstanceReflected(obj);
             //instanceRoot._propertyValueReaders.Add(new PropertyReadIndexersTestClass());
             //instanceRoot._methodValueReaders.Add(new MethodReaderTestClass());
             //instanceRoot.Reflect();

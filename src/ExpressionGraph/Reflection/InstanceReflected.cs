@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph.Reflection
 {
-    public class ReflectInstance
+    public class InstanceReflected
     {
         private List<InstanceReflectedType> _reflectedTypes;
 
@@ -18,7 +18,7 @@ namespace ExpressionGraph.Reflection
         public string ContainerName { get; private set; }
         public IEnumerable<InstanceReflectedType> ReflectedTypes { get { return _reflectedTypes; } }
 
-        public ReflectInstance(object obj, string name = null, string containerName = null)
+        public InstanceReflected(object obj, string name = null, string containerName = null)
         {
             if (obj == null)
                 throw new ArgumentNullException("obj");
@@ -65,7 +65,7 @@ namespace ExpressionGraph.Reflection
             if (ReferenceEquals(obj, null) || this.GetType() != obj.GetType())
                 return false;
 
-            var converted = obj as ReflectInstance;
+            var converted = obj as InstanceReflected;
             return (this.Object.Equals(converted.Object));
         }
 
@@ -81,12 +81,12 @@ namespace ExpressionGraph.Reflection
 
         #region Operators
 
-        public static bool operator ==(ReflectInstance a, ReflectInstance b)
+        public static bool operator ==(InstanceReflected a, InstanceReflected b)
         {
             return Equals(a, b);
         }
 
-        public static bool operator !=(ReflectInstance a, ReflectInstance b)
+        public static bool operator !=(InstanceReflected a, InstanceReflected b)
         {
             return !Equals(a, b);
         }
