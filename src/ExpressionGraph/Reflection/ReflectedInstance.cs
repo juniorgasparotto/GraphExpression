@@ -8,46 +8,47 @@ using System.Threading.Tasks;
 
 namespace ExpressionGraph.Reflection
 {
-    public class InstanceReflected
+    public class ReflectedInstance
     {
-        private List<InstanceReflectedType> _reflectedTypes;
+        private List<ReflectedType> _reflectedTypes;
 
         public string Name { get; private set; }
         public object Object { get; private set; }
         public Type ObjectType { get; private set; }
         public string ContainerName { get; private set; }
-        public IEnumerable<InstanceReflectedType> ReflectedTypes { get { return _reflectedTypes; } }
+        public IEnumerable<ReflectedType> ReflectedTypes { get { return _reflectedTypes; } }
 
-        public InstanceReflected(object obj, string name = null, string containerName = null)
+        public ReflectedInstance(object obj, string name = null, string containerName = null)
         {
-            if (obj == null)
-                throw new ArgumentNullException("obj");
+            if (obj != null)
+            { 
+                this.ObjectType = obj.GetType();
+                this.Name = name ?? this.ObjectType.Name + "_" + obj.GetHashCode();
+            }
 
-            this.ObjectType = obj.GetType();
-            this.Name = name ?? this.ObjectType.Name + "_" + obj.GetHashCode();
             this.ContainerName = containerName;
             this.Object = obj;
-            this._reflectedTypes = new List<InstanceReflectedType>();
+            this._reflectedTypes = new List<ReflectedType>();
         }
 
-        public void Add(InstanceReflectedType instanceType)
+        public void Add(ReflectedType instanceType)
         {
             this._reflectedTypes.Add(instanceType);
         }
 
         public IEnumerable<Property> GetAllProperties()
         {
-            return this.ReflectedTypes.SelectMany(f => f.Properties);
+            return this._reflectedTypes.SelectMany(f => f.Properties);
         }
 
         public IEnumerable<Method> GetAllMethods()
         {
-            return this.ReflectedTypes.SelectMany(f => f.Methods);
+            return this._reflectedTypes.SelectMany(f => f.Methods);
         }
 
         public IEnumerable<Field> GetAllFields()
         {
-            return this.ReflectedTypes.SelectMany(f => f.Fields);
+            return this._reflectedTypes.SelectMany(f => f.Fields);
         }
 
         #region Overrides
@@ -65,7 +66,7 @@ namespace ExpressionGraph.Reflection
             if (ReferenceEquals(obj, null) || this.GetType() != obj.GetType())
                 return false;
 
-            var converted = obj as InstanceReflected;
+            var converted = obj as ReflectedInstance;
             return (this.Object.Equals(converted.Object));
         }
 
@@ -81,12 +82,12 @@ namespace ExpressionGraph.Reflection
 
         #region Operators
 
-        public static bool operator ==(InstanceReflected a, InstanceReflected b)
+        public static bool operator ==(ReflectedInstance a, ReflectedInstance b)
         {
             return Equals(a, b);
         }
 
-        public static bool operator !=(InstanceReflected a, InstanceReflected b)
+        public static bool operator !=(ReflectedInstance a, ReflectedInstance b)
         {
             return !Equals(a, b);
         }

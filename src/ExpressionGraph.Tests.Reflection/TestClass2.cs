@@ -144,9 +144,8 @@ namespace ExpressionGraph.Tests.Reflection
 
         #endregion
 
-        public void PopulateSingles()
+        public void Populate()
         {
-
             #region Types of Keywords
 
             FieldPublicDynamic = "content:FieldPublicDynamic";
@@ -172,8 +171,8 @@ namespace ExpressionGraph.Tests.Reflection
             FieldPublicDateTime = DateTime.Now;
             FieldPublicTimeSpan = new TimeSpan(DateTime.Now.Day, DateTime.Now.Minute, DateTime.Now.Second);
             FieldPublicEnumDateTimeKind = DateTimeKind.Local;
-            FieldPublicDateTimeOffset = new DateTimeOffset(FieldPublicDateTime, FieldPublicTimeSpan);
-
+            FieldPublicDateTimeOffset = DateTimeOffset.Now;
+            
             FieldPublicIntPtr = new IntPtr(100);
             FieldPublicTimeZone = TimeZone.CurrentTimeZone;
             FieldPublicTimeZoneInfo = TimeZoneInfo.Utc;
@@ -261,7 +260,7 @@ namespace ExpressionGraph.Tests.Reflection
 
             FieldPublicKeyedCollection = new MyDataKeyedCollection();
             FieldPublicKeyedCollection.Add(new MyData() { Data = "data1", Id = 0 });
-            FieldPublicKeyedCollection.Add(new MyData() { Data = "data2", Id = 0 });
+            FieldPublicKeyedCollection.Add(new MyData() { Data = "data2", Id = 1 });
 
             var list = new List<string>();
             list.Add("list1");
@@ -288,13 +287,13 @@ namespace ExpressionGraph.Tests.Reflection
             FieldPublicSortedList.Add("key1", 1);
             FieldPublicSortedList.Add("key2", 2);
             FieldPublicSortedList.Add("key3", 3);
-            FieldPublicSortedList.Add(0, "value1");
+            FieldPublicSortedList.Add("key4", 4);
 
             FieldPublicHashtableNonGeneric = new System.Collections.Hashtable();
             FieldPublicHashtableNonGeneric.Add("key1", 1);
             FieldPublicHashtableNonGeneric.Add("key2", 2);
             FieldPublicHashtableNonGeneric.Add("key3", 3);
-            FieldPublicHashtableNonGeneric.Add(0, "value1");
+            FieldPublicHashtableNonGeneric.Add("key4", 4);
 
             FieldPublicQueueNonGeneric = new System.Collections.Queue();
             FieldPublicQueueNonGeneric.Enqueue("FieldPublicQueueNonGeneric1");
@@ -352,7 +351,6 @@ namespace ExpressionGraph.Tests.Reflection
 
             #endregion
 
-
             #region Several
 
             PropXmlDocument = new XmlDocument();
@@ -363,7 +361,7 @@ namespace ExpressionGraph.Tests.Reflection
             PropStream = GenerateStreamFromString("PropStream");
             PropBigInteger = new System.Numerics.BigInteger(100);
             PropStringBuilder = new StringBuilder("PropStringBuilder");
-            FieldPublicIQueryable = FieldPublicStringCollection.AsQueryable();
+            FieldPublicIQueryable = new List<string>() { "A" }.AsQueryable();
 
             #endregion
         }

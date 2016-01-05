@@ -3,12 +3,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ExpressionGraph.Reflection
 {
     public class ReflectionTree
     {
-        private Expression<InstanceReflected> _expressions;
+        List<Type> noneMemberForTypes = new List<Type>()
+            {
+                typeof(Boolean),
+                typeof(Char),
+                typeof(SByte),
+                typeof(Byte),
+                typeof(Int16),
+                typeof(UInt16),
+                typeof(Int32),
+                typeof(UInt32),
+                typeof(Int64),
+                typeof(UInt64),
+                typeof(Single),
+                typeof(Double),
+                typeof(Decimal),
+                typeof(DateTime),
+                typeof(String),
+                typeof(System.Text.StringBuilder),
+                typeof(TimeSpan),
+                typeof(DateTimeOffset),
+                typeof(IntPtr),
+                typeof(UIntPtr),
+                typeof(TimeZone),
+                typeof(Uri),
+                typeof(Guid),
+                typeof(Action),
+                typeof(Action<,>),
+            };
+
+        List<string> noneMemberForTypesNames = new List<string>()
+            {
+                "^System.RuntimeType$",
+                "^System.Action$",
+                "^System.Func$",
+                "^System.Action`",
+                "^System.Func`"
+            };
+
+        private Expression<ReflectedInstance> _expressions;
         private SettingsFlags _settingsAttributes;
         private object _object;
 
@@ -22,9 +61,14 @@ namespace ExpressionGraph.Reflection
         private List<DefinitionOfMethodValueReader<PropertyInfo>> _propertyValueReaders;
         private List<DefinitionOfMethodValueReader<MethodInfo>> _methodValueReaders;
 
+        private long maxItems;
+
         public ReflectionTree(object obj)
         {
             this._object = obj;
+
+            //set default max items 
+            this.maxItems = 1000;
 
             // Readers for types and member AND Add the default selectors
             this._typesReaders = new List<DefinitionOfTypeReader>();
@@ -55,20 +99,26 @@ namespace ExpressionGraph.Reflection
             return this;
         }
 
-        public InstanceReflected Reflect()
+        public ReflectionTree SetMaxItems(long maxItems)
+        {
+            this.maxItems = maxItems;
+            return this;
+        }
+
+        public ReflectedInstance Reflect()
         {
             return this.GetInstance(this._object, "");
         }
 
-        public IEnumerable<InstanceReflected> ReflectTree()
+        public IEnumerable<ReflectedInstance> ReflectTree()
         {
-            return this.Query().ToEntities();
+            return this.Query().ToEntities(false);
         }
 
-        public Expression<InstanceReflected> Query()
+        public Expression<ReflectedInstance> Query()
         {
-            var instanceRoot = new List<InstanceReflected>() { GetInstance(this._object, "") };
-            this._expressions = ExpressionBuilder<InstanceReflected>
+            var instanceRoot = new List<ReflectedInstance>() { GetInstance(this._object, "") };
+            this._expressions = ExpressionBuilder<ReflectedInstance>
             .Build
             (
                 instanceRoot,
@@ -76,16 +126,20 @@ namespace ExpressionGraph.Reflection
                 true,
                 false,
                 false,
-                f => ObjectToString(f.Object, f.ObjectType, f.ContainerName)
+                f => 
+                {
+                    return ObjectToString(f.Entity.Object, f.Entity.ObjectType, f.Entity.ContainerName, f.Id, f.HasChildren());
+                },
+                this.maxItems
             )
             .FirstOrDefault();
 
             return _expressions;
         }
 
-        private List<InstanceReflected> GetChildren(InstanceReflected instance)
+        private List<ReflectedInstance> GetChildren(ReflectedInstance instance)
         {
-            var list = new List<InstanceReflected>();
+            var list = new List<ReflectedInstance>();
 
             var fields = instance.GetAllFields().ToList();
             foreach (var field in fields)
@@ -104,10 +158,17 @@ namespace ExpressionGraph.Reflection
                         var showParameterName = _settingsAttributes.HasFlag(SettingsFlags.ShowParameterName);
                         if (value.Parameters != null)
                         {
-                            foreach (var param in value.Parameters)
+                            if (value.Parameters.Length == 1 && value.Parameters[0].Value is ArrayKey)
                             {
-                                parameterStr += parameterStr == "" ? "" : ", ";
-                                parameterStr += ObjectToString(param.Value, param.Value.GetType(), showParameterName ? param.Name : null);
+                                parameterStr = value.Parameters[0].Value.ToString();
+                            }
+                            else
+                            { 
+                                foreach (var param in value.Parameters)
+                                {
+                                    parameterStr += parameterStr == "" ? "" : ", ";
+                                    parameterStr += ObjectToString(param.Value, param.Value.GetType(), showParameterName ? param.Name : null);
+                                }
                             }
 
                             parameterStr = "[" + parameterStr + "]";
@@ -118,26 +179,78 @@ namespace ExpressionGraph.Reflection
                 }
             }
 
+            var methods = instance.GetAllMethods().ToList();
+            foreach (var method in methods)
+            {
+                if (method.Values != null)
+                {
+                    foreach (var value in method.Values)
+                    {
+                        var parameterStr = "";
+                        var showParameterName = _settingsAttributes.HasFlag(SettingsFlags.ShowParameterName);
+                        if (value.Parameters != null)
+                        {
+                            if (value.Parameters.Length == 1 && value.Parameters[0].Value is ArrayKey)
+                            {
+                                parameterStr = value.Parameters[0].Value.ToString();
+                            }
+                            else
+                            {
+                                foreach (var param in value.Parameters)
+                                {
+                                    parameterStr += parameterStr == "" ? "" : ", ";
+                                    parameterStr += ObjectToString(param.Value, param.Value.GetType(), showParameterName ? param.Name : null);
+                                }
+                            }
+
+                            parameterStr = "[" + parameterStr + "]";
+                        }
+
+                        list.Add(GetInstance(value.Value, method.Name + parameterStr));
+                    }
+                }
+            }
+
             return list;
         }
 
-        private string ObjectToString(object obj, Type type, string containerName = null)
+        private string ObjectToString(object obj, Type type, string containerName = null, long id = -1, bool hasChildren = false)
         {
-            var objString = "";
-            var showFullName = _settingsAttributes.HasFlag(SettingsFlags.ShowFullNameOfType);
-
-            if (CanGetAnyMembers(obj, type))
-                objString = ReflectionUtils.CSharpName(type, showFullName) + "_" + obj.GetHashCode();
+            string output;
+            if (obj != null && hasChildren)
+            {
+                var showFullName = _settingsAttributes.HasFlag(SettingsFlags.ShowFullNameOfType);
+                output = ReflectionUtils.CSharpName(type, showFullName) + "_" + id;
+            }
             else
-                objString = obj.ToString();
-            
-            if (string.IsNullOrWhiteSpace(containerName))
-                return objString;
+            { 
+                output = Utils.ToLiteral(obj);
+            }
 
-            return containerName + ":" + objString;
+            if (!string.IsNullOrWhiteSpace(containerName))
+                output = containerName + ": " + output;
+
+            return output;
         }
 
-        private InstanceReflected GetInstance(object obj, string containerName)
+        //private string ObjectToString(object obj, Type type, string containerName = null, long id = -1)
+        //{
+        //    if (obj != null && id != -1)
+        //    {
+        //        var showFullName = _settingsAttributes.HasFlag(SettingsFlags.ShowFullNameOfType);
+        //        if (CanGetAnyMembers(obj, type))
+        //            return ReflectionUtils.CSharpName(type, showFullName) + "_" + id;
+        //    }
+
+        //    string output = Utils.ToLiteral(obj);
+
+        //    if (string.IsNullOrWhiteSpace(containerName))
+        //        return output;
+
+        //    return containerName + ": " + output;
+        //}
+
+        private ReflectedInstance GetInstance(object obj, string containerName)
         {
             var reflectionUnit = new ReflectionUnit();
             reflectionUnit.TypesReader = 
@@ -176,7 +289,11 @@ namespace ExpressionGraph.Reflection
             reflectionUnit.MethodsReader = 
                 (objParam, type) =>
                 {
-                    List<MethodInfo> methods = null;
+                    IEnumerable<MethodInfo> methods = null;
+                    var selector = this.GetMethodsReader(objParam, type);
+                    if (selector != null)
+                        methods = selector.Get(objParam, type);
+
                     return methods;
                 };
 
@@ -258,7 +375,11 @@ namespace ExpressionGraph.Reflection
         /// <returns></returns>
         public ReflectionTree SelectProperties(BindingFlags bindingAttr)
         {
-            this._propertysReaders[0].Get = (value, type) => type.GetProperties(bindingAttr);
+            this._propertysReaders[0].Get =
+                (value, type) =>
+                {
+                    return type.GetProperties(bindingAttr);
+                };
             return this;
         }
 
@@ -267,9 +388,9 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="selector">Selector of the properties</param>
         /// <returns></returns>
-        public ReflectionTree SelectProperties(Func<object, Type, IEnumerable<FieldInfo>> selector)
+        public ReflectionTree SelectProperties(Func<object, Type, IEnumerable<PropertyInfo>> selector)
         {
-            this._fieldsReaders[0].Get = selector;
+            this._propertysReaders[0].Get = selector;
             return this;
         }
 
@@ -345,7 +466,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="valuesGetter">Selector of the values</param>
         /// <returns></returns>
-        public ReflectionTree AddValueReaderForProperties(Func<InstanceReflected, Type, PropertyInfo, bool> filter, Func<object, Type, PropertyInfo, IEnumerable<MethodValue>> valuesGetter)
+        public ReflectionTree AddValueReaderForProperties(Func<ReflectedInstance, Type, PropertyInfo, bool> filter, Func<ReflectedInstance, Type, PropertyInfo, IEnumerable<MethodValue>> valuesGetter)
         {
             var reader2 = new DefinitionOfMethodValueReader<PropertyInfo>();
             reader2.CanRead = filter;
@@ -374,7 +495,7 @@ namespace ExpressionGraph.Reflection
         /// <param name="filter">Specify the filter to apply selector</param>
         /// <param name="valuesGetter">Selector of the values</param>
         /// <returns></returns>
-        public ReflectionTree AddValueReaderForMethods(Func<InstanceReflected, Type, MethodInfo, bool> filter, Func<object, Type, MethodInfo, IEnumerable<MethodValue>> valuesGetter)
+        public ReflectionTree AddValueReaderForMethods(Func<ReflectedInstance, Type, MethodInfo, bool> filter, Func<ReflectedInstance, Type, MethodInfo, IEnumerable<MethodValue>> valuesGetter)
         {
             var reader2 = new DefinitionOfMethodValueReader<MethodInfo>();
             reader2.CanRead = filter;
@@ -392,28 +513,39 @@ namespace ExpressionGraph.Reflection
                 {
                     var typesParents = new List<Type>();
                     var type = obj.GetType();
-                    typesParents.Add(type);
-                    //typesParents.AddRange(ReflectionHelper.GetAllParentTypes(type, true).Distinct());
+                    if (obj is Array)
+                    {
+                        typesParents.Add(typeof(System.Collections.IList));
+                    }
+                    else
+                    { 
+                        typesParents.Add(type);
+                    }
                     return typesParents;
                 });
         }
 
         private void DefaultSettingsToFields()
         {
-            // Disable object from .net system
+            // Return none fields (null) from object that are specify
             // OBS: It's can be overrided ONLY adding other filter, that return "true", after this.
             this.SelectFields(
                 (obj, type) =>
                 {
-                    var valueType = obj.GetType();
-                    return valueType.Namespace.Equals("System") || type.Namespace.StartsWith("System.");
+                    var mainType = obj.GetType();
+
+                    if
+                    (
+                           noneMemberForTypes.Contains(mainType)
+                        || noneMemberForTypesNames.Exists(match => Regex.IsMatch(mainType.FullName, match))
+                        || typeof(Delegate).IsAssignableFrom(mainType)
+                    )
+                        return true;
+
+                    return false;
                 }
                 , null
             );
-
-            // By default, disable reading fields to "Array" or "Dictionary". 
-            // OBS: It's can be overrided ONLY adding other filter, that return "true", after this.
-            this.SelectFields((obj, type) => obj is Array || obj is System.Collections.IDictionary, null);
         }
 
         private void DefaultSettingsToProperties()
@@ -421,50 +553,54 @@ namespace ExpressionGraph.Reflection
             // Default bindingAttr for all 
             this.SelectProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            // Disable object from .net system
+            // Return none properties (null) from object that are specify
             // OBS: It's can be overrided ONLY adding other filter, that return "true", after this.
             this.SelectProperties(
                 (obj, type) =>
                 {
-                    var valueType = obj.GetType();
-                    return valueType.Namespace.Equals("System") || type.Namespace.StartsWith("System.");
+                    var mainType = obj.GetType();
+
+                    if 
+                    (   
+                           noneMemberForTypes.Contains(mainType)
+                        || noneMemberForTypesNames.Exists(match => Regex.IsMatch(mainType.FullName, match))
+                        || typeof(Delegate).IsAssignableFrom(mainType)
+                    )
+                        return true;
+
+                    return false;
                 }
                 , null
             );
 
-            // Get only property "Item[params int[] indices]" for Arrays
+            // Get only property "Item[int32 index]", "Item[string key]" for Dictionary, "Item[params int[] indices]" (representative only) for Arrays
             // OBS: It's can be overrided ONLY adding other filter, that return "true", after this.
             this.SelectProperties(
                 (obj, type) =>
                 {
-                    return obj is Array;
+                    return obj is System.Collections.ArrayList 
+                        || obj is System.Collections.BitArray 
+                        || obj is System.Collections.IDictionary
+                        || obj is Array;
                 }
                 ,
                 (obj, type) =>
                 {
-                    if (type == typeof(System.Collections.IList))
-                        return typeof(System.Collections.IList).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(f => f.GetIndexParameters().Length > 0);
+                    if 
+                    (
+                        type == typeof(System.Collections.ArrayList)
+                     || type == typeof(System.Collections.BitArray)
+                     || type == typeof(System.Collections.IDictionary)
+                     || type == typeof(System.Collections.IList)
+                    )
+                        return type.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(f => f.GetIndexParameters().Length > 0);
+
                     return null;
                 }
             );
 
-            // Get only property "Item[string key]" for Dictionary
-            // OBS: It's can be overrided ONLY adding other filter, that return "true", after this.
-            this.SelectProperties(
-                (obj, type) =>
-                {
-                    return obj is System.Collections.IDictionary;
-                }
-                ,
-                (obj, type) =>
-                {
-                    if (type == typeof(System.Collections.IDictionary))
-                        return typeof(System.Collections.IDictionary).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(f => f.GetIndexParameters().Length > 0);
-                    return null;
-                }
-            );
-
-            // set default valuesGetters
+            // Set default valuesGetters
+            // ** This order is obrigatory **
             this.AddValueReaderForProperties(new PropertyReaderDefault());
             this.AddValueReaderForProperties(new PropertyReaderIndexerInt32InAnyClass());
             this.AddValueReaderForProperties(new PropertyReaderIndexerInArray());
@@ -473,7 +609,21 @@ namespace ExpressionGraph.Reflection
 
         private void DefaultSettingsToMethods()
         {
-            
+            // Get "GetEnumerator" method for classes that hasn't a indexer (this[...]) to get owner values
+            this.SelectMethods(
+                (obj, type) =>
+                {   
+                    return obj is System.Collections.IEnumerable
+                        && obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Count(f => f.GetIndexParameters().Length == 0) == 0;
+                }
+                ,
+                (obj, type) =>
+                {
+                    return type.GetMethods(BindingFlags.NonPublic |  BindingFlags.Public | BindingFlags.Instance).Where(f => f.Name == "GetEnumerator" || f.Name == "System.Collections.IEnumerable.GetEnumerator");
+                }
+            );
+
+            this.AddValueReaderForMethods(new MethodReaderIEnumerableGetEnumerator());
         }
 
         #endregion
@@ -481,18 +631,7 @@ namespace ExpressionGraph.Reflection
         #endregion
 
         #region Privates
-
-        private bool CanGetAnyMembers(object obj, Type type)
-        {
-            var selectorProps = this.GetPropertiesReader(obj, type);
-            var selectorFields = this.GetPropertiesReader(obj, type);
-
-            if (selectorProps == null && selectorFields == null)
-                return false;
-
-            return true;
-        }
-
+        
         private DefinitionOfClassMemberReader<FieldInfo> GetFieldsReader(object obj, Type type)
         {
             var selector = this._fieldsReaders.LastOrDefault(f => f.CanRead != null && f.CanRead(obj, type));
@@ -505,6 +644,15 @@ namespace ExpressionGraph.Reflection
         private DefinitionOfClassMemberReader<PropertyInfo> GetPropertiesReader(object obj, Type type)
         {
             var selector = this._propertysReaders.LastOrDefault(f => f.CanRead != null && f.CanRead(obj, type));
+            if (selector != null && selector.Get != null)
+                return selector;
+
+            return null;
+        }
+
+        private DefinitionOfClassMemberReader<MethodInfo> GetMethodsReader(object obj, Type type)
+        {
+            var selector = this._methodsReaders.LastOrDefault(f => f.CanRead != null && f.CanRead(obj, type));
             if (selector != null && selector.Get != null)
                 return selector;
 

@@ -26,46 +26,50 @@ namespace ExpressionGraph.Reflection
         /// Do reflection
         /// </summary>
         /// <returns></returns>
-        public InstanceReflected GetInstance(object obj, string containerName)
+        public ReflectedInstance GetInstance(object obj, string containerName)
         {
-            var instance = new InstanceReflected(obj, null, containerName);
-            IEnumerable<Type> typesParents = null;
+            var instance = new ReflectedInstance(obj, null, containerName);
 
-            if (this.TypesReader != null)
-                typesParents = this.TypesReader(obj);
-
-            if (typesParents != null)
+            if (obj != null)
             {
-                typesParents = typesParents.Distinct().ToList();
-                var propertiesAll = new List<Property>();
-                var methodsAll = new List<Method>();
-                var fieldsAll = new List<Field>();
+                IEnumerable<Type> typesParents = null;
 
-                foreach (var typeParent in typesParents)
+                if (this.TypesReader != null)
+                    typesParents = this.TypesReader(obj);
+
+                if (typesParents != null)
                 {
-                    var instanceType = new InstanceReflectedType(typeParent);
+                    typesParents = typesParents.Distinct().ToList();
+                    var propertiesAll = new List<Property>();
+                    var methodsAll = new List<Method>();
+                    var fieldsAll = new List<Field>();
 
-                    if (this.FieldsReader != null)
-                        this.ParseFields(instance, this.FieldsReader(obj, typeParent), instanceType, fieldsAll);
+                    foreach (var typeParent in typesParents)
+                    {
+                        var instanceType = new ReflectedType(typeParent);
 
-                    if (this.PropertiesReader != null)
-                        this.ParseProperties(instance, this.PropertiesReader(obj, typeParent), instanceType, propertiesAll);
+                        if (this.FieldsReader != null)
+                            this.ParseFields(instance, this.FieldsReader(obj, typeParent), instanceType, fieldsAll);
 
-                    if (this.MethodsReader != null)
-                        this.ParseMethods(instance, this.MethodsReader(obj, typeParent), instanceType, methodsAll);
+                        if (this.PropertiesReader != null)
+                            this.ParseProperties(instance, this.PropertiesReader(obj, typeParent), instanceType, propertiesAll);
 
-                    instance.Add(instanceType);
+                        if (this.MethodsReader != null)
+                            this.ParseMethods(instance, this.MethodsReader(obj, typeParent), instanceType, methodsAll);
 
-                    propertiesAll.AddRange(instanceType.Properties);
-                    methodsAll.AddRange(instanceType.Methods);
-                    fieldsAll.AddRange(instanceType.Fields);
+                        instance.Add(instanceType);
+
+                        propertiesAll.AddRange(instanceType.Properties);
+                        methodsAll.AddRange(instanceType.Methods);
+                        fieldsAll.AddRange(instanceType.Fields);
+                    }
                 }
             }
 
             return instance;
         }
 
-        private void ParseProperties(InstanceReflected instance, IEnumerable<PropertyInfo> properties, InstanceReflectedType instanceType, List<Property> propertiesAddeds)
+        private void ParseProperties(ReflectedInstance instance, IEnumerable<PropertyInfo> properties, ReflectedType instanceType, List<Property> propertiesAddeds)
         {
             if (properties == null) return;
 
@@ -132,7 +136,7 @@ namespace ExpressionGraph.Reflection
             }
         }
 
-        private void ParseMethods(InstanceReflected instance, IEnumerable<MethodInfo> methods, InstanceReflectedType instanceType, List<Method> methodsAddeds)
+        private void ParseMethods(ReflectedInstance instance, IEnumerable<MethodInfo> methods, ReflectedType instanceType, List<Method> methodsAddeds)
         {
             if (methods == null) return;
 
@@ -165,11 +169,11 @@ namespace ExpressionGraph.Reflection
 
                 if (methodsAddeds != null)
                 {
-                    var propDuplicated = methodsAddeds.FirstOrDefault(f => f.Name == name);
+                    var methodDuplicated = methodsAddeds.FirstOrDefault(f => f.Name == name);
 
-                    if (propDuplicated != null)
+                    if (methodDuplicated != null)
                     {
-                        if (propDuplicated.ParentType != objType)
+                        if (methodDuplicated.ParentType != objType)
                             name = objType.FullName + "." + name;
                     }
                 }
@@ -195,7 +199,7 @@ namespace ExpressionGraph.Reflection
             }
         }
 
-        private void ParseFields(InstanceReflected instance, IEnumerable<FieldInfo> fields, InstanceReflectedType instanceType, List<Field> fieldsAddeds)
+        private void ParseFields(ReflectedInstance instance, IEnumerable<FieldInfo> fields, ReflectedType instanceType, List<Field> fieldsAddeds)
         {
             if (fields == null) return;
 

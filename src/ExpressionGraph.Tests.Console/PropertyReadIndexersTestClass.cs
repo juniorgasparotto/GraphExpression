@@ -10,12 +10,12 @@ namespace ExpressionGraph.Tests.Console
 {
     public class PropertyReadIndexersTestClass : IPropertyReader
     {
-        public bool CanRead(InstanceReflected value, Type type, PropertyInfo property)
+        public bool CanRead(ReflectedInstance value, Type type, PropertyInfo property)
         {
             return value.Object is TestClass && property.GetIndexParameters().Length > 0;
         }
 
-        public IEnumerable<MethodValue> GetValues(InstanceReflected value, Type type, PropertyInfo property)
+        public IEnumerable<MethodValue> GetValues(ReflectedInstance value, Type type, PropertyInfo property)
         {
             var converted = value.Object as TestClass;
             var len = converted.List.Count;

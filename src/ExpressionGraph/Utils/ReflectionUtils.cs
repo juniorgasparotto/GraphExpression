@@ -10,14 +10,17 @@ namespace ExpressionGraph
 {
     public static class ReflectionUtils
     {
-        public static IEnumerable<Type> GetAllParentTypes(Type type, bool includeInterfaces)
+        public static IEnumerable<Type> GetAllParentTypes(Type type, bool includeSelf = true, bool includeInterfaces = true)
         {
+            if (includeSelf)
+                yield return type;
+
             if (includeInterfaces)
             { 
                 foreach (Type i in type.GetInterfaces())
                 {
                     yield return i;
-                    foreach (Type t in GetAllParentTypes(i, includeInterfaces))
+                    foreach (Type t in GetAllParentTypes(i, false, includeInterfaces))
                     {
                         yield return t;
                     }
@@ -27,7 +30,7 @@ namespace ExpressionGraph
             if (type.BaseType != null)
             {
                 yield return type.BaseType;
-                foreach (Type b in GetAllParentTypes(type.BaseType, includeInterfaces))
+                foreach (Type b in GetAllParentTypes(type.BaseType, false, includeInterfaces))
                 {
                     yield return b;
                 }
@@ -81,6 +84,12 @@ namespace ExpressionGraph
             sb.Append(">");
             return sb.ToString();
         }
+
+        public static Type GetDeclaredType<TSelf>(TSelf self)
+        {
+            return typeof(TSelf);
+        }
+
 
         public static Dictionary<ArrayKey, object> ArrayToDictionary(Array inObject)
         {

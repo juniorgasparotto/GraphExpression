@@ -14,8 +14,9 @@ namespace ExpressionGraph
             childrenCallback, 
             bool awaysRepeatDefined = true, 
             bool enableParenthesis = true, 
-            bool enablePlus = true, 
-            Func<T, string> entityToStringCallback = null
+            bool enablePlus = true,
+            Func<ExpressionItem<T>, string> entityToStringCallback = null,
+            long maxItems = 0
         )
         {
             Expression<T> expression = null;
@@ -37,7 +38,7 @@ namespace ExpressionGraph
                     // New expression
                     if (iteration.Level == 1)
                     {
-                        expression = new Expression<T>(enableParenthesis, enablePlus, entityToStringCallback);
+                        expression = new Expression<T>(enableParenthesis, enablePlus, entityToStringCallback, maxItems);
                         expressions.Add(expression);
                     }
 

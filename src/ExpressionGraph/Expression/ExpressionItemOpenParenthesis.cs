@@ -9,7 +9,7 @@ namespace ExpressionGraph
     public class ExpressionItemOpenParenthesis<T> : ExpressionItem<T>
     {
         internal ExpressionItemOpenParenthesis(int level, int levelInExpression, int index)
-            : base(default(T), level, levelInExpression, index)
+            : base(default(T), -1, level, levelInExpression, index)
         {
         }
 

@@ -14,7 +14,7 @@ namespace ExpressionGraph.Reflection
         //public CanReadMethodDelegate CanRead { get; set; }
         //public GetValuesMethodDelegate GetValues { get; set; }
 
-        public Func<InstanceReflected, Type, TMemberType, bool> CanRead { get; set; }
-        public Func<InstanceReflected, Type, TMemberType, IEnumerable<MethodValue>> GetValues { get; set; }
+        public Func<ReflectedInstance, Type, TMemberType, bool> CanRead { get; set; }
+        public Func<ReflectedInstance, Type, TMemberType, IEnumerable<MethodValue>> GetValues { get; set; }
     }
 }

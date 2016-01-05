@@ -9,18 +9,18 @@ namespace ExpressionGraph.Reflection
 {
     public class PropertyReaderIndexerInt32InAnyClass : IPropertyReader
     {
-        public bool CanRead(InstanceReflected value, Type type, PropertyInfo property)
+        public bool CanRead(ReflectedInstance value, Type type, PropertyInfo property)
         {
             // verify if property is "this[int i]", in real use is: "myList[0]', exclude array objects 
             // because if array is multidimensional will happen a error when call 
             // "property.GetValue(obj, new object[] { 0, 0 });" the class "PropertyReaderIndexerInArray" fix it.
             var parameters = property.GetIndexParameters();
             //
-            return !(value.Object is Array) && (parameters.Length == 1)
+            return (parameters.Length == 1)
                 && (parameters[0].ParameterType == typeof(int));
         }
 
-        public IEnumerable<MethodValue> GetValues(InstanceReflected value, Type type, PropertyInfo property)
+        public IEnumerable<MethodValue> GetValues(ReflectedInstance value, Type type, PropertyInfo property)
         {
             //var converted = obj as System.Collections.ICollection;
             //var len = converted.Count;

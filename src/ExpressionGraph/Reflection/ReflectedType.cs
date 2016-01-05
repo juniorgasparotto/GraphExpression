@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ExpressionGraph.Reflection
 {
-    public class InstanceReflectedType
+    public class ReflectedType
     {
         private List<Property> _properties;
         private List<Method> _methods;
@@ -15,7 +15,7 @@ namespace ExpressionGraph.Reflection
         public IEnumerable<Property> Properties { get { return _properties; } }
         public IEnumerable<Method> Methods { get { return _methods; } }
 
-        public InstanceReflectedType(Type type)
+        public ReflectedType(Type type)
         {
             this.Type = type;
             this._fields = new List<Field>();

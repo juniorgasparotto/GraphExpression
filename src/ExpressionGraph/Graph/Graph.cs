@@ -70,7 +70,7 @@ namespace ExpressionGraph.Graph
             this.edges = new List<Edge<T>>();
             
             if (configuration.EntityToStringCallback != null)
-                this.Expression = new Expression<T>(true, true, f => configuration.EntityToStringCallback(f));
+                this.Expression = new Expression<T>(true, true, f => configuration.EntityToStringCallback(f.Entity));
             else
                 this.Expression = new Expression<T>(true, true);
 

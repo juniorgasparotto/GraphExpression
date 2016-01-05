@@ -28,7 +28,7 @@ namespace ExpressionGraph.Tests
             List<dynamic> entities = new List<dynamic>();
             entities.Add(a);
 
-            var expression = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, true, true, f => f.Name).FirstOrDefault();
+            var expression = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, true, true, f => f.Entity.Name).FirstOrDefault();
 
             var debug = expression.ToString();
             var test = @"A + B + B + B + B + C + C + C + B + B";
@@ -54,16 +54,16 @@ namespace ExpressionGraph.Tests
             List<dynamic> entities = new List<dynamic>();
             entities.Add(a);
 
-            var expression1 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, false, false, f => f.Name).FirstOrDefault();
+            var expression1 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, false, false, f => f.Entity.Name).FirstOrDefault();
             Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression1.ToString(), "Test 12");
 
-            var expression2 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, true, false, f => f.Name).FirstOrDefault();
+            var expression2 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, true, false, f => f.Entity.Name).FirstOrDefault();
             Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression2.ToString(), "Test 13");
 
-            var expression3 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, false, true, f => f.Name).FirstOrDefault();
+            var expression3 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, false, true, f => f.Entity.Name).FirstOrDefault();
             Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression3.ToString(), "Test 14");
 
-            var expression4 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, true, true, f => f.Name).FirstOrDefault();
+            var expression4 = ExpressionBuilder<dynamic>.Build(entities, f => f.Items, true, true, true, f => f.Entity.Name).FirstOrDefault();
             Assert.IsTrue("A + (B + C + B + B + C) + (B + C + B + B + C) + C + C" == expression4.ToString(), "Test 15");
         }
     }

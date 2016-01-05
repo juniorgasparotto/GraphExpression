@@ -10,16 +10,18 @@ namespace ExpressionGraph
         private static Type TypeOpenParenthesis = typeof(ExpressionItemOpenParenthesis<T>);
         private static Type TypeCloseParenthesis = typeof(ExpressionItemCloseParenthesis<T>);
         private static Type TypePlus = typeof(ExpressionItemPlus<T>);
-        private Func<T, string> toStringCallBack;
+        private Func<ExpressionItem<T>, string> toStringCallBack;
         private bool isLastOpenParenthesis = false;
 
+        private Dictionary<T, long> itemsIds;
         private List<ExpressionItem<T>> items;
         private ExpressionItem<T> currentParent;
         private ExpressionItem<T> lastItem;
 
         private int levelInExpression = 1;
         private int level = 1;
-
+        private long maxOfDifferentItems;
+        
         public bool EnableParenthesis { get; private set; }
         public bool EnablePlus { get; private set; }
 
@@ -39,19 +41,26 @@ namespace ExpressionGraph
             }
         }
 
-        internal Expression(bool enableParenthesis, bool enablePlus, Func<T, string> toStringCallBack = null)
+        public long CountOfDifferentEntities
+        {
+            get;
+            private set;
+        }
+
+        internal Expression(bool enableParenthesis, bool enablePlus, Func<ExpressionItem<T>, string> toStringCallBack = null, long maxOfDifferentItems = 0)
         {
             this.items = new List<ExpressionItem<T>>();
+            this.itemsIds = new Dictionary<T, long>();
             this.toStringCallBack = toStringCallBack;
             this.EnableParenthesis = enableParenthesis;
             this.EnablePlus = enablePlus;
+            this.maxOfDifferentItems = maxOfDifferentItems;
         }
 
         internal void AddItem(T item)
         {
             //var lastItemIsOpenParenthesis = this.lastItem != null && this.lastItem.GetType() == TypeOpenParenthesis;
             //var lastItemIsOpenParenthesis = this.isOpenParenthesis;
-
             var lastItemIsPlus = this.lastItem != null && this.lastItem.GetType() == TypePlus;
 
             if (this.EnablePlus && this.items.Count > 0 && !this.isLastOpenParenthesis && !lastItemIsPlus)
@@ -67,7 +76,20 @@ namespace ExpressionGraph
                 this.lastItem = plus;
             }
 
-            var current = new ExpressionItem<T>(item, this.level, this.levelInExpression, this.items.Count);
+            long id;
+            if (!itemsIds.ContainsKey(item))
+            {
+                if (this.CountOfDifferentEntities == this.maxOfDifferentItems)
+                    throw new Exception("Number of loaded items exceeded the limit of '" + this.maxOfDifferentItems + "'.");
+
+                id = this.CountOfDifferentEntities++;
+            }
+            else
+            {
+                id = itemsIds[item];
+            }
+
+            var current = new ExpressionItem<T>(item, id, this.level, this.levelInExpression, this.items.Count);
             current.ToStringCallBack = this.toStringCallBack;
 
             this.items.Add(current);

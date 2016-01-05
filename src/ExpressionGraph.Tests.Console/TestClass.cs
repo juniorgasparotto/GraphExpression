@@ -13,6 +13,11 @@ namespace ExpressionGraph.Tests
     public interface B : C
     {
         string B { get; }
+        // Indexer declaration:
+        string this[int index]
+        {
+            get;
+        }
     }
 
     public interface C

@@ -68,27 +68,27 @@ namespace ExpressionGraph.Tests
         public void TestExpressionBuilderToString()
         {
             var debug = "";
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C))"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C))"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + C))" == debug, "Test 1");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C)+D)"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C)+D)"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + C) + D)" == debug, "Test 2");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C)+C)"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C)+C)"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + C) + (C + C))" == debug, "Test 3");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C))+D"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C))+D"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + C)) + D" == debug, "Test 4");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C))+C"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+C))+C"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + C)) + (C + C)" == debug, "Test 5");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)))+C"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)))+C"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + (D + C))) + (C + (D + C))" == debug, "Test 6");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C))+I)+C"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C))+I)+C"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + (D + C)) + I) + (C + (D + C))" == debug, "Test 7");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P)+I)+C"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P)+I)+C"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + (D + C) + P) + I) + (C + (D + C) + P)" == debug, "Test 8");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P)+I+P)+C"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P)+I+P)+C"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + (D + C) + P) + I + P) + (C + (D + C) + P)" == debug, "Test 9");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P+G)+I+P)+C"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P+G)+I+P)+C"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + (D + C) + P + G) + I + P) + (C + (D + C) + P + G)" == debug, "Test 10");
-            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P+G))+C"), f => f.Children, true, true, true, f => f.Identity.ToString()).FirstOrDefault().ToString();
+            debug = ExpressionBuilder<HierarchicalEntity>.Build(ExpressionUtils.FromString("A+(B+(C+(D+C)+P+G))+C"), f => f.Children, true, true, true, f => f.Entity.Identity.ToString()).FirstOrDefault().ToString();
             Assert.IsTrue("A + (B + (C + (D + C) + P + G)) + (C + (D + C) + P + G)" == debug, "Test 11");
         }
 

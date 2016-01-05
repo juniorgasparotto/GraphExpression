@@ -8,6 +8,7 @@ namespace ExpressionGraph
 {
     public class ExpressionItem<T>
     {
+        public long Id { get; private set; }
         public int Index { get; private set; }
         public T Entity { get; private set; }
         public int Level { get; private set; }
@@ -43,11 +44,12 @@ namespace ExpressionGraph
             }
         }
 
-        internal Func<T, string> ToStringCallBack { get; set; }
+        internal Func<ExpressionItem<T>, string> ToStringCallBack { get; set; }
 
-        internal ExpressionItem(T entity, int level, int levelInExpression, int index)
+        internal ExpressionItem(T entity, long id, int level, int levelInExpression, int index)
         {
             this.Entity = entity;
+            this.Id = id;
             this.Level = level;
             this.LevelInExpression = levelInExpression;
             this.Index = index;
@@ -303,7 +305,7 @@ namespace ExpressionGraph
         public override string ToString()
         {
             if (ToStringCallBack != null)
-                return ToStringCallBack(this.Entity);
+                return ToStringCallBack(this);
 
             return this.Entity.ToString();
         }

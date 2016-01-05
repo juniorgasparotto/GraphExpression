@@ -18,7 +18,7 @@ namespace ExpressionGraph
             return query;
         }
 
-        public static IEnumerable<object> Objects(this IEnumerable<InstanceReflected> instanceReflecteds)
+        public static IEnumerable<object> Objects(this IEnumerable<ReflectedInstance> instanceReflecteds)
         {
             foreach (var r in instanceReflecteds)
                 yield return r.Object;
