@@ -155,17 +155,17 @@ namespace ExpressionGraph.Reflection
                 var name = method.Name;
 
                 // Prevent duplicate indexer (Item) "this[int32 index]" or "this[int32 index, int32 index2]"
-                var parameters = method.GetParameters();
-                if (parameters.Length > 0)
-                {
-                    var paramsStr = "";
-                    foreach (var param in parameters)
-                    {
-                        paramsStr += paramsStr == "" ? "" : ", ";
-                        paramsStr += string.Format("{0} {1}", param.ParameterType.Name, param.Name);
-                    }
-                    name += " [" + paramsStr + "]";
-                }
+                //var parameters = method.GetParameters();
+                //if (parameters.Length > 0)
+                //{
+                //    var paramsStr = "";
+                //    foreach (var param in parameters)
+                //    {
+                //        paramsStr += paramsStr == "" ? "" : ", ";
+                //        paramsStr += string.Format("{0} {1}", param.ParameterType.Name, param.Name);
+                //    }
+                //    name += "[" + paramsStr + "]";
+                //}
 
                 if (methodsAddeds != null)
                 {

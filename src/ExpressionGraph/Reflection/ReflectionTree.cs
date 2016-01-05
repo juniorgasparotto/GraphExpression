@@ -513,14 +513,14 @@ namespace ExpressionGraph.Reflection
                 {
                     var typesParents = new List<Type>();
                     var type = obj.GetType();
-                    if (obj is Array)
-                    {
-                        typesParents.Add(typeof(System.Collections.IList));
-                    }
-                    else
-                    { 
+                    //if (obj is Array)
+                    //{
+                    //    typesParents.Add(typeof(System.Collections.IList));
+                    //}
+                    //else
+                    //{ 
                         typesParents.Add(type);
-                    }
+                    //}
                     return typesParents;
                 });
         }
@@ -578,8 +578,8 @@ namespace ExpressionGraph.Reflection
             this.SelectProperties(
                 (obj, type) =>
                 {
-                    return obj is System.Collections.ArrayList 
-                        || obj is System.Collections.BitArray 
+                    return obj is System.Collections.ArrayList
+                        || obj is System.Collections.BitArray
                         || obj is System.Collections.IDictionary
                         || obj is Array;
                 }
@@ -591,7 +591,6 @@ namespace ExpressionGraph.Reflection
                         type == typeof(System.Collections.ArrayList)
                      || type == typeof(System.Collections.BitArray)
                      || type == typeof(System.Collections.IDictionary)
-                     || type == typeof(System.Collections.IList)
                     )
                         return type.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(f => f.GetIndexParameters().Length > 0);
 
@@ -603,7 +602,7 @@ namespace ExpressionGraph.Reflection
             // ** This order is obrigatory **
             this.AddValueReaderForProperties(new PropertyReaderDefault());
             this.AddValueReaderForProperties(new PropertyReaderIndexerInt32InAnyClass());
-            this.AddValueReaderForProperties(new PropertyReaderIndexerInArray());
+            //this.AddValueReaderForProperties(new PropertyReaderIndexerInArray());
             this.AddValueReaderForProperties(new PropertyReaderIndexerInDictionary());
         }
 
@@ -623,7 +622,21 @@ namespace ExpressionGraph.Reflection
                 }
             );
 
+            // Get "Array" values by method GetValue
+            this.SelectMethods(
+                (obj, type) =>
+                {
+                    return obj is Array;
+                }
+                ,
+                (obj, type) =>
+                {
+                    return type.GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(f => f.Name == "GetValue" && f.GetParameters()[0].ParameterType == typeof(long[]));
+                }
+            );
+
             this.AddValueReaderForMethods(new MethodReaderIEnumerableGetEnumerator());
+            this.AddValueReaderForMethods(new MethodReaderArrayGetValue());
         }
 
         #endregion

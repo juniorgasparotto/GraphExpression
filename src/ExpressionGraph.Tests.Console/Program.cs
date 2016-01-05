@@ -74,29 +74,29 @@ namespace ExpressionGraph.Tests.Console
             var json = "";
             var testClass = new SeveralTypesTest();
             testClass.Populate();
-
+            
             var expressionResult1 = testClass.FieldPublicArrayUni.AsReflection().Query().ToString();
-            expectedTest = "String[]_0 + Item[0]: \"[0]\" + Item[1]: \"[1]\"";
+            expectedTest = "String[]_0 + GetValue[0]: \"[0]\" + GetValue[1]: \"[1]\"";
             json = ToJson(testClass.FieldPublicArrayUni);
             AssertTrue(expressionResult1 == expectedTest, "ArrayUni");
 
             var expressionResult2 = testClass.FieldPublicArrayTwo.AsReflection().Query().ToString();
-            expectedTest = "String[,]_0 + Item[0,0]: \"[0, 0]\" + Item[0,1]: \"[0, 1]\" + Item[1,0]: \"[1, 0]\" + Item[1,1]: \"[1, 1]\"";
+            expectedTest = "String[,]_0 + GetValue[0,0]: \"[0, 0]\" + GetValue[0,1]: \"[0, 1]\" + GetValue[1,0]: \"[1, 0]\" + GetValue[1,1]: \"[1, 1]\"";
             json = ToJson(testClass.FieldPublicArrayTwo);
             AssertTrue(expressionResult2 == expectedTest, "ArrayTwo");
 
             var expressionResult3 = testClass.FieldPublicArrayThree.AsReflection().Query().ToString();
-            expectedTest = "String[,,]_0 + Item[0,0,0]: \"[0, 0, 0]\" + Item[0,0,1]: \"[0, 0, 1]\"";
+            expectedTest = "String[,,]_0 + GetValue[0,0,0]: \"[0, 0, 0]\" + GetValue[0,0,1]: \"[0, 0, 1]\"";
             json = ToJson(testClass.FieldPublicArrayThree);
             AssertTrue(expressionResult3 == expectedTest, "ArrayThree");
 
             var expressionResult4 = testClass.FieldPublicJaggedArrayTwo.AsReflection().Query().ToString();
-            expectedTest = "String[][]_0 + (Item[0]: String[]_1 + Item[0]: \"a\" + Item[1]: \"b\" + Item[2]: \"c\" + Item[3]: \"d\" + Item[4]: \"e\") + (Item[1]: String[]_7 + Item[0]: \"a1\" + Item[1]: \"b1\" + Item[2]: \"c1\" + Item[3]: \"d1\")";
+            expectedTest = "String[][]_0 + (GetValue[0]: String[]_1 + GetValue[0]: \"a\" + GetValue[1]: \"b\" + GetValue[2]: \"c\" + GetValue[3]: \"d\" + GetValue[4]: \"e\") + (GetValue[1]: String[]_7 + GetValue[0]: \"a1\" + GetValue[1]: \"b1\" + GetValue[2]: \"c1\" + GetValue[3]: \"d1\")";
             json = ToJson(testClass.FieldPublicJaggedArrayTwo);
             AssertTrue(expressionResult4 == expectedTest, "JaggedArrayTwo");
 
             var expressionResult5 = testClass.FieldPublicJaggedArrayThree.AsReflection().Query().ToString();
-            expectedTest = "String[][][]_0 + (Item[0]: String[][]_1 + (Item[0]: String[]_2 + Item[0]: \"[0][0][0]\" + Item[1]: \"[0][0][1]\"))";
+            expectedTest = "String[][][]_0 + (GetValue[0]: String[][]_1 + (GetValue[0]: String[]_2 + GetValue[0]: \"[0][0][0]\" + GetValue[1]: \"[0][0][1]\"))";
             json = ToJson(testClass.FieldPublicJaggedArrayThree);
             AssertTrue(expressionResult5 == expectedTest, "JaggedArrayThree");
 
@@ -113,7 +113,7 @@ namespace ExpressionGraph.Tests.Console
             // is normal "int[,][]" is changed by "int[][,]". The .net make it.
             // ** Newtonsoft Json have different return expectations **
             var expressionResult8 = testClass.FieldPublicMixedArrayAndJagged.AsReflection().Query().ToString();
-            expectedTest = "Int32[,][]_0 + (Item[0]: Int32[,]_1 + Item[0,0]: 1 + Item[0,1]: 3 + Item[1,0]: 5 + Item[1,1]: 7) + (Item[1]: Int32[,]_6 + Item[0,0]: 0 + Item[0,1]: 2 + Item[1,0]: 4 + Item[1,1]: 6 + Item[2,0]: 8 + Item[2,1]: 10) + (Item[2]: Int32[,]_13 + Item[0,0]: 11 + Item[0,1]: 22 + Item[1,0]: 99 + Item[1,1]: 88 + Item[2,0]: 0 + Item[2,1]: 9)";
+            expectedTest = "Int32[,][]_0 + (GetValue[0]: Int32[,]_1 + GetValue[0,0]: 1 + GetValue[0,1]: 3 + GetValue[1,0]: 5 + GetValue[1,1]: 7) + (GetValue[1]: Int32[,]_6 + GetValue[0,0]: 0 + GetValue[0,1]: 2 + GetValue[1,0]: 4 + GetValue[1,1]: 6 + GetValue[2,0]: 8 + GetValue[2,1]: 10) + (GetValue[2]: Int32[,]_13 + GetValue[0,0]: 11 + GetValue[0,1]: 22 + GetValue[1,0]: 99 + GetValue[1,1]: 88 + GetValue[2,0]: 0 + GetValue[2,1]: 9)";
             json = ToJson(testClass.FieldPublicMixedArrayAndJagged);
             AssertTrue(expressionResult8 == expectedTest, "MixedArrayAndJagged");
         }

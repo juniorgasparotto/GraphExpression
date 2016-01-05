@@ -434,8 +434,6 @@ public class MyCollectionExplicitGetEnumerator : IEnumerable
 
 public class MyCollectionInheritsExplicitGetEnumerator : MyCollectionExplicitGetEnumerator
 {
-    private string[] elements;
-
     public MyCollectionInheritsExplicitGetEnumerator(string source, char[] delimiters)
         : base(source, delimiters)
     {
@@ -462,8 +460,6 @@ public class MyCollectionPublicGetEnumerator : IEnumerable
 
 public class MyCollectionInheritsPublicGetEnumerator : MyCollectionPublicGetEnumerator
 {
-    private string[] elements;
-
     public MyCollectionInheritsPublicGetEnumerator(string source, char[] delimiters)
         : base(source, delimiters)
     {

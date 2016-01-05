@@ -40,6 +40,7 @@
     <Compile Include="Reflection\DefinitionOfMethodValueReader.cs" />
     <Compile Include="Reflection\DefinitionOfClassMemberReader.cs" />
     <Compile Include="Reflection\Instance - Copy %282%29.cs" />
+    <Compile Include="Reflection\Method\MethodReaderArrayGetValue.cs" />
     <Compile Include="Reflection\Method\MethodReaderIEnumerableGetEnumerator.cs" />
     <Compile Include="SettingsFlags.cs" />
     <Compile Include="Reflection\Class\deleted\ClassReaderWithoutPrimitives.cs" />
