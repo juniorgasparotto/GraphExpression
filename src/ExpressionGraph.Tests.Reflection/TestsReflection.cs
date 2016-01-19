@@ -612,9 +612,21 @@ namespace ExpressionGraph.Tests.Console
                 .AddValueReaderForMethods(new BeepMethodReader());
            
             var result = reflection.Query().ToString();
-            var expected = "";
+            var expected = "{ExpressionGraph.Tests.Son_0} + Add: null + Beep[263, 100]: true + Beep[263, 100]: true + Beep[294, 100]: true + Beep[330, 100]: true + Beep[351, 100]: true + Beep[393, 100]: true + Beep[440, 100]: true + Beep[495, 100]: true + Beep[526, 100]: true + Beep[588, 100]: true + Beep[660, 100]: true + Beep[702, 100]: true + Beep[787, 100]: true + Beep[879, 100]: true + Beep[990, 100]: true + Beep[1053, 100]: true + Public: null + ToString: null + Equals: null + GetHashCode: null + GetType: null";
             AssertTrue(result == expected, "Test public and extern method");
 
+            // test load all methods of 'GrandFather' class, don't load properties or fields and add reader for all methods that hasen't parameters
+            // is important use "BindingFlags.DeclaredOnly" to don't get a infinite execution because the private method "MemberwiseClone" aways return the 
+            // new copy of "GrandFather" instance causing the loop.
+            reflection = obj.AsReflection()
+                .SelectTypes(value => ReflectionUtils.GetAllParentTypes(value.GetType(), true, true))
+                .SelectProperties(null)
+                .SelectMethods((value, type) => type == typeof(Grandfather), (value, type) => type.GetMethods(BindingFlags.DeclaredOnly |  BindingFlags.NonPublic | BindingFlags.Instance))
+                .AddValueReaderForMethods(new MethodReaderDefault());
+            result = reflection.Query().ToString();
+            expected = "{ExpressionGraph.Tests.Son_0} + GrandGatherMethod: \"Hi!\"";
+            AssertTrue(result == expected, "Test internal and the method is the GrandFather level");
+            var r = reflection.ReflectTree().ToList();
             //reflection.AddValueReaderForProperties(new PropertyReadIndexersTestClass());
         }
 

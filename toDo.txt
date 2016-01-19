@@ -7,3 +7,4 @@ tester field com valor null
 tester property com valor null
 tester method com valor null
 precisa mudar o esquema de parametros para suportar valores NULL e ainda sim ter as infos dos parametros
+criar teste para SetMaxItems menor que o suportado

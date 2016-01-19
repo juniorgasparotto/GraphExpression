@@ -105,9 +105,9 @@ namespace ExpressionGraph.Tests
             }
         }
 
-        internal void GrandGatherMethod()
+        internal string GrandGatherMethod()
         {
-
+            return "Hi!";
         }
     }
 

@@ -19,7 +19,7 @@ namespace ExpressionGraph.Reflection
 
         public IEnumerable<MethodValue> GetValues(ReflectedInstance value, Type type, MethodInfo methodInfo)
         {
-            var methodValue = methodInfo.Invoke(value, null);
+            var methodValue = methodInfo.Invoke(value.Object, null);
             yield return new MethodValue(methodValue, null);
         }
     }

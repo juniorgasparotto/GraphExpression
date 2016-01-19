@@ -90,7 +90,6 @@ namespace ExpressionGraph
             return typeof(TSelf);
         }
 
-
         public static Dictionary<ArrayKey, object> ArrayToDictionary(Array inObject)
         {
             var outObject = new Dictionary<ArrayKey, object>();
