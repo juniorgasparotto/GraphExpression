@@ -37,7 +37,7 @@ namespace ExpressionGraph
 
         public static string ToLiteral(object input, bool addNullLiteral = true)
         {
-            string output = addNullLiteral ? "null" : "";
+            string output = null;
 
             if (input != null)
             {
@@ -80,14 +80,14 @@ namespace ExpressionGraph
                             output = ((Double)((Single)input)).ToString(CultureInfo.InvariantCulture);
                             break;
                         case TypeCode.Object:
-                            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-                            {
-                                output = ToLiteral(Nullable.GetUnderlyingType(type));
-                            }
-                            else
-                            {
-                                output = ToLiteral(input.ToString());
-                            }
+                            //if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                            //{
+                            //    output = ToLiteral(Nullable.GetUnderlyingType(type));
+                            //}
+                            //else
+                            //{
+                            //    output = ToLiteral(input.ToString());
+                            //}
                             break;
                         default:
                             output = ToLiteral(input.ToString());

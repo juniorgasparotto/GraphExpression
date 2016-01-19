@@ -36,12 +36,16 @@
     <Compile Include="Expression\ExpressionBuilder.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Iteration.cs" />
+    <Compile Include="Reflection\Class\EnumerableReaderArray.cs" />
+    <Compile Include="Reflection\Class\EnumerableReaderIDictionary.cs" />
     <Compile Include="Reflection\DefinitionOfTypeReader.cs" />
     <Compile Include="Reflection\DefinitionOfMethodValueReader.cs" />
     <Compile Include="Reflection\DefinitionOfClassMemberReader.cs" />
     <Compile Include="Reflection\Instance - Copy %282%29.cs" />
+    <Compile Include="Reflection\Class\IEnumeratorReader.cs" />
     <Compile Include="Reflection\Method\MethodReaderArrayGetValue.cs" />
     <Compile Include="Reflection\Method\MethodReaderIEnumerableGetEnumerator.cs" />
+    <Compile Include="Reflection\Class\EnumerableReaderDefault.cs" />
     <Compile Include="SettingsFlags.cs" />
     <Compile Include="Reflection\Class\deleted\ClassReaderWithoutPrimitives.cs" />
     <Compile Include="Reflection\Class\deleted\IClassReader.cs" />

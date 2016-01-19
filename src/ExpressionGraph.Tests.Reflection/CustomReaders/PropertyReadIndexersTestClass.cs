@@ -12,12 +12,12 @@ namespace ExpressionGraph.Tests.Console
     {
         public bool CanRead(ReflectedInstance value, Type type, PropertyInfo property)
         {
-            return value.Object is TestClass && property.GetIndexParameters().Length > 0;
+            return value.Object is Son && property.GetIndexParameters().Length > 0;
         }
 
         public IEnumerable<MethodValue> GetValues(ReflectedInstance value, Type type, PropertyInfo property)
         {
-            var converted = value.Object as TestClass;
+            var converted = value.Object as Son;
             var len = converted.List.Count;
             var parameters = property.GetIndexParameters();
 

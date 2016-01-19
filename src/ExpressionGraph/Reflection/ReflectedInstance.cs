@@ -51,6 +51,11 @@ namespace ExpressionGraph.Reflection
             return this._reflectedTypes.SelectMany(f => f.Fields);
         }
 
+        public IEnumerable<MethodValue> GetAllEnumeratorValues()
+        {
+            return this._reflectedTypes.SelectMany(f => f.EnumeratorValues);
+        }
+
         #region Overrides
 
         public override string ToString()

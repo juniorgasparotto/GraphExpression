@@ -79,7 +79,7 @@ namespace ExpressionGraph
             long id;
             if (!itemsIds.ContainsKey(item))
             {
-                if (this.CountOfDifferentEntities == this.maxOfDifferentItems)
+                if (this.maxOfDifferentItems > 0 && this.CountOfDifferentEntities == this.maxOfDifferentItems)
                     throw new Exception("Number of loaded items exceeded the limit of '" + this.maxOfDifferentItems + "'.");
 
                 id = this.CountOfDifferentEntities++;

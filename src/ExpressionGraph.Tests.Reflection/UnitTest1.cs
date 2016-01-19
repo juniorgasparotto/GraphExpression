@@ -12,10 +12,10 @@ namespace ExpressionGraph.Tests.Reflection
         [TestMethod]
         public void Test_Reflection_Default()
         {
-            var testClass = new ClassTestTypes();
-            dynamic X = 0;
-            testClass.FieldPublicDynamic = X;
-            var reflection = testClass.FieldPublicDynamic.AsReflection();
+            //var testClass = new ClassTestTypes();
+            //dynamic X = 0;
+            //testClass.FieldPublicDynamic = X;
+            //var reflection = testClass.FieldPublicDynamic.AsReflection();
             
             //var r1 = testClass.FieldPublicDynamic.AsReflection();
 

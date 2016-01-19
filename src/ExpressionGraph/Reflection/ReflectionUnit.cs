@@ -14,6 +14,7 @@ namespace ExpressionGraph.Reflection
         public Func<object, Type, IEnumerable<FieldInfo>> FieldsReader { get; set; }
         public Func<object, Type, IEnumerable<PropertyInfo>> PropertiesReader { get; set; }
         public Func<object, Type, IEnumerable<MethodInfo>> MethodsReader { get; set; }
+        public Func<object, Type, IEnumerable<MethodValue>> EnumeratorReader { get; set; }
         public List<DefinitionOfMethodValueReader<PropertyInfo>> PropertyValueReaders { get; set; }
         public List<DefinitionOfMethodValueReader<MethodInfo>> MethodValueReaders { get; set; }
 
@@ -57,6 +58,9 @@ namespace ExpressionGraph.Reflection
                         if (this.MethodsReader != null)
                             this.ParseMethods(instance, this.MethodsReader(obj, typeParent), instanceType, methodsAll);
 
+                        if (this.EnumeratorReader != null)
+                            this.ParseEnumerator(instance, instanceType);
+
                         instance.Add(instanceType);
 
                         propertiesAll.AddRange(instanceType.Properties);
@@ -82,8 +86,8 @@ namespace ExpressionGraph.Reflection
                     var read = this.PropertyValueReaders.LastOrDefault(f => f.CanRead(instance, instanceType.Type, property));
                     if (read != null)
                         values = read.GetValues(instance, instanceType.Type, property).ToList();
-                    else 
-                        throw new Exception("No reader has been found for the Property '" + property.Name + "'");
+                    //else 
+                    //    throw new Exception("No reader has been found for the Property '" + property.Name + "'");
                 }
 
                 var name = property.Name;
@@ -139,6 +143,8 @@ namespace ExpressionGraph.Reflection
         private void ParseMethods(ReflectedInstance instance, IEnumerable<MethodInfo> methods, ReflectedType instanceType, List<Method> methodsAddeds)
         {
             if (methods == null) return;
+
+            methods = methods.Where(m => !m.IsSpecialName);
 
             var objType = instanceType.Type;
             foreach (var method in methods)
@@ -197,6 +203,13 @@ namespace ExpressionGraph.Reflection
 
                 instanceType.Add(methodAux);
             }
+        }
+
+        private void ParseEnumerator(ReflectedInstance instance, ReflectedType instanceType)
+        {
+            var values = this.EnumeratorReader(instance.Object, instanceType.Type);
+            if (values != null)
+                instanceType.Add(values);
         }
 
         private void ParseFields(ReflectedInstance instance, IEnumerable<FieldInfo> fields, ReflectedType instanceType, List<Field> fieldsAddeds)

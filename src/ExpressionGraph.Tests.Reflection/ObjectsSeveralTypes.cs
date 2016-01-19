@@ -17,17 +17,6 @@ internal enum EnumTest
 
 internal delegate string DelegateTest(int a, string b);
 
-internal class ClassTestVisibility
-{
-    public string FieldPublicString;
-    private string FieldPrivateString;
-    internal string FieldInternalString;
-
-    public string PropPublicString { get; set; }
-    private string PropPrivateString { get; set; }
-    internal string PropInternalString { get; set; }
-}
-
 internal class SeveralTypesTest
 {
     #region Types of Keywords
@@ -47,6 +36,20 @@ internal class SeveralTypesTest
     public short FieldPublicShort;
     public ushort FieldPublicUShort;
     public float FieldPublicFloat;
+
+    public int? FieldPublicInt32Nullable;
+    public long? FieldPublicInt64Nullable;
+    public ulong? FieldPublicULongNullable;
+    public uint? FieldPublicUIntNullable;
+    public decimal? FieldPublicDecimalNullable;
+    public double? FieldPublicDoubleNullable;
+    public char? FieldPublicCharNullable;
+    public byte? FieldPublicByteNullable;
+    public bool? FieldPublicBooleanNullable;
+    public sbyte? FieldPublicSByteNullable;
+    public short? FieldPublicShortNullable;
+    public ushort? FieldPublicUShortNullable;
+    public float? FieldPublicFloatNullable;
 
     #endregion
 
@@ -144,10 +147,15 @@ internal class SeveralTypesTest
     public MyCollectionInheritsPublicGetEnumerator FieldPublicMyCollectionInheritsPublicGetEnumerator;
     public MyCollectionExplicitGetEnumerator FieldPublicMyCollectionExplicitGetEnumerator;
     public MyCollectionInheritsExplicitGetEnumerator FieldPublicMyCollectionInheritsExplicitGetEnumerator;
-
+    public MyCollectionInheritsTooIEnumerable FieldPublicMyCollectionInheritsTooIEnumerable;
+    
     public EnumTest FieldPublicEnumSpecific;
     public DelegateTest MyDelegate { get; set; }
-    public event DelegateTest MyEvent;
+    public EmptyClass EmptyClass;
+
+    public ThreeTuple<int> StructGeneric;
+    public ThreeTuple<int>? StructGenericNullable;
+    public System.Nullable<ThreeTuple<int>> FieldPublicNullable;
 
     #endregion
 
@@ -155,7 +163,7 @@ internal class SeveralTypesTest
     {
         #region Types of Keywords
 
-        FieldPublicDynamic = "Dynamic - String";
+        FieldPublicDynamic = new { PropPublic1 = "A", PropPublic2 = 1, PropPublic3 = "B", PropPublic4 = "B", PropPublic5 = "B", PropPublic6 = "B", PropPublic7 = "B", PropPublic8 = "B", PropPublic9 = "B", PropPublic10 = "B", PropPublic11 = "B", PropPublic12 = new { PropSubPublic1 = 0, PropSubPublic2 = 1, PropSubPublic3 = 2 } };
         FieldPublicObject = new StringBuilder("Object - StringBuilder");
         FieldPublicInt32 = int.MaxValue;
         FieldPublicInt64 = long.MaxValue;
@@ -170,6 +178,20 @@ internal class SeveralTypesTest
         FieldPublicShort = short.MaxValue;
         FieldPublicUShort = ushort.MaxValue;
         FieldPublicFloat = 100000.675555f;
+
+        FieldPublicInt32Nullable = int.MaxValue;
+        FieldPublicInt64Nullable = 2;
+        FieldPublicULongNullable = ulong.MaxValue;
+        FieldPublicUIntNullable = uint.MaxValue;
+        FieldPublicDecimalNullable = 100000.999999m;
+        FieldPublicDoubleNullable = 100000.999999d;
+        FieldPublicCharNullable = 'A';
+        FieldPublicByteNullable = byte.MaxValue;
+        FieldPublicBooleanNullable = true;
+        FieldPublicSByteNullable = sbyte.MaxValue;
+        FieldPublicShortNullable = short.MaxValue;
+        FieldPublicUShortNullable = ushort.MaxValue;
+        FieldPublicFloatNullable = 100000.675555f;
 
         #endregion
 
@@ -188,7 +210,7 @@ internal class SeveralTypesTest
         FieldPublicIntPtr = new IntPtr(100);
         FieldPublicTimeZone = TimeZone.CurrentTimeZone;
         FieldPublicTimeZoneInfo = TimeZoneInfo.Utc;
-        FieldPublicTuple = Tuple.Create<string, int, decimal>("T-string", 1, 1.1m);
+        FieldPublicTuple = Tuple.Create<string, int, decimal>("T-string\"", 1, 1.1m);
         FieldPublicType = typeof(object);
         FieldPublicUIntPtr = new UIntPtr(100);
         FieldPublicUri = new Uri("http://www.site.com");
@@ -359,10 +381,12 @@ internal class SeveralTypesTest
         FieldPublicListDictionary.Add("ListDictionaryKey1", "ListDictionary1");
         FieldPublicListDictionary.Add("ListDictionaryKey2", "ListDictionary2");
         FieldPublicNameValueCollection = new System.Collections.Specialized.NameValueCollection();
-        FieldPublicNameValueCollection.Add(new System.Collections.Specialized.NameValueCollection());
+        FieldPublicNameValueCollection.Add("Key1", "Value1");
+        FieldPublicNameValueCollection.Add("Key2", "Value2");
 
         FieldPublicOrderedDictionary = new System.Collections.Specialized.OrderedDictionary();
-        FieldPublicOrderedDictionary.Add("OrderedDictionaryKey1", "OrderedDictionary1");
+        FieldPublicOrderedDictionary.Add(1, "OrderedDictionary1");
+        FieldPublicOrderedDictionary.Add(2, "OrderedDictionary1");
         FieldPublicOrderedDictionary.Add("OrderedDictionaryKey2", "OrderedDictionary2");
 
         FieldPublicStringCollection = new System.Collections.Specialized.StringCollection();
@@ -391,10 +415,14 @@ internal class SeveralTypesTest
         FieldPublicMyCollectionInheritsPublicGetEnumerator = new MyCollectionInheritsPublicGetEnumerator("a b c", new char[] { ' ' });
         FieldPublicMyCollectionExplicitGetEnumerator = new MyCollectionExplicitGetEnumerator("a b c", new char[] { ' ' });
         FieldPublicMyCollectionInheritsExplicitGetEnumerator = new MyCollectionInheritsExplicitGetEnumerator("a b c", new char[] { ' ' });
+        FieldPublicMyCollectionInheritsTooIEnumerable = new MyCollectionInheritsTooIEnumerable("a b c", new char[] { ' ' });
+
         FieldPublicEnumSpecific = EnumTest.ValueB;
         MyDelegate = MethodDelegate;
-        MyEvent += new DelegateTest(MyDelegate);
-        MyEvent += new DelegateTest(MyDelegate);
+        EmptyClass = new EmptyClass();
+        StructGeneric = new ThreeTuple<int>(0, 1, 2);
+        StructGenericNullable = new ThreeTuple<int>(0, 1, 2);
+        FieldPublicNullable = new Nullable<ThreeTuple<int>>(StructGeneric);
 
         #endregion
     }
@@ -466,6 +494,23 @@ public class MyCollectionInheritsPublicGetEnumerator : MyCollectionPublicGetEnum
     }
 }
 
+public class MyCollectionInheritsTooIEnumerable: MyCollectionPublicGetEnumerator, IEnumerable
+{
+    private string[] elements2;
+    public MyCollectionInheritsTooIEnumerable(string source, char[] delimiters)
+        : base(source, delimiters)
+    {
+        // The constructor parses the string argument into tokens.
+        elements2 = source.ToUpper().Split(delimiters);
+    }
+
+    // The IEnumerable interface requires implementation of method GetEnumerator.
+    public IEnumerator GetEnumerator()
+    {
+        return elements2.GetEnumerator();
+    }
+}
+
 public class MyDataKeyedCollection : KeyedCollection<int, MyData>
 {
     protected override int GetKeyForItem(MyData item)
@@ -478,4 +523,26 @@ public class MyData
 {
     public int Id { get; set; }
     public string Data { get; set; }
+}
+
+public class EmptyClass
+{
+    public override string ToString()
+    {
+        return "New to string";
+    }
+}
+
+public struct ThreeTuple<T>
+{
+    public ThreeTuple(T x, T y, T z)
+    {
+        X = x;
+        Y = y;
+        Z = z;
+    }
+
+    public T X;
+    public T Y;
+    public T Z;
 }

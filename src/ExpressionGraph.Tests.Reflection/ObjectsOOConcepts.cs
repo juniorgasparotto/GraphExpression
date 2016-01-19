@@ -5,32 +5,32 @@ using System.Runtime.InteropServices;
 
 namespace ExpressionGraph.Tests
 {
-    public interface A : B
+    public interface ILevel3
     {
-        string A { get; }
+        string C { get; }
     }
 
-    public interface B : C
+    public interface ILevel2 : ILevel3
     {
         string B { get; }
-        // Indexer declaration:
+        
         string this[int index]
         {
             get;
         }
     }
 
-    public interface C
+    public interface ILevel1 : ILevel2
     {
-        string C { get; }
+        string A { get; }
     }
 
-    public interface IBase
+    public interface IGrandfather
     {
         string BaseProp { get; }
     }
 
-    public abstract class TestClassBaseBase : IBase
+    public abstract class Grandfather: IGrandfather
     {
         private string Field1 = "field1";
         private const string Constant1 = "constant1a";
@@ -68,9 +68,9 @@ namespace ExpressionGraph.Tests
             }
         }
 
-        string IBase.BaseProp
+        string IGrandfather.BaseProp
         {
-            get { return "base.IBase.BaseProp"; }
+            get { return "base.IGrandfather.BaseProp"; }
         }
 
         public static string StaticA
@@ -104,9 +104,14 @@ namespace ExpressionGraph.Tests
                 return "base.base.this[string contains]";
             }
         }
+
+        internal void GrandGatherMethod()
+        {
+
+        }
     }
 
-    public class TestClassBase : TestClassBaseBase, IBase
+    public class Father : Grandfather, IGrandfather
     {
         private string Field1 = "field1";
         private const string Constant1 = "constant1a";
@@ -144,9 +149,9 @@ namespace ExpressionGraph.Tests
             }
         }
 
-        string IBase.BaseProp
+        string IGrandfather.BaseProp
         {
-            get { return "IBase.BaseProp"; }
+            get { return "IGrandfather.BaseProp"; }
         }
 
         public static string StaticA
@@ -182,7 +187,7 @@ namespace ExpressionGraph.Tests
         }
     }
 
-    public class TestClass : TestClassBase, A
+    public class Son : Father, ILevel1
     {
         private string Field1 = "field1";
         private const string Constant1 = "constant1a";
@@ -190,7 +195,7 @@ namespace ExpressionGraph.Tests
         public List<string> list = new List<string>();
         public static List<string> listStatic = new List<string>();
 
-        public TestClass()
+        public Son()
         {
             list.Add("list 0");
             list.Add("list 1");
@@ -259,7 +264,7 @@ namespace ExpressionGraph.Tests
             this.list.Add(value);
         }
 
-        string A.A
+        string ILevel1.A
         {
             get
             {
@@ -316,16 +321,23 @@ namespace ExpressionGraph.Tests
             }
         }
 
-
-        [DllImport("kernel32.dll")]
-        public static extern bool Beep(int frequency, int duration);
-
-        protected internal int IsProtectedInternal 
+        protected internal int OnlySetProperty
         {
             set
             {
 
             }
+        }
+
+        [DllImport("kernel32.dll")]
+        public static extern bool Beep(int frequency, int duration);
+        public bool Public(bool param1) 
+        {
+            return false;
+        }
+        private bool Private(bool param1)
+        {
+            return false;
         }
     }
 }

@@ -45,11 +45,9 @@
     <Compile Include="Program2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MethodReaderTestClass.cs" />
-    <Compile Include="PropertyReadIndexersTestClass.cs" />
-    <Compile Include="TestClass.cs" />
-    <Compile Include="TestClass3.cs" />
-    <Compile Include="SeveralTypesTest.cs" />
+    <Compile Include="deleted\SoundClass.cs" />
+    <Compile Include="deleted\TestClass3.cs" />
+    <Compile Include="deleted\TestObjects.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -62,6 +60,10 @@
     <ProjectReference Include="..\ExpressionGraph.Serialization\ExpressionGraph.Serialization.csproj">
       <Project>{dc183878-b594-4bab-b79d-bc775ca9579f}</Project>
       <Name>ExpressionGraph.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExpressionGraph.Tests.Reflection\ExpressionGraph.Tests.Reflection.csproj">
+      <Project>{0193621b-3b15-4a97-9090-17fe0aa8b90e}</Project>
+      <Name>ExpressionGraph.Tests.Reflection</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExpressionGraph\ExpressionGraph.csproj">
       <Project>{8de63a2d-7367-473d-8cf2-0efa652e5fbd}</Project>

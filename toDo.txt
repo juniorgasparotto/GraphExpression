@@ -1,0 +1,9 @@
+liberar exceptin, guid, 
+parametro null
+testes dos metodos
+testes dos fields
+testes das properties
+tester field com valor null
+tester property com valor null
+tester method com valor null
+precisa mudar o esquema de parametros para suportar valores NULL e ainda sim ter as infos dos parametros

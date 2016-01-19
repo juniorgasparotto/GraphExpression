@@ -57,8 +57,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MyCollection.cs" />
-    <Compile Include="TestClass2.cs" />
+    <Compile Include="deleted\MyCollection.cs" />
+    <Compile Include="CustomReaders\MethodReaderTestClass.cs" />
+    <Compile Include="ObjectsOOConcepts.cs" />
+    <Compile Include="CustomReaders\PropertyReadIndexersTestClass.cs" />
+    <Compile Include="TestsReflection.cs" />
+    <Compile Include="deleted\TestClass2.cs" />
+    <Compile Include="ObjectsSeveralTypes.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

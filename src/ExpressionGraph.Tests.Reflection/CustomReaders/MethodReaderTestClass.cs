@@ -9,12 +9,11 @@ using ExpressionGraph.Reflection;
 
 namespace ExpressionGraph.Tests.Console
 {
-    public class MethodReaderTestClass : IMethodReader
+    public class BeepMethodReader : IMethodReader
     {
-
         public bool CanRead(ReflectedInstance value, Type type, MethodInfo methodInfo)
         {
-            return value.Object is TestClass && methodInfo.GetParameters().Length > 0;
+            return value.Object is Son && methodInfo.GetParameters().Length > 0;
         }
 
         public IEnumerable<MethodValue> GetValues(ReflectedInstance value, Type type, MethodInfo methodInfo)

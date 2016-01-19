@@ -76,7 +76,7 @@ namespace ExpressionGraph
             var sb = new StringBuilder();
             var name = showFullName ? type.FullName : type.Name;
             //return name;
-            if (!type.IsGenericType) return name;
+            if (!type.IsGenericType || name.IndexOf('`') == -1) return name;
             sb.Append(name.Substring(0, name.IndexOf('`')));
             sb.Append("<");
             sb.Append(string.Join(", ", type.GetGenericArguments()
