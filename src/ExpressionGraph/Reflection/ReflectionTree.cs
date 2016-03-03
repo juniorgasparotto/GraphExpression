@@ -102,6 +102,23 @@ namespace ExpressionGraph.Reflection
             this.DefaultSettingsToIEnumerable();
         }
 
+        #region Test
+
+        public ReflectionTree SelectParentsType<T>(Func<object, IEnumerable<Type>> selector)
+        {
+            this.SelectTypes((type) => type == typeof(T), selector);
+            return this;
+        }
+
+        public ReflectionTree SelectMethods<T>(Func<object, Type, IEnumerable<MethodInfo>> selector)
+        {
+            this.SelectMethods((value, parentType) => parentType == typeof(T), selector);
+            return this;
+        }
+
+        #endregion
+
+
         public ReflectionTree Settings(SettingsFlags settingsAttr)
         {
             this._settingsAttributes = settingsAttr;

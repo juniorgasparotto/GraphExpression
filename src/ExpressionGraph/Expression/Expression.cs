@@ -189,13 +189,88 @@ namespace ExpressionGraph
             return items.GetEnumerator();
         }
 
+        #region Iterations
+
+        public void IterationAll(Action<ExpressionItem<T>> beginCodeBlockCallback, Action<ExpressionItem<T>> endCodeBlockCallback)
+        {
+            var typeOfItem = typeof(ExpressionItem<T>);
+            var remainingItemsToClose = new Stack<ExpressionItem<T>>();
+
+            // FROM:  A + ( B + C ) + J - Complete
+            // FROM:  A   ( B   C )   J - Without "+"
+            // FROM:  A +   B + C   + J - Without "(" and ")"
+            // TO:    A     B   C     J - Result
+            //        1 2 2 2 3 3 2 2 2 - Levels
+
+            var current = this.items.FirstOrDefault();
+            while (current != null)
+            {
+                // ignore "+" or "(" or ")"
+                if (current.GetType() != typeOfItem)
+                {
+                    current = current.NextInExpression;
+                    continue;
+                }
+
+                // start iteration
+                beginCodeBlockCallback(current);
+
+                if (current.HasChildren())
+                    remainingItemsToClose.Push(current);
+
+                if (current.IsLastInParenthesis())
+                {
+                    var next = current.Next;
+                    int countToClose;
+
+                    if (next == null)
+                    {
+                        // NEXT is null: Close all that are opening because the expression came to an end 
+                        //               and don't exist next to get the base diff.
+                        // ** The action is fired in item 'E' because it is last in your parenthesis group
+                        // * A + (B + (C + (D + E)))
+                        // * 1    2    3    4   5 => Levels
+                        // *      ^    ^    ^   * => 3 items was opening when current is 'E'
+                        // 
+                        // ** Close 3 parenthesis when current is "E", the same amount that was opening.
+                        countToClose = remainingItemsToClose.Count;
+                    }
+                    else
+                    {
+                        // Otherwise: close all pending using with base the next item.
+                        // Sample 1
+                        // ** The action is fired in item 'D' because it is last in your parenthesis group
+                        // *     A + (B + (C + (D + E))) + J
+                        // *     1    2    3    4   5      2      => Levels
+                        // ** Calc diff:           [5  -   2 = 3] => Close 3 parenthesis when current is "E"
+                        // Sample 2
+                        // ** 1: The action is fired in item 'D' because it is last in your parenthesis group
+                        // ** 2: The action is fired in item 'O' because it is last in your parenthesis group
+                        // *     A + (B + (C + D) + O) + J
+                        // *     1    2    3   4    3    2      => Levels
+                        // ** 1: Calc diff:   [4  - 3      = 1] => Close 1 parenthesis when current is "D"
+                        // ** 2: Calc diff:        [3  - 2 = 1] => Close 1 parenthesis when current is "O"
+                        countToClose = current.Level - next.Level;
+                    }
+
+                    // end
+                    for (var iClose = countToClose; iClose > 0; iClose--)
+                        endCodeBlockCallback(remainingItemsToClose.Pop());
+                }
+
+                current = current.NextInExpression;
+            }
+        }
+
+        #endregion
+
         #region Overrides
 
         public override string ToString()
         {
             var output = "";
 
-            this.items.FirstOrDefault().IterationAll
+            this.IterationAll
                 (
                     itemWhenStart =>
                     {

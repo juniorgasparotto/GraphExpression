@@ -54,7 +54,7 @@ namespace ExpressionGraph.Serialization
         {
             var output = "";
 
-            expression.FirstOrDefault().IterationAll
+            expression.IterationAll
                 (
                     itemWhenStart =>
                     {
