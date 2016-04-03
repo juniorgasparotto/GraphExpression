@@ -23,5 +23,7 @@ namespace ExpressionGraph
 
             return EntityRootOfTheIterationForDebug.ToString();
         }
+
+        public int Index { get; set; }
     }
 }

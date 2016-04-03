@@ -8,8 +8,8 @@ namespace ExpressionGraph
 {
     public class ExpressionItemOpenParenthesis<T> : ExpressionItem<T>
     {
-        internal ExpressionItemOpenParenthesis(int level, int levelInExpression, int index)
-            : base(default(T), -1, level, levelInExpression, index)
+        internal ExpressionItemOpenParenthesis(int level, int levelInExpression, int index, int indexSameLevel)
+            : base(default(T), -1, level, levelInExpression, index, indexSameLevel)
         {
         }
 

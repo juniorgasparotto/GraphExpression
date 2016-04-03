@@ -26,6 +26,7 @@ namespace ExpressionGraph
             {
                 Enumerator = source.Distinct().GetEnumerator(),
                 Level = 1,
+                Index = -1
             };
 
             var iterations = new List<Iteration<T>>();
@@ -35,6 +36,8 @@ namespace ExpressionGraph
             {
                 while (iteration.Enumerator.MoveNext())
                 {
+                    var indexSameLevel = iteration.Index += 1;
+
                     // New expression
                     if (iteration.Level == 1)
                     {
@@ -88,13 +91,14 @@ namespace ExpressionGraph
                             Level = iteration.Level + 1,
                             EntityRootOfTheIterationForDebug = iteration.Enumerator.Current,
                             IterationParent = iteration,
-                            HasOpenParenthesis = addParenthesis
+                            HasOpenParenthesis = addParenthesis,
+                            Index = -1
                         };
 
                         iterations.Add(iteration);
                     }
-                    
-                    expression.AddItem(entity);
+
+                    expression.AddItem(entity, indexSameLevel);
                 }
 
                 if (iteration.HasOpenParenthesis)

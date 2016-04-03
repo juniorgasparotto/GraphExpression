@@ -57,7 +57,7 @@ namespace ExpressionGraph
             this.maxOfDifferentItems = maxOfDifferentItems;
         }
 
-        internal void AddItem(T item)
+        internal void AddItem(T item, int index)
         {
             //var lastItemIsOpenParenthesis = this.lastItem != null && this.lastItem.GetType() == TypeOpenParenthesis;
             //var lastItemIsOpenParenthesis = this.isOpenParenthesis;
@@ -65,7 +65,7 @@ namespace ExpressionGraph
 
             if (this.EnablePlus && this.items.Count > 0 && !this.isLastOpenParenthesis && !lastItemIsPlus)
             {
-                var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
+                var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count, -1);
                 this.items.Add(plus);
 
                 plus.PrevInExpression = this.lastItem;
@@ -89,7 +89,7 @@ namespace ExpressionGraph
                 id = itemsIds[item];
             }
 
-            var current = new ExpressionItem<T>(item, id, this.level, this.levelInExpression, this.items.Count);
+            var current = new ExpressionItem<T>(item, id, this.level, this.levelInExpression, this.items.Count, index);
             current.ToStringCallBack = this.toStringCallBack;
 
             this.items.Add(current);
@@ -120,8 +120,8 @@ namespace ExpressionGraph
             if (this.items.Count > 0)
             {
                 if (this.EnablePlus)
-                { 
-                    var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count);
+                {
+                    var plus = new ExpressionItemPlus<T>(this.level, this.levelInExpression, this.items.Count, -1);
                     this.items.Add(plus);
 
                     plus.PrevInExpression = this.lastItem;
@@ -136,8 +136,8 @@ namespace ExpressionGraph
             }
 
             if (this.EnableParenthesis)
-            { 
-                var current = new ExpressionItemOpenParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
+            {
+                var current = new ExpressionItemOpenParenthesis<T>(this.level, this.levelInExpression, this.items.Count, -1);
                 this.items.Add(current);
 
                 current.PrevInExpression = lastItem;
@@ -158,7 +158,7 @@ namespace ExpressionGraph
 
             if (this.EnableParenthesis)
             {
-                var current = new ExpressionItemCloseParenthesis<T>(this.level, this.levelInExpression, this.items.Count);
+                var current = new ExpressionItemCloseParenthesis<T>(this.level, this.levelInExpression, this.items.Count, -1);
                 this.items.Add(current);
 
                 current.PrevInExpression = lastItem;

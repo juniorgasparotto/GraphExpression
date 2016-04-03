@@ -100,6 +100,8 @@ namespace ExpressionGraph.Graph
             {
                 while (iteration.Enumerator.MoveNext())
                 {
+                    var indexSameLevel = iteration.Index += 1;
+
                     // New graph
                     if (iteration.Level == 1)
                     {
@@ -166,7 +168,7 @@ namespace ExpressionGraph.Graph
                         if (addParenthesis)
                             graph.Expression.OpenParenthesis();
 
-                        graph.Expression.AddItem(vertex.Entity);
+                        graph.Expression.AddItem(vertex.Entity, indexSameLevel);
 
                         iteration = new Iteration<T>()
                         {
@@ -181,7 +183,7 @@ namespace ExpressionGraph.Graph
                     }
                     else
                     {
-                        graph.Expression.AddItem(vertex.Entity);
+                        graph.Expression.AddItem(vertex.Entity, indexSameLevel);
                         graph.ClosePath();
                     }
                 }

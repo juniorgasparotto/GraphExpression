@@ -8,8 +8,8 @@ namespace ExpressionGraph
 {
     public class ExpressionItemPlus<T> : ExpressionItem<T>
     {
-        internal ExpressionItemPlus(int level, int levelInExpression, int index)
-            : base(default(T), -1, level, levelInExpression, index)
+        internal ExpressionItemPlus(int level, int levelInExpression, int index, int indexSameLevel)
+            : base(default(T), -1, level, levelInExpression, index, indexSameLevel)
         {
         }
 

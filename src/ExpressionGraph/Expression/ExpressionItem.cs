@@ -46,13 +46,14 @@ namespace ExpressionGraph
 
         internal Func<ExpressionItem<T>, string> ToStringCallBack { get; set; }
 
-        internal ExpressionItem(T entity, long id, int level, int levelInExpression, int index)
+        internal ExpressionItem(T entity, long id, int level, int levelInExpression, int index, int indexSameLevel)
         {
             this.Entity = entity;
             this.Id = id;
             this.Level = level;
             this.LevelInExpression = levelInExpression;
             this.Index = index;
+            this.IndexSameLevel = indexSameLevel;
         }
 
         #region Checks
@@ -237,5 +238,7 @@ namespace ExpressionGraph
         }
 
         #endregion
+
+        public int IndexSameLevel { get; set; }
     }
 }
