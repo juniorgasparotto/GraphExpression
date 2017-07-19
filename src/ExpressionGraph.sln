@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph", "ExpressionGraph\ExpressionGraph.csproj", "{8DE63A2D-7367-473D-8CF2-0EFA652E5FBD}"
 EndProject
@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests", "Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Serialization", "ExpressionGraph.Serialization\ExpressionGraph.Serialization.csproj", "{DC183878-B594-4BAB-B79D-BC775CA9579F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json", "..\..\..\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj", "{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests.Console", "ExpressionGraph.Tests.Console\ExpressionGraph.Tests.Console.csproj", "{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests.Reflection", "ExpressionGraph.Tests.Reflection\ExpressionGraph.Tests.Reflection.csproj", "{0193621B-3B15-4A97-9090-17FE0AA8B90E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQuery", "GraphQuery\GraphQuery.csproj", "{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{DC183878-B594-4BAB-B79D-BC775CA9579F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC183878-B594-4BAB-B79D-BC775CA9579F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC183878-B594-4BAB-B79D-BC775CA9579F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{0193621B-3B15-4A97-9090-17FE0AA8B90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0193621B-3B15-4A97-9090-17FE0AA8B90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0193621B-3B15-4A97-9090-17FE0AA8B90E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

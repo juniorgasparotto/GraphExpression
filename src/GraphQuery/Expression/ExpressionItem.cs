@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExpressionGraph
+namespace GraphQuery
 {
     public class ExpressionItem<T>
     {
