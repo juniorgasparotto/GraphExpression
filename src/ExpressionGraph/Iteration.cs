@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace ExpressionGraph
 {
-    internal class Iteration<T>
+    public class Iteration<T>
     {
         public IEnumerator<T> Enumerator { get; set; }
         public T EntityRootOfTheIterationForDebug { get; set; }

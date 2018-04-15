@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExpressionGraph.Tests.Console</RootNamespace>
     <AssemblyName>ExpressionGraph.Tests.Console</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,8 +66,12 @@
       <Project>{0193621b-3b15-4a97-9090-17fe0aa8b90e}</Project>
       <Name>ExpressionGraph.Tests.Reflection</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExpressionGraph.Tests\ExpressionGraph.Tests.csproj">
+      <Project>{69564b40-81ce-4466-8a42-3d81a3dc689e}</Project>
+      <Name>ExpressionGraph.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExpressionGraph\ExpressionGraph.csproj">
-      <Project>{8de63a2d-7367-473d-8cf2-0efa652e5fbd}</Project>
+      <Project>{4b8db9b5-4ff5-40d1-b7b0-3873330a3879}</Project>
       <Name>ExpressionGraph</Name>
     </ProjectReference>
   </ItemGroup>

@@ -99,6 +99,11 @@ namespace ExpressionGraph
             return output;
         }
 
+        /// <summary>
+        /// To Verbatim
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string ToLiteral(string input)
         {
             using (var writer = new System.IO.StringWriter())

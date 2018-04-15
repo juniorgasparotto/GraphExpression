@@ -47,7 +47,7 @@ namespace ExpressionGraph
             private set;
         }
 
-        internal Expression(bool enableParenthesis, bool enablePlus, Func<ExpressionItem<T>, string> toStringCallBack = null, long maxOfDifferentItems = 0)
+        public Expression(bool enableParenthesis, bool enablePlus, Func<ExpressionItem<T>, string> toStringCallBack = null, long maxOfDifferentItems = 0)
         {
             this.items = new List<ExpressionItem<T>>();
             this.itemsIds = new Dictionary<T, long>();
@@ -57,7 +57,7 @@ namespace ExpressionGraph
             this.maxOfDifferentItems = maxOfDifferentItems;
         }
 
-        internal void AddItem(T item, int index)
+        public void AddItem(T item, int index)
         {
             //var lastItemIsOpenParenthesis = this.lastItem != null && this.lastItem.GetType() == TypeOpenParenthesis;
             //var lastItemIsOpenParenthesis = this.isOpenParenthesis;
@@ -113,7 +113,7 @@ namespace ExpressionGraph
             this.isLastOpenParenthesis = false;
         }
 
-        internal void OpenParenthesis()
+        public void OpenParenthesis()
         {
             this.isLastOpenParenthesis = true;
 
@@ -151,7 +151,7 @@ namespace ExpressionGraph
             }
         }
 
-        internal void CloseParenthesis()
+        public void CloseParenthesis()
         {
             this.level--;
             this.currentParent = this.currentParent.Parent;

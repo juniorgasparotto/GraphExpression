@@ -116,84 +116,84 @@ namespace ExpressionGraph
             return expressions;
         }
 
-        public static void Build2
-        (
-            IEnumerable<T> source,
-            Func<T, IEnumerable<T>> childrenCallback,
-            bool awaysRepeatDefined = true
-        )
-        {
-            var iteration = new Iteration<T>()
-            {
-                Enumerator = source.Distinct().GetEnumerator(),
-                Level = 1,
-            };
+        //public static void Build2
+        //(
+        //    IEnumerable<T> source,
+        //    Func<T, IEnumerable<T>> childrenCallback,
+        //    bool awaysRepeatDefined = true
+        //)
+        //{
+        //    var iteration = new Iteration<T>()
+        //    {
+        //        Enumerator = source.Distinct().GetEnumerator(),
+        //        Level = 1,
+        //    };
 
-            var iterations = new List<Iteration<T>>();
-            iterations.Add(iteration);
+        //    var iterations = new List<Iteration<T>>();
+        //    iterations.Add(iteration);
 
-            while (true)
-            {
-                while (iteration.Enumerator.MoveNext())
-                {
-                    // New expression
-                    if (iteration.Level == 1)
-                    {
-                        // initObject()
-                    }
+        //    while (true)
+        //    {
+        //        while (iteration.Enumerator.MoveNext())
+        //        {
+        //            // New expression
+        //            if (iteration.Level == 1)
+        //            {
+        //                // initObject()
+        //            }
 
-                    var entity = iteration.Enumerator.Current;
-                    bool exists = false;
+        //            var entity = iteration.Enumerator.Current;
+        //            bool exists = false;
 
-                    if (awaysRepeatDefined)
-                    {
+        //            if (awaysRepeatDefined)
+        //            {
                         
-                    }
-                    else
-                    {
+        //            }
+        //            else
+        //            {
 
-                    }
+        //            }
 
-                    IEnumerable<T> children = null;
+        //            IEnumerable<T> children = null;
 
-                    if (!exists)
-                        children = childrenCallback(entity);
+        //            if (!exists)
+        //                children = childrenCallback(entity);
 
-                    var hasChildren = children != null && children.Count() > 0;
+        //            var hasChildren = children != null && children.Count() > 0;
 
-                    if (hasChildren)
-                    {
-                        // add parenthesis "(B" because exists children
-                        var addParenthesis = iteration.Level > 1;
+        //            if (hasChildren)
+        //            {
+        //                // add parenthesis "(B" because exists children
+        //                var addParenthesis = iteration.Level > 1;
 
-                        iteration = new Iteration<T>()
-                        {
-                            Enumerator = children.GetEnumerator(),
-                            Level = iteration.Level + 1,
-                            EntityRootOfTheIterationForDebug = iteration.Enumerator.Current,
-                            IterationParent = iteration,
-                            HasOpenParenthesis = addParenthesis
-                        };
+        //                iteration = new Iteration<T>()
+        //                {
+        //                    Enumerator = children.GetEnumerator(),
+        //                    Level = iteration.Level + 1,
+        //                    EntityRootOfTheIterationForDebug = iteration.Enumerator.Current,
+        //                    IterationParent = iteration,
+        //                    HasOpenParenthesis = addParenthesis
+        //                };
 
-                        iterations.Add(iteration);
-                    }
+        //                iterations.Add(iteration);
+        //            }
 
-                    // addItem();
-                }
+        //            // addItem();
+        //        }
 
-                if (iteration.HasOpenParenthesis)
-                {
-                    // endPath();
-                }
+        //        if (iteration.HasOpenParenthesis)
+        //        {
+        //            // endPath();
+        //        }
 
-                // Remove iteration because is empty
-                iterations.Remove(iteration);
+        //        // Remove iteration because is empty
+        //        iterations.Remove(iteration);
 
-                if (iterations.Count == 0)
-                    break;
+        //        if (iterations.Count == 0)
+        //            break;
 
-                iteration = iterations.LastOrDefault();
-            }
-        }
+        //        iteration = iterations.LastOrDefault();
+        //    }
+        //}
     }
 }

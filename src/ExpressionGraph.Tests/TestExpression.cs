@@ -1,21 +1,19 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using ExpressionGraph.Graph;
 
 namespace ExpressionGraph.Tests
 {
     public partial class TestExpression
     {
-        private GraphConfiguration<HierarchicalEntity> GetConfig()
-        {
-            return new GraphConfiguration<HierarchicalEntity>
-            (
-                assignEdgeWeightCallback: (current, parent) => 1,
-                entityToStringCallback: f => f.ToString()
-            );
-        }
+        //private GraphConfiguration<HierarchicalEntity> GetConfig()
+        //{
+        //    return new GraphConfiguration<HierarchicalEntity>
+        //    (
+        //        assignEdgeWeightCallback: (current, parent) => 1,
+        //        entityToStringCallback: f => f.ToString()
+        //    );
+        //}
 
         private string ToStringExpressionItems(IEnumerable<ExpressionItem<HierarchicalEntity>> items)
         {
@@ -162,8 +160,7 @@ namespace ExpressionGraph.Tests
         public void TestExpressionWithoutRepeat()
         {
             return;
-            IEnumerable<HierarchicalEntity> entities;
-            var debug = GetExpression("A+(B+(C+C)+B)+A", out entities, true, true, false).ToString();
+            var debug = GetExpression("A+(B+(C+C)+B)+A", out IEnumerable<HierarchicalEntity> entities, true, true, false).ToString();
             Assert.IsTrue("" == debug);
 
             debug = GetExpression("A+(B+C+(J+I))+(D+(B+C+(J+I)))", out entities, true, true, false).ToString();
@@ -191,7 +188,6 @@ namespace ExpressionGraph.Tests
         [TestMethod]
         public void TestExpressionMultiple()
         {
-            var config = GetConfig();
             var iTest = 1;
 
             var expressionIn = "A+(B+C+(J+I))+(D+B)";
@@ -213,7 +209,7 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "D", Items = "A", Parents = "A" });
 
             // 1
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -244,7 +240,7 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "U", Items = "P,D,A", Parents = "P" });
 
             // 2
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -269,7 +265,7 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "P", Items = "D,C,A", Parents = "D" });
 
             // 3
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -286,7 +282,7 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "C", Items = "B,A", Parents = "B" });
 
             // 4
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -299,7 +295,7 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "A", Items = "", Parents = "" });
 
             // 5
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -314,7 +310,7 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "B", Items = "A", Parents = "A" });
 
             // 6
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -347,7 +343,7 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "M", Items = "A", Parents = "A" });
 
             // 7
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
 
             //////////////////////////
 
@@ -360,13 +356,12 @@ namespace ExpressionGraph.Tests
             ancestorsTest.Add(new { EntityTest = "A", Items = "A", Parents = "A" });
 
             // 8
-            this.ExecuteTestAuto(iTest++, config, expressionIn, expressionOut, descendentsTest, ancestorsTest);
+            this.ExecuteTestAuto(iTest++, expressionIn, expressionOut, descendentsTest, ancestorsTest);
         }
 
         public void ExecuteTestAuto
         (
             int iTest,
-            GraphConfiguration<HierarchicalEntity> configuration,
             string expressionIn,
             string expressionOut,
             List<dynamic> descendentsTest,

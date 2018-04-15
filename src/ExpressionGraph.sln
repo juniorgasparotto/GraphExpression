@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph", "ExpressionGraph\ExpressionGraph.csproj", "{8DE63A2D-7367-473D-8CF2-0EFA652E5FBD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests", "ExpressionGraph.Tests\ExpressionGraph.Tests.csproj", "{69564B40-81CE-4466-8A42-3D81A3DC689E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Serialization", "ExpressionGraph.Serialization\ExpressionGraph.Serialization.csproj", "{DC183878-B594-4BAB-B79D-BC775CA9579F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressionGraph.Serialization", "ExpressionGraph.Serialization\ExpressionGraph.Serialization.csproj", "{DC183878-B594-4BAB-B79D-BC775CA9579F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests.Console", "ExpressionGraph.Tests.Console\ExpressionGraph.Tests.Console.csproj", "{EC1336D5-4810-4A5C-A1FA-FAC7E8652003}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests.Reflection", "ExpressionGraph.Tests.Reflection\ExpressionGraph.Tests.Reflection.csproj", "{0193621B-3B15-4A97-9090-17FE0AA8B90E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQuery", "GraphQuery\GraphQuery.csproj", "{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressionGraph", "ExpressionGraph\ExpressionGraph.csproj", "{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AA86E234-2B43-4EDE-81DA-9F04EF2A3435}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8DE63A2D-7367-473D-8CF2-0EFA652E5FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DE63A2D-7367-473D-8CF2-0EFA652E5FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DE63A2D-7367-473D-8CF2-0EFA652E5FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DE63A2D-7367-473D-8CF2-0EFA652E5FBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{69564B40-81CE-4466-8A42-3D81A3DC689E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{69564B40-81CE-4466-8A42-3D81A3DC689E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69564B40-81CE-4466-8A42-3D81A3DC689E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,5 +44,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{69564B40-81CE-4466-8A42-3D81A3DC689E} = {AA86E234-2B43-4EDE-81DA-9F04EF2A3435}
+		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003} = {AA86E234-2B43-4EDE-81DA-9F04EF2A3435}
+		{0193621B-3B15-4A97-9090-17FE0AA8B90E} = {AA86E234-2B43-4EDE-81DA-9F04EF2A3435}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED7A1FBB-1140-4083-98FD-7E5391C1A36E}
 	EndGlobalSection
 EndGlobal

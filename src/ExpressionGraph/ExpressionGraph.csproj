@@ -1,102 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8DE63A2D-7367-473D-8CF2-0EFA652E5FBD}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExpressionGraph</RootNamespace>
-    <AssemblyName>ExpressionGraph</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
+    <PackageReference Include="System.CodeDom" Version="4.4.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Expression\ExpressionBuilder.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Iteration.cs" />
-    <Compile Include="Reflection\Class\EnumerableReaderArray.cs" />
-    <Compile Include="Reflection\Class\EnumerableReaderIDictionary.cs" />
-    <Compile Include="Reflection\DefinitionOfTypeReader.cs" />
-    <Compile Include="Reflection\DefinitionOfMethodValueReader.cs" />
-    <Compile Include="Reflection\DefinitionOfClassMemberReader.cs" />
-    <Compile Include="Reflection\Class\IEnumeratorReader.cs" />
-    <Compile Include="Reflection\Method\MethodReaderArrayGetValue.cs" />
-    <Compile Include="Reflection\Method\MethodReaderIEnumerableGetEnumerator.cs" />
-    <Compile Include="Reflection\Class\EnumerableReaderDefault.cs" />
-    <Compile Include="SettingsFlags.cs" />
-    <Compile Include="Reflection\Class\deleted\ClassReaderWithoutPrimitives.cs" />
-    <Compile Include="Reflection\Class\deleted\IClassReader.cs" />
-    <Compile Include="Reflection\ReflectedInstance.cs" />
-    <Compile Include="Reflection\ReflectedType.cs" />
-    <Compile Include="Reflection\Method\IMethodReader.cs" />
-    <Compile Include="Reflection\Class\deleted\ClassReaderDefault.cs" />
-    <Compile Include="Reflection\ReflectionTree.cs" />
-    <Compile Include="Reflection\Property\IPropertyReader.cs" />
-    <Compile Include="Reflection\Field\Field.cs" />
-    <Compile Include="Reflection\Method\MethodReaderDefault.cs" />
-    <Compile Include="Reflection\ArrayKey.cs" />
-    <Compile Include="Reflection\Property\Property.cs" />
-    <Compile Include="Reflection\Property\PropertyReaderDefault.cs" />
-    <Compile Include="Reflection\Property\PropertyReaderIndexerInDictionary.cs" />
-    <Compile Include="Reflection\Property\PropertyReaderIndexerInArray.cs" />
-    <Compile Include="Reflection\Property\PropertyReaderIndexerInt32InAnyClass.cs" />
-    <Compile Include="Reflection\Method\MethodValueParam.cs" />
-    <Compile Include="Reflection\ReflectionUnit.cs" />
-    <Compile Include="Utils\ReflectionUtils.cs" />
-    <Compile Include="Reflection\Method\MethodValue.cs" />
-    <Compile Include="Reflection\Method\Method.cs" />
-    <Compile Include="Expression\ExpressionItemPlus.cs" />
-    <Compile Include="Expression\ExpressionItemOpenParenthesis.cs" />
-    <Compile Include="Expression\ExpressionItemCloseParenthesis.cs" />
-    <Compile Include="Expression\IEnumerableExtensions\AncestorsExtensions.cs" />
-    <Compile Include="Expression\IEnumerableExtensions\DebugExtensions.cs" />
-    <Compile Include="Expression\IEnumerableExtensions\DescendantsExtensions.cs" />
-    <Compile Include="Expression\IEnumerableExtensions\FindExtensions.cs" />
-    <Compile Include="Expression\IEnumerableExtensions\NextsOrPreviousOrSiblingsExtensions.cs" />
-    <Compile Include="Expression\IEnumerableExtensions\ConvertersExtensions.cs" />
-    <Compile Include="Expression\Expression.cs" />
-    <Compile Include="Graph\GraphConfiguration.cs" />
-    <Compile Include="Graph\Edge.cs" />
-    <Compile Include="Graph\Graph.cs" />
-    <Compile Include="Expression\ExpressionItem.cs" />
-    <Compile Include="Graph\IEnumerable\PathExtension.cs" />
-    <Compile Include="Graph\IEnumerable\GraphExtension.cs" />
-    <Compile Include="Graph\Path.cs" />
-    <Compile Include="Graph\PathItem.cs" />
-    <Compile Include="Graph\PathType.cs" />
-    <Compile Include="Graph\Vertex.cs" />
-    <Compile Include="Utils\Utils.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

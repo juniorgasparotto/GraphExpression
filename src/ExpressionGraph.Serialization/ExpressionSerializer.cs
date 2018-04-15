@@ -1,9 +1,6 @@
 ﻿using NCalc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace ExpressionGraph.Serialization
 {
@@ -53,7 +50,7 @@ namespace ExpressionGraph.Serialization
         public string ToString<T>(ExpressionGraph.Expression<T> expression)
         {
             var output = "";
-
+            
             expression.IterationAll
                 (
                     itemWhenStart =>

@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExpressionGraph.Tests</RootNamespace>
     <AssemblyName>ExpressionGraph.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,7 +56,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestClass.cs" />
     <Compile Include="TestExpressionReflection.cs" />
     <Compile Include="TestExpressionDynamic.cs" />
     <Compile Include="TestExpressionSiblings.cs" />
@@ -64,9 +64,6 @@
     <Compile Include="TestExpressionDescendants.cs" />
     <Compile Include="TestExpressionAncestors.cs" />
     <Compile Include="TestExpression.cs" />
-    <Compile Include="TestGraph.cs" />
-    <Compile Include="TestGraphEdge.cs" />
-    <Compile Include="TestGraphVertex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpressionGraph.Serialization\ExpressionGraph.Serialization.csproj">
@@ -74,7 +71,7 @@
       <Name>ExpressionGraph.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExpressionGraph\ExpressionGraph.csproj">
-      <Project>{8de63a2d-7367-473d-8cf2-0efa652e5fbd}</Project>
+      <Project>{4b8db9b5-4ff5-40d1-b7b0-3873330a3879}</Project>
       <Name>ExpressionGraph</Name>
     </ProjectReference>
   </ItemGroup>

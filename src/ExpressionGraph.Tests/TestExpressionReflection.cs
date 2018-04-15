@@ -1,24 +1,22 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
-using ExpressionGraph.Graph;
 
 namespace ExpressionGraph.Tests
 {
     [TestClass]
     public partial class TestExpressionReflection
     {
-        private GraphConfiguration<HierarchicalEntity> GetConfig()
-        {
-            return new GraphConfiguration<HierarchicalEntity>
-            (
-                assignEdgeWeightCallback: (current, parent) => 1,
-                entityToStringCallback: f => f.ToString()
-            );
-        }
+        //private GraphConfiguration<HierarchicalEntity> GetConfig()
+        //{
+        //    return new GraphConfiguration<HierarchicalEntity>
+        //    (
+        //        assignEdgeWeightCallback: (current, parent) => 1,
+        //        entityToStringCallback: f => f.ToString()
+        //    );
+        //}
 
         private string ToStringExpressionItems(IEnumerable<ExpressionItem<HierarchicalEntity>> items)
         {
