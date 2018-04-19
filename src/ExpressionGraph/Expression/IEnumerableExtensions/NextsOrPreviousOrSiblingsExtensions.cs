@@ -7,9 +7,14 @@ namespace ExpressionGraph
 {
     public static class NextsOrPreviousOrSiblingsExtensions
     {
-        #region Nexts Methods
+        #region Nexts
 
-        public static IEnumerable<ExpressionItem<T>> Nexts<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
+        public static IEnumerable<ExpressionItem<T>> Nexts<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate<T> filter, ExpressionFilterDelegate<T> stop = null, int? positionStart = null, int? positionEnd = null)
+        {
+            return Nexts(references, ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), positionStart, positionEnd);
+        }
+
+        public static IEnumerable<ExpressionItem<T>> Nexts<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
         {
             if (positionStart <= 0)
                 throw new ArgumentException("The 'positionStart' parameter can not be lower than 1.");
@@ -27,27 +32,41 @@ namespace ExpressionGraph
 
         public static IEnumerable<ExpressionItem<T>> Nexts<T>(this IEnumerable<ExpressionItem<T>> references, int positionEnd)
         {
-            return Nexts(references, null, null, 1, positionEnd);
+            return Nexts(references, 1, positionEnd);
         }
 
         public static IEnumerable<ExpressionItem<T>> Nexts<T>(this IEnumerable<ExpressionItem<T>> references, int positionStart, int positionEnd)
         {
-            return Nexts(references, null, null, positionStart, positionEnd);
+            return Nexts(references, (ExpressionFilterDelegate2<T>)null, (ExpressionFilterDelegate2<T>)null, positionStart, positionEnd);
         }
 
-        public static IEnumerable<ExpressionItem<T>> NextsUntil<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> stop, Func<ExpressionItem<T>, int, bool> filter = null)
+        #endregion
+
+        #region NextsUntil
+
+        public static IEnumerable<ExpressionItem<T>> NextsUntil<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate<T> stop, ExpressionFilterDelegate<T> filter = null)
+        {
+            return NextsUntil(references, ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter));
+        }
+
+        public static IEnumerable<ExpressionItem<T>> NextsUntil<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate2<T> stop, ExpressionFilterDelegate2<T> filter = null)
         {
             if (stop == null)
                 throw new ArgumentNullException("stop");
 
             return Nexts(references, filter, stop);
         }
-        
+
         #endregion
 
-        #region Previous Methods
+        #region Previous
 
-        public static IEnumerable<ExpressionItem<T>> Previous<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
+        public static IEnumerable<ExpressionItem<T>> Previous<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate<T> filter, ExpressionFilterDelegate<T> stop = null, int? positionStart = null, int? positionEnd = null)
+        {
+            return Previous(references, ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), positionStart, positionEnd);
+        }
+
+        public static IEnumerable<ExpressionItem<T>> Previous<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
         {
             if (positionStart <= 0)
                 throw new ArgumentException("The 'positionStart' parameter can not be lower than 1.");
@@ -65,15 +84,24 @@ namespace ExpressionGraph
 
         public static IEnumerable<ExpressionItem<T>> Previous<T>(this IEnumerable<ExpressionItem<T>> references, int positionEnd)
         {
-            return Previous(references, null, null, 1, positionEnd);
+            return Previous(references, 1, positionEnd);
         }
 
         public static IEnumerable<ExpressionItem<T>> Previous<T>(this IEnumerable<ExpressionItem<T>> references, int positionStart, int positionEnd)
         {
-            return Previous(references, null, null, positionStart, positionEnd);
+            return Previous(references, (ExpressionFilterDelegate2 <T>)null, (ExpressionFilterDelegate2<T>)null, positionStart, positionEnd);
         }
 
-        public static IEnumerable<ExpressionItem<T>> PreviousUntil<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> stop, Func<ExpressionItem<T>, int, bool> filter = null)
+        #endregion
+
+        #region PreviousUntil
+
+        public static IEnumerable<ExpressionItem<T>> PreviousUntil<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate<T> stop, ExpressionFilterDelegate<T> filter = null)
+        {
+            return PreviousUntil(references, ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter));
+        }
+
+        public static IEnumerable<ExpressionItem<T>> PreviousUntil<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate2<T> stop, ExpressionFilterDelegate2<T> filter = null)
         {
             if (stop == null)
                 throw new ArgumentNullException("stop");
@@ -83,9 +111,14 @@ namespace ExpressionGraph
 
         #endregion
 
-        #region Siblings Methods
+        #region Siblings
 
-        public static IEnumerable<ExpressionItem<T>> Siblings<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
+        public static IEnumerable<ExpressionItem<T>> Siblings<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate<T> filter, ExpressionFilterDelegate<T> stop = null, int? positionStart = null, int? positionEnd = null)
+        {
+            return Siblings(references, ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), positionStart, positionEnd);
+        }
+
+        public static IEnumerable<ExpressionItem<T>> Siblings<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
         {
             if (positionStart <= 0)
                 throw new ArgumentException("The 'positionStart' parameter can not be lower than 1.");
@@ -108,15 +141,24 @@ namespace ExpressionGraph
         
         public static IEnumerable<ExpressionItem<T>> Siblings<T>(this IEnumerable<ExpressionItem<T>> references, int positionEnd)
         {
-            return Siblings(references, null, null, 1, positionEnd);
+            return Siblings(references, 1, positionEnd);
         }
 
         public static IEnumerable<ExpressionItem<T>> Siblings<T>(this IEnumerable<ExpressionItem<T>> references, int positionStart, int positionEnd)
         {
-            return Siblings(references, null, null, positionStart, positionEnd);
+            return Siblings(references, (ExpressionFilterDelegate2 <T>)null, (ExpressionFilterDelegate2<T>)null, positionStart, positionEnd);
         }
 
-        public static IEnumerable<ExpressionItem<T>> SiblingsUntil<T>(this IEnumerable<ExpressionItem<T>> references, Func<ExpressionItem<T>, int, bool> stop, Func<ExpressionItem<T>, int, bool> filter = null)
+        #endregion
+
+        #region SiblingsUntil
+
+        public static IEnumerable<ExpressionItem<T>> SiblingsUntil<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate<T> stop, ExpressionFilterDelegate<T> filter = null)
+        {
+            return SiblingsUntil(references, ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter));
+        }
+
+        public static IEnumerable<ExpressionItem<T>> SiblingsUntil<T>(this IEnumerable<ExpressionItem<T>> references, ExpressionFilterDelegate2<T> stop, ExpressionFilterDelegate2<T> filter = null)
         {
             if (stop == null)
                 throw new ArgumentNullException("stop");

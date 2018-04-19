@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <Authors>Glauber Donizeti Gasparotto Junior</Authors>
+    <PackageIconUrl>https://raw.githubusercontent.com/juniorgasparotto/ExpressionGraph/master/doc/img/icon.ico</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/juniorgasparotto/ExpressionGraph/blob/master/README.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/juniorgasparotto/ExpressionGraph</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/juniorgasparotto/ExpressionGraph</RepositoryUrl>
+    <Company>Glauber Donizeti Gasparotto Junior</Company>
   </PropertyGroup>
 
   <ItemGroup>

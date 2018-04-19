@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressionGraph", "Expressi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AA86E234-2B43-4EDE-81DA-9F04EF2A3435}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.ConsoleApp.NetCore20", "ExpressionGraph.Console.NetCore20\ExpressionGraph.ConsoleApp.NetCore20.csproj", "{6EF76A34-C46A-4247-876C-2DC5F5158B4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B8DB9B5-4FF5-40D1-B7B0-3873330A3879}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF76A34-C46A-4247-876C-2DC5F5158B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF76A34-C46A-4247-876C-2DC5F5158B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF76A34-C46A-4247-876C-2DC5F5158B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF76A34-C46A-4247-876C-2DC5F5158B4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{69564B40-81CE-4466-8A42-3D81A3DC689E} = {AA86E234-2B43-4EDE-81DA-9F04EF2A3435}
 		{EC1336D5-4810-4A5C-A1FA-FAC7E8652003} = {AA86E234-2B43-4EDE-81DA-9F04EF2A3435}
 		{0193621B-3B15-4A97-9090-17FE0AA8B90E} = {AA86E234-2B43-4EDE-81DA-9F04EF2A3435}
+		{6EF76A34-C46A-4247-876C-2DC5F5158B4A} = {AA86E234-2B43-4EDE-81DA-9F04EF2A3435}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED7A1FBB-1140-4083-98FD-7E5391C1A36E}

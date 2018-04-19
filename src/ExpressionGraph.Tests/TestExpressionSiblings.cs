@@ -66,7 +66,7 @@ namespace ExpressionGraph.Tests
             */
 
             List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
+            ExpressionFilterDelegate2<HierarchicalEntity> filter;
 
             filter = (sibling, posSibling) => posSibling % 2 == 0 || sibling.ToString() == "H" || sibling.ToString() == "V";
             result = expression.Find(f => f.ToString() == "S").Siblings(filter).ToList();
@@ -88,8 +88,8 @@ namespace ExpressionGraph.Tests
             */
 
             List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> stop;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
+            ExpressionFilterDelegate2<HierarchicalEntity> stop;
+            ExpressionFilterDelegate2<HierarchicalEntity> filter;
 
             stop = (sibling, posSibling) => posSibling == 1;
             result = expression.Find(f => f.ToString() == "S").SiblingsUntil(stop).ToList();

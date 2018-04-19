@@ -17,7 +17,8 @@ namespace ExpressionGraph
         internal ExpressionItem<T> NextInExpression { get; set; }
         public ExpressionItem<T> Root { get; internal set; }
         public ExpressionItem<T> Parent { get; internal set; }
-        
+        public int IndexSameLevel { get; set; }
+
         public ExpressionItem<T> NextInGraph
         {
             get 
@@ -98,7 +99,12 @@ namespace ExpressionGraph
 
         #region Ancestors
 
-        public IEnumerable<ExpressionItem<T>> Ancestors(Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? depthStart = null, int? depthEnd = null)
+        public IEnumerable<ExpressionItem<T>> Ancestors(ExpressionFilterDelegate<T> filter, ExpressionFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
+        {
+            return Ancestors(ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), depthStart, depthEnd);
+        }
+
+        public IEnumerable<ExpressionItem<T>> Ancestors(ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? depthStart = null, int? depthEnd = null)
         {
             if (depthStart <= 0)
                 throw new ArgumentException("The 'depthStart' parameter can not be lower than 1.");
@@ -135,7 +141,12 @@ namespace ExpressionGraph
 
         #region Descendants
 
-        public IEnumerable<ExpressionItem<T>> Descendants(Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? depthStart = null, int? depthEnd = null)
+        public IEnumerable<ExpressionItem<T>> Descendants(ExpressionFilterDelegate<T> filter, ExpressionFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
+        {
+            return Descendants(ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), depthStart, depthEnd);
+        }
+
+        public IEnumerable<ExpressionItem<T>> Descendants(ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? depthStart = null, int? depthEnd = null)
         {
             if (depthStart <= 0)
                 throw new ArgumentException("The 'depthStart' parameter can not be lower than 1.");
@@ -177,8 +188,8 @@ namespace ExpressionGraph
             Next,
             Previous
         }
-        
-        private IEnumerable<ExpressionItem<T>> NextsOrPrevious(SiblingDirection direction, Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
+
+        private IEnumerable<ExpressionItem<T>> NextsOrPrevious(SiblingDirection direction, ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
         {
             ExpressionItem<T> item;
             if (direction == SiblingDirection.Previous)
@@ -214,19 +225,36 @@ namespace ExpressionGraph
             }
         }
 
-        public IEnumerable<ExpressionItem<T>> Nexts(Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
+        #endregion
+
+        #region Nexts
+
+        public IEnumerable<ExpressionItem<T>> Nexts(ExpressionFilterDelegate<T> filter, ExpressionFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
+        {
+            return Nexts(ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), depthStart, depthEnd);
+        }
+
+        public IEnumerable<ExpressionItem<T>> Nexts(ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
         {
             return NextsOrPrevious(SiblingDirection.Next, filter, stop, positionStart, positionEnd);
         }
 
-        public IEnumerable<ExpressionItem<T>> Previous(Func<ExpressionItem<T>, int, bool> filter = null, Func<ExpressionItem<T>, int, bool> stop = null, int? positionStart = null, int? positionEnd = null)
+        #endregion
+
+        #region Previous
+
+        public IEnumerable<ExpressionItem<T>> Previous(ExpressionFilterDelegate<T> filter, ExpressionFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
+        {
+            return Previous(ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), ExpressionFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), depthStart, depthEnd);
+        }
+
+        public IEnumerable<ExpressionItem<T>> Previous(ExpressionFilterDelegate2<T> filter = null, ExpressionFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
         {
             return NextsOrPrevious(SiblingDirection.Previous, filter, stop, positionStart, positionEnd);
         }
 
         #endregion
-
-
+        
         #region Overrides
 
         public override string ToString()
@@ -238,7 +266,5 @@ namespace ExpressionGraph
         }
 
         #endregion
-
-        public int IndexSameLevel { get; set; }
     }
 }

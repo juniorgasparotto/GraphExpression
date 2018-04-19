@@ -63,7 +63,7 @@ namespace ExpressionGraph.Tests
             var expression = GetExpression(expressionIn, out entities);
 
             List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
+            ExpressionFilterDelegate2<HierarchicalEntity> filter;
 
             /*
              * return depths that are mod of 2.
@@ -94,8 +94,8 @@ namespace ExpressionGraph.Tests
             var expressionIn = "A+(B+C+(J+(I+(O+(R+T)))))+K+(D+E+(P+(U+(Y+(L+N)))))";
             var expression = GetExpression(expressionIn, out entities);
             List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> stop;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
+            ExpressionFilterDelegate2<HierarchicalEntity> stop;
+            ExpressionFilterDelegate2<HierarchicalEntity> filter;
 
             stop = (descendant, depthDescendant) => descendant.ToString() == "R";
             result = expression.Find(f => f.ToString() == "A").DescendantsUntil(stop).ToList();

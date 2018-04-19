@@ -52,7 +52,7 @@ namespace ExpressionGraph.Tests
             var expression = GetExpression(expressionIn, out entities);
 
             List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
+            ExpressionFilterDelegate2<HierarchicalEntity> filter;
 
             /*
              * return depths that are mod of 2.
@@ -78,8 +78,8 @@ namespace ExpressionGraph.Tests
             var expression = GetExpression(expressionIn, out entities);
 
             List<ExpressionItem<HierarchicalEntity>> result;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> stop;
-            Func<ExpressionItem<HierarchicalEntity>, int, bool> filter;
+            ExpressionFilterDelegate2<HierarchicalEntity> stop;
+            ExpressionFilterDelegate2<HierarchicalEntity> filter;
 
             stop = (ancestor, depthAncestor) => ancestor.ToString() == "J" || ancestor.ToString() == "P";
             result = expression.Find(f => f.ToString() == "T" || f.ToString() == "N").AncestorsUntil(stop).ToList();

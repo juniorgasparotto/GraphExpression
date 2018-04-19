@@ -14,6 +14,12 @@ namespace ExpressionGraph
             return query;
         }
 
+        public static Expression<ReflectedInstance> AsExpression(this object obj)
+        {
+            var query = new ReflectionTree(obj);
+            return query.Query();
+        }
+
         public static IEnumerable<object> Objects(this IEnumerable<ReflectedInstance> instanceReflecteds)
         {
             foreach (var r in instanceReflecteds)
