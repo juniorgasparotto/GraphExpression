@@ -35,44 +35,44 @@ namespace ExpressionGraph.Tests.Console
             var testClass = new SeveralTypesTest();
             testClass.Populate();
             
-            var expressionResult1 = testClass.FieldPublicArrayUni.AsReflection().Query().ToString();
+            var expressionResult1 = testClass.FieldPublicArrayUni.AsExpression().ToString();
             expectedTest = "{System.String[]_0} + [0]: \"[0]\" + [1]: \"[1]\"";
             json = ToJson(testClass.FieldPublicArrayUni);
             AssertTrue(expressionResult1 == expectedTest, "ArrayUni");
 
-            var expressionResult2 = testClass.FieldPublicArrayTwo.AsReflection().Query().ToString();
+            var expressionResult2 = testClass.FieldPublicArrayTwo.AsExpression().ToString();
             expectedTest = "{System.String[,]_0} + [0,0]: \"[0, 0]\" + [0,1]: \"[0, 1]\" + [1,0]: \"[1, 0]\" + [1,1]: \"[1, 1]\"";
             json = ToJson(testClass.FieldPublicArrayTwo);
             AssertTrue(expressionResult2 == expectedTest, "ArrayTwo");
 
-            var expressionResult3 = testClass.FieldPublicArrayThree.AsReflection().Query().ToString();
+            var expressionResult3 = testClass.FieldPublicArrayThree.AsExpression().ToString();
             expectedTest = "{System.String[,,]_0} + [0,0,0]: \"[0, 0, 0]\" + [0,0,1]: \"[0, 0, 1]\"";
             json = ToJson(testClass.FieldPublicArrayThree);
             AssertTrue(expressionResult3 == expectedTest, "ArrayThree");
 
-            var expressionResult4 = testClass.FieldPublicJaggedArrayTwo.AsReflection().Query().ToString();
+            var expressionResult4 = testClass.FieldPublicJaggedArrayTwo.AsExpression().ToString();
             expectedTest = "{System.String[][]_0} + ([0]: {System.String[]_1} + [0]: \"a\" + [1]: \"b\" + [2]: \"c\" + [3]: \"d\" + [4]: \"e\") + ([1]: {System.String[]_7} + [0]: \"a1\" + [1]: \"b1\" + [2]: \"c1\" + [3]: \"d1\")";
             json = ToJson(testClass.FieldPublicJaggedArrayTwo);
             AssertTrue(expressionResult4 == expectedTest, "JaggedArrayTwo");
 
-            var expressionResult5 = testClass.FieldPublicJaggedArrayThree.AsReflection().Query().ToString();
+            var expressionResult5 = testClass.FieldPublicJaggedArrayThree.AsExpression().ToString();
             expectedTest = "{System.String[][][]_0} + ([0]: {System.String[][]_1} + ([0]: {System.String[]_2} + [0]: \"[0][0][0]\" + [1]: \"[0][0][1]\"))";
             json = ToJson(testClass.FieldPublicJaggedArrayThree);
             AssertTrue(expressionResult5 == expectedTest, "JaggedArrayThree");
 
-            var expressionResult6 = testClass.FieldPublicArrayListNonGeneric.AsReflection().Query().ToString();
+            var expressionResult6 = testClass.FieldPublicArrayListNonGeneric.AsExpression().ToString();
             expectedTest = "{System.Collections.ArrayList_0} + [0]: 1 + [1]: \"a\" + [2]: 10.0 + [3]: \"2000-01-01T00:00:00.000-02:00\"";
             json = ToJson(testClass.FieldPublicArrayListNonGeneric);
             AssertTrue(expressionResult6 == expectedTest, "ArrayList");
 
-            var expressionResult7 = testClass.FieldPublicBitArray.AsReflection().Query().ToString();
+            var expressionResult7 = testClass.FieldPublicBitArray.AsExpression().ToString();
             expectedTest = "{System.Collections.BitArray_0} + [0]: false + [1]: false + [2]: true";
             json = ToJson(testClass.FieldPublicBitArray);
             AssertTrue(expressionResult7 == expectedTest, "BitArray");
 
             // is normal "int[,][]" is changed by "int[][,]". The .net make it.
             // ** Newtonsoft Json have different return expectations **
-            var expressionResult8 = testClass.FieldPublicMixedArrayAndJagged.AsReflection().Query().ToString();
+            var expressionResult8 = testClass.FieldPublicMixedArrayAndJagged.AsExpression().ToString();
             expectedTest = "{System.Int32[,][]_0} + ([0]: {System.Int32[,]_1} + [0,0]: 1 + [0,1]: 3 + [1,0]: 5 + [1,1]: 7) + ([1]: {System.Int32[,]_6} + [0,0]: 0 + [0,1]: 2 + [1,0]: 4 + [1,1]: 6 + [2,0]: 8 + [2,1]: 10) + ([2]: {System.Int32[,]_13} + [0,0]: 11 + [0,1]: 22 + [1,0]: 99 + [1,1]: 88 + [2,0]: 0 + [2,1]: 9)";
             json = ToJson(testClass.FieldPublicMixedArrayAndJagged);
             AssertTrue(expressionResult8 == expectedTest, "MixedArrayAndJagged");
@@ -88,7 +88,7 @@ namespace ExpressionGraph.Tests.Console
 
             #region Types of Keywords
 
-            var expressionResult1 = Extensions.AsReflection(testClass.FieldPublicDynamic).Query().ToString();
+            var expressionResult1 = Extensions.AsExpression(testClass.FieldPublicDynamic).Query().ToString();
             expectedTest = "{<>f__AnonymousType1<System.String, System.Int32, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, <>f__AnonymousType0<System.Int32, System.Int32, System.Int32>>_0} + PropPublic1: \"A\" + PropPublic2: 1 + PropPublic3: \"B\" + PropPublic4: \"B\" + PropPublic5: \"B\" + PropPublic6: \"B\" + PropPublic7: \"B\" + PropPublic8: \"B\" + PropPublic9: \"B\" + PropPublic10: \"B\" + PropPublic11: \"B\" + (PropPublic12: {<>f__AnonymousType0<System.Int32, System.Int32, System.Int32>_12} + PropSubPublic1: 0 + PropSubPublic2: 1 + PropSubPublic3: 2)";
             json = ToJson(testClass.FieldPublicDynamic);
             AssertTrue(expressionResult1 == expectedTest, "Dynamic");
@@ -570,8 +570,8 @@ namespace ExpressionGraph.Tests.Console
             var value = "Test";
 
             //  load all properties for "System.String"
-            var query = value.AsReflection()
-                .SelectProperties
+            var query = value.AsExpression(c => 
+                c.SelectProperties
                 (
                     (obj, type) =>
                     {
@@ -592,8 +592,7 @@ namespace ExpressionGraph.Tests.Console
                     {
                         return obj.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
                     }
-                )
-                .Query();
+                ));
 
             var expressionResult = query.ToString();
 
@@ -606,44 +605,43 @@ namespace ExpressionGraph.Tests.Console
         {
             // test load all methods of 'Sun' class, don't load properties or fields and add specify reader for "Beep Method"
             var obj = new Son();
-            var reflection = obj.AsReflection()
-                .SelectProperties(null)
-                .SelectMethods((value, type) => value is Son, (value, type) => type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
-                .AddValueReaderForMethods(new BeepMethodReader());
-           
-            var result = reflection.Query().ToString();
+            var expression = obj.AsExpression(c => 
+                c.SelectProperties(null)
+                 .SelectMethods((value, type) => value is Son, (value, type) => type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
+                 .AddValueReaderForMethods(new BeepMethodReader())
+            );
+
+            var result = expression.ToString();
             var expected = "{ExpressionGraph.Tests.Son_0} + Add: null + Beep[263, 100]: true + Beep[263, 100]: true + Beep[294, 100]: true + Beep[330, 100]: true + Beep[351, 100]: true + Beep[393, 100]: true + Beep[440, 100]: true + Beep[495, 100]: true + Beep[526, 100]: true + Beep[588, 100]: true + Beep[660, 100]: true + Beep[702, 100]: true + Beep[787, 100]: true + Beep[879, 100]: true + Beep[990, 100]: true + Beep[1053, 100]: true + Public: null + ToString: null + Equals: null + GetHashCode: null + GetType: null";
             AssertTrue(result == expected, "Test public and extern method");
 
             // test load all methods of 'GrandFather' class, don't load properties or fields and add reader for all methods that hasen't parameters
             // is important use "BindingFlags.DeclaredOnly" to don't get a infinite execution because the private method "MemberwiseClone" aways return the 
             // new copy of "GrandFather" instance causing the loop.
-            reflection = obj.AsReflection()
-                .SelectTypes(value => ReflectionUtils.GetAllParentTypes(value.GetType(), true, true))
-                .SelectProperties(null)
-                .SelectMethods((value, type) => type == typeof(Grandfather), (value, type) => type.GetMethods(BindingFlags.DeclaredOnly |  BindingFlags.NonPublic | BindingFlags.Instance))
-                .AddValueReaderForMethods(new MethodReaderDefault());
-            result = reflection.Query().ToString();
+            expression = obj.AsExpression(c =>
+                c.SelectTypes(value => ReflectionUtils.GetAllParentTypes(value.GetType(), true, true))
+                 .SelectProperties(null)
+                 .SelectMethods((value, type) => type == typeof(Grandfather), (value, type) => type.GetMethods(BindingFlags.DeclaredOnly |  BindingFlags.NonPublic | BindingFlags.Instance))
+                 .AddValueReaderForMethods(new MethodReaderDefault()));
+            result = expression.ToString();
             expected = "{ExpressionGraph.Tests.Son_0} + GrandGatherMethod: \"Hi!\"";
             AssertTrue(result == expected, "Test internal and the method is the GrandFather level");
-            var r = reflection.ReflectTree().ToList();
-            //reflection.AddValueReaderForProperties(new PropertyReadIndexersTestClass());
         }
 
         public string GetString(object obj, bool loadFields = false)
         {
             if (!loadFields)
                 return obj
-                    .AsReflection()
-                    //.Settings(SettingsFlags.ShowFullNameOfType | SettingsFlags.ShowParameterName)
-                    .SetMaxItems(2000)
-                    .Query()
+                    .AsExpression(c =>
+                    {
+                        c.SetMaxItems(2000);
+                        c.AsExpression();
+                        //c.Settings(SettingsFlags.ShowFullNameOfType | SettingsFlags.ShowParameterName);
+                    })
                     .ToString();
 
             return obj
-                .AsReflection()
-                .SelectFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
-                .Query()
+                .AsExpression(c => c.SelectFields())
                 .ToString();
         }
 

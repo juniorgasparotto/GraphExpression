@@ -17,14 +17,15 @@ namespace ExpressionGraph.Tests.Console
             var testClass = new Son();
 
             var reflection = testClass
-                .AsReflection()
-                .AddValueReaderForProperties(new PropertyReadIndexersTestClass())
-                .SelectTypes((value) => value is string, (value) => ReflectionUtils.GetAllParentTypes(value.GetType(), true));
+                .AsExpression(c => {
+                    c.AddValueReaderForProperties(new PropertyReadIndexersTestClass());
+                    c.SelectTypes((value) => value is string, (value) => ReflectionUtils.GetAllParentTypes(value.GetType(), true));
+                });
 
-            var instanceReflecteds = reflection.ReflectTree().ToList();
-            var objects = reflection.ReflectTree().Objects().ToList();
+            var instanceReflecteds = reflection.AsExpression().ToList();
+            var objects = reflection.AsExpression().ToEntities().ToList();
 
-            var query = reflection.Query();
+            var query = reflection.AsExpression();
             var instanceReflectedsByQuery = query.Where(f=>f.Entity.ObjectType == typeof(string)).ToEntities();
             //var objectsByQuery = query.Objects().ToList();
                         
@@ -42,14 +43,13 @@ namespace ExpressionGraph.Tests.Console
 
         private static Expression<ReflectedInstance> GetEntityGraph(object obj)
         {
-            return obj.AsReflection()
+            return obj.AsExpression(c =>
                 //.Settings(SettingsFlags.ShowFullNameOfType | SettingsFlags.ShowParameterName)
                 //.Settings(SettingsFlags.ShowParameterName)
                 //.Settings(SettingsFlags.ShowFullNameOfType)
-                .Settings(SettingsFlags.Default)
-                .SelectFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
-                .SelectProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
-                .Query();
+                c.Settings(SettingsFlags.Default)
+                 .SelectFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+                 .SelectProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static));
         }
 
         public static void TestCustomClass()

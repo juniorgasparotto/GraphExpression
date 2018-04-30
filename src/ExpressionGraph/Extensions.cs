@@ -1,4 +1,5 @@
 ﻿using ExpressionGraph.Reflection;
+using System;
 using System.Collections.Generic;
 
 namespace ExpressionGraph
@@ -8,16 +9,11 @@ namespace ExpressionGraph
     /// </summary>
     public static class Extensions
     {
-        public static ReflectionTree AsReflection(this object obj)
+        public static Expression<ReflectedInstance> AsExpression(this object obj, Action<ReflectionTree> config = null)
         {
-            var query = new ReflectionTree(obj);
-            return query;
-        }
-
-        public static Expression<ReflectedInstance> AsExpression(this object obj)
-        {
-            var query = new ReflectionTree(obj);
-            return query.Query();
+            var builder = new ReflectionTree(obj);
+            config?.Invoke(builder);
+            return builder.AsExpression();
         }
 
         public static IEnumerable<object> Objects(this IEnumerable<ReflectedInstance> instanceReflecteds)

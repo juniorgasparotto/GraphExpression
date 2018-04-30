@@ -123,7 +123,7 @@ namespace ExpressionGraph.Tests
             test = @"A + (B + K + (C + B + P)) + A + V + F";
             Assert.IsTrue(test == debug, "Test 6 - error");
 
-            debug = GetExpression("A+(B+C+D)+D+(E+B)+F+G(G+G+C)+(H+C)", out entities).ToString();
+            debug = GetExpression("A+(B+C+D)+D+(E+B)+F+(G+G+C)+(H+C)", out entities).ToString();
             test = @"A + (B + C + D) + D + (E + (B + C + D)) + F + (G + G + C) + (H + C)";
             Assert.IsTrue(test == debug, "Test 7 - error");
             

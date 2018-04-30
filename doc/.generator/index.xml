@@ -1,26 +1,25 @@
 ﻿<documentation>
   <page>
     <languages>
-      <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md" />
-      <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/SysCommand" />
+      <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" />
+      <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/ExpressionGraph" />
     </languages>
     <content>
-      <a href="https://github.com/juniorgasparotto/SysCommand" rel="Inglês">
-        <img alt="Inglês" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png" />
+      <a href="https://github.com/juniorgasparotto/ExpressionGraph" rel="Inglês">
+        <img alt="Inglês" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/documentation/img/en-us.png" />
       </a>
 
-      <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/readme-pt-br.md" rel="Português">
-        <img alt="Português" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png" />
+      <a href="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" rel="Português">
+        <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/documentation/img/pt-br.png" />
       </a>
 
-      <include href="documentation/.generator/pages/presentation/syscommand.md" />
-      <include href="documentation/.generator/pages/presentation/install.md" />
-      <include href="documentation/.generator/pages/presentation/how-it-works.md" />
-      <include href="documentation/.generator/pages/presentation/what-is-the-purpose.md" />
-      <include href="documentation/.generator/pages/presentation/dlls.md" />
-      <include href="documentation/.generator/pages/presentation/footer.md" />
-      <include href="documentation/.generator/pages/donate.md" />
-      <include href="documentation/.generator/pages/license.md" />
+      <include href="doc/.generator/pages/presentation/expressiongraph.md" />
+      <include href="doc/.generator/pages/presentation/install.md" />
+      <include href="doc/.generator/pages/presentation/how-it-works.md" />
+      <include href="doc/.generator/pages/presentation/what-is-the-purpose.md" />
+      <include href="doc/.generator/pages/presentation/footer.md" />
+      <include href="doc/.generator/pages/donate.md" />
+      <include href="doc/.generator/pages/license.md" />
       
       <custom-translation>
         <default>
@@ -31,83 +30,6 @@
           ---
           <sub>This text was translated by a machine</sub>
 
-          https://github.com/juniorgasparotto/MarkdownGenerator
-        </language>
-      </custom-translation>
-    </content>
-  </page>
-
-  <page>
-    <languages>
-      <language name="pt-br" output="documentation/pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md" />
-      <language name="en-us" output="documentation/en.md" url-base="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md" />
-    </languages>
-    <content>
-      <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/en.md" rel="Inglês">
-        <img alt="Inglês" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/en-us.png" />
-      </a>
-
-      <a href="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/pt-br.md" rel="Português">
-        <img alt="Português" src="https://github.com/juniorgasparotto/SysCommand/blob/master/documentation/img/pt-br.png" />
-      </a>
-
-      # <anchor-set name="documentation">Documentação</anchor-set>
-
-      <table-of-contents/>
-
-      <include href="documentation/.generator/pages/getting-start/class-app.md" />
-      <include href="documentation/.generator/pages/getting-start/initializing-by-static-method.md" />
-      <include href="documentation/.generator/pages/getting-start/specifying-commands.md" />
-      <include href="documentation/.generator/pages/getting-start/kind-of-commands.md" />
-      <include href="documentation/.generator/pages/getting-start/orchestrating-commands.md" />
-      <include href="documentation/.generator/pages/getting-start/events.md" />
-      <include href="documentation/.generator/pages/input/input.md" />
-      <include href="documentation/.generator/pages/input/arguments.md" />
-      <include href="documentation/.generator/pages/input/actions.md" />
-      <include href="documentation/.generator/pages/input/multi-action.md" />
-      <include href="documentation/.generator/pages/input/support-types.md" />
-      <include href="documentation/.generator/pages/input/parser.md" />
-      <include href="documentation/.generator/pages/output/output.md" />
-      <include href="documentation/.generator/pages/output/output-using-razor.md" />
-      <include href="documentation/.generator/pages/output/output-using-t4.md" />
-      <include href="documentation/.generator/pages/output/output-tabulated.md" />
-      <include href="documentation/.generator/pages/properties/properties.md" />
-      <include href="documentation/.generator/pages/properties/customizing-the-argument-names.md" />
-      <include href="documentation/.generator/pages/properties/customizing-help-information.md" />
-      <include href="documentation/.generator/pages/properties/required.md" />
-      <include href="documentation/.generator/pages/properties/posicional.md" />
-      <include href="documentation/.generator/pages/properties/ignoring-public-properties.md" />
-      <include href="documentation/.generator/pages/methods/methods.md" />
-      <include href="documentation/.generator/pages/methods/methods-without-parameters.md" />
-      <include href="documentation/.generator/pages/methods/optional-parameters.md" />
-      <include href="documentation/.generator/pages/methods/overloads.md" />
-      <include href="documentation/.generator/pages/methods/posicional-inputs.md" />
-      <include href="documentation/.generator/pages/methods/ignoring-public-methods.md" />
-      <include href="documentation/.generator/pages/methods/customizing-actions-and-arguments-names.md" />
-      <include href="documentation/.generator/pages/methods/customizing-the-help-information-of-actions-and-their-parameters.md" />
-      <include href="documentation/.generator/pages/methods/changing-position-of-positional-parameters.md" />
-      <include href="documentation/.generator/pages/methods/properties-of-argumentattribute-attributes-that-are-not-used.md" />
-      <include href="documentation/.generator/pages/methods/default-methods.md" />
-      <include href="documentation/.generator/pages/help/help.md" />
-      <include href="documentation/.generator/pages/help/default.md" />
-      <include href="documentation/.generator/pages/verbose/verbose.md" />
-      <include href="documentation/.generator/pages/error/error.md" />
-      <include href="documentation/.generator/pages/variable/variable.md" />
-      <include href="documentation/.generator/pages/file-manager/file-manager.md" />
-      <include href="documentation/.generator/pages/redirecting/redirecting.md" />
-      <include href="documentation/.generator/pages/stop-propagation/stop-propagation.md" />
-      <include href="documentation/.generator/pages/argument-history-manager/argument-history-manager.md" />
-      <include href="documentation/.generator/pages/extras/extras.md" />
-
-      <custom-translation>
-        <default>
-          
-        </default>
-
-        <language name="en-us">
-          ---
-          <sub>This text was translated by a machine</sub>
-          
           https://github.com/juniorgasparotto/MarkdownGenerator
         </language>
       </custom-translation>

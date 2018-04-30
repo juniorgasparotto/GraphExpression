@@ -11,12 +11,15 @@ namespace ExpressionGraph.ConsoleApp.NetCore20
                 .AsExpression();
 
             var str = expression.ToString();
+            var a = myClass.AsExpression(c => c.SelectFields())
+                .Where(f => f.Entity.Object is MySubClass).ToArray();
+            var entities = expression.ToEntities();
 
             // retornar todos os elementos que iniciam com "Prop"
             var descendants = expression.Descendants().ToList();
 
-            var allPropsNames = expression.Descendants(i => 
-                i.Entity.ContainerName.Contains("Prop")).ToList();
+            var allPropsNames = expression.Descendants(i => i.Entity.ContainerName.Contains("Prop")).ToList();
+//            var allSubClass = expression.Descendants(i => i.Entity.o.ContainerName.Contains("Prop")).ToList();
 
 
                 //.Descendants((a, b) => a.Entity.GetAllProperties().Where(p => p.Name.Contains("Prop")))

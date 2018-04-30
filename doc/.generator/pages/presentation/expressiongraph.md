@@ -1,6 +1,59 @@
-# SysCommand <header-set anchor-name="presentation" />
+# Expression Graph <header-set anchor-name="presentation" />
 
-O `SysCommand` é um poderoso framework, multiplataforma, para desenvolver `Console Applications` em .NET. É simples, fortemente tipado e com grandes influências do padrão MVC.
+O conceito `Expression graph` foi criado em 2015 por Glauber Donizeti Gasparotto Jr e tem como objetivo a representação de um grafo em forma de expressão.
+
+Imagine o seguinte grafo:
+
+```
+A 
+    B
+        C
+        D
+            B
+    E
+        A
+```
+
+A sua representação em forma de expressão seria:
+
+```
+A + (B + C + (D + B)) + (E + A)
+```
+
+**Entidade Raiz**
+
+A entidade raiz é a primeira da expressão, ela que dá origem a toda cadeia de conexões do grafo. Por exemplo:
+
+`A + B`
+
+Nesse exemplo, a entidade raiz é o `A`
+
+**Entidades filhas**
+
+As entidades filhas são somadas a entidade raiz usando o sinal `+` do grupo de conexão
+
+**Sinal de `+`**
+
+O sinal de `+` representa uma conexão entre as entidades. A entidade da esquerda determina que ela contém uma conexão com a entidade da direita. Por exemplo:
+
+`A + B`
+
+Isso significa que a entidade `A` faz conexão com a entidade `B`.
+
+**Parenteses**
+
+Os parenteses representam um novo grupo de conexões
+
+**Referencias ciclicas:**
+
+Note que o grafo contém duas referencias ciclicas:
+
+`A -> E` e `E -> A`
+`B -> D` e `D -> B`
+
+Quando isso ocorre, basta repetir o item sem precisar escrever toda a sua cadeia novamente.
+
+
 
 ## Build Status
 

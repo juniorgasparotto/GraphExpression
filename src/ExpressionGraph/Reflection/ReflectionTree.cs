@@ -100,6 +100,28 @@ namespace ExpressionGraph.Reflection
             this.DefaultSettingsToIEnumerable();
         }
 
+        public Expression<ReflectedInstance> AsExpression()
+        {
+            var instanceRoot = new List<ReflectedInstance>() { GetInstance(this._object, "") };
+            this._expressions = ExpressionBuilder<ReflectedInstance>
+            .Build
+            (
+                instanceRoot,
+                f => GetChildren(f),
+                true,
+                false,
+                false,
+                f =>
+                {
+                    return ObjectToString(f.Entity.Object, f.Entity.ObjectType, f.Entity.ContainerName, f.Id, f.HasChildren());
+                },
+                this.maxItems
+            )
+            .FirstOrDefault();
+
+            return _expressions;
+        }
+
         #region Test
 
         public ReflectionTree SelectParentsType<T>(Func<object, IEnumerable<Type>> selector)
@@ -134,36 +156,9 @@ namespace ExpressionGraph.Reflection
             return this.GetInstance(this._object, "");
         }
 
-        public IEnumerable<ReflectedInstance> ReflectTree()
-        {
-            return this.Query().ToEntities(false);
-        }
-
-        public Expression<ReflectedInstance> Query()
-        {
-            var instanceRoot = new List<ReflectedInstance>() { GetInstance(this._object, "") };
-            this._expressions = ExpressionBuilder<ReflectedInstance>
-            .Build
-            (
-                instanceRoot,
-                f => GetChildren(f),
-                true,
-                false,
-                false,
-                f => 
-                {
-                    return ObjectToString(f.Entity.Object, f.Entity.ObjectType, f.Entity.ContainerName, f.Id, f.HasChildren());
-                },
-                this.maxItems
-            )
-            .FirstOrDefault();
-
-            return _expressions;
-        }
-
         private List<ReflectedInstance> GetChildren(ReflectedInstance instance)
         {
-            var list = new List<ReflectedInstance>();
+             var list = new List<ReflectedInstance>();
 
             var fields = instance.GetAllFields().ToList();
             foreach (var field in fields)
@@ -402,9 +397,15 @@ namespace ExpressionGraph.Reflection
         /// </summary>
         /// <param name="bindingAttr">Specific binding to return fields</param>
         /// <returns></returns>
-        public ReflectionTree SelectFields(BindingFlags bindingAttr)
+        public ReflectionTree SelectFields(BindingFlags bindingAttr = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance)
         {
-            this._fieldsReaders[0].Get = (value, type) => type.GetFields(bindingAttr);
+            this._fieldsReaders[0].Get = (value, type) =>
+            {
+                // ignore properties fields
+                // ex: <Prop1>._bracketfield
+                var fields = type.GetFields(bindingAttr).Where(f => !f.Name.StartsWith("<"));
+                return fields;
+            };
             return this;
         }
 

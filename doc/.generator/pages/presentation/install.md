@@ -1,7 +1,7 @@
 # Instalação <header-set anchor-name="install" />
 
-Via [NuGet](https://www.nuget.org/packages/SysCommand/):
+Via [NuGet](https://www.nuget.org/packages/ExpressionGraph/):
 
 ```
-Install-Package SysCommand
+Install-Package ExpressionGraph
 ```
