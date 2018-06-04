@@ -96,7 +96,6 @@ namespace ExpressionGraph.Tests
             IEnumerable<HierarchicalEntity> entities;
             var expression = GetExpression("A+(B+C+(J+I))+K+(D+E+(P+U))", out entities);
 
-            var debug = expression.ToDebug();
             List<ExpressionItem<HierarchicalEntity>> result;
 
             try

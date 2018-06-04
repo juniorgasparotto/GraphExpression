@@ -176,6 +176,87 @@ A + A + B + (C + A)
 * Uma direta (`A + A`): onde a entidade `A` é pai dela mesma.
 * Uma indireta (`C + A`): Onde `C` é pai de uma entidade ascendente, no caso a entidade `A`.
 
+## Níveis
+
+Uma expressão tem dois tipos de níveis: "Nível geral" e "Nível na expressão".
+
+O "nível geral" determina em qual nível a entidade está com relação a hierarquia do grafo. 
+
+Por exemplo:
+
+```
+A (Nível 1)
+----B (Nível 2)
+    ----C (Nível 3)
+    ----D (Nível 3)
+        ----B (Nível 4)
+----E (Nível 2)
+    ----A (Nível 3)
+```
+
+O "nível na expressão" determina em qual nível a entidade está com relação a expressão. 
+
+Por exemplo:
+
+```
+                    A + B + C + ( D + E + ( F + G ) )
+Nível na expressão: 1   1   1     2   2     3   3    
+Nível geral:        1   2   2     2   3     3   4   
+```
+
+Note que o nível da expressão ignora o nível da entidade na hieraquia, é uma informação útil apenas para a expressão.
+
+## Índices
+
+Uma expressão tem dois tipos de índices: "Índice na expressão" e "Índice do nível".
+
+O "Índice da expressão" determina em qual posição a entidade está na expressão. O índice inicia em zero e soma-se +1 até a última entidade da expressão. 
+
+Por exemplo:
+
+```
+A + B + C + ( D + E + ( F  + G ) ) 
+0   1   2     3   4     5    6
+```
+
+O "Índice do nível" determina em qual posição a entidade está com relação ao seu nível. O índice inicia em zero na primeira entidade do nível e soma-se +1 até a última entidade do mesmo nível. Por exemplo:
+
+```        
+                 A + B + C + ( D + E + ( F + G ) )
+Nível geral:     1   2   2     2   3     3   4   
+Índice do nível: 0   0   1     2   0     1   0  
+```
+
+* A entidade `A` é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.
+* A entidade `B` é a primeira do segunda nível e terá a posição zero. Ela é filha da entidade `A`.
+* A entidade `C` e a segunda do segundo nível e terá a posição 1. Ela é filha da entidade `A`.
+* A entidade `D` e a terceria do segundo nível e terá a posição 2. Ela é filha da entidade `A`.
+* A entidade `E` e a primeira do terceiro nível e terá a posição 0. Ela é filha da entidade `D`.
+* A entidade `F` e a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
+* A entidade `G` e a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
+
+## Navegação para a direita (Próxima entidade)
+
+Toda entidade, com exceção da última da expressão, tem conhecimento da próxima entidade na expressão. 
+
+No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a direita da entidade corrente:
+
+```
+A + B + C + ( D + E + ( F + G ) )
+B   C   D     E   F     G
+```
+
+No exemplo, a entidade `A` tem conhecimento da entidade `B`. Note que a entidade `B` é filha de `A`, mas isso não influência, pois a ideia é conhecer a próxima entidade da expressão e não do seu nível.
+
+## Navegação para a esquerda (Entidade anterior)
+
+Toda entidade, com exceção da primeira da expressão (a entidade raiz), tem conhecimento da entidade anterior na expressão. No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a esquerda da entidade corrente:
+
+```
+A + B + C + ( D + E + ( F + G ) ) 
+    A   B     C   D     E   F
+```
+
 ## Repetições de grupo de expressão
 
 Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
@@ -288,100 +369,57 @@ A + (B + D) + K + (D + B)
 A + (B + (D + B)) + K + (D + (B + D))
 ```
 
-## Desnormalizando
+## Desnormalização
 
-O objetivo da desnormalização é repetir grupos de expressão em todos os lugares que a entidade pai é utilizada.
+O objetivo da desnormalização é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta. 
 
-## Níveis
-
-Uma expressão tem dois tipos de níveis: "Nível geral" e "Nível na expressão".
-
-O "nível geral" determina em qual nível a entidade está com relação a hierarquia do grafo. 
-
-Por exemplo:
+Considere a seguinte expressão original:
 
 ```
-A (Nível 1)
-----B (Nível 2)
-    ----C (Nível 3)
-    ----D (Nível 3)
-        ----B (Nível 4)
-----E (Nível 2)
-    ----A (Nível 3)
+A + (B + D) + (E + B)
 ```
 
-O "nível na expressão" determina em qual nível a entidade está com relação a expressão. 
-
-Por exemplo:
-
-```
-                    A + B + C + ( D + E + ( F + G ) )
-Nível na expressão: 1   1   1     2   2     3   3    
-Nível geral:        1   2   2     2   3     3   4   
-```
-
-Note que o nível da expressão ignora o nível da entidade na hieraquia, é uma informação útil apenas para a expressão.
-
-## Índices
-
-Uma expressão tem dois tipos de índices: "Índice na expressão" e "Índice do nível".
-
-O "Índice da expressão" determina em qual posição a entidade está na expressão. O índice inicia em zero e soma-se +1 até a última entidade da expressão. 
-
-Por exemplo:
+* Note que a entidade `B` é filha da entidade `A` e filha da entidade `E`.
+* Após a desnormalização teremos a seguinte expressão:
 
 ```
-A + B + C + ( D + E + ( F  + G ) ) 
-0   1   2     3   4     5    6
+A + (B + D) + (E + (B + D))
+                    ^
 ```
 
-O "Índice do nível" determina em qual posição a entidade está com relação ao seu nível. O índice inicia em zero na primeira entidade do nível e soma-se +1 até a última entidade do mesmo nível. Por exemplo:
+* Após a desnormalização a entidade `B` teve seu grupo de expressão reescrito por completo quando foi utilizada novamente como filha da entidade `D`.
 
-```        
-                 A + B + C + ( D + E + ( F + G ) )
-Nível geral:     1   2   2     2   3     3   4   
-Índice do nível: 0   0   1     2   0     1   0  
-```
-
-* A entidade `A` é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.
-* A entidade `B` é a primeira do segunda nível e terá a posição zero. Ela é filha da entidade `A`.
-* A entidade `C` e a segunda do segundo nível e terá a posição 1. Ela é filha da entidade `A`.
-* A entidade `D` e a terceria do segundo nível e terá a posição 2. Ela é filha da entidade `A`.
-* A entidade `E` e a primeira do terceiro nível e terá a posição 0. Ela é filha da entidade `D`.
-* A entidade `F` e a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
-* A entidade `G` e a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
-
-## Navegação para a direita (Próxima entidade)
-
-Toda entidade, com exceção da última da expressão, tem conhecimento da próxima entidade na expressão. 
-
-No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a direita da entidade corrente:
+Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma expressão original é igual a sua expressão desnormalizada. Vejam um exemplo de como elas são diferentes:
 
 ```
-A + B + C + ( D + E + ( F + G ) )
-B   C   D     E   F     G
+Original:       A + (B + D) + (E + B)
+Grafo final:
+                A
+                ---B
+                ------D
+                ---E
+                ------B
 ```
 
-No exemplo, a entidade `A` tem conhecimento da entidade `B`. Note que a entidade `B` é filha de `A`, mas isso não influência, pois a ideia é conhecer a próxima entidade da expressão e não do seu nível.
-
-## Navegação para a esquerda (Entidade anterior)
-
-Toda entidade, com exceção da primeira da expressão (a entidade raiz), tem conhecimento da entidade anterior na expressão. No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a esquerda da entidade corrente:
+Se pegarmos a expressão desnormalizada e extrairmos o seu grafo, teremos um grafo diferente do grafo original:
 
 ```
-A + B + C + ( D + E + ( F + G ) ) 
-    A   B     C   D     E   F
+Original:                    A + (B + D) + (E + (B + D))
+Após normalização de tipo 1: A + (B + D + D) + (E + B)
+Grafo final:
+                             A
+                             ---B
+                             ------D
+                             ------D
+                             ---E
+                             ------B
 ```
+
+Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico "Repetições de grupo de expressão".
 
 ## Representação em forma de matriz
 
 Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão. Isso facilita a visualização e pesquisa de grafos complexos e de multiplos níveis. Exemplo:
-<!-- 
-```
-                    (A + B + C + ( D + E + ( F + ( G + D ) ) ))
-Nível geral:         1   2   2     2   3     3     4   5
-Índice do nível:     0   0   1     2   0     1   0 
-``` -->
 
 _Expressão:_
 
