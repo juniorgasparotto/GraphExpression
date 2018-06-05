@@ -43,6 +43,18 @@ namespace ExpressionGraph
             foreach (var i in expression)
                 str += (i.PreviousInGraph == null) ? "  " : i.PreviousInGraph.ToString() + " ";
 
+            str += "\r\n\r\n\r\n";
+            foreach (var i in expression)
+            {
+                var t = i is ExpressionItemCloseParenthesis<T>;
+                t = t ? t : i is ExpressionItemOpenParenthesis<T>;
+                t = t ? t : i is ExpressionItemPlus<T>;
+
+                if (!t)
+                {
+                    str += $"{i.ToString()} | {i.Level} | {i.IndexSameLevel} \r\n";
+                }
+            }
             return str;
         }
     }
