@@ -44,5 +44,5 @@ Grafo final:
                              ------B
 ```
 
-Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico <header-get anchor-name="expression-group-repeat" />.
+Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico <anchor-get name="expression-group-repeat" />.
 

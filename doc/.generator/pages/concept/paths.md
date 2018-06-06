@@ -2,7 +2,7 @@
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
 
-E para representar cada ocorrência usamos a notação de **"caminhos de entidades"** para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
+E para representar cada ocorrência usamos a notação de **caminhos de entidades** para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
 
 ```
 A.B.C.D

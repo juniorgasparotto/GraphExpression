@@ -223,7 +223,7 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
 
-E para representar cada ocorrência usamos a notação de **"caminhos de entidades"** para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
+E para representar cada ocorrência usamos a notação de **caminhos de entidades** para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
 
 ```
 A.B.C.D
@@ -431,13 +431,13 @@ A + (B + F) + (C + (G + F) + B) + G
 ```
 
 * Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
-* A entidade `B`, dentro do grupo `C` e a entidade `G` que está solitária no final da expressão, se transformaram em entidades finais e devido a isso, podemos aplicar a <header-get anchor-name="normalization-2"></header-get> para melhorar a visualização, veja:
+* A entidade `B`, dentro do grupo `C` e a entidade `G` que está solitária no final da expressão, se transformaram em entidades finais e devido a isso, podemos aplicar a [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2) para melhorar a visualização, veja:
 
 ```
 A + G + (B + F) + (C + B + (G + F))
 ```
 
-* Podemos aplicar novamente a <header-get anchor-name="normalization-3"></header-get> para declarar o grupo de expressão da entidade `G` após a sua movimentação para o inicio da expressão:
+* Podemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para declarar o grupo de expressão da entidade `G` após a sua movimentação para o inicio da expressão:
 
 ```
 A + (G + F) + (B + F) + (C + B + G)
@@ -491,7 +491,7 @@ Grafo final:
                              ------B
 ```
 
-Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico <header-get anchor-name="expression-group-repeat"></header-get>.
+Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat).
 
 ## <a name="search" />Pesquisas em expressões de grafos
 
@@ -556,7 +556,7 @@ A **pesquisa profunda** tem o objetivo de retornar a maior quantidade de resulta
 
 Para poder criar uma pesquisa profunda, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
-Vejamos a seguir o mesmo exemplo utilizado no tópico <header-get anchor-name="matrix-of-information"></header-get>, porém agora, a expressão foi desnormalizada:
+Vejamos a seguir o mesmo exemplo utilizado no tópico [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information), porém agora, a expressão foi desnormalizada:
 
 **Expressão:**
 
