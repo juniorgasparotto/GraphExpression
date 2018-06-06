@@ -1,8 +1,8 @@
 [
-![Inglês](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/documentation/img/en-us.png)
+![Inglês](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/en-us.png)
 ](https://github.com/juniorgasparotto/ExpressionGraph)
 [
-![Português](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/documentation/img/pt-br.png)
+![Português](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md)
 * [Expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#concept)
   * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
