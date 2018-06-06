@@ -4,6 +4,9 @@
 [
 ![Português](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md)
+
+# <a name="doc-concept" />Expressão de grafos
+
 * [Expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#concept)
 * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
   * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
@@ -32,8 +35,6 @@
     * [Pesquisando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-ascending)
     * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
-
-# <a name="doc-concept" />Expressão de grafos
 
 # <a name="concept" />Expressão de grafos
 

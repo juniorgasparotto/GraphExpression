@@ -1,5 +1,3 @@
-# <anchor-set name="doc-concept">Expressão de grafos</anchor-set>
-
 # Expressão de grafos <header-set anchor-name="concept" />
 
 O conceito expressão de grafos foi criado em 2015 por Glauber Donizeti Gasparotto Junior e tem como objetivos a representação de um grafo em forma de expressão.

@@ -13,6 +13,9 @@
         <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png" />
       </a>
 
+      # <anchor-set name="doc-concept">Expressão de grafos</anchor-set>
+
+
       <table-of-contents />
 
       <include href="doc/.generator/pages/concept/presentation.md" />
