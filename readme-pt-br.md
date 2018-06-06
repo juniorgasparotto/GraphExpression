@@ -5,33 +5,33 @@
 ![Português](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md)
 * [Expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#concept)
-  * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
-    * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
-    * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
-    * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
-    * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
-    * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
-    * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
-  * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
-    * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
-  * [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
-  * [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
-  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
-  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
-  * [Normalização - tipo 1](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-1)
-  * [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2)
-  * [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3)
-  * [Desnormalização](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#desnormalization)
-  * [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search)
+* [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
+  * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
+  * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
+  * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
+  * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
+  * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
+  * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
+* [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
+  * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
+* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
+* [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
+* [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
+* [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
+* [Normalização - tipo 1](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-1)
+* [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2)
+* [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3)
+* [Desnormalização](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#desnormalization)
+* [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search)
     * [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information)
-    * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
-      * [Pesquisando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-occurrences)
-      * [Pesquisando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-with-children)
-      * [Pesquisando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-descendants)
-      * [Pesquisando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-children)
-      * [Pesquisando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-ascending)
-      * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
-    * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
+  * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+    * [Pesquisando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-occurrences)
+    * [Pesquisando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-with-children)
+    * [Pesquisando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-descendants)
+    * [Pesquisando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-children)
+    * [Pesquisando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-ascending)
+    * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
+  * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
 
 # <a name="concept" />Expressão de grafos
 
@@ -111,7 +111,7 @@ A
 
 Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita. É obvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita, mas o que importa aqui é entender a ordem de resolução e o objetivo final do resultado.
 
-## <a name="expression-group" />Grupos de expressão
+# <a name="expression-group" />Grupos de expressão
 
 Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar.
 
@@ -134,7 +134,7 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 * A entidade `A` é a entidade pai de seu grupo de expressão e a entidade `B` e `C` são suas filhas.
 * A entidade `C` é a entidade pai de seu grupo de expressão e a entidade `D` é sua filha.
 
-### <a name="expression-group-root" />Grupo de expressão raiz
+## <a name="expression-group-root" />Grupo de expressão raiz
 
 O primeiro grupo de expressão é chamado de **grupo de expressão raiz**.
 
@@ -150,7 +150,7 @@ Ou
 A + B
 ```
 
-### <a name="expression-sub-group" />Sub-grupos de expressão
+## <a name="expression-sub-group" />Sub-grupos de expressão
 
 Um grupo de expressão pode conter outros grupos de expressão dentro dele e a lógica será a mesma para o sub-grupo:
 
@@ -158,7 +158,7 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
-### <a name="expression-group-repeat" />Repetições de grupo de expressão
+## <a name="expression-group-repeat" />Repetições de grupo de expressão
 
 Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
 
@@ -177,7 +177,7 @@ A + B + (C + D + E) + (I + C)
 A + B + (C + D + E) + (I + (C + D + E))
 ```
 
-### <a name="entity-root" />Entidade Raiz
+## <a name="entity-root" />Entidade Raiz
 
 A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
 
@@ -187,7 +187,7 @@ A + B + (C + A)
 
 * A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
 
-### <a name="entity-parent" />Entidade Pai
+## <a name="entity-parent" />Entidade Pai
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo.
 
@@ -198,7 +198,7 @@ Por exemplo:
 * Nesse exemplo, temos duas entidades pai: `A` e `C`.
 * O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
 
-### <a name="entity-final" />Entidade final
+## <a name="entity-final" />Entidade final
 
 Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
 
@@ -219,7 +219,7 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 * A entidade `C` é final e não contém filhos
 * A entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
 
-## <a name="paths" />Caminhos de entidades
+# <a name="paths" />Caminhos de entidades
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
 
@@ -259,7 +259,7 @@ Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interro
 * _Ocorrência 1_: `A.B`
 * _Ocorrência 2_: `A.D.B`
 
-### <a name="paths-cyclic" />Caminhos cíclicos na expressão
+## <a name="paths-cyclic" />Caminhos cíclicos na expressão
 
 Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação ciclica.
 
@@ -272,7 +272,7 @@ A + A + B + (C + A)
 * Uma direta (`A + A`): onde a entidade `A` é pai dela mesma.
 * Uma indireta (`C + A`): Onde `C` é pai de uma entidade ascendente, no caso a entidade `A`.
 
-## <a name="levels" />Níveis
+# <a name="levels" />Níveis
 
 Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
@@ -302,7 +302,7 @@ Nível geral:        1   2   2     2   3     3   4
 
 Note que o nível da expressão ignora o nível da entidade na hieraquia, é uma informação útil apenas para a expressão.
 
-## <a name="indexes" />Índices
+# <a name="indexes" />Índices
 
 Uma expressão tem dois tipos de índices: **Índice na expressão** e **Índice do nível**.
 
@@ -331,7 +331,7 @@ Nível geral:     1   2   2     2   3     3   4
 * A entidade `F` é a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
 * A entidade `G` é a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
 
-## <a name="entity-next" />Navegação para a direita (Próxima entidade)
+# <a name="entity-next" />Navegação para a direita (Próxima entidade)
 
 Toda entidade, com exceção da última da expressão, tem conhecimento da próxima entidade na expressão.
 
@@ -344,7 +344,7 @@ B   C   D     E   F     G
 
 No exemplo, a entidade `A` tem conhecimento da entidade `B`. Note que a entidade `B` é filha de `A`, mas isso não influência, pois a ideia é conhecer a próxima entidade da expressão e não do seu nível.
 
-## <a name="entity-previous" />Navegação para a esquerda (Entidade anterior)
+# <a name="entity-previous" />Navegação para a esquerda (Entidade anterior)
 
 Toda entidade, com exceção da primeira da expressão (a entidade raiz), tem conhecimento da entidade anterior na expressão. No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a esquerda da entidade corrente:
 
@@ -353,7 +353,7 @@ A + B + C + ( D + E + ( F + G ) )
     A   B     C   D     E   F
 ```
 
-## <a name="normalization-1" />Normalização - tipo 1
+# <a name="normalization-1" />Normalização - tipo 1
 
 A **normalização de tipo 1** tem o objetivo de enxugar grupos de expressão que pertencem a mesma entidade pai e que estão em diferentes lugares na expressão.
 
@@ -393,7 +393,7 @@ A + (B + Y) + (D + B)
 A + (B + Y + Y) + (D + B)
 ```
 
-## <a name="normalization-2" />Normalização - tipo 2
+# <a name="normalization-2" />Normalização - tipo 2
 
 A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as **entidades finais** no começo do seu grupo de expressão para ajudar na visualização da expressão.
 
@@ -412,7 +412,7 @@ A + F + G + (B + E + (C + D))
 * Note que as entidades `F` e `G` foram para o ínicio do seu grupo de expressão.
 * A entidade `E` também foi reorganizada para o ínicio do seu grupo de expressão.
 
-## <a name="normalization-3" />Normalização - tipo 3
+# <a name="normalization-3" />Normalização - tipo 3
 
 A **normalização de tipo 3** tem o objetivo de declarar o mais rápido possível todos os **grupos de expressão**.
 
@@ -445,7 +445,7 @@ A + (G + F) + (B + F) + (C + B + G)
 
 Com isso concluímos a normalização e temos acima uma expressão muito mais legível.
 
-## <a name="desnormalization" />Desnormalização
+# <a name="desnormalization" />Desnormalização
 
 O objetivo da **desnormalização** é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 
@@ -493,7 +493,7 @@ Grafo final:
 
 Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat).
 
-## <a name="search" />Pesquisas em expressões de grafos
+# <a name="search" />Pesquisas em expressões de grafos
 
 A pesquisa em expressão de grafos pode ser dividida em duas partes: **Pesquisa superficial** e **Pesquisa profunda**.
 
@@ -550,7 +550,7 @@ A (Indice do nível: 0)
 
 Com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos criar meios de navegação e pesquisa de entidades.
 
-### <a name="search-deep" />Pesquisa profunda
+## <a name="search-deep" />Pesquisa profunda
 
 A **pesquisa profunda** tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
 
@@ -616,13 +616,13 @@ A (Indice do nível: 0)
 #13             | Z        | 3           | 2 
 ```
 
-#### <a name="search-deep-occurrences" />Pesquisando todas as ocorrências de uma entidade
+### <a name="search-deep-occurrences" />Pesquisando todas as ocorrências de uma entidade
 
 Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo acima, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontrariamos as linhas `#4`, `#11` e `#12`.
 
 * Note que sem a desnormalização não seria possível encontrar a linha `#11` e não seria possível obter o número correto de ocorrências dessa entidade.
 
-#### <a name="search-deep-with-children" />Pesquisando todas as entidades que contenham filhos
+### <a name="search-deep-with-children" />Pesquisando todas as entidades que contenham filhos
 
 Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 
@@ -647,7 +647,7 @@ Com base no exemplo, teremos:
 
 Com isso, após removermos as repetições de entidades (no caso a entidade `C` que aparece nas linhas `#3` e `#10`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
 
-#### <a name="search-deep-descendants" />Pesquisando todos os descendentes de uma entidade
+### <a name="search-deep-descendants" />Pesquisando todos os descendentes de uma entidade
 
 Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é uma descendente.
 
@@ -665,7 +665,7 @@ Por exemplo, se quisermos pegar os descendentes da entidade `F`.
 
 Após eliminarmos as repetições de entidades, obtemos como resultado final as seguintes entidades descendentes: `G`, `B`, `C` e `Y`
 
-#### <a name="search-deep-get-entity-children" />Pesquisando os filhos de uma entidade
+### <a name="search-deep-get-entity-children" />Pesquisando os filhos de uma entidade
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
 
@@ -677,7 +677,7 @@ Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidad
 
 Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`, `F` e `Z`
 
-#### <a name="search-deep-get-entity-ascending" />Pesquisando todos os ascendentes de uma entidade
+### <a name="search-deep-get-entity-ascending" />Pesquisando todos os ascendentes de uma entidade
 
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 
@@ -731,7 +731,7 @@ Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
 
 Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`
 
-#### <a name="search-deep-get-entity-parent" />Pesquisando o pai de uma entidade
+### <a name="search-deep-get-entity-parent" />Pesquisando o pai de uma entidade
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
 
@@ -756,7 +756,7 @@ Como existem 3 ocorrências da entidade `Y`, teremos um resultado por ocorrênci
 * `#08`: A entidade `G` tem o nível geral igual a 4, não é uma ascendente.
 * `#07`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a 3, portanto, ela é pai da entidade `Y`.**
 
-### <a name="search-surface" />Pesquisa superficial
+## <a name="search-surface" />Pesquisa superficial
 
 Na **Pesquisa superficial** a técnica usada é a mesma da **Pesquisa profunda**, á única deferença é que na pesquisa superficial não consideramos os caminhos que já foram escritos (ou percorridos). No caso, não usamos a técnica da desnormalização para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da _Pesquisa profunda_.
 

@@ -1,4 +1,4 @@
-## Grupos de expressão <header-set anchor-name="expression-group" />
+# Grupos de expressão <header-set anchor-name="expression-group" />
 
 Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar. 
 
@@ -21,7 +21,7 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 * A entidade `A` é a entidade pai de seu grupo de expressão e a entidade `B` e `C` são suas filhas.
 * A entidade `C` é a entidade pai de seu grupo de expressão e a entidade `D` é sua filha.
 
-### Grupo de expressão raiz <header-set anchor-name="expression-group-root" />
+## Grupo de expressão raiz <header-set anchor-name="expression-group-root" />
 
 O primeiro grupo de expressão é chamado de **grupo de expressão raiz**.
 
@@ -37,7 +37,7 @@ Ou
 A + B
 ```
 
-### Sub-grupos de expressão <header-set anchor-name="expression-sub-group" />
+## Sub-grupos de expressão <header-set anchor-name="expression-sub-group" />
 
 Um grupo de expressão pode conter outros grupos de expressão dentro dele e a lógica será a mesma para o sub-grupo:
 
@@ -45,7 +45,7 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
-### Repetições de grupo de expressão <header-set anchor-name="expression-group-repeat" />
+## Repetições de grupo de expressão <header-set anchor-name="expression-group-repeat" />
 
 Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
 
@@ -64,7 +64,7 @@ A + B + (C + D + E) + (I + C)
 A + B + (C + D + E) + (I + (C + D + E))
 ```
 
-### Entidade Raiz <header-set anchor-name="entity-root" />
+## Entidade Raiz <header-set anchor-name="entity-root" />
 
 A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
 
@@ -74,7 +74,7 @@ A + B + (C + A)
 
 * A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
 
-### Entidade Pai <header-set anchor-name="entity-parent" />
+## Entidade Pai <header-set anchor-name="entity-parent" />
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo. 
 
@@ -85,7 +85,7 @@ Por exemplo:
 * Nesse exemplo, temos duas entidades pai: `A` e `C`.
 * O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
 
-### Entidade final <header-set anchor-name="entity-final" />
+## Entidade final <header-set anchor-name="entity-final" />
 
 Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
 

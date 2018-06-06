@@ -1,4 +1,4 @@
-## Pesquisas em expressões de grafos <header-set anchor-name="search" />
+# Pesquisas em expressões de grafos <header-set anchor-name="search" />
 
 A pesquisa em expressão de grafos pode ser dividida em duas partes: **Pesquisa superficial** e **Pesquisa profunda**.
 

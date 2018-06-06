@@ -1,4 +1,4 @@
-## Caminhos de entidades <header-set anchor-name="paths" />
+# Caminhos de entidades <header-set anchor-name="paths" />
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
 
@@ -38,7 +38,7 @@ Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interro
 * _Ocorrência 1_: `A.B`
 * _Ocorrência 2_: `A.D.B`
 
-### Caminhos cíclicos na expressão <header-set anchor-name="paths-cyclic" />
+## Caminhos cíclicos na expressão <header-set anchor-name="paths-cyclic" />
 
 Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação ciclica.
 
