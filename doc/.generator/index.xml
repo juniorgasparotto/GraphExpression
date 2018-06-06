@@ -6,11 +6,11 @@
     </languages>
     <content>
       <a href="https://github.com/juniorgasparotto/ExpressionGraph" rel="Inglês">
-        <img alt="Inglês" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/documentation/img/en-us.png" />
+        <img alt="Inglês" src="https://raw.githubusercontent.com/juniorgasparotto/ExpressionGraph/master/doc/img/en-us.png" />
       </a>
 
       <a href="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" rel="Português">
-        <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/documentation/img/pt-br.png" />
+        <img alt="Português" src="https://raw.githubusercontent.com/juniorgasparotto/ExpressionGraph/master/doc/img/pt-br.png" />
       </a>
 
       <table-of-contents />
