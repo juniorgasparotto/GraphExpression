@@ -2,9 +2,9 @@
 
 O conceito expressão de grafos foi criado em 2015 por Glauber Donizeti Gasparotto Junior e tem como objetivos a representação de um grafo em forma de expressão.
 
-A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legivel e não apenas imagem.
+A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte.
 
-Com o avanço do entendimento do conceito, você vai notar que ele pode ser útil para a criação de mecanismos de pesquisas complexas. Vale ressaltar que o foco não é performance, mas apenas uma nova forma de enchergar um grafo e suas informações.
+Com o avanço do entendimento do conceito, você vai notar que ele pode ser útil para a criação de mecanismos de pesquisas complexas. Vale ressaltar que o foco não é performance, mas apenas uma nova forma de enxergar um grafo e suas informações.
 
 Imagine o seguinte grafo:
 
@@ -30,8 +30,8 @@ Note que essa representação se parece com uma expressão matemática, porém a
 
 Primeiro, vamos listar os elementos de uma expressão:
 
-* **Entidade:** É o elemento fundamental da expressão, determina uma unidade, um vértice no conceito de grafo.
-* **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
+* **Entidade:** É o elemento fundamental da expressão, determina uma unidade, um vértice no teória de grafo.
+* **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade, uma aresta em teória de grafos.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
 ## Objetivo do resultado final

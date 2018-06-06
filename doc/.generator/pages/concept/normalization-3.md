@@ -1,4 +1,4 @@
-## Normalização - tipo 3
+## Normalização - tipo 3 <header-set anchor-name="normalization-3" />
 
 A normalização de tipo 3 tem o objetivo de declarar o mais rápido possível todos os "grupos de expressão".
 

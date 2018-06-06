@@ -1,4 +1,4 @@
-### Pesquisa profunda
+### Pesquisa profunda <header-set anchor-name="search-deep" />
 
 A pesquisa profunda tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
 
@@ -64,13 +64,13 @@ A (Indice do nível: 0)
 #13             | Z        | 3           | 2 
 ```
 
-#### Pesquisando todas as ocorrências de uma entidade
+#### Pesquisando todas as ocorrências de uma entidade <header-set anchor-name="search-deep-occurrences" />
 
 Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo acima, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontrariamos as linhas `#4`, `#11` e `#12`.
 
 * Note que sem a desnormalização não seria possível encontrar a linha `#11` e não seria possível obter o número correto de ocorrências dessa entidade.
 
-#### Pesquisando todas as entidades que contenham filhos
+#### Pesquisando todas as entidades que contenham filhos <header-set anchor-name="search-deep-with-children" />
 
 Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 
@@ -95,7 +95,7 @@ Com base no exemplo, teremos:
 
 Com isso, após removermos as repetições de entidades (no caso a entidade `C` que aparece nas linhas `#3` e `#10`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
 
-#### Pesquisando todos os descendentes de uma entidade
+#### Pesquisando todos os descendentes de uma entidade <header-set anchor-name="search-deep-descendants" />
 
 Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é uma descendente.
 
@@ -113,7 +113,7 @@ Por exemplo, se quisermos pegar os descendentes da entidade `F`.
 
 Após eliminarmos as repetições de entidades, obtemos como resultado final as seguintes entidades descendentes: `G`, `B`, `C` e `Y`
 
-#### Pesquisando os filhos de uma entidade
+#### Pesquisando os filhos de uma entidade <header-set anchor-name="search-deep-get-entity-children" />
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: [nível geral da entidade corrente] + 1
 
@@ -125,7 +125,7 @@ Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidad
 
 Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`, `F` e `Z`
 
-#### Pesquisando todos os ascendentes de uma entidade
+#### Pesquisando todos os ascendentes de uma entidade <header-set anchor-name="search-deep-get-entity-ascending" />
 
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 
@@ -179,7 +179,7 @@ Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
 
 Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`
 
-#### Pesquisando o pai de uma entidade
+#### Pesquisando o pai de uma entidade <header-set anchor-name="search-deep-get-entity-parent" />
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: [nível geral da entidade corrente] - 1; ou a primeira entidade com o nível geral menor que a entidade desejada.
 

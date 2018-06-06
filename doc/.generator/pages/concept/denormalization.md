@@ -1,4 +1,4 @@
-## Desnormalização
+## Desnormalização <header-set anchor-name="desnormalization" />
 
 O objetivo da desnormalização é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 

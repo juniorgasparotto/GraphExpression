@@ -13,6 +13,8 @@
         <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/documentation/img/pt-br.png" />
       </a>
 
+      <table-of-contents />
+
       <include href="doc/.generator/pages/concept/presentation.md" />
       <include href="doc/.generator/pages/concept/expression-group.md" />
       <include href="doc/.generator/pages/concept/paths.md" />
