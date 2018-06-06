@@ -38,7 +38,7 @@
 
 # <a name="concept" />Expressão de grafos
 
-O conceito expressão de grafos foi criado em 2015 por Glauber Donizeti Gasparotto Junior e tem como objetivos a representação de um grafo em forma de expressão.
+O conceito expressão de grafos foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão.
 
 A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte.
 
@@ -226,7 +226,9 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
 
-E para representar cada ocorrência usamos a notação de **caminhos de entidades** para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
+Usamos uma notação para escrever o caminho completo de cada ocorrência de uma entidade na expressão. A notação utiliza o caractere `.` entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha. Vejamos um exemplo:
+
+Abaixo temos o caminho até chegar na entidade `D`.
 
 ```
 A.B.C.D
@@ -242,22 +244,22 @@ A + (B + (C + D))
 * A entidede `C` é filha da entidade `B`
 * A entidede `B` é filha da entidade `A`
 
-O caractere `.` é usado entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha. Vejamos mais exemplos:
+**Outras exemplos:**
 
-**Expressão:**
+_Expressão:_
 
 ```
 (A + A + (B + C) + (D + B))
 ```
 
-**Caminho da entidade `A`:**
+_Caminho da entidade `A`:_
 
 * _Ocorrência 1_: `A`
 * _Ocorrência 2_: `A.A`
 
 Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teriamos um caminho infinito.
 
-**Caminho da entidade `B`:**
+_Caminho da entidade `B`:_
 
 * _Ocorrência 1_: `A.B`
 * _Ocorrência 2_: `A.D.B`
