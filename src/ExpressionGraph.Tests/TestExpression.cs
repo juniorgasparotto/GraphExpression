@@ -26,7 +26,7 @@ namespace ExpressionGraph.Tests
         private Expression<HierarchicalEntity> GetExpression(string expressionIn, out IEnumerable<HierarchicalEntity> entities, bool usePlus = true, bool useParenthesis = true, bool awaysRepeatDefined = true)
         {
             entities = ExpressionUtils.FromString(expressionIn);
-            return ExpressionBuilder<HierarchicalEntity>.Build(entities, f => f.Children, true, usePlus, useParenthesis).FirstOrDefault();
+            return ExpressionBuilder<HierarchicalEntity>.Build(entities, f => f.Children, awaysRepeatDefined, usePlus, useParenthesis).FirstOrDefault();
 
             //entities = Utils.FromExpression(expressionIn);
             //var graphs = entities.ToGraphs(f => f.Children, GetConfig());

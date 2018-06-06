@@ -24,7 +24,7 @@ A sua representação em forma de expressão seria:
 (A + (B + C + (D + B)) + (E + A))
 ```
 
-Note que essa representação se parece com uma expressão matemática, porém a resolução da expressão é bem peculiar. Vamos lá:
+Note que essa representação se parece com uma expressão matemática, porém a resolução da expressão é bem peculiar.
 
 ## Elementos de uma expressão de grafos
 
@@ -101,7 +101,9 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 
 ### Grupo de expressão raiz
 
-Não é obrigatório o uso dos parenteses no primeiro grupo de expressão. Veremos que nos exemplos a seguir ambas as expressão estão corretas:
+O primeiro grupo de expressão é chamado de "grupo de expressão raiz".
+
+Não é obrigatório o uso dos parenteses no grupo de expressão raiz. Veremos que nos exemplos a seguir ambas as expressão estão corretas:
 
 ``` 
 (A + B)
@@ -113,7 +115,7 @@ Ou
 A + B
 ```
 
-## Sub-grupos de expressão
+### Sub-grupos de expressão
 
 Um grupo de expressão pode conter outros grupos de expressão dentro dele e a lógica será a mesma para o sub-grupo:
 
@@ -121,17 +123,36 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
-## Entidade Raiz
+### Repetições de grupo de expressão
+
+Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
+
+Por exemplo: 
+
+```
+A + B + (C + D + E) + (I + C)
+```
+
+* A entidade `C` tem os filhos `D` e `E`
+* A entidade `I` tem como filha a entidade `C`, porém não é necessário redeclarar as entidades filhas de `C`.
+
+**Errado:**
+
+```
+A + B + (C + D + E) + (I + (C + D + E))
+```
+
+### Entidade Raiz
 
 A primeira entidade da expressão é a entidade raiz da expressão. Uma expressão só pode conter uma entidade raiz.
 
 ```
-(A + A + B + (C + A))
+A + B + (C + A)
 ```
 
 * A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
 
-## Entidade Pai
+### Entidade Pai
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo. 
 
@@ -142,7 +163,7 @@ Por exemplo:
 * Nesse exemplo, temos duas entidades pai: `A` e `C`.
 * O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
 
-## Entidade final
+### Entidade final
 
 Uma entidade que não possui grupos de expressão em seu nível é chamada de "entidade final". Isso não significa que a entidade não tenha filhos, veja:
 
@@ -163,11 +184,51 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de "e
 * A entidade `C` é final e não contém filhos
 * A entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
 
-## Somas ciclicas
+## Caminhos de entidades
+
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome, isso não faz sentido. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
+
+E para representar cada ocorrência usamos a notação de "caminhos de entidades" para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
+
+```
+A.B.C.D
+```
+
+Essa notação é o mesmo que:
+
+```
+A + (B + (C + D))
+```
+
+* A entidede `D` é filha da entidade `C`
+* A entidede `C` é filha da entidade `B`
+* A entidede `B` é filha da entidade `A`
+
+O caractere `.` é usado entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha. Vejamos mais exemplos:
+
+**Expressão:**
+
+```
+(A + A + (B + C) + (D + B))
+```
+
+**Caminho da entidade `A`:**
+
+Ocorrência 1: `A`
+Ocorrência 2: `A.A`
+
+Na "ocorrência 2" temos uma relação ciclica, portanto a notação é interrompida quando isso acontece, do contrário teriamos um caminho infinito.
+
+**Caminho da entidade `B`:**
+
+Ocorrência 1: `A.B`
+Ocorrência 2: `A.D.B`
+
+### Caminhos cíclicos na expressão
 
 Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe uma soma ciclica entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação ciclica.
 
-Note que o grafo contém duas referencias ciclicas: 
+Note que o grafo contém duas referências ciclicas:
 
 ```
 A + A + B + (C + A)
@@ -228,12 +289,12 @@ Nível geral:     1   2   2     2   3     3   4
 ```
 
 * A entidade `A` é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.
-* A entidade `B` é a primeira do segunda nível e terá a posição zero. Ela é filha da entidade `A`.
-* A entidade `C` e a segunda do segundo nível e terá a posição 1. Ela é filha da entidade `A`.
-* A entidade `D` e a terceria do segundo nível e terá a posição 2. Ela é filha da entidade `A`.
-* A entidade `E` e a primeira do terceiro nível e terá a posição 0. Ela é filha da entidade `D`.
-* A entidade `F` e a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
-* A entidade `G` e a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
+* A entidade `B` é a primeira do segundo nível e terá a posição zero. Ela é filha da entidade `A`.
+* A entidade `C` é a segunda do segundo nível e terá a posição 1. Ela é filha da entidade `A`.
+* A entidade `D` é a terceria do segundo nível e terá a posição 2. Ela é filha da entidade `A`.
+* A entidade `E` é a primeira do terceiro nível e terá a posição 0. Ela é filha da entidade `D`.
+* A entidade `F` é a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
+* A entidade `G` é a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
 
 ## Navegação para a direita (Próxima entidade)
 
@@ -255,25 +316,6 @@ Toda entidade, com exceção da primeira da expressão (a entidade raiz), tem co
 ```
 A + B + C + ( D + E + ( F + G ) ) 
     A   B     C   D     E   F
-```
-
-## Repetições de grupo de expressão
-
-Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
-
-Por exemplo: 
-
-```
-A + B + (C + D + E) + (I + C)
-```
-
-* A entidade `C` tem os filhos `D` e `E`
-* A entidade `I` tem como filha a entidade `C`, porém não é necessário redeclarar as entidades filhas de `C`.
-
-**Errado:**
-
-```
-A + B + (C + D + E) + (I + (C + D + E))
 ```
 
 ## Normalização - tipo 1
@@ -351,27 +393,27 @@ A + B + (C + G + (B + F)) + (G + F)
 Note que as entidades `B` e `G` são utilizadas antes que seus grupos sejam declarados e após a normalização teremos:
 
 ```
-A + (B + F) + (C + (G + F) + B)
+A + (B + F) + (C + (G + F) + B) + G
 ```
 
-* Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
-* A entidade `B`, dentro do grupo `C`, se transformou em uma entidade final e devido a isso, podemos aplicar a "normalização de tipo 2" para melhorar ainda mais a visualização, veja:
+1. Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
+2. A entidade `B`, dentro do grupo `C` e a entidade `G` que está solitária no final da expressão, se transformaram em entidades finais e devido a isso, podemos aplicar a "normalização de tipo 2" para melhorar a visualização, veja:
 
 ```
-A + (B + F) + (C + (G + F) + B)
+A + G + (B + F) + (C + B + (G + F))
 ```
 
-```
-A + (B + D) + K + (D + B)
-```
+3. Podemos aplicar novamente a normalização de tipo 3 para declarar o grupo de expressão da entidade `G` após a sua movimentação para o inicio da expressão:
 
 ```
-A + (B + (D + B)) + K + (D + (B + D))
+A + (G + F) + (B + F) + (C + B + G)
 ```
+
+Com isso concluímos a normalização e temos acima uma expressão muito mais legível.
 
 ## Desnormalização
 
-O objetivo da desnormalização é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta. 
+O objetivo da desnormalização é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 
 Considere a seguinte expressão original:
 
@@ -417,27 +459,27 @@ Grafo final:
 
 Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico "Repetições de grupo de expressão".
 
-## Representação em forma de matriz
+## Pesquisa e navegação
 
-Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão. Como fonte de dados da matriz devemos usar a expressão desnormalizada da expressão original.
+A pesquisa em expressão de grafos pode ser dividida em duas partes: "Pesquisa superficial" e "Pesquisa profunda".
 
-Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
+Ambas utilizam de uma matriz de informação que veremos adiante para poder obter ensumos para a pesquisa.
 
-Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos.
+### Matriz de informação
 
-Exemplo:
+Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão. 
 
-_Expressão:_
+Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos. Vejamos um exemplo:
+
+**Expressão:**
 
 ```
-Original:            A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-                               ^                                   ^
-Desnormalizada:      A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z ) 
-Nível geral:         1   2     2   3       2   3     3     4   5     5   6       4     3 
-Índice do nível:     0   0     1   0       2   0     1     0   0     1   0       1     2
+Expressão:          A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+Nível geral:        1   2     2   3       2   3     3     4   5   5     4     3
+Índice do nível:    0   0     1   0       2   0     1     0   0   1     1     2
 ```
 
-_Hierarquia:_
+**Hierarquia:**
 
 ```
 A (Indice do nível: 0)
@@ -450,52 +492,109 @@ A (Indice do nível: 0)
         ----G (Indice do nível: 0)
             ----B (Indice do nível: 0)
             ----C (Indice do nível: 1)
-                ----Y (Indice do nível: 0)
         ----Y (Indice do nível: 1)
     ----Z (Indice do nível: 2)
 ```
 
-_Matriz de informações:_
+**Matriz:**
 
 ```
-Índice geral   | Entidade | Nível geral | Índice do nível
-#1	           | A        | 1           | 0 
-#2	           | B        | 2           | 0 
-#3	           | C        | 2           | 1 
-#4	           | Y        | 3           | 0 
-#5	           | D        | 2           | 2 
-#6	           | E        | 3           | 0 
-#7	           | F        | 3           | 1 
-#8	           | G        | 4           | 0 
-#9	           | B        | 5           | 0 
-#10	           | C        | 5           | 1 
-#11            | Y        | 6           | 0 
-#12            | Y        | 4           | 1 
-#13            | Z        | 3           | 2 
+Índice geral    | Entidade | Nível geral | Índice do nível
+#01             | A        | 1           | 0 
+#02             | B        | 2           | 0 
+#03             | C        | 2           | 1 
+#04             | Y        | 3           | 0 
+#05             | D        | 2           | 2 
+#06             | E        | 3           | 0 
+#07             | F        | 3           | 1 
+#08             | G        | 4           | 0 
+#09             | B        | 5           | 0 
+#10             | C        | 5           | 1 
+#11             | Y        | 4           | 1 
+#12             | Z        | 3           | 2
 ```
 
-* Note que as entidades `B` e `C` tem dois pais: `A` e `G`, porém com níveis diferentes.
-* Note foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão reescrito dentro da entidade `G`.
+Com base nessa matriz de informação e ao fato das entidades conhecerem os seus "vizinhos", ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos criar meios de navegação e pesquisa de entidades.
 
-## Pesquisa e navegação
+### Pesquisa profunda
 
-Com base nessa matriz de informações e ao fato das entidades conhecerem os seus "vizinhos", ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos enfim criar meios de navegação e pesquisa de entidades. 
+A pesquisa profunda tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
 
-Vejamos alguns exemplos de pesquisas:
+Para poder criar uma pesquisa profunda, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
-### Pesquisando todas as ocorrências de uma entidade
+Vejamos a seguir o mesmo exemplo utilizado no tópico "Matriz de informação", porém agora, a expressão foi desnormalizada:
+
+**Expressão:**
+
+```
+Original:            A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+                               ^                                   ^
+Desnormalizada:      A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
+                                                                         ^
+Nível geral:         1   2     2   3       2   3     3     4   5     5   6       4     3 
+Índice do nível:     0   0     1   0       2   0     1     0   0     1   0       1     2
+```
+
+**Hierarquia:**
+
+```
+A (Indice do nível: 0)
+----B (Indice do nível: 0)
+----C (Indice do nível: 1) 
+    ----Y (Indice do nível: 0)
+----D (Indice do nível: 2)
+    ----E (Indice do nível: 0)
+    ----F (Indice do nível: 1)
+        ----G (Indice do nível: 0)
+            ----B (Indice do nível: 0)
+            ----C (Indice do nível: 1)
+                ----Y (Indice do nível: 0) *
+        ----Y (Indice do nível: 1)
+    ----Z (Indice do nível: 2)
+```
+
+* Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão reescrito dentro da entidade `G`.
+* Após a desnormalização um novo caminho foi criado para a entidade `Y`:
+    * Antes:
+        * Ocorrência 1: A.C.Y
+        * Ocorrência 2: A.D.F.G.Y
+    * Depois:
+        * Ocorrência 1: A.C.Y
+        * Ocorrência 2: A.D.F.G.C.Y -> Novo caminho
+        * Ocorrência 3: A.D.F.G.Y
+
+**Matriz:**
+
+```
+Índice geral    | Entidade | Nível geral | Índice do nível
+#01             | A        | 1           | 0 
+#02             | B        | 2           | 0 
+#03             | C        | 2           | 1 
+#04             | Y        | 3           | 0 
+#05             | D        | 2           | 2 
+#06             | E        | 3           | 0 
+#07             | F        | 3           | 1 
+#08             | G        | 4           | 0 
+#09             | B        | 5           | 0 
+#10             | C        | 5           | 1 
+#11             | Y *      | 6           | 0
+#12             | Y        | 4           | 1 
+#13             | Z        | 3           | 2 
+```
+
+#### Pesquisando todas as ocorrências de uma entidade
 
 Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo acima, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontrariamos as linhas `#4`, `#11` e `#12`.
 
 * Note que sem a desnormalização não seria possível encontrar a linha `#11` e não seria possível obter o número correto de ocorrências dessa entidade.
 
-### Pesquisando todas as entidades que contenham filhos
+#### Pesquisando todas as entidades que contenham filhos
 
 Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 
-No exemplo, encontrariamos:
+Com base no exemplo, teremos:
 
-1. Encontramos todas as linhas com o índice do nível igual a zero: 
+1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero: 
     * `#01 (A)`
     * `#02 (B)`
     * `#04 (Y)`
@@ -504,7 +603,7 @@ No exemplo, encontrariamos:
     * `#09 (B)`
     * `#11 (Y)`
 2. Para cada linha encontrada, retornamos a sua entidade anterior que será uma entidade pai:
-    * `[NULL]`  -> `#01 (A)`: Não contém entidade anterior, portanto não retorna nada.
+    * `NULL`  -> `#01 (A)`: Não contém entidade anterior, portanto não retorna nada.
     * `#01 (A)` -> `#02 (B)`: Retorna a entidade `A` como sendo sua anterior
     * `#03 (C)` -> `#04 (Y)`: Retorna a entidade `C` como sendo sua anterior
     * `#05 (D)` -> `#06 (E)`: Retorna a entidade `D` como sendo sua anterior
@@ -514,7 +613,7 @@ No exemplo, encontrariamos:
 
 Com isso, após removermos as repetições de entidades (no caso a entidade `C` que aparece nas linhas `#3` e `#10`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
 
-### Pesquisando todos os descendentes de uma entidade
+#### Pesquisando todos os descendentes de uma entidade
 
 Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é uma descendente.
 
@@ -532,7 +631,7 @@ Por exemplo, se quisermos pegar os descendentes da entidade `F`.
 
 Após eliminarmos as repetições de entidades, obtemos como resultado final as seguintes entidades descendentes: `G`, `B`, `C` e `Y`
 
-### Pesquisando os filhos de uma entidade
+#### Pesquisando os filhos de uma entidade
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: [nível geral da entidade corrente] + 1
 
@@ -544,7 +643,7 @@ Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidad
 
 Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`, `F` e `Z`
 
-### Pesquisando todos os ascendentes de uma entidade
+#### Pesquisando todos os ascendentes de uma entidade
 
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 
@@ -598,7 +697,7 @@ Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
 
 Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`
 
-### Pesquisando o pai de uma entidade
+#### Pesquisando o pai de uma entidade
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: [nível geral da entidade corrente] - 1; ou a primeira entidade com o nível geral menor que a entidade desejada.
 
@@ -622,3 +721,34 @@ Como existem 3 ocorrências da entidade `Y`, teremos um resultado por ocorrênci
 * `#09`: A entidade `B` tem o nível geral igual a 5, não é uma ascendente.
 * `#08`: A entidade `G` tem o nível geral igual a 4, não é uma ascendente.
 * `#07`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a 3, portanto, ela é pai da entidade `Y`.**
+
+### Pesquisa superficial
+
+Na "Pesquisa superficial" a técnica usada é a mesma da "Pesquisa profunda", á única deferença é que na pesquisa superficial não consideramos os caminhos que já foram escritos (ou percorridos). No caso, não usamos a técnica da desnormalização para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da "Pesquisa profunda".
+
+Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teriamos a seguinte diferença entre os tipos de pesquisas:
+
+**Expressão:**
+
+```
+A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+```
+
+**Pesquisa profunda:**
+
+Primeiro, aplica-se a desnormalização:
+
+```
+A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
+```
+
+* Ocorrência 1: A.C.Y
+* Ocorrência 2: A.D.F.G.C.Y -> Novo caminho
+* Ocorrência 3: A.D.F.G.Y
+
+**Pesquisa superficial:**
+
+Utiliza a expressão original:
+
+* Ocorrência 1: A.C.Y
+* Ocorrência 2: A.D.F.G.Y
