@@ -1,8 +1,8 @@
 ## Índices <header-set anchor-name="indexes" />
 
-Uma expressão tem dois tipos de índices: "Índice na expressão" e "Índice do nível".
+Uma expressão tem dois tipos de índices: **Índice na expressão** e **Índice do nível**.
 
-O "Índice da expressão" determina em qual posição a entidade está na expressão. O índice inicia em zero e soma-se +1 até a última entidade da expressão. 
+O **Índice da expressão** determina em qual posição a entidade está na expressão. O índice inicia em zero e soma-se +1 até a última entidade da expressão. 
 
 Por exemplo:
 
@@ -11,7 +11,7 @@ A + B + C + ( D + E + ( F  + G ) )
 0   1   2     3   4     5    6
 ```
 
-O "Índice do nível" determina em qual posição a entidade está com relação ao seu nível. O índice inicia em zero na primeira entidade do nível e soma-se +1 até a última entidade do mesmo nível. Por exemplo:
+O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia em zero na primeira entidade do nível e soma-se +1 até a última entidade do mesmo nível. Por exemplo:
 
 ```        
                  A + B + C + ( D + E + ( F + G ) )

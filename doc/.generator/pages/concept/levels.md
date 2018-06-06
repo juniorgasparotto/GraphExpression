@@ -1,8 +1,8 @@
 ## Níveis <header-set anchor-name="levels" />
 
-Uma expressão tem dois tipos de níveis: "Nível geral" e "Nível na expressão".
+Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
-O "nível geral" determina em qual nível a entidade está com relação a hierarquia do grafo. 
+O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo. 
 
 Por exemplo:
 
@@ -16,7 +16,7 @@ A (Nível 1)
     ----A (Nível 3)
 ```
 
-O "nível na expressão" determina em qual nível a entidade está com relação a expressão. 
+O **nível na expressão** determina em qual nível a entidade está com relação a expressão. 
 
 Por exemplo:
 

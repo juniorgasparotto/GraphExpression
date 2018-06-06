@@ -1,10 +1,10 @@
 ### Pesquisa profunda <header-set anchor-name="search-deep" />
 
-A pesquisa profunda tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
+A **pesquisa profunda** tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
 
 Para poder criar uma pesquisa profunda, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
-Vejamos a seguir o mesmo exemplo utilizado no tópico "Matriz de informação", porém agora, a expressão foi desnormalizada:
+Vejamos a seguir o mesmo exemplo utilizado no tópico <header-get anchor-name="matrix-of-information" />, porém agora, a expressão foi desnormalizada:
 
 **Expressão:**
 
@@ -38,12 +38,12 @@ A (Indice do nível: 0)
 * Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão reescrito dentro da entidade `G`.
 * Após a desnormalização um novo caminho foi criado para a entidade `Y`:
     * Antes:
-        * Ocorrência 1: A.C.Y
-        * Ocorrência 2: A.D.F.G.Y
+        * _Ocorrência 1_: A.C.Y
+        * _Ocorrência 2_: A.D.F.G.Y
     * Depois:
-        * Ocorrência 1: A.C.Y
-        * Ocorrência 2: A.D.F.G.C.Y -> Novo caminho
-        * Ocorrência 3: A.D.F.G.Y
+        * _Ocorrência 1_: A.C.Y
+        * **_Ocorrência 2_: A.D.F.G.C.Y**
+        * _Ocorrência 3_: A.D.F.G.Y
 
 **Matriz:**
 
@@ -115,7 +115,7 @@ Após eliminarmos as repetições de entidades, obtemos como resultado final as 
 
 #### Pesquisando os filhos de uma entidade <header-set anchor-name="search-deep-get-entity-children" />
 
-Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: [nível geral da entidade corrente] + 1
+Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
 
 * A entidade `D` tem o nível geral igual a 2
 * **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`.**
@@ -181,7 +181,7 @@ Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, 
 
 #### Pesquisando o pai de uma entidade <header-set anchor-name="search-deep-get-entity-parent" />
 
-Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: [nível geral da entidade corrente] - 1; ou a primeira entidade com o nível geral menor que a entidade desejada.
+Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
 
 Como existem 3 ocorrências da entidade `Y`, teremos um resultado por ocorrência:
 

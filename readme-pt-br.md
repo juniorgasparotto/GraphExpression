@@ -136,7 +136,7 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 
 ### <a name="expression-group-root" />Grupo de expressão raiz
 
-O primeiro grupo de expressão é chamado de "grupo de expressão raiz".
+O primeiro grupo de expressão é chamado de **grupo de expressão raiz**.
 
 Não é obrigatório o uso dos parenteses no grupo de expressão raiz. Veremos que nos exemplos a seguir ambas as expressão estão corretas:
 
@@ -179,7 +179,7 @@ A + B + (C + D + E) + (I + (C + D + E))
 
 ### <a name="entity-root" />Entidade Raiz
 
-A primeira entidade da expressão é a entidade raiz da expressão. Uma expressão só pode conter uma entidade raiz.
+A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
 
 ```
 A + B + (C + A)
@@ -200,7 +200,7 @@ Por exemplo:
 
 ### <a name="entity-final" />Entidade final
 
-Uma entidade que não possui grupos de expressão em seu nível é chamada de "entidade final". Isso não significa que a entidade não tenha filhos, veja:
+Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
 
 **Entidade final sem filhos:**
 
@@ -221,9 +221,9 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de "e
 
 ## <a name="paths" />Caminhos de entidades
 
-Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome, isso não faz sentido. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
 
-E para representar cada ocorrência usamos a notação de "caminhos de entidades" para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
+E para representar cada ocorrência usamos a notação de **"caminhos de entidades"** para determinar o caminho de inicio e fim até chegar na ocorrência da entidade. Abaixo temos um caminho de início e fim até chegar na entidade `D`.
 
 ```
 A.B.C.D
@@ -249,19 +249,21 @@ O caractere `.` é usado entre a entidade pai e a entidade filha. A entidade da 
 
 **Caminho da entidade `A`:**
 
-Ocorrência 1: `A` Ocorrência 2: `A.A`
+* _Ocorrência 1_: `A`
+* _Ocorrência 2_: `A.A`
 
-Na "ocorrência 2" temos uma relação ciclica, portanto a notação é interrompida quando isso acontece, do contrário teriamos um caminho infinito.
+Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teriamos um caminho infinito.
 
 **Caminho da entidade `B`:**
 
-Ocorrência 1: `A.B` Ocorrência 2: `A.D.B`
+* _Ocorrência 1_: `A.B`
+* _Ocorrência 2_: `A.D.B`
 
 ### <a name="paths-cyclic" />Caminhos cíclicos na expressão
 
-Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe uma soma ciclica entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação ciclica.
+Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação ciclica.
 
-Note que o grafo contém duas referências ciclicas:
+Note que o grafo contém dois caminhos cíclicos:
 
 ```
 A + A + B + (C + A)
@@ -272,9 +274,9 @@ A + A + B + (C + A)
 
 ## <a name="levels" />Níveis
 
-Uma expressão tem dois tipos de níveis: "Nível geral" e "Nível na expressão".
+Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
-O "nível geral" determina em qual nível a entidade está com relação a hierarquia do grafo.
+O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo.
 
 Por exemplo:
 
@@ -288,7 +290,7 @@ A (Nível 1)
     ----A (Nível 3)
 ```
 
-O "nível na expressão" determina em qual nível a entidade está com relação a expressão.
+O **nível na expressão** determina em qual nível a entidade está com relação a expressão.
 
 Por exemplo:
 
@@ -302,9 +304,9 @@ Note que o nível da expressão ignora o nível da entidade na hieraquia, é uma
 
 ## <a name="indexes" />Índices
 
-Uma expressão tem dois tipos de índices: "Índice na expressão" e "Índice do nível".
+Uma expressão tem dois tipos de índices: **Índice na expressão** e **Índice do nível**.
 
-O "Índice da expressão" determina em qual posição a entidade está na expressão. O índice inicia em zero e soma-se +1 até a última entidade da expressão.
+O **Índice da expressão** determina em qual posição a entidade está na expressão. O índice inicia em zero e soma-se +1 até a última entidade da expressão.
 
 Por exemplo:
 
@@ -313,7 +315,7 @@ A + B + C + ( D + E + ( F  + G ) )
 0   1   2     3   4     5    6
 ```
 
-O "Índice do nível" determina em qual posição a entidade está com relação ao seu nível. O índice inicia em zero na primeira entidade do nível e soma-se +1 até a última entidade do mesmo nível. Por exemplo:
+O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia em zero na primeira entidade do nível e soma-se +1 até a última entidade do mesmo nível. Por exemplo:
 
 ```
                  A + B + C + ( D + E + ( F + G ) )
@@ -353,7 +355,7 @@ A + B + C + ( D + E + ( F + G ) )
 
 ## <a name="normalization-1" />Normalização - tipo 1
 
-A normalização tem o objetivo de enxugar grupos de expressão que pertencem a mesma entidade pai e que estão em diferentes lugares na expressão.
+A **normalização de tipo 1** tem o objetivo de enxugar grupos de expressão que pertencem a mesma entidade pai e que estão em diferentes lugares na expressão.
 
 Por exemplo:
 
@@ -393,7 +395,7 @@ A + (B + Y + Y) + (D + B)
 
 ## <a name="normalization-2" />Normalização - tipo 2
 
-A normalização de tipo 2 tem o objetivo de organizar, quando possível, as "entidades finais" no começo do seu grupo de expressão para ajudar na visualização da expressão.
+A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as **entidades finais** no começo do seu grupo de expressão para ajudar na visualização da expressão.
 
 ```
 A + (B + (C + D) + E) + F + G
@@ -412,7 +414,7 @@ A + F + G + (B + E + (C + D))
 
 ## <a name="normalization-3" />Normalização - tipo 3
 
-A normalização de tipo 3 tem o objetivo de declarar o mais rápido possível todos os "grupos de expressão".
+A **normalização de tipo 3** tem o objetivo de declarar o mais rápido possível todos os **grupos de expressão**.
 
 Exemplo:
 
@@ -428,14 +430,14 @@ Note que as entidades `B` e `G` são utilizadas antes que seus grupos sejam decl
 A + (B + F) + (C + (G + F) + B) + G
 ```
 
-1. Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
-2. A entidade `B`, dentro do grupo `C` e a entidade `G` que está solitária no final da expressão, se transformaram em entidades finais e devido a isso, podemos aplicar a "normalização de tipo 2" para melhorar a visualização, veja:
+* Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
+* A entidade `B`, dentro do grupo `C` e a entidade `G` que está solitária no final da expressão, se transformaram em entidades finais e devido a isso, podemos aplicar a <header-get anchor-name="normalization-2"></header-get> para melhorar a visualização, veja:
 
 ```
 A + G + (B + F) + (C + B + (G + F))
 ```
 
-1. Podemos aplicar novamente a normalização de tipo 3 para declarar o grupo de expressão da entidade `G` após a sua movimentação para o inicio da expressão:
+* Podemos aplicar novamente a <header-get anchor-name="normalization-3"></header-get> para declarar o grupo de expressão da entidade `G` após a sua movimentação para o inicio da expressão:
 
 ```
 A + (G + F) + (B + F) + (C + B + G)
@@ -445,7 +447,7 @@ Com isso concluímos a normalização e temos acima uma expressão muito mais le
 
 ## <a name="desnormalization" />Desnormalização
 
-O objetivo da desnormalização é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
+O objetivo da **desnormalização** é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 
 Considere a seguinte expressão original:
 
@@ -463,7 +465,7 @@ A + (B + D) + (E + (B + D))
 
 * Após a desnormalização a entidade `B` teve seu grupo de expressão reescrito por completo quando foi utilizada novamente como filha da entidade `D`.
 
-Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma expressão original é igual a sua expressão desnormalizada. Vejam um exemplo de como elas são diferentes:
+Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma _expressão original_ é igual a sua _expressão desnormalizada_. Vejam um exemplo de como elas são diferentes:
 
 ```
 Original:       A + (B + D) + (E + B)
@@ -489,13 +491,13 @@ Grafo final:
                              ------B
 ```
 
-Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico "Repetições de grupo de expressão".
+Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico <header-get anchor-name="expression-group-repeat"></header-get>.
 
 ## <a name="search" />Pesquisas em expressões de grafos
 
-A pesquisa em expressão de grafos pode ser dividida em duas partes: "Pesquisa superficial" e "Pesquisa profunda".
+A pesquisa em expressão de grafos pode ser dividida em duas partes: **Pesquisa superficial** e **Pesquisa profunda**.
 
-Ambas utilizam de uma matriz de informação que veremos adiante para poder obter ensumos para a pesquisa.
+Ambas utilizam de uma **matriz de informação** que veremos adiante para poder obter ensumos para a pesquisa.
 
 ### <a name="matrix-of-information" />Matriz de informação
 
@@ -546,15 +548,15 @@ A (Indice do nível: 0)
 #12             | Z        | 3           | 2
 ```
 
-Com base nessa matriz de informação e ao fato das entidades conhecerem os seus "vizinhos", ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos criar meios de navegação e pesquisa de entidades.
+Com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos criar meios de navegação e pesquisa de entidades.
 
 ### <a name="search-deep" />Pesquisa profunda
 
-A pesquisa profunda tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
+A **pesquisa profunda** tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
 
 Para poder criar uma pesquisa profunda, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
-Vejamos a seguir o mesmo exemplo utilizado no tópico "Matriz de informação", porém agora, a expressão foi desnormalizada:
+Vejamos a seguir o mesmo exemplo utilizado no tópico <header-get anchor-name="matrix-of-information"></header-get>, porém agora, a expressão foi desnormalizada:
 
 **Expressão:**
 
@@ -588,12 +590,12 @@ A (Indice do nível: 0)
 * Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão reescrito dentro da entidade `G`.
 * Após a desnormalização um novo caminho foi criado para a entidade `Y`:
   * Antes:
-    * Ocorrência 1: A.C.Y
-    * Ocorrência 2: A.D.F.G.Y
+    * _Ocorrência 1_: A.C.Y
+    * _Ocorrência 2_: A.D.F.G.Y
   * Depois:
-    * Ocorrência 1: A.C.Y
-    * Ocorrência 2: A.D.F.G.C.Y -> Novo caminho
-    * Ocorrência 3: A.D.F.G.Y
+    * _Ocorrência 1_: A.C.Y
+    * **_Ocorrência 2_: A.D.F.G.C.Y**
+    * _Ocorrência 3_: A.D.F.G.Y
 
 **Matriz:**
 
@@ -665,7 +667,7 @@ Após eliminarmos as repetições de entidades, obtemos como resultado final as 
 
 #### <a name="search-deep-get-entity-children" />Pesquisando os filhos de uma entidade
 
-Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: [nível geral da entidade corrente] + 1
+Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
 
 * A entidade `D` tem o nível geral igual a 2
 * **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`.**
@@ -731,7 +733,7 @@ Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, 
 
 #### <a name="search-deep-get-entity-parent" />Pesquisando o pai de uma entidade
 
-Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: [nível geral da entidade corrente] - 1; ou a primeira entidade com o nível geral menor que a entidade desejada.
+Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
 
 Como existem 3 ocorrências da entidade `Y`, teremos um resultado por ocorrência:
 
@@ -756,7 +758,7 @@ Como existem 3 ocorrências da entidade `Y`, teremos um resultado por ocorrênci
 
 ### <a name="search-surface" />Pesquisa superficial
 
-Na "Pesquisa superficial" a técnica usada é a mesma da "Pesquisa profunda", á única deferença é que na pesquisa superficial não consideramos os caminhos que já foram escritos (ou percorridos). No caso, não usamos a técnica da desnormalização para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da "Pesquisa profunda".
+Na **Pesquisa superficial** a técnica usada é a mesma da **Pesquisa profunda**, á única deferença é que na pesquisa superficial não consideramos os caminhos que já foram escritos (ou percorridos). No caso, não usamos a técnica da desnormalização para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da _Pesquisa profunda_.
 
 Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teriamos a seguinte diferença entre os tipos de pesquisas:
 
@@ -774,13 +776,13 @@ Primeiro, aplica-se a desnormalização:
 A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
 ```
 
-* Ocorrência 1: A.C.Y
-* Ocorrência 2: A.D.F.G.C.Y -> Novo caminho
-* Ocorrência 3: A.D.F.G.Y
+* _Ocorrência 1_: A.C.Y
+* _Ocorrência 2_: A.D.F.G.C.Y -> Novo caminho
+* _Ocorrência 3_: A.D.F.G.Y
 
 **Pesquisa superficial:**
 
 Utiliza a expressão original:
 
-* Ocorrência 1: A.C.Y
-* Ocorrência 2: A.D.F.G.Y
+* _Ocorrência 1_: A.C.Y
+* _Ocorrência 2_: A.D.F.G.Y

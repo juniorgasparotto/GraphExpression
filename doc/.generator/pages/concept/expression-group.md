@@ -23,7 +23,7 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 
 ### Grupo de expressão raiz <header-set anchor-name="expression-group-root" />
 
-O primeiro grupo de expressão é chamado de "grupo de expressão raiz".
+O primeiro grupo de expressão é chamado de **grupo de expressão raiz**.
 
 Não é obrigatório o uso dos parenteses no grupo de expressão raiz. Veremos que nos exemplos a seguir ambas as expressão estão corretas:
 
@@ -66,7 +66,7 @@ A + B + (C + D + E) + (I + (C + D + E))
 
 ### Entidade Raiz <header-set anchor-name="entity-root" />
 
-A primeira entidade da expressão é a entidade raiz da expressão. Uma expressão só pode conter uma entidade raiz.
+A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
 
 ```
 A + B + (C + A)
@@ -87,7 +87,7 @@ Por exemplo:
 
 ### Entidade final <header-set anchor-name="entity-final" />
 
-Uma entidade que não possui grupos de expressão em seu nível é chamada de "entidade final". Isso não significa que a entidade não tenha filhos, veja:
+Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
 
 **Entidade final sem filhos:**
 

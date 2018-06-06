@@ -1,6 +1,6 @@
 ## Normalização - tipo 1 <header-set anchor-name="normalization-1" />
 
-A normalização tem o objetivo de enxugar grupos de expressão que pertencem a mesma entidade pai e que estão em diferentes lugares na expressão.
+A **normalização de tipo 1** tem o objetivo de enxugar grupos de expressão que pertencem a mesma entidade pai e que estão em diferentes lugares na expressão.
 
 Por exemplo:
 
