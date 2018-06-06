@@ -33,6 +33,8 @@
     * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
 
+# <a name="doc-concept" />Expressão de grafos
+
 # <a name="concept" />Expressão de grafos
 
 O conceito expressão de grafos foi criado em 2015 por Glauber Donizeti Gasparotto Junior e tem como objetivos a representação de um grafo em forma de expressão.
