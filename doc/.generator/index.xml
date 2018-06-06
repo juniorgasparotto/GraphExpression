@@ -18,15 +18,15 @@
       <include href="doc/.generator/pages/concept/paths.md" />
       <include href="doc/.generator/pages/concept/levels.md" />
       <include href="doc/.generator/pages/concept/indexes.md" />
-      <include href="doc/.generator/pages/right-navigation.md" />
-      <include href="doc/.generator/pages/left-navigation.md" />
-      <include href="doc/.generator/pages/normalization-1.md" />
-      <include href="doc/.generator/pages/normalization-2.md" />
-      <include href="doc/.generator/pages/normalization-3.md" />
-      <include href="doc/.generator/pages/denormalization.md" />
-      <include href="doc/.generator/pages/search.md" />
-      <include href="doc/.generator/pages/search-deep.md" />
-      <include href="doc/.generator/pages/search-surface.md" />
+      <include href="doc/.generator/pages/concept/right-navigation.md" />
+      <include href="doc/.generator/pages/concept/left-navigation.md" />
+      <include href="doc/.generator/pages/concept/normalization-1.md" />
+      <include href="doc/.generator/pages/concept/normalization-2.md" />
+      <include href="doc/.generator/pages/concept/normalization-3.md" />
+      <include href="doc/.generator/pages/concept/denormalization.md" />
+      <include href="doc/.generator/pages/concept/search.md" />
+      <include href="doc/.generator/pages/concept/search-deep.md" />
+      <include href="doc/.generator/pages/concept/search-surface.md" />
       
       <custom-translation>
         <default>
