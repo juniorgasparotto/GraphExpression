@@ -12,12 +12,7 @@
       <a href="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" rel="Português">
         <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png" />
       </a>
-
-      # <anchor-set name="concept">Expressão de grafos</anchor-set>
-
-
-      <table-of-contents />
-
+     
       <include href="doc/.generator/pages/concept/presentation.md" />
       <include href="doc/.generator/pages/concept/expression-group.md" />
       <include href="doc/.generator/pages/concept/paths.md" />

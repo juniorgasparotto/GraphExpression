@@ -7,6 +7,12 @@
 
 # <a name="concept" />Expressão de grafos
 
+O conceito expressão de grafos foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão.
+
+A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte.
+
+Com o avanço do entendimento do conceito, você vai notar que ele pode ser útil para a criação de mecanismos de pesquisas complexas. Vale ressaltar que o foco não é performance, mas apenas uma nova forma de enxergar um grafo e suas informações.
+
   * [Elementos de uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#elements)
   * [Objetivo do resultado final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution)
     * [Ordem de resolução](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
@@ -38,12 +44,6 @@
     * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
 * [Implementação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation)
-
-O conceito expressão de grafos foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão.
-
-A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte.
-
-Com o avanço do entendimento do conceito, você vai notar que ele pode ser útil para a criação de mecanismos de pesquisas complexas. Vale ressaltar que o foco não é performance, mas apenas uma nova forma de enxergar um grafo e suas informações.
 
 Imagine o seguinte grafo:
 
