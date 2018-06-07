@@ -5,9 +5,11 @@
 ![Português](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md)
 
-# <a name="doc-concept" />Expressão de grafos
+# <a name="concept" />Expressão de grafos
 
-* [Expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#concept)
+  * [Elementos de uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#elements)
+  * [Objetivo do resultado final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution)
+    * [Ordem de resolução](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
 * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
   * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
   * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
@@ -35,8 +37,7 @@
     * [Pesquisando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-ascending)
     * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
-
-# <a name="concept" />Expressão de grafos
+* [Implementação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation)
 
 O conceito expressão de grafos foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão.
 
@@ -64,23 +65,24 @@ A sua representação em forma de expressão seria:
 
 Note que essa representação se parece com uma expressão matemática, porém a resolução da expressão é bem peculiar.
 
-## Elementos de uma expressão de grafos
+## <a name="elements" />Elementos de uma expressão de grafos
 
 Primeiro, vamos listar os elementos de uma expressão:
 
 * **Entidade:** É o elemento fundamental da expressão, determina uma unidade, um vértice no teória de grafo.
 * **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade, uma aresta em teória de grafos.
+* **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
-## Objetivo do resultado final
+## <a name="expression-execution" />Objetivo do resultado final
 
 O objetivo de uma expressão de grafos é bem diferente do objetivo de uma expressão matemática. Na matemática, uma expressão nesses moldes teria números como sendo as entidades e após o processamento da expressão o resultado final seria outro número com a soma de todos os outros.
 
 Em expressão de grafos, o objetivo final é gerar um grafo completo a partir de uma expressão, ou a partir de um grafo, fazer a engenharia reversa para obter sua representação em forma de expressão.
 
-### Ordem de resolução
+### <a name="expression-execution-order" />Ordem de resolução
 
-A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona a entidade da direita e o resultado dessa soma é a propria entidade da esquerda e assim sucessivamente até chegar no final.
+A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a propria entidade da esquerda e assim sucessivamente até chegar no final.
 
 **Exemplo simples (Etapas simbólicas da resolução):**
 
@@ -113,6 +115,77 @@ A
 **Conclusão**
 
 Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita. É obvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita, mas o que importa aqui é entender a ordem de resolução e o objetivo final do resultado.
+
+# Soma
+
+A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafos, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
+
+* A entidade da esquerda pode adicionar a sí mesma quantas vezes for preciso:
+
+```
+Expression: A + A + A + A
+Graph:
+            A 
+            ----A
+            ----A
+            ----A
+```
+
+* A entidade `X` pode adicionar a entidade `Y` e a entidade `Y` pode adicionar a entidade `X` quantas vezes for necessário.
+
+```
+Expression: X + (Y + X + X) + Y
+Graph:
+            X 
+            ----Y
+                ----X
+                ----X
+            ----Y
+```
+
+# Subtração
+
+A operação de subtração usa o operador `-`. Em expressão de grafos, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha.
+
+A cada operação de subtração apenas uma ocorrência será removida por vez, mesmo que a entidade da esquerda tenha mais de uma filha da mesma entidade. Por exemplo:
+
+* A entidade da esquerda remove uma das filhas `B`
+
+```
+Graph 1:
+            A 
+            ----B
+            ----B
+            ----B
+
+Expression: A - B
+
+Graph 2:
+            A 
+            ----B
+            ----B
+```
+
+Note que uma das ocorrências da entidade `B` foi removida da entidade `A`. Com base no mesmo exemplo, se quisessemos remover todas as ocorrências da entidade `B` teriamos que fazer a operação de subtração 3 vezes, que é equivalente a quantidade de vezes que entidade `B` existe dentro da entidade `A`.
+
+Ainda é possível misturar as operações de soma e subtração.
+
+```
+Graph 1:
+            A 
+            ----B
+            ----B
+            ----B
+
+Expression: A - B - B - B + (C + Y)
+
+Graph 2:
+            A
+            ----C    
+                ----Y
+```
+
+Nesse exemplo, removemos todas as ocorrências da entidade `B` da entidade `A` e adicionamos uma nova filha `C` que contém a entidade `Y`.
 
 # <a name="expression-group" />Grupos de expressão
 
@@ -791,3 +864,94 @@ Utiliza a expressão original:
 
 * _Ocorrência 1_: A.C.Y
 * _Ocorrência 2_: A.D.F.G.Y
+
+# <a name="implementation" />Implementação
+
+Vamos demostrar uma implementação prática do conceito de expressão de grafos.
+
+Vamos usar a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
+
+Com esse pequeno treixo de código, temos uma demostranção de como é simples criar um grafo completo usando expressão de grafos para **entidade hierárquicas**.
+
+É claro que esse é um exemplo muito simples e limitado, pois temos apenas um tipo de entidade. Contudo, nosso objetivo é apenas exercitar a ideia.
+
+```csharp
+[DebuggerDisplay("{Name}")]
+public class Entity : List<Entity>
+{
+    public string Name { get; private set; }
+    public Entity(string identity) => this.Name = identity;
+
+    public static Entity operator +(Entity a, Entity b)
+    {
+        a.Add(b);
+        return a;
+    }
+
+    public static Entity operator -(Entity a, Entity b)
+    {
+        a.Remove(b);
+        return a;
+    }
+}
+```
+
+* A classe herda de uma lista genérica da própria classe, nossa intenção é criar uma instância hierárquica.
+* A classe exige um nome como parâmetro de entrada, será o nome da entidade
+* Os operadores `+` e `-` foram sobrescritos, agora essa entidade pode ser utilizada dentro de uma expressão.
+  * Quando houver uma soma (`+`), a entidade da direita será adicionada na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado. Essa é a base do conceito de expressão de grafos.
+  * Quando houver uma subtração (`-`), a entidade da direita será removida na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado.
+
+Para usar é simples, basta pensar no conceito explicado e usar como se fosse uma expressão matemática dentro do `C#`:
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        var A = new Entity("A");
+        var B = new Entity("B");
+        var C = new Entity("C");
+        var D = new Entity("D");
+        var E = new Entity("E");
+        var F = new Entity("F");
+        var Y = new Entity("Y");
+        var H = new Entity("H");
+
+        // expression1
+        A = A + B + (C + (D + E + F)) + (Y + H);
+
+        // expression2
+        D = D - E;
+    }
+}
+```
+
+Após a execução da primeira expressão temos o seguinte grafo:
+
+```
+A
+----B
+----C
+    ----D
+        ----E
+        ----F
+----Y
+    ----H
+```
+
+Após a execução da segunda expressão, vemos que a entidade `D` não tem mais a entidade `E` como filha, ela foi subtraída/removida:
+
+```
+A
+----B
+----C
+    ----D
+        ----F
+----Y
+    ----H
+```
+
+Note que a expressão é exatamente igual a todas as expressões que vimos durante esse estudo. Isso mostra que para entidades hierárquicas é possível usufruir desse conceito sem o uso de grandes blocos de código.
+
+Para entidades de maior complexidade, não seria possível o uso dos operadores de forma tão simples, haveria a necessidade de criar mecanismos de reflexão e o uso de `strings` para a criação e processamento da expressão. Além do mais, não recomendamos esse esforço, não é o objetivo desse conceito criar mecanismo de serialização e deserialização de entidades, para isso existe meios melhores como: `XML` e `JSON`.
