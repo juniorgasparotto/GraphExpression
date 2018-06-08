@@ -1,4 +1,4 @@
-## Entidade Raiz <header-set anchor-name="entity-root" />
+## Entidade raiz <header-set anchor-name="entity-root" />
 
 A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
 

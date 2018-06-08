@@ -2,7 +2,7 @@
 
 Vamos demostrar uma implementação prática do conceito de expressão de grafos. 
 
-Vamos usar a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
+Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
 Com esse pequeno treixo de código, temos uma demostranção de como é simples criar um grafo completo usando expressão de grafos para **entidade hierárquicas**. 
 

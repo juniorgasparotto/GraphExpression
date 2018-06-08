@@ -24,7 +24,7 @@
       <include href="doc/.generator/pages/concept/indexes.md" />
       <include href="doc/.generator/pages/concept/right-navigation.md" />
       <include href="doc/.generator/pages/concept/left-navigation.md" />
-      <include href="doc/.generator/pages/concept/entity-formatters.md" />
+      <include href="doc/.generator/pages/concept/normalization.md" />
       <include href="doc/.generator/pages/concept/normalization-1.md" />
       <include href="doc/.generator/pages/concept/normalization-2.md" />
       <include href="doc/.generator/pages/concept/normalization-3.md" />

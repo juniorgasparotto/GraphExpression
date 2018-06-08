@@ -26,7 +26,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
     * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
     * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
-  * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
+  * [Entidade raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
   * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
 * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
   * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
@@ -35,11 +35,11 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
   * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
   * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
-* [Formatando expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-formatters)
+* [Normalizando expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-formatters)
   * [Normalização - tipo 1](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-1)
   * [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2)
   * [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3)
-  * [Desnormalização](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#desnormalization)
+* [Desnormalizando expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#desnormalization)
 * [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search)
     * [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information)
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
@@ -264,7 +264,7 @@ Por exemplo:
 * Nesse exemplo, temos duas entidades pai: `A` e `C`.
 * O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
 
-## <a name="entity-root" />Entidade Raiz
+## <a name="entity-root" />Entidade raiz
 
 A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
 
@@ -352,6 +352,16 @@ A + A + B + (C + A)
 
 # <a name="entity-info" />Informações das entidades
 
+Uma entidade, ou melhor, cada ocorrência de uma entidade na expressão, contém informações que são de extrema importância, veremos isso no tópico [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search).
+
+São elas:
+
+* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
+* [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
+* Entidades vizinhas:
+  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
+  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
+
 ## <a name="levels" />Níveis
 
 Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
@@ -433,7 +443,9 @@ A + B + C + ( D + E + ( F + G ) )
     A   B     C   D     E   F
 ```
 
-# <a name="entity-formatters" />Formatando expressões
+# <a name="entity-formatters" />Normalizando expressões
+
+As normalizações foram criadas para melhorar a visualização das expressões, existem 3 tipos de normalização que serão explicadas adiante.
 
 ## <a name="normalization-1" />Normalização - tipo 1
 
@@ -527,7 +539,7 @@ A + (G + F) + (B + F) + (C + B + G)
 
 Com isso concluímos a normalização e temos acima uma expressão muito mais legível.
 
-## <a name="desnormalization" />Desnormalização
+# <a name="desnormalization" />Desnormalizando expressões
 
 O objetivo da **desnormalização** é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 
@@ -873,7 +885,7 @@ Utiliza a expressão original:
 
 Vamos demostrar uma implementação prática do conceito de expressão de grafos.
 
-Vamos usar a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
+Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
 Com esse pequeno treixo de código, temos uma demostranção de como é simples criar um grafo completo usando expressão de grafos para **entidade hierárquicas**.
 
