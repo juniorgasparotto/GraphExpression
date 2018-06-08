@@ -25,8 +25,8 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
     * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
     * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
-    * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
     * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
+  * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
     * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
 * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
   * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
@@ -251,16 +251,6 @@ A + B + (C + D + E) + (I + C)
 A + B + (C + D + E) + (I + (C + D + E))
 ```
 
-### <a name="entity-root" />Entidade Raiz
-
-A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
-
-```
-A + B + (C + A)
-```
-
-* A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
-
 ### <a name="entity-parent" />Entidade Pai
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo.
@@ -271,6 +261,16 @@ Por exemplo:
 
 * Nesse exemplo, temos duas entidades pai: `A` e `C`.
 * O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
+
+## <a name="entity-root" />Entidade Raiz
+
+A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
+
+```
+A + B + (C + A)
+```
+
+* A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
 
 ### <a name="entity-final" />Entidade final
 

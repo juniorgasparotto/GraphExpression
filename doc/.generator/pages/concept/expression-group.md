@@ -64,16 +64,6 @@ A + B + (C + D + E) + (I + C)
 A + B + (C + D + E) + (I + (C + D + E))
 ```
 
-### Entidade Raiz <header-set anchor-name="entity-root" />
-
-A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
-
-```
-A + B + (C + A)
-```
-
-* A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
-
 ### Entidade Pai <header-set anchor-name="entity-parent" />
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo. 
@@ -84,24 +74,3 @@ Por exemplo:
 
 * Nesse exemplo, temos duas entidades pai: `A` e `C`.
 * O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
-
-### Entidade final <header-set anchor-name="entity-final" />
-
-Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
-
-**Entidade final sem filhos:**
-
-```
-(A + B + C + (D + E))
-```
-
-* As entidades `B`, `C` e `E` são entidades finais.
-
-**Entidade final com filhos:**
-
-```
-(A + (B + C) + (D + B))
-```
-
-* A entidade `C` é final e não contém filhos
-* A entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
