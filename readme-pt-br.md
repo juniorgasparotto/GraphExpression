@@ -21,13 +21,13 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 * [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro)
   * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
-* [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
-  * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
-  * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
-  * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
-  * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
-  * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
-  * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
+  * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
+    * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
+    * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
+    * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
+    * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
+    * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
+    * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
 * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
   * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
 * [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
@@ -185,7 +185,7 @@ Graph 2:
 
 Nesse exemplo, removemos todas as ocorrências da entidade `B` da entidade `A` e adicionamos uma nova filha `C` que contém a entidade `Y`.
 
-# <a name="expression-group" />Grupos de expressão
+## <a name="expression-group" />Grupos de expressão
 
 Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar.
 
@@ -208,7 +208,7 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 * A entidade `A` é a entidade pai de seu grupo de expressão e a entidade `B` e `C` são suas filhas.
 * A entidade `C` é a entidade pai de seu grupo de expressão e a entidade `D` é sua filha.
 
-## <a name="expression-group-root" />Grupo de expressão raiz
+### <a name="expression-group-root" />Grupo de expressão raiz
 
 O primeiro grupo de expressão é chamado de **grupo de expressão raiz**.
 
@@ -224,7 +224,7 @@ Ou
 A + B
 ```
 
-## <a name="expression-sub-group" />Sub-grupos de expressão
+### <a name="expression-sub-group" />Sub-grupos de expressão
 
 Um grupo de expressão pode conter outros grupos de expressão dentro dele e a lógica será a mesma para o sub-grupo:
 
@@ -232,7 +232,7 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
-## <a name="expression-group-repeat" />Repetições de grupo de expressão
+### <a name="expression-group-repeat" />Repetições de grupo de expressão
 
 Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
 
@@ -251,7 +251,7 @@ A + B + (C + D + E) + (I + C)
 A + B + (C + D + E) + (I + (C + D + E))
 ```
 
-## <a name="entity-root" />Entidade Raiz
+### <a name="entity-root" />Entidade Raiz
 
 A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expressão só pode conter uma entidade raiz.
 
@@ -261,7 +261,7 @@ A + B + (C + A)
 
 * A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
 
-## <a name="entity-parent" />Entidade Pai
+### <a name="entity-parent" />Entidade Pai
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo.
 
@@ -272,7 +272,7 @@ Por exemplo:
 * Nesse exemplo, temos duas entidades pai: `A` e `C`.
 * O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
 
-## <a name="entity-final" />Entidade final
+### <a name="entity-final" />Entidade final
 
 Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
 
