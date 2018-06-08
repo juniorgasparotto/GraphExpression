@@ -7,15 +7,20 @@
 
 # <a name="concept" />Expressão de grafos
 
-O conceito expressão de grafos foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão.
+O conceito de **expressão de grafos** foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão.
 
-A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte.
+A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte ou a partir de um grafo, fazer a engenharia reversa para obter sua representação em forma de expressão.
 
-Com o avanço do entendimento do conceito, você vai notar que ele pode ser útil para a criação de mecanismos de pesquisas complexas. Vale ressaltar que o foco não é performance, mas apenas uma nova forma de enxergar um grafo e suas informações.
+A representação em forma de expressão é focada em grafos simples e até com objetivos didáticos. Não espere ver um novo jeito de serializar ou deserealizar grafos complexos, embora isso seja possível, já existem soluções melhores e bem sólidas.
 
-  * [Elementos de uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#elements)
-  * [Objetivo do resultado final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution)
-    * [Ordem de resolução](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
+Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as informações extraídas das expressões podemos criar uma matriz vertical que possibilita a criação de pesquisas em grafos simples ou complexos.
+
+É importante destacar que o conceito como um todo não tem o objetivo de ser performático ou ser melhor ou pior que outros já existentes. O objetivo é ser apenas uma nova forma de enxergar um grafo e suas informações.
+
+# <a name="concept" />Índice
+
+* [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro)
+  * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
 * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
   * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
   * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
@@ -45,51 +50,44 @@ Com o avanço do entendimento do conceito, você vai notar que ele pode ser úti
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
 * [Implementação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation)
 
-Imagine o seguinte grafo:
+# <a name="intro" />Compreendendo uma expressão de grafos
+
+Uma expressão de grafos é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
+
+**Expressão de grafos - Exemplo:**
 
 ```
-A 
-----B
-    ----C
-    ----D
-        ----B
-----E
-    ----A
+(A + B + C + D)
 ```
 
-A sua representação em forma de expressão seria:
+Os elementos que compõe uma expressão são:
 
-```
-(A + (B + C + (D + B)) + (E + A))
-```
-
-Note que essa representação se parece com uma expressão matemática, porém a resolução da expressão é bem peculiar.
-
-## <a name="elements" />Elementos de uma expressão de grafos
-
-Primeiro, vamos listar os elementos de uma expressão:
-
-* **Entidade:** É o elemento fundamental da expressão, determina uma unidade, um vértice no teória de grafo.
+* **Entidade:** É o elemento fundamental da expressão, determina uma unidade, um vértice na teória de grafo. São representados por um literal, no caso acima, as letras: `A`, `B` e etc.
 * **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade, uma aresta em teória de grafos.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
-## <a name="expression-execution" />Objetivo do resultado final
+Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
 
-O objetivo de uma expressão de grafos é bem diferente do objetivo de uma expressão matemática. Na matemática, uma expressão nesses moldes teria números como sendo as entidades e após o processamento da expressão o resultado final seria outro número com a soma de todos os outros.
+Essa expressão representa o seguinte grafo:
 
-Em expressão de grafos, o objetivo final é gerar um grafo completo a partir de uma expressão, ou a partir de um grafo, fazer a engenharia reversa para obter sua representação em forma de expressão.
+```
+A 
+----B
+----C
+----D
+```
 
-### <a name="expression-execution-order" />Ordem de resolução
+## <a name="expression-execution-order" />Resolução da expressão
 
-A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a propria entidade da esquerda e assim sucessivamente até chegar no final.
+A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a propria entidade da esquerda e assim sucessivamente até chegar no final da expressão.
 
 **Exemplo simples (Etapas simbólicas da resolução):**
 
 1. `(A + B)`
 2. Resultado final da expressão: `A`
 
-_Composição final da entidade `A`_
+_Grafo final da entidade `A`_
 
 ```
 A 
@@ -103,7 +101,7 @@ A
 3. `(A + D)`
 4. Resultado final da expressão: `A`
 
-_Composição final da entidade `A`_
+_Grafo final da entidade `A`_
 
 ```
 A 
@@ -112,11 +110,11 @@ A
 ----D
 ```
 
-**Conclusão**
+Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita.
 
-Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita. É obvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita, mas o que importa aqui é entender a ordem de resolução e o objetivo final do resultado.
+É obvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
-# Soma
+## Operador de soma
 
 A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafos, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
 
@@ -143,7 +141,7 @@ Graph:
             ----Y
 ```
 
-# Subtração
+## Operador de subtração
 
 A operação de subtração usa o operador `-`. Em expressão de grafos, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha.
 
