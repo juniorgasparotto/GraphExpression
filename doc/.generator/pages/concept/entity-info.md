@@ -1,0 +1,1 @@
+# Informações das entidades <header-set anchor-name="entity-info" />

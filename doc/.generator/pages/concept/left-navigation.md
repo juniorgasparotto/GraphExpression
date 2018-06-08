@@ -1,4 +1,4 @@
-# Navegação para a esquerda (Entidade anterior) <header-set anchor-name="entity-previous" />
+## Navegação para a esquerda (Entidade anterior) <header-set anchor-name="entity-previous" />
 
 Toda entidade, com exceção da primeira da expressão (a entidade raiz), tem conhecimento da entidade anterior na expressão. No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a esquerda da entidade corrente:
 

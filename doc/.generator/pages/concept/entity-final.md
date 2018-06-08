@@ -1,4 +1,4 @@
-### Entidade final <header-set anchor-name="entity-final" />
+## Entidade final <header-set anchor-name="entity-final" />
 
 Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
 

@@ -27,17 +27,19 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
     * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
   * [Entidade Raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
-    * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
+  * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
 * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
   * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
-* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
-* [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
-* [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
-* [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
-* [Normalização - tipo 1](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-1)
-* [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2)
-* [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3)
-* [Desnormalização](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#desnormalization)
+* [Informações das entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-info)
+  * [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
+  * [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
+  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
+  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
+* [Formatando expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-formatters)
+  * [Normalização - tipo 1](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-1)
+  * [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2)
+  * [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3)
+  * [Desnormalização](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#desnormalization)
 * [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search)
     * [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information)
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
@@ -272,7 +274,7 @@ A + B + (C + A)
 
 * A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
 
-### <a name="entity-final" />Entidade final
+## <a name="entity-final" />Entidade final
 
 Uma entidade que não possui grupos de expressão em seu nível é chamada de **entidade final**. Isso não significa que a entidade não tenha filhos, veja:
 
@@ -348,7 +350,9 @@ A + A + B + (C + A)
 * Uma direta (`A + A`): onde a entidade `A` é pai dela mesma.
 * Uma indireta (`C + A`): Onde `C` é pai de uma entidade ascendente, no caso a entidade `A`.
 
-# <a name="levels" />Níveis
+# <a name="entity-info" />Informações das entidades
+
+## <a name="levels" />Níveis
 
 Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
@@ -378,7 +382,7 @@ Nível geral:        1   2   2     2   3     3   4
 
 Note que o nível da expressão ignora o nível da entidade na hieraquia, é uma informação útil apenas para a expressão.
 
-# <a name="indexes" />Índices
+## <a name="indexes" />Índices
 
 Uma expressão tem dois tipos de índices: **Índice na expressão** e **Índice do nível**.
 
@@ -407,7 +411,7 @@ Nível geral:     1   2   2     2   3     3   4
 * A entidade `F` é a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
 * A entidade `G` é a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
 
-# <a name="entity-next" />Navegação para a direita (Próxima entidade)
+## <a name="entity-next" />Navegação para a direita (Próxima entidade)
 
 Toda entidade, com exceção da última da expressão, tem conhecimento da próxima entidade na expressão.
 
@@ -420,7 +424,7 @@ B   C   D     E   F     G
 
 No exemplo, a entidade `A` tem conhecimento da entidade `B`. Note que a entidade `B` é filha de `A`, mas isso não influência, pois a ideia é conhecer a próxima entidade da expressão e não do seu nível.
 
-# <a name="entity-previous" />Navegação para a esquerda (Entidade anterior)
+## <a name="entity-previous" />Navegação para a esquerda (Entidade anterior)
 
 Toda entidade, com exceção da primeira da expressão (a entidade raiz), tem conhecimento da entidade anterior na expressão. No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a esquerda da entidade corrente:
 
@@ -429,7 +433,9 @@ A + B + C + ( D + E + ( F + G ) )
     A   B     C   D     E   F
 ```
 
-# <a name="normalization-1" />Normalização - tipo 1
+# <a name="entity-formatters" />Formatando expressões
+
+## <a name="normalization-1" />Normalização - tipo 1
 
 A **normalização de tipo 1** tem o objetivo de enxugar grupos de expressão que pertencem a mesma entidade pai e que estão em diferentes lugares na expressão.
 
@@ -469,7 +475,7 @@ A + (B + Y) + (D + B)
 A + (B + Y + Y) + (D + B)
 ```
 
-# <a name="normalization-2" />Normalização - tipo 2
+## <a name="normalization-2" />Normalização - tipo 2
 
 A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as **entidades finais** no começo do seu grupo de expressão para ajudar na visualização da expressão.
 
@@ -488,7 +494,7 @@ A + F + G + (B + E + (C + D))
 * Note que as entidades `F` e `G` foram para o ínicio do seu grupo de expressão.
 * A entidade `E` também foi reorganizada para o ínicio do seu grupo de expressão.
 
-# <a name="normalization-3" />Normalização - tipo 3
+## <a name="normalization-3" />Normalização - tipo 3
 
 A **normalização de tipo 3** tem o objetivo de declarar o mais rápido possível todos os **grupos de expressão**.
 
@@ -521,7 +527,7 @@ A + (G + F) + (B + F) + (C + B + G)
 
 Com isso concluímos a normalização e temos acima uma expressão muito mais legível.
 
-# <a name="desnormalization" />Desnormalização
+## <a name="desnormalization" />Desnormalização
 
 O objetivo da **desnormalização** é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 
