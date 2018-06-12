@@ -30,21 +30,6 @@ A
 ----D
 ```
 
-## Entidade e ocorrências <header-set anchor-name="entity-and-occurrence" />
-
-Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
-
-```
-(A + (B + C + A) + C)
-```
-
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
-
-* <anchor-get name="indexex" />
-* <anchor-get name="levels" />
-* <anchor-get name="entity-previous" />
-* <anchor-get name="entity-next" />
-
 ## Resolução da expressão <header-set anchor-name="expression-execution-order" />
 
 A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a própria entidade da esquerda e assim sucessivamente até chegar no final da expressão.
@@ -80,6 +65,21 @@ A
 Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita. 
 
 É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
+
+## Entidade e ocorrências <header-set anchor-name="entity-and-occurrence" />
+
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
+
+```
+(A + (B + C + A) + C)
+```
+
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
+
+* <anchor-get name="indexex" />
+* <anchor-get name="levels" />
+* <anchor-get name="entity-previous" />
+* <anchor-get name="entity-next" />
 
 ## Operador de soma <header-set anchor-name="intro-plus" />
 

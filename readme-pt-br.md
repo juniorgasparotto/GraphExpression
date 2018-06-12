@@ -20,8 +20,8 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 # <a name="concept" />Índice
 
 * [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro)
-  * [Entidade e ocorrências](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-and-occurrence)
   * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
+  * [Entidade e ocorrências](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-and-occurrence)
   * [Operador de soma](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-plus)
   * [Operador de subtração](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-subtract)
   * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
@@ -94,21 +94,6 @@ A
 ----D
 ```
 
-## <a name="entity-and-occurrence" />Entidade e ocorrências
-
-Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
-
-```
-(A + (B + C + A) + C)
-```
-
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
-
-* <error>The anchor 'indexex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
-* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
-* [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
-* [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
-
 ## <a name="expression-execution-order" />Resolução da expressão
 
 A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a própria entidade da esquerda e assim sucessivamente até chegar no final da expressão.
@@ -144,6 +129,21 @@ A
 Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita.
 
 É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
+
+## <a name="entity-and-occurrence" />Entidade e ocorrências
+
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
+
+```
+(A + (B + C + A) + C)
+```
+
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
+
+* <error>The anchor 'indexex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
+* [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
+* [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
 
 ## <a name="intro-plus" />Operador de soma
 
