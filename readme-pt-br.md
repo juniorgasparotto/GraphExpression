@@ -21,6 +21,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 * [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro)
   * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
+  * [Ocorrências de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-occurrence)
   * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
     * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
     * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
@@ -28,7 +29,6 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
   * [Entidade raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
   * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
-  * [Ocorrências de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-occurrence)
   * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
     * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
 * [Informações das entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-info)
@@ -62,7 +62,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 # <a name="intro" />Compreendendo uma expressão de grafos
 
-Uma expressão de grafos é composta por 5 elementos básicos e diversas informações que vamos detalhar nesse documento.
+Uma expressão de grafos é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
 
 **Expressão de grafos - Exemplo:**
 
@@ -76,7 +76,7 @@ Os elementos que compõe uma expressão são:
   * São únicos.
   * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
 * **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
-* `* Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**. `
+  * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
@@ -198,6 +198,16 @@ Graph 2:
 
 Nesse exemplo, removemos todas as ocorrências da entidade `B` da entidade `A` e adicionamos uma nova filha `C` que contém a entidade `Y`.
 
+## <a name="entity-occurrence" />Ocorrências de entidades
+
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
+
+```
+(A + (B + C + A) + C)
+```
+
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como: _Entidade_, _Índice_, _Nível_, _Navegação_.
+
 ## <a name="expression-group" />Grupos de expressão
 
 Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar.
@@ -305,16 +315,6 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 
 * A entidade `C` é final e não contém filhos
 * A entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
-
-## <a name="entity-occurrence" />Ocorrências de entidades
-
-Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
-
-```
-(A + (B + C + A) + C)
-```
-
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como: _Entidade_, _Índice_, _Nível_, _Navegação_.
 
 ## <a name="paths" />Caminhos de entidades
 
