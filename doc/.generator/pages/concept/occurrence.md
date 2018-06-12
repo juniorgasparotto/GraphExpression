@@ -1,4 +1,4 @@
-# Ocorrências de entidades <header-set anchor-name="entity-occurrence" />
+## Ocorrências de entidades <header-set anchor-name="entity-occurrence" />
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
 
