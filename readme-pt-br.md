@@ -20,8 +20,10 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 # <a name="concept" />Índice
 
 * [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro)
+  * [Entidade e ocorrências](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-and-occurrence)
   * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
-  * [Ocorrências de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-occurrence)
+  * [Operador de soma](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-plus)
+  * [Operador de subtração](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-subtract)
   * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
     * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
     * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
@@ -73,12 +75,13 @@ Uma expressão de grafos é composta por 4 elementos básicos e diversas informa
 Os elementos que compõe uma expressão são:
 
 * **Entidade**: É o elemento fundamental da expressão, determina uma unidade, um vértice na teoria de grafo.
-  * São únicos.
+  * São únicos, mas podem aparecer `N` vezes na expressão em diferentes posições.
   * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
 * **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
   * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
+  * Em expressão de grafos são denominados: **Grupo de expressão**.
 
 Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
 
@@ -90,6 +93,21 @@ A
 ----C
 ----D
 ```
+
+## <a name="entity-and-occurrence" />Entidade e ocorrências
+
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
+
+```
+(A + (B + C + A) + C)
+```
+
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
+
+* <error>The anchor 'indexex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
+* [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
+* [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
 
 ## <a name="expression-execution-order" />Resolução da expressão
 
@@ -127,7 +145,7 @@ Vimos que a cada etapa da resolução de uma expressão a entidade da direita de
 
 É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
-## Operador de soma
+## <a name="intro-plus" />Operador de soma
 
 A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafos, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
 
@@ -154,7 +172,7 @@ Graph:
             ----Y
 ```
 
-## Operador de subtração
+## <a name="intro-subtract" />Operador de subtração
 
 A operação de subtração usa o operador `-`. Em expressão de grafos, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha.
 
@@ -197,16 +215,6 @@ Graph 2:
 ```
 
 Nesse exemplo, removemos todas as ocorrências da entidade `B` da entidade `A` e adicionamos uma nova filha `C` que contém a entidade `Y`.
-
-## <a name="entity-occurrence" />Ocorrências de entidades
-
-Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
-
-```
-(A + (B + C + A) + C)
-```
-
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como: _Entidade_, _Índice_, _Nível_, _Navegação_.
 
 ## <a name="expression-group" />Grupos de expressão
 
