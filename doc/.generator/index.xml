@@ -32,7 +32,9 @@
       <include href="doc/.generator/pages/concept/search.md" />
       <include href="doc/.generator/pages/concept/search-deep.md" />
       <include href="doc/.generator/pages/concept/search-surface.md" />
-      <include href="doc/.generator/pages/concept/implementation.md" />
+      <include href="doc/.generator/pages/concept/implementation-to-graph.md" />
+      <include href="doc/.generator/pages/concept/implementation-to-expression.md" />
+      <include href="doc/.generator/pages/concept/implementation-to-matriz.md" />
       
       <custom-translation>
         <default>

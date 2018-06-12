@@ -10,8 +10,7 @@ namespace ExpressionGraph
         public static IEnumerable<Expression<T>> Build
         (
             IEnumerable<T> source, 
-            Func<T, IEnumerable<T>> 
-            childrenCallback, 
+            Func<T, IEnumerable<T>> childrenCallback,
             bool awaysRepeatDefined = true, 
             bool enableParenthesis = true, 
             bool enablePlus = true,

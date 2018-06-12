@@ -1,12 +1,18 @@
-# Implementação <header-set anchor-name="implementation" />
+# Implementações <header-set anchor-name="implementation" />
 
-Vamos demostrar uma implementação prática do conceito de expressão de grafos. 
+Esse tópico vai demostrar na prática alguns exemplos de implementações de alguns dos conceitos que estudamos.
+
+* <anchor-get name="implementation-to-graph" />
+* <anchor-get name="implementation-to-expression" /> 
+* <anchor-get name="implementation-to-matrix" /> 
 
 Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
-Com esse pequeno treixo de código, temos uma demostranção de como é simples criar um grafo completo usando expressão de grafos para **entidade hierárquicas**. 
+## Criando grafos com expressão de grafos <header-set anchor-name="implementation-to-graph" />
 
-É claro que esse é um exemplo muito simples e limitado, pois temos apenas um tipo de entidade. Contudo, nosso objetivo é apenas exercitar a ideia.
+Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafos da forma mais simples e objetiva possível.
+
+Será usado uma **entidade hierárquicas**, ou seja, uma entidade que se relaciona com ela mesma. 
 
 ```csharp
 [DebuggerDisplay("{Name}")]

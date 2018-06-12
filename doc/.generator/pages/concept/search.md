@@ -39,18 +39,18 @@ A (Indice do nível: 0)
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
-#01             | A        | 1           | 0 
-#02             | B        | 2           | 0 
-#03             | C        | 2           | 1 
-#04             | Y        | 3           | 0 
-#05             | D        | 2           | 2 
-#06             | E        | 3           | 0 
-#07             | F        | 3           | 1 
-#08             | G        | 4           | 0 
-#09             | B        | 5           | 0 
-#10             | C        | 5           | 1 
-#11             | Y        | 4           | 1 
-#12             | Z        | 3           | 2
+#00             | A        | 1           | 0 
+#01             | B        | 2           | 0 
+#02             | C        | 2           | 1 
+#03             | Y        | 3           | 0 
+#04             | D        | 2           | 2 
+#05             | E        | 3           | 0 
+#06             | F        | 3           | 1 
+#07             | G        | 4           | 0 
+#08             | B        | 5           | 0 
+#09             | C        | 5           | 1 
+#10             | Y        | 4           | 1 
+#11             | Z        | 3           | 2
 ```
 
 Com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos criar meios de navegação e pesquisa de entidades.
