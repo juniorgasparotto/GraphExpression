@@ -34,7 +34,7 @@
       <include href="doc/.generator/pages/concept/search-surface.md" />
       <include href="doc/.generator/pages/concept/implementation-to-graph.md" />
       <include href="doc/.generator/pages/concept/implementation-to-expression.md" />
-      <include href="doc/.generator/pages/concept/implementation-to-matriz.md" />
+      <include href="doc/.generator/pages/concept/implementation-to-matrix.md" />
       
       <custom-translation>
         <default>

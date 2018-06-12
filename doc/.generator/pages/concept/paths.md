@@ -1,4 +1,4 @@
-## Caminhos de entidades <header-set anchor-name="paths" />
+## Caminhos <header-set anchor-name="paths" />
 
 Toda entidade contém um caminho que deve ser percorrido até chegar em sua posição. Para representar esse caminho podemos usar a seguinte notação:
 
@@ -31,14 +31,14 @@ _Caminhos da entidade `A`:_
 * _Ocorrência 1_: `A`
 * _Ocorrência 2_: `A.A`
 
-Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teríamos um caminho infinito.
+Na segunda ocorrência temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teríamos um caminho infinito.
 
 _Caminhos da entidade `B`:_
 
 * _Ocorrência 1_: `A.B`
 * _Ocorrência 2_: `A.D.B`
 
-### Caminhos cíclicos na expressão <header-set anchor-name="paths-cyclic" />
+### Caminhos cíclicos <header-set anchor-name="paths-cyclic" />
 
 Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação cíclica.
 

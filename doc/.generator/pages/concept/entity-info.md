@@ -1,4 +1,4 @@
-# Informações das entidades <header-set anchor-name="entity-info" />
+# Informações de uma ocorrência <header-set anchor-name="entity-info" />
 
 Uma entidade, ou melhor, cada ocorrência de uma entidade na expressão, contém informações que são de extrema importância, veremos isso no tópico <anchor-get name="search" />.
 

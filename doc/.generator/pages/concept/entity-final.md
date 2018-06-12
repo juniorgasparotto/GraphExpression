@@ -17,4 +17,4 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 ```
 
 * A entidade `C` é final e não contém filhos
-* A entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
+* A última ocorrência da entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.

@@ -66,7 +66,7 @@ Vimos que a cada etapa da resolução de uma expressão a entidade da direita de
 
 É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
-## Entidade e ocorrências <header-set anchor-name="entity-and-occurrence" />
+## Entidade e suas ocorrências <header-set anchor-name="entity-and-occurrence" />
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
 
@@ -76,7 +76,7 @@ Em um grafo, as entidades são únicas, porém elas podem estar em vários lugar
 
 Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
 
-* <anchor-get name="indexex" />
+* <anchor-get name="indexes" />
 * <anchor-get name="levels" />
 * <anchor-get name="entity-previous" />
 * <anchor-get name="entity-next" />

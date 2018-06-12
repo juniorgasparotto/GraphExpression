@@ -21,7 +21,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 * [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro)
   * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)
-  * [Entidade e ocorrências](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-and-occurrence)
+  * [Entidade e suas ocorrências](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-and-occurrence)
   * [Operador de soma](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-plus)
   * [Operador de subtração](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-subtract)
   * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
@@ -31,9 +31,9 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
   * [Entidade raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
   * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
-  * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
-    * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
-* [Informações das entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-info)
+  * [Caminhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
+    * [Caminhos cíclicos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
+* [Informações de uma ocorrência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-info)
   * [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
   * [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
   * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
@@ -61,6 +61,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 * [Implementações](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation)
   * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-graph)
   * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-expression)
+  * [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-matrix)
 
 # <a name="intro" />Compreendendo uma expressão de grafos
 
@@ -130,7 +131,7 @@ Vimos que a cada etapa da resolução de uma expressão a entidade da direita de
 
 É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
-## <a name="entity-and-occurrence" />Entidade e ocorrências
+## <a name="entity-and-occurrence" />Entidade e suas ocorrências
 
 Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
 
@@ -140,7 +141,7 @@ Em um grafo, as entidades são únicas, porém elas podem estar em vários lugar
 
 Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
 
-* <error>The anchor 'indexex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+* [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
 * [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
 * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
 * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
@@ -322,9 +323,9 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 ```
 
 * A entidade `C` é final e não contém filhos
-* A entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
+* A última ocorrência da entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
 
-## <a name="paths" />Caminhos de entidades
+## <a name="paths" />Caminhos
 
 Toda entidade contém um caminho que deve ser percorrido até chegar em sua posição. Para representar esse caminho podemos usar a seguinte notação:
 
@@ -357,14 +358,14 @@ _Caminhos da entidade `A`:_
 * _Ocorrência 1_: `A`
 * _Ocorrência 2_: `A.A`
 
-Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teríamos um caminho infinito.
+Na segunda ocorrência temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teríamos um caminho infinito.
 
 _Caminhos da entidade `B`:_
 
 * _Ocorrência 1_: `A.B`
 * _Ocorrência 2_: `A.D.B`
 
-### <a name="paths-cyclic" />Caminhos cíclicos na expressão
+### <a name="paths-cyclic" />Caminhos cíclicos
 
 Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação cíclica.
 
@@ -377,7 +378,7 @@ A + A + B + (C + A)
 * Uma direta (`A + A`): onde a entidade `A` é pai dela mesma.
 * Uma indireta (`C + A`): Onde `C` é pai de uma entidade ascendente, no caso a entidade `A`.
 
-# <a name="entity-info" />Informações das entidades
+# <a name="entity-info" />Informações de uma ocorrência
 
 Uma entidade, ou melhor, cada ocorrência de uma entidade na expressão, contém informações que são de extrema importância, veremos isso no tópico [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search).
 
@@ -991,7 +992,7 @@ Esse tópico vai demostrar na prática alguns exemplos de implementações de al
 
 * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-graph)
 * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-expression)
-* <error>The anchor 'implementation-to-matrix' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+* [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-matrix)
 
 Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
@@ -1232,3 +1233,165 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
     * [Verificando se entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-has-last-at-group-expression)
 
 Com esses treixos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**
+
+## <a name="implementation-to-matrix" />Criando uma matriz de informações a partir de um grafo
+
+No exemplo anterior vimos como gerar uma expressão de grafos a partir de uma matriz de informação manual e que foi representada pela classe `Expression`.
+
+Nesse exemplo, vamos abordar uma implementação que cria essa matriz de forma automática.
+
+```csharp
+public class Expression : List<EntityItem>
+{
+    public bool Deep { get; }
+
+    public Expression(Entity root, bool deep = true)
+    {
+        Deep = deep;
+
+        if (root != null)
+            Build(root);
+    }
+
+    private void Build(Entity parent, int level = 1)
+    {
+        // only when is root entity
+        if (Count == 0)
+        {
+            var rootItem = new EntityItem(this)
+            {
+                Entity = parent,
+                Index = 0,
+                IndexAtLevel = 0,
+                LevelAtExpression = level,
+                Level = level
+            };
+
+            Add(rootItem);
+        }
+
+        var indexLevel = 0;
+        var parentItem = this.Last();
+
+        level++;
+        foreach (var child in parent.Children)
+        {
+            var previous = this.Last();
+            var childItem = new EntityItem(this)
+            {
+                Entity = child,
+                Index = Count,
+                IndexAtLevel = indexLevel++,
+                Level = level,
+            };
+
+            Add(childItem);
+
+            // if:   IS 'deep' and the entity already declareted in expression, don't build the children of item.
+            // else: if current entity exists in ancestors (to INFINITE LOOP), don't build the children of item.
+            var continueBuild = true;
+            if (Deep)
+                continueBuild = !HasAncestorEqualsTo(childItem);
+            else
+                continueBuild = !IsEntityDeclared(childItem);
+
+            if (continueBuild && child.Children.Count() > 0)
+            {
+                childItem.LevelAtExpression = parentItem.LevelAtExpression + 1;
+                Build(child, level);
+            }
+            else
+            {
+                childItem.LevelAtExpression = parentItem.LevelAtExpression;
+            }
+        }
+    }
+
+    private bool HasAncestorEqualsTo(EntityItem entityItem)
+    {
+        var ancestor = entityItem.Parent;
+        while (ancestor != null)
+        {
+            if (entityItem.Entity == ancestor.Entity)
+                return true;
+
+            ancestor = ancestor.Parent;
+        }
+
+        return false;
+    }
+
+    private bool IsEntityDeclared(EntityItem entityItem)
+    {
+        return this.Any(e => e != entityItem && e.Entity == entityItem.Entity);
+    }
+
+    public string ToMatrixAsString()
+    {
+        var s = "";
+        s += "Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression \r\n";
+
+        foreach (var i in this)
+        {
+            s += $"{i.Index.ToString("00")}       ";
+            s += $"| {i.Entity.Name}       ";
+            s += $"| {i.Level.ToString("00")}       ";
+            s += $"| {i.IndexAtLevel.ToString("00")}              ";
+            s += $"| {i.LevelAtExpression.ToString("00")} \r\n";
+        }
+        return s;
+    }
+}
+
+class Program 
+{
+    static void Main(string[] args)
+    {
+        var A = new Entity("A");
+        var B = new Entity("B");
+        var C = new Entity("C");
+        var Y = new Entity("Y");
+        var D = new Entity("D");
+        var E = new Entity("E");
+        var F = new Entity("F");
+        var G = new Entity("G");
+        var Z = new Entity("Z");
+        A = A + (B + (C + A) + A) + (D + D + E + (F + (G + A + C) + Y) + Z) + G;
+        var expression = new Expression(A, false);
+        var matrix = expression.ToMatrixAsString();
+    }
+}
+```
+
+O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade `A`, teremos a seguinte matriz de informação:
+
+```
+Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression 
+00       | A       | 01       | 00              | 01 
+01       | B       | 02       | 00              | 02 
+02       | C       | 03       | 00              | 03 
+03       | A       | 04       | 00              | 03 
+04       | A       | 03       | 01              | 02 
+05       | D       | 02       | 01              | 02 
+06       | D       | 03       | 00              | 02 
+07       | E       | 03       | 01              | 02 
+08       | F       | 03       | 02              | 03 
+09       | G       | 04       | 00              | 04 
+10       | A       | 05       | 00              | 04 
+11       | C       | 05       | 01              | 04 
+12       | Y       | 04       | 01              | 03 
+13       | Z       | 03       | 03              | 02 
+14       | G       | 02       | 02              | 01
+```
+
+* A classe recebe em seu construtor a **entidade raiz**. A partir dessa instância, vamos navegar em seu grafo por completo.
+* O parâmetro `Deep` determina se a varredura será profunda ou não. Isso vai de encontro com o tema: [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+* O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas, uma vez que por ser a entidade raiz, serão os valores inicias.
+* Na segunda parte da função, iniciamos a leitura dos filhos da entidade `parent`.
+* Será incrementado `+1` no **nível geral** conforme se aprofunda na entidade. Esse valor é passado por parâmetro, pois ele transcende todo o grafo.
+* Será incrementado `+1` no **índice do nível**. Esse valor está fechado apenas no escopo do `foreach`, ou seja, apenas para os filhos da entidade.
+* Para cada interação, é verificado se a propriedade `Deep` é `true`, se for, devemos manter a navegação mesmo se entidade corrente já foi percorrida por completo em algum momento da expressão. Contudo, a única situação que limita a continuação é se a entidade corrente tiver relações com ela mesma em um de seus ascendentes. Se tiver, é interrompida a continuação.
+* Se a propriedade `Deep` for `false`, então devemos apenas verificar se a entidade já foi percorrida em algum momento da expressão, se foi, então não continuamos.
+* A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai somando-se `+1` quando a entidade tiver filhos e não somando nada quando não tiver.
+
+Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafos**.
