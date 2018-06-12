@@ -1,6 +1,6 @@
 # Compreendendo uma expressão de grafos <header-set anchor-name="intro" />
 
-Uma expressão de grafos é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
+Uma expressão de grafos é composta por 5 elementos básicos e diversas informações que vamos detalhar nesse documento.
 
 **Expressão de grafos - Exemplo:**
 
@@ -10,12 +10,19 @@ Uma expressão de grafos é composta por 4 elementos básicos e diversas informa
 
 Os elementos que compõe uma expressão são:
 
-* **Entidade:** É o elemento fundamental da expressão, determina uma unidade, um vértice na teória de grafo. São representados por um literal, no caso acima, as letras: `A`, `B` e etc.
-* **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade, uma aresta em teória de grafos.
+* **Entidade**: É o elemento fundamental da expressão, determina uma unidade, um vértice na teória de grafo. 
+    * São únicos.
+    * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
+    * É um elemento exclusivo do **negócio** e não da expressão.
+* **Nó**: É o elemento que representa uma ocorrência (uma posição) de uma entidade dentro da expressão. É nele que ficarão todas as informações de uma ocorrência como: _Entidade_, _Índice_, _Nível_, _Navegação_.
+    * Pode haver diversos **nós** de uma mesma entidade dentro da expressão.
+    * É um elemento exclusivo da expressão de grafos.
+* **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
+    * Fazendo uma análogia com a teória de grafos, o operador de `+` pode ser visto como uma **aresta**. Contudo, para operações computacionais ele é desnecessário sendo que um **nó** já contém todas as informações.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
-Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
+Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos nós que vão ser adicionos ou removidos uns nos outros. Além disso, o objetivo do resultado tem suas diferenças.
 
 Essa expressão representa o seguinte grafo:
 
