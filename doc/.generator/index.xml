@@ -15,10 +15,10 @@
      
       <include href="doc/.generator/pages/concept/presentation.md" />
       <include href="doc/.generator/pages/concept/intro.md" />
+      <include href="doc/.generator/pages/concept/occurrence.md" />
       <include href="doc/.generator/pages/concept/expression-group.md" />
       <include href="doc/.generator/pages/concept/entity-root.md" />
       <include href="doc/.generator/pages/concept/entity-final.md" />
-      <include href="doc/.generator/pages/concept/occurrence.md" />
       <include href="doc/.generator/pages/concept/paths.md" />
       <include href="doc/.generator/pages/concept/entity-info.md" />
       <include href="doc/.generator/pages/concept/levels.md" />

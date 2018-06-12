@@ -1,6 +1,6 @@
 # Compreendendo uma expressão de grafos <header-set anchor-name="intro" />
 
-Uma expressão de grafos é composta por 5 elementos básicos e diversas informações que vamos detalhar nesse documento.
+Uma expressão de grafos é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
 
 **Expressão de grafos - Exemplo:**
 
@@ -14,7 +14,7 @@ Os elementos que compõe uma expressão são:
     * São únicos.
     * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
 * **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
-*     * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
+    * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
