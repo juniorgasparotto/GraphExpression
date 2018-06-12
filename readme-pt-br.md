@@ -28,6 +28,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
   * [Entidade raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
   * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
+* [Ocorrências de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-occurrence)
 * [Caminhos de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
   * [Caminhos cíclicos na expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths-cyclic)
 * [Informações das entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-info)
@@ -304,6 +305,16 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 
 * A entidade `C` é final e não contém filhos
 * A entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
+
+# <a name="entity-occurrence" />Ocorrências de entidades
+
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
+
+```
+(A + (B + C + A) + C)
+```
+
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como: _Entidade_, _Índice_, _Nível_, _Navegação_.
 
 # <a name="paths" />Caminhos de entidades
 
