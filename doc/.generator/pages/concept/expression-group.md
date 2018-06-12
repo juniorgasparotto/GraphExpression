@@ -45,6 +45,26 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
+### Declarações de entidades <header-set anchor-name="expression-sub-group" />
+
+Chamamos de "**declaração**" o primeiro momento em que uma entidade é escrita, ou seja, sua primeira ocorrência.
+
+Caso essa entidade contenha filhos devemos declarar todo o seu grupo de expressão no mesmo momento, ou seja, adicionando seus filhos dentro dos parenteses.
+
+Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira rápida. 
+
+Por exemplo, para descobrir se a entidade `B` contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
+
+```
+A + B + (C + (B + D)) + B
+```
+
+Agora, se soubermos que os grupos de expressões foram escritos sempre nas primeiras ocorrências, então podemos verificar apenas a primeira ocorrência da entidade `B` para saber se ela contém ou não filhos:
+
+```
+A + (B + D) + (C + B) + B
+```
+
 ### Repetições de grupo de expressão <header-set anchor-name="expression-group-repeat" />
 
 Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
@@ -64,7 +84,7 @@ A + B + (C + D + E) + (I + C)
 A + B + (C + D + E) + (I + (C + D + E))
 ```
 
-### Entidade Pai <header-set anchor-name="entity-parent" />
+### Entidade pai <header-set anchor-name="entity-parent" />
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo. 
 

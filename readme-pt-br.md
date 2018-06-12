@@ -27,8 +27,9 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
     * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
     * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
+    * [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
     * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
-    * [Entidade Pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
+    * [Entidade pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
   * [Entidade raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
   * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final)
   * [Caminhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#paths)
@@ -259,6 +260,26 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
+### <a name="expression-sub-group" />Declarações de entidades
+
+Chamamos de "**declaração**" o primeiro momento em que uma entidade é escrita, ou seja, sua primeira ocorrência.
+
+Caso essa entidade contenha filhos devemos declarar todo o seu grupo de expressão no mesmo momento, ou seja, adicionando seus filhos dentro dos parenteses.
+
+Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira rápida.
+
+Por exemplo, para descobrir se a entidade `B` contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
+
+```
+A + B + (C + (B + D)) + B
+```
+
+Agora, se soubermos que os grupos de expressões foram escritos sempre nas primeiras ocorrências, então podemos verificar apenas a primeira ocorrência da entidade `B` para saber se ela contém ou não filhos:
+
+```
+A + (B + D) + (C + B) + B
+```
+
 ### <a name="expression-group-repeat" />Repetições de grupo de expressão
 
 Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
@@ -278,7 +299,7 @@ A + B + (C + D + E) + (I + C)
 A + B + (C + D + E) + (I + (C + D + E))
 ```
 
-### <a name="entity-parent" />Entidade Pai
+### <a name="entity-parent" />Entidade pai
 
 A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo.
 
