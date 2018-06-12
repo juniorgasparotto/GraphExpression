@@ -11,12 +11,13 @@ Uma expressão de grafos é composta por 4 elementos básicos e diversas informa
 Os elementos que compõe uma expressão são:
 
 * **Entidade**: É o elemento fundamental da expressão, determina uma unidade, um vértice na teoria de grafo. 
-    * São únicos.
+    * São únicos, mas podem aparecer `N` vezes na expressão em diferentes posições.
     * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
 * **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
     * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
-* **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
+* **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade. 
+    * Em expressão de grafos são denominados: **Grupo de expressão**.
 
 Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
 
@@ -28,6 +29,21 @@ A
 ----C
 ----D
 ```
+
+## Entidade e ocorrências <header-set anchor-name="entity-and-occurrence" />
+
+Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
+
+```
+(A + (B + C + A) + C)
+```
+
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
+
+* <anchor-get name="indexex" />
+* <anchor-get name="levels" />
+* <anchor-get name="entity-previous" />
+* <anchor-get name="entity-next" />
 
 ## Resolução da expressão <header-set anchor-name="expression-execution-order" />
 
@@ -65,7 +81,7 @@ Vimos que a cada etapa da resolução de uma expressão a entidade da direita de
 
 É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
-## Operador de soma
+## Operador de soma <header-set anchor-name="intro-plus" />
 
 A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafos, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
 
@@ -92,7 +108,7 @@ Graph:
             ----Y
 ```
 
-## Operador de subtração
+## Operador de subtração <header-set anchor-name="intro-subtract" />
 
 A operação de subtração usa o operador `-`. Em expressão de grafos, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha. 
 
