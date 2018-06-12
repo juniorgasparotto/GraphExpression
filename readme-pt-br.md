@@ -61,7 +61,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 # <a name="intro" />Compreendendo uma expressão de grafos
 
-Uma expressão de grafos é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
+Uma expressão de grafos é composta por 5 elementos básicos e diversas informações que vamos detalhar nesse documento.
 
 **Expressão de grafos - Exemplo:**
 
@@ -71,8 +71,11 @@ Uma expressão de grafos é composta por 4 elementos básicos e diversas informa
 
 Os elementos que compõe uma expressão são:
 
-* **Entidade:** É o elemento fundamental da expressão, determina uma unidade, um vértice na teória de grafo. São representados por um literal, no caso acima, as letras: `A`, `B` e etc.
-* **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade, uma aresta em teória de grafos.
+* **Entidade**: É o elemento fundamental da expressão, determina uma unidade, um vértice na teoria de grafo.
+  * São únicos.
+  * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
+* **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
+* `* Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**. `
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
@@ -89,7 +92,7 @@ A
 
 ## <a name="expression-execution-order" />Resolução da expressão
 
-A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a propria entidade da esquerda e assim sucessivamente até chegar no final da expressão.
+A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a própria entidade da esquerda e assim sucessivamente até chegar no final da expressão.
 
 **Exemplo simples (Etapas simbólicas da resolução):**
 
@@ -121,7 +124,7 @@ A
 
 Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita.
 
-É obvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
+É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
 ## Operador de soma
 
@@ -173,7 +176,7 @@ Graph 2:
             ----B
 ```
 
-Note que uma das ocorrências da entidade `B` foi removida da entidade `A`. Com base no mesmo exemplo, se quisessemos remover todas as ocorrências da entidade `B` teriamos que fazer a operação de subtração 3 vezes, que é equivalente a quantidade de vezes que entidade `B` existe dentro da entidade `A`.
+Note que uma das ocorrências da entidade `B` foi removida da entidade `A`. Com base no mesmo exemplo, se quiséssemos remover todas as ocorrências da entidade `B` teríamos que fazer a operação de subtração 3 vezes, que é equivalente a quantidade de vezes que entidade `B` existe dentro da entidade `A`.
 
 Ainda é possível misturar as operações de soma e subtração.
 
@@ -304,25 +307,23 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 
 # <a name="paths" />Caminhos de entidades
 
-Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo.
-
-Usamos uma notação para escrever o caminho completo de cada ocorrência de uma entidade na expressão. A notação utiliza o caractere `.` entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha. Vejamos um exemplo:
-
-Abaixo temos o caminho até chegar na entidade `D`.
+Toda entidade contém um caminho que deve ser percorrido até chegar em sua posição e para representar esse caminho podemos usar a seguinte notação:
 
 ```
 A.B.C.D
 ```
 
-Essa notação é o mesmo que:
+Essa notação indica a localização da entidade `D` dentro da expressão abaixo:
 
 ```
 A + (B + (C + D))
 ```
 
-* A entidede `D` é filha da entidade `C`
-* A entidede `C` é filha da entidade `B`
-* A entidede `B` é filha da entidade `A`
+* A entidade `D` é filha da entidade `C`
+* A entidade `C` é filha da entidade `B`
+* A entidade `B` é filha da entidade `A`
+
+A notação utiliza o caractere `.` entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha.
 
 **Outras exemplos:**
 
@@ -332,21 +333,21 @@ _Expressão:_
 (A + A + (B + C) + (D + B))
 ```
 
-_Caminho da entidade `A`:_
+_Caminhos da entidade `A`:_
 
 * _Ocorrência 1_: `A`
 * _Ocorrência 2_: `A.A`
 
-Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teriamos um caminho infinito.
+Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teríamos um caminho infinito.
 
-_Caminho da entidade `B`:_
+_Caminhos da entidade `B`:_
 
 * _Ocorrência 1_: `A.B`
 * _Ocorrência 2_: `A.D.B`
 
 ## <a name="paths-cyclic" />Caminhos cíclicos na expressão
 
-Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação ciclica.
+Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação cíclica.
 
 Note que o grafo contém dois caminhos cíclicos:
 

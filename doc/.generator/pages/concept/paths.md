@@ -1,24 +1,22 @@
 # Caminhos de entidades <header-set anchor-name="paths" />
 
-Em um grafo, as entidades são únicas, porém elas podem estar em vários lugares ao mesmo tempo. Por exemplo, não existem duas entidades com o mesmo nome. Mas a mesma entidade pode aparecer em diversos pontos no grafo. 
-
-Usamos uma notação para escrever o caminho completo de cada ocorrência de uma entidade na expressão. A notação utiliza o caractere `.` entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha. Vejamos um exemplo:
-
-Abaixo temos o caminho até chegar na entidade `D`.
+Toda entidade contém um caminho que deve ser percorrido até chegar em sua posição e para representar esse caminho podemos usar a seguinte notação:
 
 ```
 A.B.C.D
 ```
 
-Essa notação é o mesmo que:
+Essa notação indica a localização da entidade `D` dentro da expressão abaixo:
 
 ```
 A + (B + (C + D))
 ```
 
-* A entidede `D` é filha da entidade `C`
-* A entidede `C` é filha da entidade `B`
-* A entidede `B` é filha da entidade `A`
+* A entidade `D` é filha da entidade `C`
+* A entidade `C` é filha da entidade `B`
+* A entidade `B` é filha da entidade `A`
+
+A notação utiliza o caractere `.` entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha.
 
 **Outras exemplos:**
 
@@ -28,21 +26,21 @@ _Expressão:_
 (A + A + (B + C) + (D + B))
 ```
 
-_Caminho da entidade `A`:_
+_Caminhos da entidade `A`:_
 
 * _Ocorrência 1_: `A`
 * _Ocorrência 2_: `A.A`
 
-Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teriamos um caminho infinito.
+Na "ocorrência 2" temos uma relação cíclica, portanto a notação é interrompida quando isso acontece, do contrário teríamos um caminho infinito.
 
-_Caminho da entidade `B`:_
+_Caminhos da entidade `B`:_
 
 * _Ocorrência 1_: `A.B`
 * _Ocorrência 2_: `A.D.B`
 
 ## Caminhos cíclicos na expressão <header-set anchor-name="paths-cyclic" />
 
-Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação ciclica.
+Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação cíclica.
 
 Note que o grafo contém dois caminhos cíclicos:
 

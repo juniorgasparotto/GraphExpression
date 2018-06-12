@@ -10,19 +10,15 @@ Uma expressão de grafos é composta por 5 elementos básicos e diversas informa
 
 Os elementos que compõe uma expressão são:
 
-* **Entidade**: É o elemento fundamental da expressão, determina uma unidade, um vértice na teória de grafo. 
+* **Entidade**: É o elemento fundamental da expressão, determina uma unidade, um vértice na teoria de grafo. 
     * São únicos.
     * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
-    * É um elemento exclusivo do **negócio** e não da expressão.
-* **Nó**: É o elemento que representa uma ocorrência (uma posição) de uma entidade dentro da expressão. É nele que ficarão todas as informações de uma ocorrência como: _Entidade_, _Índice_, _Nível_, _Navegação_.
-    * Pode haver diversos **nós** de uma mesma entidade dentro da expressão.
-    * É um elemento exclusivo da expressão de grafos.
 * **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
-    * Fazendo uma análogia com a teória de grafos, o operador de `+` pode ser visto como uma **aresta**. Contudo, para operações computacionais ele é desnecessário sendo que um **nó** já contém todas as informações.
+*     * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
 
-Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos nós que vão ser adicionos ou removidos uns nos outros. Além disso, o objetivo do resultado tem suas diferenças.
+Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
 
 Essa expressão representa o seguinte grafo:
 
@@ -35,7 +31,7 @@ A
 
 ## Resolução da expressão <header-set anchor-name="expression-execution-order" />
 
-A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a propria entidade da esquerda e assim sucessivamente até chegar no final da expressão.
+A resolução é sempre da esquerda para a direita, onde a entidade da esquerda adiciona ou remove a entidade da direita e o resultado dessa soma é a própria entidade da esquerda e assim sucessivamente até chegar no final da expressão.
 
 **Exemplo simples (Etapas simbólicas da resolução):**
 
@@ -67,7 +63,7 @@ A
 
 Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita. 
 
-É obvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
+É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
 ## Operador de soma
 
@@ -119,7 +115,7 @@ Graph 2:
             ----B
 ```
 
-Note que uma das ocorrências da entidade `B` foi removida da entidade `A`. Com base no mesmo exemplo, se quisessemos remover todas as ocorrências da entidade `B` teriamos que fazer a operação de subtração 3 vezes, que é equivalente a quantidade de vezes que entidade `B` existe dentro da entidade `A`.
+Note que uma das ocorrências da entidade `B` foi removida da entidade `A`. Com base no mesmo exemplo, se quiséssemos remover todas as ocorrências da entidade `B` teríamos que fazer a operação de subtração 3 vezes, que é equivalente a quantidade de vezes que entidade `B` existe dentro da entidade `A`.
 
 Ainda é possível misturar as operações de soma e subtração.
 
