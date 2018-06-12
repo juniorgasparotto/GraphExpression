@@ -74,12 +74,7 @@ Em um grafo, as entidades são únicas, porém elas podem estar em vários lugar
 (A + (B + C + A) + C)
 ```
 
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
-
-* <anchor-get name="indexes" />
-* <anchor-get name="levels" />
-* <anchor-get name="entity-previous" />
-* <anchor-get name="entity-next" />
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição. Veremos isso no tópico <anchor-get name="entity-info" />.
 
 ## Operador de soma <header-set anchor-name="intro-plus" />
 

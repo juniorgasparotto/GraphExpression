@@ -139,12 +139,7 @@ Em um grafo, as entidades são únicas, porém elas podem estar em vários lugar
 (A + (B + C + A) + C)
 ```
 
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição como:
-
-* [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)
-* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
-* [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-previous)
-* [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-next)
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição. Veremos isso no tópico [Informações de uma ocorrência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-info).
 
 ## <a name="intro-plus" />Operador de soma
 
