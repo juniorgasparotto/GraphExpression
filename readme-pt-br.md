@@ -52,6 +52,8 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
     * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
     * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
+    * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-first-at-group-expression)
+    * [Verificando se entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-last-at-group-expression)
     * [Verificando se a entidade é a raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-root)
     * [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-has-children)
     * [Encontrando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-with-children)
@@ -842,6 +844,36 @@ Com base no _exemplo modelo_, para obter a próxima entidade da entidade `Y` da 
 ```
 
 * Se o resultado for maior que a quantidade máxima de itens na matriz é porque estamos na última entidade da expressão e não existe uma próxima entidade.
+
+### <a name="search-method-is-first-at-group-expression" />Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)
+
+Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
+
+```
+                A + B + ( C + Y ) + (D + C)
+Nível geral:    1   2     2   3      2   3
+Index:          0   1     2   3      4   5
+```
+
+No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á `2` e a sua próxima entidade `Y` tem o nível geral igual á `3`, sendo assim, ela é a primeira dentro de seu parênteses.
+
+**Observação:**
+
+Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+
+### <a name="search-method-is-last-at-group-expression" />Verificando se entidade é a última do grupo de expressão (última dentro dos parêntese)
+
+Para descobrir se uma entidade é a última do seu grupo de expressão (última dentro do parênteses), verificamos se seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a última do seu grupo de expressão.
+
+```
+                A + B + ( C + Y ) + (D + C) + U
+Nível geral:    1   2     2   3      2   3    2
+Index:          0   1     2   3      4   5    6
+```
+
+No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á `3` e a sua próxima entidade `D` tem o nível geral igual á `4`, sendo assim, ela é a última dentro de seu parênteses.
+
+* A entidade `U` do índice `#06` não tem uma próxima entidade, portanto ela é a última de seu grupo de expressão, embora ele esteja omitido por estarmos no **grupo de expressão raiz**.
 
 ### <a name="search-method-is-root" />Verificando se a entidade é a raiz da expressão
 
