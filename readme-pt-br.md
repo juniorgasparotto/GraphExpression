@@ -17,7 +17,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 É importante destacar que o conceito como um todo não tem o objetivo de ser performático ou ser melhor ou pior que outros já existentes. O objetivo é ser apenas uma nova forma de enxergar um grafo e suas informações.
 
-# <a name="concept" />Índice
+# <a name="index" />Índice
 
 * [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro)
   * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-execution-order)

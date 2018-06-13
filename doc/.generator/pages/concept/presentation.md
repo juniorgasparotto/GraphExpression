@@ -10,6 +10,6 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 É importante destacar que o conceito como um todo não tem o objetivo de ser performático ou ser melhor ou pior que outros já existentes. O objetivo é ser apenas uma nova forma de enxergar um grafo e suas informações.
 
-# <anchor-set name="concept">Índice</anchor-set>
+# <anchor-set name="index">Índice</anchor-set>
 
 <table-of-contents />
