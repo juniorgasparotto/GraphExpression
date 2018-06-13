@@ -1,6 +1,6 @@
 ## Normalização - tipo 2 <header-set anchor-name="normalization-2" />
 
-A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as **entidades finais** no começo do seu grupo de expressão para ajudar na visualização da expressão.
+A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as <anchor-get name="entity-final" /> no começo do seu grupo de expressão para ajudar na visualização da expressão.
 
 ```
 A + (B + (C + D) + E) + F + G

@@ -24,10 +24,10 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Entidade e suas ocorrências](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-and-occurrence)
   * [Operador de soma](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-plus)
   * [Operador de subtração](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#intro-subtract)
-  * [Grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
+  * [Grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group)
     * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-root)
     * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
-    * [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-sub-group)
+    * [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration)
     * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat)
     * [Entidade pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-parent)
   * [Entidade raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-root)
@@ -47,17 +47,18 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 * [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search)
     * [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information)
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
-    * [Pesquisando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-occurrences)
+    * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-occurrences)
     * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-previous)
     * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-next)
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-first-at-group-expression)
     * [Verificando se entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-has-last-at-group-expression)
-    * [Verificando se entidade é a entidade raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-root)
-    * [Pesquisando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-with-children)
-    * [Pesquisando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-descendants)
-    * [Pesquisando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-children)
-    * [Pesquisando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-ascending)
-    * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
+    * [Verificando se a entidade é a raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-root)
+    * [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-has-children)
+    * [Encontrando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-with-children)
+    * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-descendants)
+    * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-children)
+    * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-ascending)
+    * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
 * [Implementações](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation)
   * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-graph)
@@ -213,7 +214,7 @@ Graph 2:
 
 Nesse exemplo, removemos todas as ocorrências da entidade `B` da entidade `A` e adicionamos uma nova filha `C` que contém a entidade `Y`.
 
-## <a name="expression-group" />Grupos de expressão
+## <a name="expression-group" />Grupo de expressão
 
 Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar.
 
@@ -260,13 +261,13 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
-### <a name="expression-sub-group" />Declarações de entidades
+### <a name="entity-declaration" />Declarações de entidades
 
 Chamamos de "**declaração**" o primeiro momento em que uma entidade é escrita, ou seja, sua primeira ocorrência.
 
 Caso essa entidade contenha filhos devemos declarar todo o seu grupo de expressão no mesmo momento, ou seja, adicionando seus filhos dentro dos parenteses.
 
-Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira rápida.
+Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira mais rápida.
 
 Por exemplo, para descobrir se a entidade `B` contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
 
@@ -410,21 +411,21 @@ São elas:
 
 Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
-O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo.
+O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo. O nível inicia-se em `1` e é incrementado `+1` até chegar no último nível.
 
 Por exemplo:
 
 ```
-A (Nível 1)
-----B (Nível 2)
-    ----C (Nível 3)
-    ----D (Nível 3)
-        ----B (Nível 4)
-----E (Nível 2)
-    ----A (Nível 3)
+A (Level 1)
+----B (Level 2)
+    ----C (Level 3)
+    ----D (Level 3)
+        ----B (Level 4)
+----E (Level 2)
+    ----A (Level 3)
 ```
 
-O **nível na expressão** determina em qual nível a entidade está com relação a expressão.
+O **nível na expressão** determina em qual nível a entidade está com relação a expressão. O nível inicia-se em `1` e é incrementado `+1` até chegar no último nível.
 
 Por exemplo:
 
@@ -434,13 +435,13 @@ Nível na expressão: 1   1   1     2   2     3   3
 Nível geral:        1   2   2     2   3     3   4   
 ```
 
-Note que o nível da expressão ignora o nível da entidade na hieraquia, é uma informação útil apenas para a expressão.
+Note que o _nível da expressão_ é bem similar ao _nível geral_. A única diferença está no valor da **entidade pai**, no nível geral esse número é sempre menor que o nível geral de seus filhos e no nível da expressão eles são iguais.
 
 ## <a name="indexes" />Índices
 
 Uma expressão tem dois tipos de índices: **Índice na expressão** e **Índice do nível**.
 
-O **Índice da expressão** determina em qual posição a entidade está na expressão. O índice inicia em zero e soma-se +1 até a última entidade da expressão.
+O **Índice da expressão** determina em qual posição a entidade está com relação a expressão. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade da expressão.
 
 Por exemplo:
 
@@ -449,21 +450,35 @@ A + B + C + ( D + E + ( F  + G ) )
 0   1   2     3   4     5    6
 ```
 
-O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia em zero na primeira entidade do nível e soma-se +1 até a última entidade do mesmo nível. Por exemplo:
+O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade do mesmo nível. Por exemplo:
 
 ```
-                 A + B + C + ( D + E + ( F + G ) )
-Nível geral:     1   2   2     2   3     3   4   
-Índice do nível: 0   0   1     2   0     1   0  
+                 A + B + C + ( D + E + ( F + G + Y) )
+Nível geral:     1   2   2     2   3     3   4   4
+Índice do nível: 0   0   1     2   0     1   0   1 
+```
+
+Por exemplo:
+
+```
+A (Level 0)
+----B (Level 0)
+----C (Level 1)
+----D (Level 2)
+    ----E (Level 0)
+    ----F (Level 1)
+        ----G (Level 0)
+        ----Y (Level 1)
 ```
 
 * A entidade `A` é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.
 * A entidade `B` é a primeira do segundo nível e terá a posição zero. Ela é filha da entidade `A`.
 * A entidade `C` é a segunda do segundo nível e terá a posição 1. Ela é filha da entidade `A`.
-* A entidade `D` é a terceria do segundo nível e terá a posição 2. Ela é filha da entidade `A`.
+* A entidade `D` é a terceira do segundo nível e terá a posição 2. Ela é filha da entidade `A`.
 * A entidade `E` é a primeira do terceiro nível e terá a posição 0. Ela é filha da entidade `D`.
 * A entidade `F` é a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
 * A entidade `G` é a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
+* A entidade `Y` é a segunda do quarto nível e terá a posição 1. Ela é filha da entidade `F`.
 
 ## <a name="entity-next" />Navegação para a direita (Próxima entidade)
 
@@ -533,7 +548,7 @@ A + (B + Y + Y) + (D + B)
 
 ## <a name="normalization-2" />Normalização - tipo 2
 
-A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as **entidades finais** no começo do seu grupo de expressão para ajudar na visualização da expressão.
+A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final) no começo do seu grupo de expressão para ajudar na visualização da expressão.
 
 ```
 A + (B + (C + D) + E) + F + G
@@ -552,7 +567,7 @@ A + F + G + (B + E + (C + D))
 
 ## <a name="normalization-3" />Normalização - tipo 3
 
-A **normalização de tipo 3** tem o objetivo de declarar o mais rápido possível todos os **grupos de expressão**.
+A **normalização de tipo 3** tem o objetivo de declarar o mais rápido possível todos os [grupos de expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group). Essa tema também foi abordado no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration).
 
 Exemplo:
 
@@ -569,13 +584,13 @@ A + (B + F) + (C + (G + F) + B) + G
 ```
 
 * Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
-* A entidade `B`, dentro do grupo `C` e a entidade `G` que está solitária no final da expressão, se transformaram em entidades finais e devido a isso, podemos aplicar a [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2) para melhorar a visualização, veja:
+* A entidade `B`, dentro do grupo `C`, e a entidade `G` que está solitária no final da expressão, se transformaram em [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final) e devido a isso, podemos aplicar a [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-2) para melhorar a visualização, veja:
 
 ```
 A + G + (B + F) + (C + B + (G + F))
 ```
 
-* Podemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para declarar o grupo de expressão da entidade `G` após a sua movimentação para o inicio da expressão:
+* Note que agora a entidade `G` que estava no final da expressão foi movido para o inicio. Sendo assim, devemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3):
 
 ```
 A + (G + F) + (B + F) + (C + B + G)
@@ -585,7 +600,9 @@ Com isso concluímos a normalização e temos acima uma expressão muito mais le
 
 # <a name="desnormalization" />Desnormalizando expressões
 
-O objetivo da **desnormalização** é gerar uma nova expressão onde os grupos de expressões sejam escritos toda vez que a sua entidade pai for utilizada. Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
+O objetivo da **desnormalização** é gerar uma nova expressão onde os [grupos de expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group) sejam redeclarados toda vez que a sua entidade pai for utilizada.
+
+Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 
 Considere a seguinte expressão original:
 
@@ -593,7 +610,7 @@ Considere a seguinte expressão original:
 A + (B + D) + (E + B)
 ```
 
-* Note que a entidade `B` é filha da entidade `A` e filha da entidade `E`.
+* Note que a entidade `B` tem dois pais: `A` e `E`
 * Após a desnormalização teremos a seguinte expressão:
 
 ```
@@ -601,9 +618,11 @@ A + (B + D) + (E + (B + D))
                     ^
 ```
 
-* Após a desnormalização a entidade `B` teve seu grupo de expressão reescrito por completo quando foi utilizada novamente como filha da entidade `D`.
+* Após a desnormalização a entidade `B` teve seu grupo de expressão redeclarado por completo quando foi utilizada novamente como filha da entidade `D`.
 
-Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma _expressão original_ é igual a sua _expressão desnormalizada_. Vejam um exemplo de como elas são diferentes:
+Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma _expressão original_ é igual a sua _expressão desnormalizada_.
+
+Vejam um exemplo de como elas são diferentes:
 
 ```
 Original:       A + (B + D) + (E + B)
@@ -633,15 +652,17 @@ Portanto, não podemos considerar que uma expressão desnormalizada seja usada c
 
 # <a name="search" />Pesquisas em expressões de grafos
 
-A pesquisa em expressão de grafos pode ser dividida em duas partes: **Pesquisa superficial** e **Pesquisa profunda**.
+A pesquisa em expressão de grafos pode ser dividida em dois tipos: **Pesquisa superficial** e **Pesquisa profunda**.
 
-Ambas utilizam de uma **matriz de informação** que veremos adiante para poder obter ensumos para a pesquisa.
+Nos próximos tópicos vamos abordar a diferença entre esses tipos de pesquisas, mas antes, será preciso entender o que é uma **matriz de informação** que é o tema comum entre os dois tipos de pesquisa.
 
 ### <a name="matrix-of-information" />Matriz de informação
 
 Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão.
 
-Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos. Vejamos um exemplo:
+Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos.
+
+Vejamos um exemplo:
 
 **Expressão:**
 
@@ -725,7 +746,7 @@ A (Indice do nível: 0)
     ----Z (Indice do nível: 2)
 ```
 
-* Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão reescrito dentro da entidade `G`.
+* Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão redeclarado dentro da entidade `G`.
 * Após a desnormalização um novo caminho foi criado para a entidade `Y`:
   * Antes:
     * _Ocorrência 1_: A.C.Y
@@ -735,7 +756,7 @@ A (Indice do nível: 0)
     * **_Ocorrência 2_: A.D.F.G.C.Y**
     * _Ocorrência 3_: A.D.F.G.Y
 
-**Matriz:**
+**Matriz (Exemplo modelo):**
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -754,17 +775,19 @@ A (Indice do nível: 0)
 #12             | Z        | 3           | 2 
 ```
 
-### <a name="search-deep-occurrences" />Pesquisando todas as ocorrências de uma entidade
+### <a name="search-deep-occurrences" />Encontrando todas as ocorrências de uma entidade
 
-Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo acima, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontrariamos as linhas `#3`, `#10` e `#11`.
+Uma entidade pode ter mais de uma ocorrência em um grafo, no _exemplo modelo_, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
 
 * Note que sem a desnormalização não seria possível encontrar a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
 
 ### <a name="search-deep-get-entity-previous" />Retornando a entidade anterior
 
-Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o **índice geral** em `-1`. Por exemplo:
+Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o **índice geral** em `-1`.
 
-Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (= `3`) e subtraímos `-1`. Com o resultado (= `2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornariamos a entidade `C`.
+Por exemplo:
+
+Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -772,13 +795,13 @@ Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índi
 #03             | Y        | 3           | 0 
 ```
 
-* Se o resultado for menor que zero, é porque estamos na entidade raiz e não existe entidade anterior.
+* Se o resultado for menor que zero, é porque estamos na **entidade raiz** e não existe entidade anterior.
 
 ### <a name="search-deep-get-entity-next" />Retornando a próxima entidade
 
 Para retornar a próxima entidade de uma determinada entidade, devemos somar o **índice geral** em `+1`. Por exemplo:
 
-Para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (=`3`) e somamos `+1`. Com o resultado (= `4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornariamos a entidade `D`.
+Com base no _exemplo modelo_, para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -790,7 +813,7 @@ Para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índi
 
 ### <a name="search-deep-is-first-at-group-expression" />Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)
 
-Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses),verificamos se o seu **nível geral** é maior que o índice geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
+Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
 
 ```
                 A + B + ( C + Y ) + (D + C)
@@ -802,19 +825,11 @@ No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á 
 
 **Observação:**
 
-Não confunda essa regra como sendo a solução para verificar se uma entidade contém filhos.
-
-Note que a entidade `C` se repete no final da expressão e essa regra não se aplicaria nesse caso. E isso ocorre porque seu grupo de expressão não foi redeclarado.
-
-Portanto, se o seu propósito é descobrir se a entidade `C`, que está no índice `#05`, contém filhos devemos aplicar essa mesma regra com alguns passos a mais: localizar a primeira ocorrência da entidade `C` e aplicar a regra.
-
-1. Aplica a regra na entidade `C` do índice `#05`.
-2. Se não tiver grupo de expressão: busca a primeira ocorrência da entidade `C`, nesse caso encontrariamos o índice `#02`. Se não existir uma ocorrência anterior é porque a ocorrência atual é a primeira ocorrência, sendo assim, essa entidade não teria filhos.
-3. Usando a ocorrência do índice `#02`, aplicamos essa regra e pronto! Agora sabemos se a entidade contém filhos.
+Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-has-children).
 
 ### <a name="search-deep-has-last-at-group-expression" />Verificando se entidade é a última do grupo de expressão (última dentro dos parêntese)
 
-Para descobrir se uma entidade é a última do seu grupo de expressão (última dentro do parênteses), verificamos se seu **nível geral** é maior que o índice geral da **próxima entidade**, se for, essa entidade é a última do seu grupo de expressão.
+Para descobrir se uma entidade é a última do seu grupo de expressão (última dentro do parênteses), verificamos se seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a última do seu grupo de expressão.
 
 ```
                 A + B + ( C + Y ) + (D + C) + U
@@ -826,9 +841,9 @@ No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á 
 
 * A entidade `U` do índice `#06` não tem uma próxima entidade, portanto ela é a última de seu grupo de expressão, embora ele esteja omitido por estarmos no **grupo de expressão raiz**.
 
-### <a name="search-deep-is-root" />Verificando se entidade é a entidade raiz da expressão
+### <a name="search-deep-is-root" />Verificando se a entidade é a raiz da expressão
 
-Para descobrir se a entidade é a raiz da expressão, verificamos se o seu **índice geral** é igual á `0`, se for, então ela será a entidade raiz.
+Para descobrir se uma entidade é a raiz da expressão, verificamos se o seu **índice geral** é igual á `0`, se for, então ela será a entidade raiz.
 
 ```
         A + B
@@ -837,11 +852,46 @@ Index:  0   1
 
 * A entidade `A` é a raiz.
 
-### <a name="search-deep-with-children" />Pesquisando todas as entidades que contenham filhos
+### <a name="search-deep-has-children" />Verificando se uma entidade contém filhos
+
+Para descobrir se uma entidade contém filhos, verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade contém filhos. Essa é a mesma técnica usada no tópico [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-first-at-group-expression).
+
+Contudo, não podemos apenas verificar a **ocorrência da entidade**, pois não é garantido que o seu grupo de expressão foi declarado nesse momento. Nesse caso temos duas opções que serão explicadas adiante.
+
+Essa limitação também serve para expressões **desnormalizadas**, isso por que ela não repete grupos de expressões que tem ascendências da entidade corrente.
+
+Por exemplo, se quisermos descobrir se a entidade `A` , que está no índice `#05`, contém filhos?
+
+```
+                A + B + ( C + Y ) + (D + A)
+General Level:  1   2     2   3      2   3
+Index:          0   1     2   3      4   5
+```
+
+Essa expressão está **desnormalizada** e a ocorrência do índice `#05` não foi redeclaradas para evitar um **caminho cíclico**.
+
+**Opção 1:**
+
+1. Verificar se todas as ocorrências da entidade `A` contém filhos.
+
+Com isso, teríamos um resultado negativo ao analisar a ocorrência da entidade `A` que está no índice `#05` e um resultado positivo ao analisar a ocorrência da entidade `A` que está no índice `#00`.
+
+_Essa opção deve ser evitada se o seu propósito for retornar as entidades filhas, isso porque você retornaria as mesmas entidades em todas as ocorrências, nesse caso utilize a opção abaixo._
+
+**Opção 2:**
+
+1. Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização.
+2. Localizar a primeira ocorrência da entidade `A`. Deve-se encontrar a ocorrência que está no índice `#00`.
+
+Com isso, teríamos um resultado positivo ao analisar a ocorrência da entidade `A` que está no índice `#00` e não seria necessário verificar as outras ocorrências.
+
+Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration).
+
+### <a name="search-deep-with-children" />Encontrando todas as entidades que contenham filhos
 
 Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 
-Com base no exemplo, teremos:
+Com base no _exemplo modelo_, teremos os seguintes passos:
 
 1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero:
   * `#00 (A)`
@@ -860,39 +910,49 @@ Com base no exemplo, teremos:
   * `#07 (G)` -> `#08 (B)`: Retorna a entidade `G` como sendo sua anterior
   * `#09 (C)` -> `#10 (Y)`: Retorna a entidade `C` como sendo sua anterior
 
-Com isso, após removermos as repetições de entidades (no caso a entidade `C` que aparece nas linhas `#2` e `#09`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
+Com isso, após removermos as repetições (no caso, a entidade `C` que aparece nas linhas `#2` e `#09`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
 
-### <a name="search-deep-descendants" />Pesquisando todos os descendentes de uma entidade
+### <a name="search-deep-descendants" />Encontrando todos os descendentes de uma entidade
 
 Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é uma descendente.
 
 Devemos continuar navegando para frente até quando a próxima entidade tiver o mesmo **nível geral** da entidade desejada ou se a expressão não tiver mais entidades.
 
-Por exemplo, se quisermos pegar os descendentes da entidade `F`.
+Com base no _exemplo modelo_, se quisermos pegar os descendentes da entidade `F`.
 
-* A entidade `F` tem o nível geral igual a 3
-* **A entidade `G` é a próxima entidade depois de `F` e o seu nível geral é 4, é descendente.**
-* **A entidade `B` é a próxima entidade depois de `G` e o seu nível geral é 5, é descendente.**
-* **A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é 5, é descendente.**
-* **A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é 6, é descendente.**
-* **A entidade `Y` é a próxima entidade depois de `Y` e o seu nível geral é 4, é descendente.**
-* A entidade `Z` é a próxima entidade depois de `Y`, porém o seu nível é 3, igual ao nível da entidade `F`, portanto não é descendente.
+* A entidade `F` tem o nível geral igual a `3`.
+* **A entidade `G` é a próxima entidade depois de `F` e o seu nível geral é `4`, é descendente**.
+* **A entidade `B` é a próxima entidade depois de `G` e o seu nível geral é `5`, é descendente**.
+* **A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `5`, é descendente**.
+* **A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `6`, é descendente**.
+* **A entidade `Y` é a próxima entidade depois de `Y` e o seu nível geral é `4`, é descendente**.
+* A entidade `Z` é a próxima entidade depois de `Y`, porém o seu nível é `3`, igual ao nível da entidade `F`, portanto não é descendente.
 
-Após eliminarmos as repetições de entidades, obtemos como resultado final as seguintes entidades descendentes: `G`, `B`, `C` e `Y`
+Após eliminarmos as repetições de entidades, obtemos como resultado final as seguintes entidades descendentes: `G`, `B`, `C` e `Y`.
 
-### <a name="search-deep-get-entity-children" />Pesquisando os filhos de uma entidade
+**Observação:**
 
-Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisariamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
+Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-has-children).
 
-* A entidade `D` tem o nível geral igual a 2
-* **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`.**
-* **A entidade `F` é a próxima entidade depois de `E` e o seu nível geral também é 3, é filha de `D`.**
+### <a name="search-deep-get-entity-children" />Encontrando os filhos de uma entidade
+
+Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisaríamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
+
+Com base no _exemplo modelo_:
+
+* A entidade `D` tem o nível geral igual a `2`.
+* **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`**.
+* **A entidade `F` é a próxima entidade depois de `E` e o seu nível geral também é 3, é filha de `D`**.
 * As próximas entidades depois de `F` são: `G`, `B`, `C`, `Y` e `Y`, todas tem níveis maiores que 3, então serão ignoradas.
-* **A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral também é 3, é filha de `D`.**
+* **A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral também é 3, é filha de `D`**.
 
 Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`, `F` e `Z`
 
-### <a name="search-deep-get-entity-ascending" />Pesquisando todos os ascendentes de uma entidade
+**Observação:**
+
+Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-has-children).
+
+### <a name="search-deep-get-entity-ascending" />Encontrando todos os ascendentes de uma entidade
 
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 
@@ -925,51 +985,51 @@ Por exemplo, se quisermos pegar os ascendentes da entidade `C` considerando toda
 
 **Ocorrência 1:**
 
-* A entidade `C` da linha `#2` tem o nível geral igual a 2
-* `#01`: A entidade `B` tem o nível geral igual a 2, não é ascendente.
-* `#00`: **A entidade `A` tem o nível geral igual a 1, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível 1 e não mais o nível 2.**
+* A entidade `C` da linha `#02` tem o nível geral igual a `2`.
+* `#01`: A entidade `B` tem o nível geral igual a `2`, não é ascendente.
+* `#00`: **A entidade `A` tem o nível geral igual a `1`, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível `1` e não mais o nível `2`**.
 
 Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
 
 **Ocorrência 2:**
 
-* A entidade `C` da linha `#09` tem o nível geral igual a 5
-* `#08`: A entidade `B` tem o nível geral igual a 5, não é ascendente.
-* `#07`: **A entidade `G` tem o nível geral igual a 4, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível 4 e não mais o nível 5.**
-* `#06`: **A entidade `F` tem o nível geral igual a 3, é menor que o nível geral da entidade `G`, portanto é uma ascendente. Agora o nível a ser considerado será o nível 3 e não mais o nível 4.**
-* `#05`: A entidade `E` tem o nível geral igual a 3, não é uma ascendente.
-* `#04`: **A entidade `D` tem o nível geral igual a 2, é uma ascendente. Agora o nível a ser considerado será o nível 2 e não mais o nível 3.**
-* `#03`: A entidade `Y` tem o nível geral igual a 3, não é uma ascendente.
-* `#02`: A entidade `C` tem o nível geral igual a 2, não é uma ascendente.
-* `#01`: A entidade `B` tem o nível geral igual a 2, não é uma ascendente.
-* `#00`: **A entidade `A` tem o nível geral igual a 1, é uma ascendente. Agora o nível a ser considerado será o nível 1 e não mais o nível 2.**
+* A entidade `C` da linha `#09` tem o nível geral igual a `5`.
+* `#08`: A entidade `B` tem o nível geral igual a `5`, não é ascendente.
+* `#07`: **A entidade `G` tem o nível geral igual a `4`, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível `4` e não mais o nível `5`**.
+* `#06`: **A entidade `F` tem o nível geral igual a `3`, é menor que o nível geral da entidade `G`, portanto é uma ascendente. Agora o nível a ser considerado será o nível `3` e não mais o nível `4`**.
+* `#05`: A entidade `E` tem o nível geral igual a `3`, não é uma ascendente.
+* `#04`: **A entidade `D` tem o nível geral igual a `2`, é uma ascendente. Agora o nível a ser considerado será o nível `2` e não mais o nível `3`**.
+* `#03`: A entidade `Y` tem o nível geral igual a `3`, não é uma ascendente.
+* `#02`: A entidade `C` tem o nível geral igual a `2`, não é uma ascendente.
+* `#01`: A entidade `B` tem o nível geral igual a `2`, não é uma ascendente.
+* `#00`: **A entidade `A` tem o nível geral igual a `1`, é uma ascendente. Agora o nível a ser considerado será o nível `1` e não mais o nível `2`**.
 
 Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`
 
-### <a name="search-deep-get-entity-parent" />Pesquisando o pai de uma entidade
+### <a name="search-deep-get-entity-parent" />Encontrando os pais de uma entidade
 
-Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisariamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
+Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
 
-Como existem 3 ocorrências da entidade `Y`, teremos um resultado por ocorrência:
+Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocorrência:
 
 **Ocorrência 1:**
 
-* A entidade `Y` da linha `#3` tem o nível geral igual a 3
-* `#02`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a 2, portanto, ela é pai da entidade `Y`.**
+* A entidade `Y` da linha `#3` tem o nível geral igual a `3`.
+* `#02`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `2`, portanto, ela é pai da entidade `Y`**.
 
 **Ocorrência 2:**
 
-* A entidade `Y` da linha `#10` tem o nível geral igual a 6
-* `#09`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a 5, portanto, ela é pai da entidade `Y`.**
+* A entidade `Y` da linha `#10` tem o nível geral igual a `6`.
+* `#09`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `5`, portanto, ela é pai da entidade `Y`**.
 
 **Ocorrência 3:**
 
-* A entidade `Y` da linha `#11` tem o nível geral igual a 4
-* `#10`: A entidade `Y` tem o nível geral igual a 6, não é uma ascendente.
-* `#09`: A entidade `C` tem o nível geral igual a 5, não é uma ascendente.
-* `#08`: A entidade `B` tem o nível geral igual a 5, não é uma ascendente.
-* `#07`: A entidade `G` tem o nível geral igual a 4, não é uma ascendente.
-* `#06`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a 3, portanto, ela é pai da entidade `Y`.**
+* A entidade `Y` da linha `#11` tem o nível geral igual a `4`.
+* `#10`: A entidade `Y` tem o nível geral igual a `6`, não é uma ascendente.
+* `#09`: A entidade `C` tem o nível geral igual a `5`, não é uma ascendente.
+* `#08`: A entidade `B` tem o nível geral igual a `5`, não é uma ascendente.
+* `#07`: A entidade `G` tem o nível geral igual a `4`, não é uma ascendente.
+* `#06`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a `3`, portanto, ela é pai da entidade `Y`**.
 
 ## <a name="search-surface" />Pesquisa superficial
 
@@ -1145,7 +1205,7 @@ public class EntityItem
 * Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as regras:
   * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-previous)
   * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-next)
-  * [Pesquisando o pai de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
+  * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
 
 ```csharp
 public class Expression : List<EntityItem>
@@ -1242,7 +1302,7 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
 * Para cada iteração:
   * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
-    * [Verificando se entidade é a entidade raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-root)
+    * [Verificando se a entidade é a raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-root)
   * Se a entidade tiver filhos, adiciona o caractere `(`
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-first-at-group-expression)
   * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.

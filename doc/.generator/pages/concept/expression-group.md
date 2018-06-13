@@ -1,4 +1,4 @@
-## Grupos de expressão <header-set anchor-name="expression-group" />
+## Grupo de expressão <header-set anchor-name="expression-group" />
 
 Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar. 
 
@@ -45,13 +45,13 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
 
-### Declarações de entidades <header-set anchor-name="expression-sub-group" />
+### Declarações de entidades <header-set anchor-name="entity-declaration" />
 
 Chamamos de "**declaração**" o primeiro momento em que uma entidade é escrita, ou seja, sua primeira ocorrência.
 
 Caso essa entidade contenha filhos devemos declarar todo o seu grupo de expressão no mesmo momento, ou seja, adicionando seus filhos dentro dos parenteses.
 
-Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira rápida. 
+Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira mais rápida. 
 
 Por exemplo, para descobrir se a entidade `B` contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
 

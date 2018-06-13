@@ -1,14 +1,16 @@
 # Pesquisas em expressões de grafos <header-set anchor-name="search" />
 
-A pesquisa em expressão de grafos pode ser dividida em duas partes: **Pesquisa superficial** e **Pesquisa profunda**.
+A pesquisa em expressão de grafos pode ser dividida em dois tipos: **Pesquisa superficial** e **Pesquisa profunda**. 
 
-Ambas utilizam de uma **matriz de informação** que veremos adiante para poder obter ensumos para a pesquisa.
+Nos próximos tópicos vamos abordar a diferença entre esses tipos de pesquisas, mas antes, será preciso entender o que é uma **matriz de informação** que é o tema comum entre os dois tipos de pesquisa.
 
 ### Matriz de informação <header-set anchor-name="matrix-of-information" />
 
 Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão. 
 
-Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos. Vejamos um exemplo:
+Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos. 
+
+Vejamos um exemplo:
 
 **Expressão:**
 

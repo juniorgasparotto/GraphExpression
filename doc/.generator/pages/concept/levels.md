@@ -2,21 +2,21 @@
 
 Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
-O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo. 
+O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo. O nível inicia-se em `1` e é incrementado `+1` até chegar no último nível.
 
 Por exemplo:
 
 ```
-A (Nível 1)
-----B (Nível 2)
-    ----C (Nível 3)
-    ----D (Nível 3)
-        ----B (Nível 4)
-----E (Nível 2)
-    ----A (Nível 3)
+A (Level 1)
+----B (Level 2)
+    ----C (Level 3)
+    ----D (Level 3)
+        ----B (Level 4)
+----E (Level 2)
+    ----A (Level 3)
 ```
 
-O **nível na expressão** determina em qual nível a entidade está com relação a expressão. 
+O **nível na expressão** determina em qual nível a entidade está com relação a expressão. O nível inicia-se em `1` e é incrementado `+1` até chegar no último nível.
 
 Por exemplo:
 
@@ -26,5 +26,5 @@ Nível na expressão: 1   1   1     2   2     3   3
 Nível geral:        1   2   2     2   3     3   4   
 ```
 
-Note que o nível da expressão ignora o nível da entidade na hieraquia, é uma informação útil apenas para a expressão.
+Note que o _nível da expressão_ é bem similar ao _nível geral_. A única diferença está no valor da **entidade pai**, no nível geral esse número é sempre menor que o nível geral de seus filhos e no nível da expressão eles são iguais.
 
