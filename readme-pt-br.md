@@ -49,9 +49,9 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
   * [Pesquisas sem referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+    * [Verificando se a entidade é a raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-root)
     * [Encontrando as "entidades pais" de uma expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-find-parents)
   * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-with-references)
-    * [Verificando se a entidade é a raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-root)
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-first-at-group-expression)
     * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-last-at-group-expression)
     * [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-has-children)
@@ -826,6 +826,17 @@ Nesse tipo de pesquisa não temos nenhuma entidade como referência e a busca se
 
 Como existem infinitas opção de pesquisas dentro de um grafo, abordaremos apenas um exemplo de _pesquisa sem referência_ usando expressão de grafos.
 
+### <a name="search-method-is-root" />Verificando se a entidade é a raiz da expressão
+
+Para descobrir se uma entidade é a raiz da expressão, verificamos se o seu **índice geral** é igual á `0`, se for, então ela será a entidade raiz.
+
+```
+        A + B
+Index:  0   1
+```
+
+* A entidade `A` é a raiz.
+
 ### <a name="search-method-find-parents" />Encontrando as "entidades pais" de uma expressão
 
 Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte técnica:
@@ -869,17 +880,6 @@ A lógica será a mesma da **pesquisa profunda**, contudo não teremos as duplic
 A **pesquisa com referência** parte do princípio que a _entidade_ ou uma de suas _ocorrências_ já foi encontrada e com base nisso podemos tomar ações como: _verificações_, _navegações_ ou pesquisas em seus _ascendentes_ e _descendentes_.
 
 Como existem infinitas opção de pesquisas usando uma entidade, abordaremos apenas alguns exemplos de _pesquisas com referências_ usando expressão de grafos.
-
-### <a name="search-method-is-root" />Verificando se a entidade é a raiz da expressão
-
-Para descobrir se uma entidade é a raiz da expressão, verificamos se o seu **índice geral** é igual á `0`, se for, então ela será a entidade raiz.
-
-```
-        A + B
-Index:  0   1
-```
-
-* A entidade `A` é a raiz.
 
 ### <a name="search-method-is-first-at-group-expression" />Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)
 

@@ -36,11 +36,11 @@
 
       <!-- Without references -->
       <include href="doc/.generator/pages/concept/search/without-references/search-without-references.md" />
+      <include href="doc/.generator/pages/concept/search/without-references/find-root.md" />
       <include href="doc/.generator/pages/concept/search/without-references/find-parents.md" />
 
       <!-- With references -->
       <include href="doc/.generator/pages/concept/search/with-references/search-with-references.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/check/is-root.md" />
       <include href="doc/.generator/pages/concept/search/with-references/check/is-first-at-group-expression.md" />
       <include href="doc/.generator/pages/concept/search/with-references/check/is-last-at-group-expression.md" />
       <include href="doc/.generator/pages/concept/search/with-references/check/has-children.md" />
