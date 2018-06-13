@@ -1,10 +1,10 @@
-### Verificando se a entidade é a raiz da expressão <header-set anchor-name="search-method-is-root" />
+### Encontrando a entidade raiz da expressão <header-set anchor-name="search-find-root" />
 
-Para descobrir se uma entidade é a raiz da expressão, verificamos se o seu **índice geral** é igual á `0`, se for, então ela será a entidade raiz.
+Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual `0`.
 
 ```
         A + B
 Index:  0   1
 ```
 
-* A entidade `A` é a raiz.
+* A entidade `A` é a raiz da expressão.
