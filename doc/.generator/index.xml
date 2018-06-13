@@ -12,7 +12,7 @@
       <a href="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" rel="Português">
         <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png" />
       </a>
-     
+
       <include href="doc/.generator/pages/concept/presentation.md" />
       <include href="doc/.generator/pages/concept/intro.md" />
       <include href="doc/.generator/pages/concept/expression-group.md" />
@@ -24,23 +24,35 @@
       <include href="doc/.generator/pages/concept/indexes.md" />
       <include href="doc/.generator/pages/concept/navigation-right.md" />
       <include href="doc/.generator/pages/concept/navigation-left.md" />
-      <include href="doc/.generator/pages/concept/normalization.md" />
-      <include href="doc/.generator/pages/concept/normalization-1.md" />
-      <include href="doc/.generator/pages/concept/normalization-2.md" />
-      <include href="doc/.generator/pages/concept/normalization-3.md" />
+      <include href="doc/.generator/pages/concept/normalization/normalization.md" />
+      <include href="doc/.generator/pages/concept/normalization/normalization-1.md" />
+      <include href="doc/.generator/pages/concept/normalization/normalization-2.md" />
+      <include href="doc/.generator/pages/concept/normalization/normalization-3.md" />
       <include href="doc/.generator/pages/concept/denormalization.md" />
       <include href="doc/.generator/pages/concept/search/search.md" />
       <include href="doc/.generator/pages/concept/search/search-matrix.md" />
       <include href="doc/.generator/pages/concept/search/search-deep.md" />
       <include href="doc/.generator/pages/concept/search/search-surface.md" />
 
-      <!-- Mass -->
-      <include href="doc/.generator/pages/concept/search/search-mass.md" />
-      <include href="doc/.generator/pages/concept/search/methods/find-parents.md" />
+      <!-- Without references -->
+      <include href="doc/.generator/pages/concept/search/without-references/search-without-references.md" />
+      <include href="doc/.generator/pages/concept/search/without-references/find-parents.md" />
 
-      <!-- Reference -->
-      <include href="doc/.generator/pages/concept/search/search-with-references.md" />
-      <include href="doc/.generator/pages/concept/search/methods/find-occurrences.md" />
+      <!-- With references -->
+      <include href="doc/.generator/pages/concept/search/with-references/search-with-references.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/is-root.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/is-first-at-group-expression.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/is-last-at-group-expression.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/has-children.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-occurrences.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-previous.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-next.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/get-descendants.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-children.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-ascending.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-parent.md" />
+
+      <!-- <include href="doc/.generator/pages/concept/search/methods/find-occurrences.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-previous.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-next.md" />
       <include href="doc/.generator/pages/concept/search/methods/is-first-at-group-expression.md" />
@@ -50,16 +62,16 @@
       <include href="doc/.generator/pages/concept/search/methods/get-descendants.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-children.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-ascending.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-entity-parent.md" />
-    
+      <include href="doc/.generator/pages/concept/search/methods/get-entity-parent.md" /> -->
+
       <!-- Impl -->
       <include href="doc/.generator/pages/concept/implementation-to-graph.md" />
       <include href="doc/.generator/pages/concept/implementation-to-expression.md" />
       <include href="doc/.generator/pages/concept/implementation-to-matrix.md" />
-      
+
       <custom-translation>
         <default>
-          
+
         </default>
 
         <language name="en-us">
