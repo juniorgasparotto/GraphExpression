@@ -48,7 +48,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information)
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
-* [Tipos de pesquisas](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+  * [Tipos de pesquisas](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
     * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-occurrences)
     * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-previous)
     * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-next)
@@ -807,7 +807,7 @@ Utiliza a expressão original:
 * _Ocorrência 1_: A.C.Y
 * _Ocorrência 2_: A.D.F.G.Y
 
-# <a name="search-deep" />Tipos de pesquisas
+## <a name="search-deep" />Tipos de pesquisas
 
 ### <a name="search-deep-occurrences" />Encontrando todas as ocorrências de uma entidade
 

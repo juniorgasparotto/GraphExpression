@@ -1,4 +1,4 @@
-# Tipos de pesquisas <header-set anchor-name="search-deep" />
+## Tipos de pesquisas <header-set anchor-name="search-deep" />
 
 ### Encontrando todas as ocorrências de uma entidade <header-set anchor-name="search-deep-occurrences" />
 
