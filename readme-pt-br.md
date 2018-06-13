@@ -49,19 +49,19 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
   * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+    * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
+    * [Encontrando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-with-children)
+  * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
     * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
     * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-first-at-group-expression)
     * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-last-at-group-expression)
     * [Verificando se a entidade é a raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-root)
     * [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-has-children)
-    * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-children)
-    * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-parent)
     * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-descendants)
+    * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-children)
     * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-ascending)
-  * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
-    * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
-    * [Encontrando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-with-children)
+    * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-parent)
 * [Implementações](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation)
   * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-graph)
   * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-expression)
@@ -810,6 +810,39 @@ Utiliza a expressão original:
 
 ## <a name="search-deep" />Pesquisas com referência
 
+### <a name="search-method-get-occurrences" />Encontrando todas as ocorrências de uma entidade
+
+Uma entidade pode ter mais de uma ocorrência em um grafo, no _exemplo modelo_, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+
+* Note que sem a desnormalização não seria possível encontrar a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
+
+### <a name="search-method-with-children" />Encontrando todas as entidades que contenham filhos
+
+Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
+
+Com base no _exemplo modelo_, teremos os seguintes passos:
+
+1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero:
+  * `#00 (A)`
+  * `#01 (B)`
+  * `#03 (Y)`
+  * `#05 (E)`
+  * `#07 (G)`
+  * `#08 (B)`
+  * `#10 (Y)`
+2. Para cada linha encontrada, retornamos a sua entidade anterior que será uma entidade pai:
+  * `NULL` -> `#00 (A)`: Não contém entidade anterior, portanto não retorna nada.
+  * `#00 (A)` -> `#01 (B)`: Retorna a entidade `A` como sendo sua anterior
+  * `#02 (C)` -> `#03 (Y)`: Retorna a entidade `C` como sendo sua anterior
+  * `#04 (D)` -> `#05 (E)`: Retorna a entidade `D` como sendo sua anterior
+  * `#06 (F)` -> `#07 (G)`: Retorna a entidade `F` como sendo sua anterior
+  * `#07 (G)` -> `#08 (B)`: Retorna a entidade `G` como sendo sua anterior
+  * `#09 (C)` -> `#10 (Y)`: Retorna a entidade `C` como sendo sua anterior
+
+Com isso, após removermos as repetições (no caso, a entidade `C` que aparece nas linhas `#2` e `#09`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
+
+## <a name="search-deep" />Pesquisas com referência
+
 ### <a name="search-method-get-entity-previous" />Retornando a entidade anterior
 
 Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o **índice geral** em `-1`.
@@ -916,49 +949,6 @@ Com isso, teríamos um resultado positivo ao analisar a ocorrência da entidade 
 
 Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration).
 
-### <a name="search-method-get-entity-children" />Encontrando os filhos de uma entidade
-
-Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisaríamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
-
-Com base no _exemplo modelo_:
-
-* A entidade `D` tem o nível geral igual a `2`.
-* **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`**.
-* **A entidade `F` é a próxima entidade depois de `E` e o seu nível geral também é 3, é filha de `D`**.
-* As próximas entidades depois de `F` são: `G`, `B`, `C`, `Y` e `Y`, todas tem níveis maiores que 3, então serão ignoradas.
-* **A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral também é 3, é filha de `D`**.
-
-Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`, `F` e `Z`
-
-**Observação:**
-
-Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
-
-### <a name="search-method-get-entity-parent" />Encontrando os pais de uma entidade
-
-Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
-
-Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocorrência:
-
-**Ocorrência 1:**
-
-* A entidade `Y` da linha `#3` tem o nível geral igual a `3`.
-* `#02`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `2`, portanto, ela é pai da entidade `Y`**.
-
-**Ocorrência 2:**
-
-* A entidade `Y` da linha `#10` tem o nível geral igual a `6`.
-* `#09`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `5`, portanto, ela é pai da entidade `Y`**.
-
-**Ocorrência 3:**
-
-* A entidade `Y` da linha `#11` tem o nível geral igual a `4`.
-* `#10`: A entidade `Y` tem o nível geral igual a `6`, não é uma ascendente.
-* `#09`: A entidade `C` tem o nível geral igual a `5`, não é uma ascendente.
-* `#08`: A entidade `B` tem o nível geral igual a `5`, não é uma ascendente.
-* `#07`: A entidade `G` tem o nível geral igual a `4`, não é uma ascendente.
-* `#06`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a `3`, portanto, ela é pai da entidade `Y`**.
-
 ### <a name="search-method-get-descendants" />Encontrando todos os descendentes de uma entidade
 
 Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é uma descendente.
@@ -976,6 +966,24 @@ Com base no _exemplo modelo_, se quisermos pegar os descendentes da entidade `F`
 * A entidade `Z` é a próxima entidade depois de `Y`, porém o seu nível é `3`, igual ao nível da entidade `F`, portanto não é descendente.
 
 Após eliminarmos as repetições de entidades, obtemos como resultado final as seguintes entidades descendentes: `G`, `B`, `C` e `Y`.
+
+**Observação:**
+
+Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+
+### <a name="search-method-get-entity-children" />Encontrando os filhos de uma entidade
+
+Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisaríamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
+
+Com base no _exemplo modelo_:
+
+* A entidade `D` tem o nível geral igual a `2`.
+* **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`**.
+* **A entidade `F` é a próxima entidade depois de `E` e o seu nível geral também é 3, é filha de `D`**.
+* As próximas entidades depois de `F` são: `G`, `B`, `C`, `Y` e `Y`, todas tem níveis maiores que 3, então serão ignoradas.
+* **A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral também é 3, é filha de `D`**.
+
+Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`, `F` e `Z`
 
 **Observação:**
 
@@ -1035,38 +1043,30 @@ Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
 
 Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`.
 
-## <a name="search-deep" />Pesquisas com referência
+### <a name="search-method-get-entity-parent" />Encontrando os pais de uma entidade
 
-### <a name="search-method-get-occurrences" />Encontrando todas as ocorrências de uma entidade
+Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
 
-Uma entidade pode ter mais de uma ocorrência em um grafo, no _exemplo modelo_, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocorrência:
 
-* Note que sem a desnormalização não seria possível encontrar a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
+**Ocorrência 1:**
 
-### <a name="search-method-with-children" />Encontrando todas as entidades que contenham filhos
+* A entidade `Y` da linha `#3` tem o nível geral igual a `3`.
+* `#02`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `2`, portanto, ela é pai da entidade `Y`**.
 
-Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
+**Ocorrência 2:**
 
-Com base no _exemplo modelo_, teremos os seguintes passos:
+* A entidade `Y` da linha `#10` tem o nível geral igual a `6`.
+* `#09`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `5`, portanto, ela é pai da entidade `Y`**.
 
-1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero:
-  * `#00 (A)`
-  * `#01 (B)`
-  * `#03 (Y)`
-  * `#05 (E)`
-  * `#07 (G)`
-  * `#08 (B)`
-  * `#10 (Y)`
-2. Para cada linha encontrada, retornamos a sua entidade anterior que será uma entidade pai:
-  * `NULL` -> `#00 (A)`: Não contém entidade anterior, portanto não retorna nada.
-  * `#00 (A)` -> `#01 (B)`: Retorna a entidade `A` como sendo sua anterior
-  * `#02 (C)` -> `#03 (Y)`: Retorna a entidade `C` como sendo sua anterior
-  * `#04 (D)` -> `#05 (E)`: Retorna a entidade `D` como sendo sua anterior
-  * `#06 (F)` -> `#07 (G)`: Retorna a entidade `F` como sendo sua anterior
-  * `#07 (G)` -> `#08 (B)`: Retorna a entidade `G` como sendo sua anterior
-  * `#09 (C)` -> `#10 (Y)`: Retorna a entidade `C` como sendo sua anterior
+**Ocorrência 3:**
 
-Com isso, após removermos as repetições (no caso, a entidade `C` que aparece nas linhas `#2` e `#09`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
+* A entidade `Y` da linha `#11` tem o nível geral igual a `4`.
+* `#10`: A entidade `Y` tem o nível geral igual a `6`, não é uma ascendente.
+* `#09`: A entidade `C` tem o nível geral igual a `5`, não é uma ascendente.
+* `#08`: A entidade `B` tem o nível geral igual a `5`, não é uma ascendente.
+* `#07`: A entidade `G` tem o nível geral igual a `4`, não é uma ascendente.
+* `#06`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a `3`, portanto, ela é pai da entidade `Y`**.
 
 # <a name="implementation" />Implementações
 
