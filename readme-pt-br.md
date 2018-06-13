@@ -853,9 +853,9 @@ Com isso, após removermos as repetições (no caso, a entidade `C` que aparece 
 
 ### <a name="search-method-get-occurrences" />Encontrando todas as ocorrências de uma entidade
 
-Uma entidade pode ter mais de uma ocorrência em um grafo, no _exemplo modelo_, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo [Matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated), se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
 
-* Note que sem a desnormalização não seria possível encontrar a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
+Se essa mesma pesquisa fosse feita usando a **pesquisa superficial**, não teríamos encontrado a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
 
 ## <a name="search-deep" />Pesquisas com referência
 
