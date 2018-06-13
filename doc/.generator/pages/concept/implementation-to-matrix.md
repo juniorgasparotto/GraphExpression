@@ -149,7 +149,7 @@ Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression
 ```
 
 * A classe recebe em seu construtor a **entidade raiz**. A partir dessa instância, vamos navegar em seu grafo por completo.
-* O parâmetro `Deep` determina se a varredura será profunda ou não. Isso vai de encontro com o tema: <anchor-get name="search-deep" />
+* O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico <anchor-get name="search-deep" />
 * O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas, uma vez que por ser a entidade raiz, serão os valores inicias.
 * Na segunda parte da função, iniciamos a leitura dos filhos da entidade `parent`. 
 * Será incrementado `+1` no **nível geral** conforme se aprofunda na entidade. Esse valor é passado por parâmetro, pois ele transcende todo o grafo.

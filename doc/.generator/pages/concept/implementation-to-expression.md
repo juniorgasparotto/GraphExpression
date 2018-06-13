@@ -41,7 +41,7 @@ public class EntityItem
 ```
 
 * Essa classe será nossa representação de cada linha da matriz de informação, ou seja, cada ocorrência de uma entidade dentro da expressão. Nela teremos todas as propriedades que uma ocorrência de uma entidade pode ter.
-* Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as regras:
+* Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as técnicas:
     * <anchor-get name="search-deep-get-entity-previous" />
     * <anchor-get name="search-deep-get-entity-next" />
     * <anchor-get name="search-deep-get-entity-parent" />
@@ -56,18 +56,17 @@ public class Expression : List<EntityItem>
         foreach (var item in this)
         {
             var next = item.Next;
-            var hasChildren = next != null && item.Level < next.Level;
+            var isFirstInParenthesis = next != null && item.Level < next.Level;
             var isLastInParenthesis = next == null || item.Level > next.Level;
             var isNotRoot = item.Index > 0;
 
-            if (isNotRoot) 
-                output += " + ";
+            if (isNotRoot) output += " + ";
 
-            if (hasChildren) 
-            {                
+            if (isFirstInParenthesis)
+            {
                 output += "(";
                 parenthesisToClose.Push(item);
-            } 
+            }
 
             output += item.Entity.Name.ToString();
 
@@ -82,11 +81,8 @@ public class Expression : List<EntityItem>
 
                 for (var i = countToClose; i > 0; i--)
                 {
+                    parenthesisToClose.Pop();
                     output += ")";
-
-                    // End iteration for entity: entityItemToClose
-                    var entityItemToClose = parenthesisToClose.Pop();
-                    // DO anything
                 }
             }
         }
@@ -142,7 +138,7 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 * Para cada iteração:
     * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
         * <anchor-get name="search-deep-is-root" />
-    * Se a entidade tiver filhos, adiciona o caractere `(`
+    * Se a entidade for a primeira do grupo de expressão, adiciona o caractere `(`
         * <anchor-get name="search-deep-is-first-at-group-expression" />
     * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
         * <anchor-get name="search-deep-has-last-at-group-expression" />

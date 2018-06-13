@@ -47,6 +47,8 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 * [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search)
     * [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information)
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+  * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
+* [Tipos de pesquisas](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
     * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-occurrences)
     * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-previous)
     * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-next)
@@ -59,7 +61,6 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-children)
     * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-ascending)
     * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
-  * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
 * [Implementações](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation)
   * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-graph)
   * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-expression)
@@ -775,6 +776,39 @@ A (Indice do nível: 0)
 #12             | Z        | 3           | 2 
 ```
 
+## <a name="search-surface" />Pesquisa superficial
+
+Na **Pesquisa superficial** a técnica usada é a mesma da **Pesquisa profunda**, á única deferença é que na pesquisa superficial não consideramos os caminhos que já foram escritos (ou percorridos). No caso, não usamos a técnica da **desnormalização** para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da _Pesquisa profunda_.
+
+Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teriamos a seguinte diferença entre os tipos de pesquisas:
+
+**Expressão:**
+
+```
+A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+```
+
+**Pesquisa profunda:**
+
+Primeiro, aplica-se a desnormalização:
+
+```
+A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
+```
+
+* _Ocorrência 1_: A.C.Y
+* _Ocorrência 2_: A.D.F.G.C.Y -> Novo caminho
+* _Ocorrência 3_: A.D.F.G.Y
+
+**Pesquisa superficial:**
+
+Utiliza a expressão original:
+
+* _Ocorrência 1_: A.C.Y
+* _Ocorrência 2_: A.D.F.G.Y
+
+# <a name="search-deep" />Tipos de pesquisas
+
 ### <a name="search-deep-occurrences" />Encontrando todas as ocorrências de uma entidade
 
 Uma entidade pode ter mais de uma ocorrência em um grafo, no _exemplo modelo_, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
@@ -860,7 +894,7 @@ Contudo, não podemos apenas verificar a **ocorrência da entidade**, pois não 
 
 Essa limitação também serve para expressões **desnormalizadas**, isso por que ela não repete grupos de expressões que tem ascendências da entidade corrente.
 
-Por exemplo, se quisermos descobrir se a entidade `A` , que está no índice `#05`, contém filhos?
+Por exemplo, se quisermos descobrir se a entidade `A` , que está no índice `#05`, contém filhos:
 
 ```
                 A + B + ( C + Y ) + (D + A)
@@ -868,7 +902,7 @@ General Level:  1   2     2   3      2   3
 Index:          0   1     2   3      4   5
 ```
 
-Essa expressão está **desnormalizada** e a ocorrência do índice `#05` não foi redeclaradas para evitar um **caminho cíclico**.
+Essa expressão está **desnormalizada** e a entidade `A` que está no índice `#05` não foi redeclarado para evitar um **caminho cíclico**.
 
 **Opção 1:**
 
@@ -1031,37 +1065,6 @@ Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocor
 * `#07`: A entidade `G` tem o nível geral igual a `4`, não é uma ascendente.
 * `#06`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a `3`, portanto, ela é pai da entidade `Y`**.
 
-## <a name="search-surface" />Pesquisa superficial
-
-Na **Pesquisa superficial** a técnica usada é a mesma da **Pesquisa profunda**, á única deferença é que na pesquisa superficial não consideramos os caminhos que já foram escritos (ou percorridos). No caso, não usamos a técnica da desnormalização para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da _Pesquisa profunda_.
-
-Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teriamos a seguinte diferença entre os tipos de pesquisas:
-
-**Expressão:**
-
-```
-A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-```
-
-**Pesquisa profunda:**
-
-Primeiro, aplica-se a desnormalização:
-
-```
-A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
-```
-
-* _Ocorrência 1_: A.C.Y
-* _Ocorrência 2_: A.D.F.G.C.Y -> Novo caminho
-* _Ocorrência 3_: A.D.F.G.Y
-
-**Pesquisa superficial:**
-
-Utiliza a expressão original:
-
-* _Ocorrência 1_: A.C.Y
-* _Ocorrência 2_: A.D.F.G.Y
-
 # <a name="implementation" />Implementações
 
 Esse tópico vai demostrar na prática alguns exemplos de implementações de alguns dos conceitos que estudamos.
@@ -1202,7 +1205,7 @@ public class EntityItem
 ```
 
 * Essa classe será nossa representação de cada linha da matriz de informação, ou seja, cada ocorrência de uma entidade dentro da expressão. Nela teremos todas as propriedades que uma ocorrência de uma entidade pode ter.
-* Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as regras:
+* Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as técnicas:
   * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-previous)
   * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-next)
   * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-get-entity-parent)
@@ -1217,18 +1220,17 @@ public class Expression : List<EntityItem>
         foreach (var item in this)
         {
             var next = item.Next;
-            var hasChildren = next != null && item.Level < next.Level;
+            var isFirstInParenthesis = next != null && item.Level < next.Level;
             var isLastInParenthesis = next == null || item.Level > next.Level;
             var isNotRoot = item.Index > 0;
 
-            if (isNotRoot) 
-                output += " + ";
+            if (isNotRoot) output += " + ";
 
-            if (hasChildren) 
-            {                
+            if (isFirstInParenthesis)
+            {
                 output += "(";
                 parenthesisToClose.Push(item);
-            } 
+            }
 
             output += item.Entity.Name.ToString();
 
@@ -1243,11 +1245,8 @@ public class Expression : List<EntityItem>
 
                 for (var i = countToClose; i > 0; i--)
                 {
+                    parenthesisToClose.Pop();
                     output += ")";
-
-                    // End iteration for entity: entityItemToClose
-                    var entityItemToClose = parenthesisToClose.Pop();
-                    // DO anything
                 }
             }
         }
@@ -1303,7 +1302,7 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 * Para cada iteração:
   * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
     * [Verificando se a entidade é a raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-root)
-  * Se a entidade tiver filhos, adiciona o caractere `(`
+  * Se a entidade for a primeira do grupo de expressão, adiciona o caractere `(`
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-is-first-at-group-expression)
   * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
     * [Verificando se entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep-has-last-at-group-expression)
@@ -1461,7 +1460,7 @@ Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression
 ```
 
 * A classe recebe em seu construtor a **entidade raiz**. A partir dessa instância, vamos navegar em seu grafo por completo.
-* O parâmetro `Deep` determina se a varredura será profunda ou não. Isso vai de encontro com o tema: [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+* O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
 * O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas, uma vez que por ser a entidade raiz, serão os valores inicias.
 * Na segunda parte da função, iniciamos a leitura dos filhos da entidade `parent`.
 * Será incrementado `+1` no **nível geral** conforme se aprofunda na entidade. Esse valor é passado por parâmetro, pois ele transcende todo o grafo.
