@@ -4,6 +4,7 @@ Para descobrir se uma entidade é a última do seu grupo de expressão (última 
 
 ```
                 A + B + ( C + Y ) + (D + C) + U
+                              ^
 Nível geral:    1   2     2   3      2   3    2
 Index:          0   1     2   3      4   5    6
 ```

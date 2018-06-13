@@ -10,11 +10,12 @@ Por exemplo, se quisermos descobrir se a entidade `A` , que está no índice `#0
 
 ```
                 A + B + ( C + Y ) + (D + A)
+                                         ^
 General Level:  1   2     2   3      2   3
 Index:          0   1     2   3      4   5
 ```
 
-Essa expressão está **desnormalizada** e a entidade `A` que está no índice `#05` não foi redeclarado para evitar um **caminho cíclico**.
+_Essa expressão está **desnormalizada** e a entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**._
 
 **Opção 1:**
 

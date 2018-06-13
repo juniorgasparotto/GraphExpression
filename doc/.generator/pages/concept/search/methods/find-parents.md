@@ -1,8 +1,8 @@
-### Encontrando todas as entidades que contenham filhos <header-set anchor-name="search-method-with-children" />
+### Encontrando as "entidades pais" de uma expressão <header-set anchor-name="search-method-with-children" />
 
 Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 
-Com base no _exemplo modelo_, teremos os seguintes passos:
+Com base no exemplo <anchor-get name="sample-matrix-desnormalizated" />, teremos os seguintes passos:
 
 1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero: 
     * `#00 (A)`

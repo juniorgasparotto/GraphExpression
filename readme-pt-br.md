@@ -49,8 +49,8 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
   * [Pesquisas em massa](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+    * [Encontrando as "entidades pais" de uma expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-with-children)
     * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
-    * [Encontrando todas as entidades que contenham filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-with-children)
   * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
     * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
     * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
@@ -691,7 +691,7 @@ A (Indice do nível: 0)
     ----Z (Indice do nível: 2)
 ```
 
-**Matriz:**
+**<a name="sample-matrix" />Matriz de informação:**
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -709,7 +709,13 @@ A (Indice do nível: 0)
 #11             | Z        | 3           | 2
 ```
 
-Com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos criar meios de navegação e pesquisa de entidades.
+Perceba que a expressão mudou da orientação horizontal para a orientação vertical e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão.
+
+Inclusive, essa é uma regra importante: _Nunca alterar a ordem das linhas, isso altera completamente o grafo._
+
+Os _elementos de soma_ e _parênteses_ foram removidos, eles não são necessários na matriz, pois somente com as informações de _índices_ e _níveis_, é possível identificar todos os _grupos de expressões_.
+
+E é com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aqueles que estão posicionados na sua esquerda ou na sua direita, independentemente do nível, que podemos criar meios de pesquisas e navegações.
 
 ## <a name="search-deep" />Pesquisa profunda
 
@@ -758,7 +764,9 @@ A (Indice do nível: 0)
     * **_Ocorrência 2_: A.D.F.G.C.Y**
     * _Ocorrência 3_: A.D.F.G.Y
 
-**Matriz (Exemplo modelo):**
+**<a name="sample-matrix-desnormalizated" />Matriz desnormalizada:**
+
+Veja como ficou a expressão desnormalizada em forma de matriz:
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -777,11 +785,13 @@ A (Indice do nível: 0)
 #12             | Z        | 3           | 2 
 ```
 
+* Foi criado uma nova linha com relação a versão original: A linha `#10` contém o novo caminho.
+
 ## <a name="search-surface" />Pesquisa superficial
 
-Na **Pesquisa superficial** a técnica usada é a mesma da **Pesquisa profunda**, á única deferença é que na pesquisa superficial não consideramos os caminhos que já foram escritos (ou percorridos). No caso, não usamos a técnica da **desnormalização** para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da _Pesquisa profunda_.
+Na **Pesquisa superficial** não consideramos os caminhos que já foram declarados (ou percorridos), ou seja, não usamos a técnica da **desnormalização** para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da _Pesquisa profunda_.
 
-Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teriamos a seguinte diferença entre os tipos de pesquisas:
+Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teríamos a seguinte diferença entre os tipos de pesquisas:
 
 **Expressão:**
 
@@ -810,17 +820,17 @@ Utiliza a expressão original:
 
 ## <a name="search-deep" />Pesquisas em massa
 
-### <a name="search-method-get-occurrences" />Encontrando todas as ocorrências de uma entidade
+A **pesquisa em massa** busca encontrar entidades ou informações dentro da matriz de informação.
 
-Uma entidade pode ter mais de uma ocorrência em um grafo, no _exemplo modelo_, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+Nesse tipo de pesquisa não temos nenhuma entidade e a busca será feita em todo a matriz de acordo com a necessidade.
 
-* Note que sem a desnormalização não seria possível encontrar a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
+Como existem infinitas opção de pesquisas dentro de um grafo, abordaremos apenas um exemplo de _pesquisas em massa_ usando expressão de grafos.
 
-### <a name="search-method-with-children" />Encontrando todas as entidades que contenham filhos
+### <a name="search-method-with-children" />Encontrando as "entidades pais" de uma expressão
 
 Para isso, basta recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 
-Com base no _exemplo modelo_, teremos os seguintes passos:
+Com base no exemplo [Matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated), teremos os seguintes passos:
 
 1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero:
   * `#00 (A)`
@@ -841,6 +851,12 @@ Com base no _exemplo modelo_, teremos os seguintes passos:
 
 Com isso, após removermos as repetições (no caso, a entidade `C` que aparece nas linhas `#2` e `#09`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
 
+### <a name="search-method-get-occurrences" />Encontrando todas as ocorrências de uma entidade
+
+Uma entidade pode ter mais de uma ocorrência em um grafo, no _exemplo modelo_, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+
+* Note que sem a desnormalização não seria possível encontrar a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
+
 ## <a name="search-deep" />Pesquisas com referência
 
 ### <a name="search-method-get-entity-previous" />Retornando a entidade anterior
@@ -849,7 +865,7 @@ Para retornar a entidade anterior de uma determinada entidade, devemos subtrair 
 
 Por exemplo:
 
-Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
+Com base no exemplo modelo, para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -861,7 +877,9 @@ Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índi
 
 ### <a name="search-method-get-entity-next" />Retornando a próxima entidade
 
-Para retornar a próxima entidade de uma determinada entidade, devemos somar o **índice geral** em `+1`. Por exemplo:
+Para retornar a próxima entidade de uma determinada entidade, devemos somar o **índice geral** em `+1`.
+
+Por exemplo:
 
 Com base no _exemplo modelo_, para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
 
@@ -879,6 +897,7 @@ Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeir
 
 ```
                 A + B + ( C + Y ) + (D + C)
+                          ^
 Nível geral:    1   2     2   3      2   3
 Index:          0   1     2   3      4   5
 ```
@@ -895,6 +914,7 @@ Para descobrir se uma entidade é a última do seu grupo de expressão (última 
 
 ```
                 A + B + ( C + Y ) + (D + C) + U
+                              ^
 Nível geral:    1   2     2   3      2   3    2
 Index:          0   1     2   3      4   5    6
 ```
@@ -926,11 +946,12 @@ Por exemplo, se quisermos descobrir se a entidade `A` , que está no índice `#0
 
 ```
                 A + B + ( C + Y ) + (D + A)
+                                         ^
 General Level:  1   2     2   3      2   3
 Index:          0   1     2   3      4   5
 ```
 
-Essa expressão está **desnormalizada** e a entidade `A` que está no índice `#05` não foi redeclarado para evitar um **caminho cíclico**.
+_Essa expressão está **desnormalizada** e a entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**._
 
 **Opção 1:**
 
@@ -951,7 +972,7 @@ Esse tema também foi abordado, de forma superficial, no tópico [Declarações 
 
 ### <a name="search-method-get-descendants" />Encontrando todos os descendentes de uma entidade
 
-Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é uma descendente.
+Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é sua descendente.
 
 Devemos continuar navegando para frente até quando a próxima entidade tiver o mesmo **nível geral** da entidade desejada ou se a expressão não tiver mais entidades.
 

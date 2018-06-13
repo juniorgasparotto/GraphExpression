@@ -45,7 +45,9 @@ A (Indice do nível: 0)
         * **_Ocorrência 2_: A.D.F.G.C.Y**
         * _Ocorrência 3_: A.D.F.G.Y
 
-**Matriz (Exemplo modelo):**
+**<anchor-set name="sample-matrix-desnormalizated">Matriz desnormalizada</anchor-set>:**
+
+Veja como ficou a expressão desnormalizada em forma de matriz:
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -63,3 +65,5 @@ A (Indice do nível: 0)
 #11             | Y        | 4           | 1 
 #12             | Z        | 3           | 2 
 ```
+
+* Foi criado uma nova linha com relação a versão original: A linha `#10` contém o novo caminho.

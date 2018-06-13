@@ -36,10 +36,10 @@
 
       <!-- Mass -->
       <include href="doc/.generator/pages/concept/search/search-mass.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-occurrences.md" />
-      <include href="doc/.generator/pages/concept/search/methods/with-children.md" />
+      <include href="doc/.generator/pages/concept/search/methods/find-parents.md" />
 
       <!-- Reference -->
+      <include href="doc/.generator/pages/concept/search/methods/find-occurrences.md" />
       <include href="doc/.generator/pages/concept/search/search-with-references.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-previous.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-next.md" />

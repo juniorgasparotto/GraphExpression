@@ -4,7 +4,7 @@ Para retornar a entidade anterior de uma determinada entidade, devemos subtrair 
 
 Por exemplo:
 
-Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
+Com base no exemplo modelo, para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível

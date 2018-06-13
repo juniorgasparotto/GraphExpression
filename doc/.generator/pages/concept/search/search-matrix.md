@@ -31,7 +31,7 @@ A (Indice do nível: 0)
     ----Z (Indice do nível: 2)
 ```
 
-**Matriz:**
+**<anchor-set name="sample-matrix">Matriz de informação</anchor-set>:**
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -49,4 +49,10 @@ A (Indice do nível: 0)
 #11             | Z        | 3           | 2
 ```
 
-Com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aquelas que estão posicionadas na sua esquerda ou na sua direita na expressão (independentemente do nível) podemos criar meios de navegação e pesquisa de entidades.
+Perceba que a expressão mudou da orientação horizontal para a orientação vertical e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão. 
+
+Inclusive, essa é uma regra importante: _Nunca alterar a ordem das linhas, isso altera completamente o grafo._
+
+Os _elementos de soma_ e _parênteses_ foram removidos, eles não são necessários na matriz, pois somente com as informações de _índices_ e _níveis_, é possível identificar todos os _grupos de expressões_.
+
+E é com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aqueles que estão posicionados na sua esquerda ou na sua direita, independentemente do nível, que podemos criar meios de pesquisas e navegações.
