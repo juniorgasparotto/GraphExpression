@@ -7,11 +7,11 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 
 Essa pesquisa pode ser feita usando os dois tipos de pesquisa. Contudo, a **pesquisa profunda** pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
 
-Sendo assim, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
+Sendo assim, nesse caso, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
 
 **Pesquisa profunda**
 
-Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz desnormalizada</anchor-get> do tópico sobre <anchor-get name="search-deep">.
+Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz desnormalizada</anchor-get> do tópico sobre <anchor-get name="search-deep" />.
 
 1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero: 
     * `#00 (A)`

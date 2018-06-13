@@ -49,7 +49,7 @@ A (Indice do nível: 0)
 #11             | Z        | 3           | 2
 ```
 
-Perceba que a expressão mudou da orientação horizontal para a orientação vertical e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão. 
+Perceba que a expressão mudou da _orientação horizontal_ para a _orientação vertical_ e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão. 
 
 Inclusive, essa é uma regra importante: _Nunca alterar a ordem das linhas, isso altera completamente o grafo._
 

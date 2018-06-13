@@ -39,8 +39,8 @@
       <include href="doc/.generator/pages/concept/search/methods/find-parents.md" />
 
       <!-- Reference -->
-      <include href="doc/.generator/pages/concept/search/methods/find-occurrences.md" />
       <include href="doc/.generator/pages/concept/search/search-with-references.md" />
+      <include href="doc/.generator/pages/concept/search/methods/find-occurrences.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-previous.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-next.md" />
       <include href="doc/.generator/pages/concept/search/methods/is-first-at-group-expression.md" />

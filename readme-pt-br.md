@@ -50,8 +50,8 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-surface)
   * [Pesquisas em massa](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
     * [Encontrando as "entidades pais" de uma expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-find-parents)
-    * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
   * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
+    * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
     * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
     * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-first-at-group-expression)
@@ -709,7 +709,7 @@ A (Indice do nível: 0)
 #11             | Z        | 3           | 2
 ```
 
-Perceba que a expressão mudou da orientação horizontal para a orientação vertical e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão.
+Perceba que a expressão mudou da _orientação horizontal_ para a _orientação vertical_ e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão.
 
 Inclusive, essa é uma regra importante: _Nunca alterar a ordem das linhas, isso altera completamente o grafo._
 
@@ -719,9 +719,9 @@ E é com base nessa matriz de informação e ao fato das entidades conhecerem os
 
 ## <a name="search-deep" />Pesquisa profunda
 
-A **pesquisa profunda** tem o objetivo de retornar a maior quantidade de resultados possíveis e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
+A **pesquisa profunda** tem o objetivo de retornar a maior quantidade possíveis de resultados e para isso ela considera todos os caminhos que uma entidade percorre em um grafo.
 
-Para poder criar uma pesquisa profunda, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
+Para poder criar uma _pesquisa profunda_, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
 Vejamos a seguir o mesmo exemplo utilizado no tópico [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information), porém agora, a expressão foi desnormalizada:
 
@@ -789,11 +789,11 @@ Veja como ficou a expressão desnormalizada em forma de matriz:
 
 ## <a name="search-surface" />Pesquisa superficial
 
-Na **Pesquisa superficial** não consideramos os caminhos que já foram declarados (ou percorridos), ou seja, não usamos a técnica da **desnormalização** para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas não terá a mesma precisão da _Pesquisa profunda_.
+Na **Pesquisa superficial** não consideramos os caminhos que já foram declarados (ou percorridos), ou seja, não usamos a técnica da **desnormalização** para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas em alguns casos não terá a mesma precisão da _Pesquisa profunda_.
 
 Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teríamos a seguinte diferença entre os tipos de pesquisas:
 
-**Expressão:**
+_Expressão de exemplo:_
 
 ```
 A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
@@ -835,11 +835,11 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 
 Essa pesquisa pode ser feita usando os dois tipos de pesquisa. Contudo, a **pesquisa profunda** pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
 
-Sendo assim, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
+Sendo assim, nesse caso, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
 
 **Pesquisa profunda**
 
-Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [.
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep).
 
 1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero:
   * `#00 (A)`
@@ -864,15 +864,15 @@ Com isso, após removermos as repetições (no caso, a entidade `C` que aparece 
 
 A lógica será a mesma da **pesquisa profunda**, contudo não teremos as duplicações, pois na _pesquisa superficial_ não existem grupos de expressões repetidos.
 
-### Encontrando todas as ocorrências de uma entidade 
+## <a name="search-deep" />Pesquisas com referência
 
-Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo <anchor-get name="sample-matrix-desnormalizated"></anchor-get>, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+### <a name="search-method-get-occurrences" />Encontrando todas as ocorrências de uma entidade
+
+Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo [Matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated), se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
 
 Se essa mesma pesquisa fosse feita usando a **pesquisa superficial**, não teríamos encontrado a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
 
-## Pesquisas com referência 
-
-### Retornando a entidade anterior 
+### <a name="search-method-get-entity-previous" />Retornando a entidade anterior
 
 Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o **índice geral** em `-1`.
 
@@ -888,7 +888,7 @@ Com base no exemplo modelo, para obter a entidade anterior da entidade `Y` da li
 
 * Se o resultado for menor que zero, é porque estamos na **entidade raiz** e não existe entidade anterior.
 
-### Retornando a próxima entidade 
+### <a name="search-method-get-entity-next" />Retornando a próxima entidade
 
 Para retornar a próxima entidade de uma determinada entidade, devemos somar o **índice geral** em `+1`.
 
@@ -904,7 +904,7 @@ Com base no _exemplo modelo_, para obter a próxima entidade da entidade `Y` da 
 
 * Se o resultado for maior que a quantidade máxima de itens na matriz é porque estamos na última entidade da expressão e não existe uma próxima entidade.
 
-### Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese) 
+### <a name="search-method-is-first-at-group-expression" />Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)
 
 Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
 
@@ -919,9 +919,9 @@ No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á 
 
 **Observação:**
 
-Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico <anchor-get name="search-deep-has-children"></anchor-get>.
+Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
-### Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese) 
+### <a name="search-method-is-last-at-group-expression" />Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)
 
 Para descobrir se uma entidade é a última do seu grupo de expressão (última dentro do parênteses), verificamos se seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a última do seu grupo de expressão.
 
@@ -936,7 +936,7 @@ No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á 
 
 * A entidade `U` do índice `#06` não tem uma próxima entidade, portanto ela é a última de seu grupo de expressão, embora ele esteja omitido por estarmos no **grupo de expressão raiz**.
 
-### Verificando se a entidade é a raiz da expressão 
+### <a name="search-method-is-root" />Verificando se a entidade é a raiz da expressão
 
 Para descobrir se uma entidade é a raiz da expressão, verificamos se o seu **índice geral** é igual á `0`, se for, então ela será a entidade raiz.
 
@@ -947,9 +947,9 @@ Index:  0   1
 
 * A entidade `A` é a raiz.
 
-### Verificando se uma entidade contém filhos 
+### <a name="search-method-has-children" />Verificando se uma entidade contém filhos
 
-Para descobrir se uma entidade contém filhos, verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade contém filhos. Essa é a mesma técnica usada no tópico <anchor-get name="search-deep-is-first-at-group-expression"></anchor-get>.
+Para descobrir se uma entidade contém filhos, verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade contém filhos. Essa é a mesma técnica usada no tópico <error>The anchor 'search-deep-is-first-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
 Contudo, não podemos apenas verificar a **ocorrência da entidade**, pois não é garantido que o seu grupo de expressão foi declarado nesse momento. Nesse caso temos duas opções que serão explicadas adiante.
 
@@ -976,14 +976,14 @@ _Essa opção deve ser evitada se o seu propósito for retornar as entidades fil
 
 **Opção 2:**
 
-1. Aplicar a <anchor-get name="normalization-3"></anchor-get> para garantir que todas as entidades estão sendo declaradas logo na primeira utilização.
+1. Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização.
 2. Localizar a primeira ocorrência da entidade `A`. Deve-se encontrar a ocorrência que está no índice `#00`.
 
 Com isso, teríamos um resultado positivo ao analisar a ocorrência da entidade `A` que está no índice `#00` e não seria necessário verificar as outras ocorrências.
 
-Esse tema também foi abordado, de forma superficial, no tópico <anchor-get name="entity-declaration"></anchor-get>.
+Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration).
 
-### Encontrando todos os descendentes de uma entidade 
+### <a name="search-method-get-descendants" />Encontrando todos os descendentes de uma entidade
 
 Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é sua descendente.
 
@@ -1003,9 +1003,9 @@ Após eliminarmos as repetições de entidades, obtemos como resultado final as 
 
 **Observação:**
 
-Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <anchor-get name="search-deep-has-children"></anchor-get>.
+Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
-### Encontrando os filhos de uma entidade 
+### <a name="search-method-get-entity-children" />Encontrando os filhos de uma entidade
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisaríamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
 
@@ -1021,9 +1021,9 @@ Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`,
 
 **Observação:**
 
-Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <anchor-get name="search-deep-has-children"></anchor-get>.
+Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
-### Encontrando todos os ascendentes de uma entidade 
+### <a name="search-method-get-entity-ascending" />Encontrando todos os ascendentes de uma entidade
 
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 
@@ -1077,7 +1077,7 @@ Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
 
 Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`.
 
-### Encontrando os pais de uma entidade 
+### <a name="search-method-get-entity-parent" />Encontrando os pais de uma entidade
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
 
@@ -1102,17 +1102,17 @@ Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocor
 * `#07`: A entidade `G` tem o nível geral igual a `4`, não é uma ascendente.
 * `#06`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a `3`, portanto, ela é pai da entidade `Y`**.
 
-# Implementações 
+# <a name="implementation" />Implementações
 
 Esse tópico vai demostrar na prática alguns exemplos de implementações de alguns dos conceitos que estudamos.
 
-* <anchor-get name="implementation-to-graph"></anchor-get>
-* <anchor-get name="implementation-to-expression"></anchor-get>
-* <anchor-get name="implementation-to-matrix"></anchor-get>
+* [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-graph)
+* [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-expression)
+* [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#implementation-to-matrix)
 
 Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
-## Criando grafos com expressão de grafos 
+## <a name="implementation-to-graph" />Criando grafos com expressão de grafos
 
 Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafos da forma mais simples e objetiva possível.
 
@@ -1199,7 +1199,7 @@ Note que a expressão é exatamente igual a todas as expressões que vimos duran
 
 Para entidades de maior complexidade, não seria possível o uso dos operadores de forma tão simples, haveria a necessidade de criar mecanismos de reflexão e o uso de `strings` para a criação e processamento da expressão. Além do mais, não recomendamos esse esforço, não é o objetivo desse conceito criar mecanismo de serialização e deserialização de entidades, para isso existe meios melhores como: `XML` e `JSON`.
 
-## Convertendo uma matriz de informação para expressões de grafos 
+## <a name="implementation-to-expression" />Convertendo uma matriz de informação para expressões de grafos
 
 Nesse exemplo veremos como converter uma matriz de informação de volta para expressão de grafos.
 
@@ -1243,9 +1243,9 @@ public class EntityItem
 
 * Essa classe será nossa representação de cada linha da matriz de informação, ou seja, cada ocorrência de uma entidade dentro da expressão. Nela teremos todas as propriedades que uma ocorrência de uma entidade pode ter.
 * Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as técnicas:
-  * <anchor-get name="search-deep-get-entity-previous"></anchor-get>
-  * <anchor-get name="search-deep-get-entity-next"></anchor-get>
-  * <anchor-get name="search-deep-get-entity-parent"></anchor-get>
+  * <error>The anchor 'search-deep-get-entity-previous' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+  * <error>The anchor 'search-deep-get-entity-next' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+  * <error>The anchor 'search-deep-get-entity-parent' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
 
 ```csharp
 public class Expression : List<EntityItem>
@@ -1338,15 +1338,15 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
 * Para cada iteração:
   * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
-    * <anchor-get name="search-deep-is-root"></anchor-get>
+    * <error>The anchor 'search-deep-is-root' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
   * Se a entidade for a primeira do grupo de expressão, adiciona o caractere `(`
-    * <anchor-get name="search-deep-is-first-at-group-expression"></anchor-get>
+    * <error>The anchor 'search-deep-is-first-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
   * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
-    * <anchor-get name="search-deep-has-last-at-group-expression"></anchor-get>
+    * <error>The anchor 'search-deep-has-last-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
 
 Com esses treixos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**
 
-## Criando uma matriz de informações a partir de um grafo 
+## <a name="implementation-to-matrix" />Criando uma matriz de informações a partir de um grafo
 
 No exemplo anterior vimos como gerar uma expressão de grafos a partir de uma matriz de informação manual e que foi representada pela classe `Expression`.
 
@@ -1497,7 +1497,7 @@ Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression
 ```
 
 * A classe recebe em seu construtor a **entidade raiz**. A partir dessa instância, vamos navegar em seu grafo por completo.
-* O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico <anchor-get name="search-deep"></anchor-get>
+* O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
 * O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas, uma vez que por ser a entidade raiz, serão os valores inicias.
 * Na segunda parte da função, iniciamos a leitura dos filhos da entidade `parent`.
 * Será incrementado `+1` no **nível geral** conforme se aprofunda na entidade. Esse valor é passado por parâmetro, pois ele transcende todo o grafo.
@@ -1507,5 +1507,3 @@ Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression
 * A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai somando-se `+1` quando a entidade tiver filhos e não somando nada quando não tiver.
 
 Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafos**.
-
-](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep)
