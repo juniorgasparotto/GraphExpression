@@ -5,7 +5,7 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 1. Recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 2. Para cada linha encontrada, retornamos a sua **entidade anterior** que será sempre uma **entidade pai**.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa. Contudo, a **pesquisa profunda** pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
 
 Sendo assim, nesse caso, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
 

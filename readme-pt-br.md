@@ -830,12 +830,14 @@ Como existem infinitas opção de pesquisas dentro de um grafo, abordaremos apen
 
 Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual `0`.
 
-```
-        A + B
-Index:  0   1
-```
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
-* A entidade `A` é a raiz da expressão.
+Com base na expressão a seguir, podemos afirmar que a entidade `A` é a **entidade raiz** da expressão.
+
+```
+        A + B + C
+Index:  0   1   2
+```
 
 ### <a name="search-method-find-parents" />Encontrando as "entidades pais" de uma expressão
 
@@ -844,7 +846,7 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 1. Recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 2. Para cada linha encontrada, retornamos a sua **entidade anterior** que será sempre uma **entidade pai**.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa. Contudo, a **pesquisa profunda** pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
 
 Sendo assim, nesse caso, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
 
