@@ -52,18 +52,6 @@
       <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-ascending.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-parent.md" />
 
-      <!-- <include href="doc/.generator/pages/concept/search/methods/find-occurrences.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-entity-previous.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-entity-next.md" />
-      <include href="doc/.generator/pages/concept/search/methods/is-first-at-group-expression.md" />
-      <include href="doc/.generator/pages/concept/search/methods/is-last-at-group-expression.md" />
-      <include href="doc/.generator/pages/concept/search/methods/is-root.md" />
-      <include href="doc/.generator/pages/concept/search/methods/has-children.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-descendants.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-entity-children.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-entity-ascending.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-entity-parent.md" /> -->
-
       <!-- Impl -->
       <include href="doc/.generator/pages/concept/implementation-to-graph.md" />
       <include href="doc/.generator/pages/concept/implementation-to-expression.md" />

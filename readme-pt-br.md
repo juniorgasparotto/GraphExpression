@@ -887,6 +887,8 @@ Como existem infinitas opção de pesquisas usando uma entidade, abordaremos ape
 
 Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
 
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+
 ```
                 A + B + ( C + Y ) + (D + C)
                           ^
@@ -903,6 +905,8 @@ Não confunda essa técnica como sendo a solução para verificar se uma entidad
 ### <a name="search-method-is-last-at-group-expression" />Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)
 
 Para descobrir se uma entidade é a última do seu grupo de expressão (última dentro do parênteses), verificamos se seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a última do seu grupo de expressão.
+
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 ```
                 A + B + ( C + Y ) + (D + C) + U
