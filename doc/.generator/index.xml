@@ -34,18 +34,21 @@
       <include href="doc/.generator/pages/concept/search/search-deep.md" />
       <include href="doc/.generator/pages/concept/search/search-surface.md" />
       <include href="doc/.generator/pages/concept/search/search-with-references.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-occurrences.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-previous.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-next.md" />
       <include href="doc/.generator/pages/concept/search/methods/is-first-at-group-expression.md" />
       <include href="doc/.generator/pages/concept/search/methods/is-last-at-group-expression.md" />
       <include href="doc/.generator/pages/concept/search/methods/is-root.md" />
       <include href="doc/.generator/pages/concept/search/methods/has-children.md" />
-      <include href="doc/.generator/pages/concept/search/methods/with-children.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-descendants.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-children.md" />
-      <include href="doc/.generator/pages/concept/search/methods/get-entity-ascending.md" />
       <include href="doc/.generator/pages/concept/search/methods/get-entity-parent.md" />
+      <include href="doc/.generator/pages/concept/search/methods/get-descendants.md" />
+      <include href="doc/.generator/pages/concept/search/methods/get-entity-ascending.md" />
+
+
+      <include href="doc/.generator/pages/concept/search/search-mass.md" />
+      <include href="doc/.generator/pages/concept/search/methods/get-occurrences.md" />
+      <include href="doc/.generator/pages/concept/search/methods/with-children.md" />
 
       <include href="doc/.generator/pages/concept/implementation-to-graph.md" />
       <include href="doc/.generator/pages/concept/implementation-to-expression.md" />

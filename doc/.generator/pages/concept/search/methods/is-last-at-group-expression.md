@@ -1,4 +1,4 @@
-### Verificando se entidade é a última do grupo de expressão (última dentro dos parêntese) <header-set anchor-name="search-method-is-last-at-group-expression" />
+### Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese) <header-set anchor-name="search-method-is-last-at-group-expression" />
 
 Para descobrir se uma entidade é a última do seu grupo de expressão (última dentro do parênteses), verificamos se seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a última do seu grupo de expressão.
 
