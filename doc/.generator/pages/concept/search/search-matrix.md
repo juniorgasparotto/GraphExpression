@@ -9,44 +9,44 @@ Vejamos um exemplo:
 **Expressão:**
 
 ```
-Expressão:          A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-Nível geral:        1   2     2   3       2   3     3     4   5   5     4     3
-Índice do nível:    0   0     1   0       2   0     1     0   0   1     1     2
+Expression:     A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+General Level:  1   2     2   3       2   3     3     4   5   5     4     3
+Level Index:    0   0     1   0       2   0     1     0   0   1     1     2
 ```
 
 **Hierarquia:**
 
 ```
-A (Indice do nível: 0)
-----B (Indice do nível: 0)
-----C (Indice do nível: 1)
-    ----Y (Indice do nível: 0)
-----D (Indice do nível: 2)
-    ----E (Indice do nível: 0)
-    ----F (Indice do nível: 1)
-        ----G (Indice do nível: 0)
-            ----B (Indice do nível: 0)
-            ----C (Indice do nível: 1)
-        ----Y (Indice do nível: 1)
-    ----Z (Indice do nível: 2)
+A (Level Index: 0)
+----B (Level Index: 0)
+----C (Level Index: 1)
+    ----Y (Level Index: 0)
+----D (Level Index: 2)
+    ----E (Level Index: 0)
+    ----F (Level Index: 1)
+        ----G (Level Index: 0)
+            ----B (Level Index: 0)
+            ----C (Level Index: 1)
+        ----Y (Level Index: 1)
+    ----Z (Level Index: 2)
 ```
 
 **<anchor-set name="sample-matrix">Matriz de informação</anchor-set>:**
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#00             | A        | 1           | 0 
-#01             | B        | 2           | 0 
-#02             | C        | 2           | 1 
-#03             | Y        | 3           | 0 
-#04             | D        | 2           | 2 
-#05             | E        | 3           | 0 
-#06             | F        | 3           | 1 
-#07             | G        | 4           | 0 
-#08             | B        | 5           | 0 
-#09             | C        | 5           | 1 
-#10             | Y        | 4           | 1 
-#11             | Z        | 3           | 2
+Index   | Entity | Level | Level Index
+#00     | A      | 1     | 0
+#01     | B      | 2     | 0
+#02     | C      | 2     | 1
+#03     | Y      | 3     | 0
+#04     | D      | 2     | 2
+#05     | E      | 3     | 0
+#06     | F      | 3     | 1
+#07     | G      | 4     | 0
+#08     | B      | 5     | 0
+#09     | C      | 5     | 1
+#10     | Y      | 4     | 1
+#11     | Z      | 3     | 2
 ```
 
 Perceba que a expressão mudou da _orientação horizontal_ para a _orientação vertical_ e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão. 

@@ -415,13 +415,13 @@ O **nível geral** determina em qual nível a entidade está com relação a hie
 Por exemplo:
 
 ```
-A (Level 1)
-----B (Level 2)
-    ----C (Level 3)
-    ----D (Level 3)
-        ----B (Level 4)
-----E (Level 2)
-    ----A (Level 3)
+A (Level: 1)
+----B (Level: 2)
+    ----C (Level: 3)
+    ----D (Level: 3)
+        ----B (Level: 4)
+----E (Level: 2)
+    ----A (Level: 3)
 ```
 
 O **nível na expressão** determina em qual nível a entidade está com relação a expressão. O nível inicia-se em `1` e é incrementado `+1` até chegar no último nível.
@@ -429,9 +429,9 @@ O **nível na expressão** determina em qual nível a entidade está com relaç�
 Por exemplo:
 
 ```
-                    A + B + C + ( D + E + ( F + G ) )
-Nível na expressão: 1   1   1     2   2     3   3    
-Nível geral:        1   2   2     2   3     3   4   
+                        A + B + C + ( D + E + ( F + G ) )
+Level in expression:    1   1   1     2   2     3   3    
+General Level:          1   2   2     2   3     3   4   
 ```
 
 Note que o _nível da expressão_ é bem similar ao _nível geral_. A única diferença está no valor da **entidade pai**, no nível geral esse número é sempre menor que o nível geral de seus filhos e no nível da expressão eles são iguais.
@@ -452,22 +452,22 @@ A + B + C + ( D + E + ( F  + G ) )
 O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade do mesmo nível. Por exemplo:
 
 ```
-                 A + B + C + ( D + E + ( F + G + Y) )
-Nível geral:     1   2   2     2   3     3   4   4
-Índice do nível: 0   0   1     2   0     1   0   1 
+                A + B + C + ( D + E + ( F + G + Y ) )
+General Level:  1   2   2     2   3     3   4   4
+Level Index:    0   0   1     2   0     1   0   1
 ```
 
 Por exemplo:
 
 ```
-A (Level 0)
-----B (Level 0)
-----C (Level 1)
-----D (Level 2)
-    ----E (Level 0)
-    ----F (Level 1)
-        ----G (Level 0)
-        ----Y (Level 1)
+A (Level Index: 0)
+----B (Level Index: 0)
+----C (Level Index: 1)
+----D (Level Index: 2)
+    ----E (Level Index: 0)
+    ----F (Level Index: 1)
+        ----G (Level Index: 0)
+        ----Y (Level Index: 1)
 ```
 
 * A entidade `A` é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.
@@ -625,7 +625,7 @@ Vejam um exemplo de como elas são diferentes:
 
 ```
 Original:       A + (B + D) + (E + B)
-Grafo final:
+Final Graph:
                 A
                 ---B
                 ------D
@@ -636,15 +636,15 @@ Grafo final:
 Se pegarmos a expressão desnormalizada e extrairmos o seu grafo, teremos um grafo diferente do grafo original:
 
 ```
-Original:                    A + (B + D) + (E + (B + D))
-Após normalização de tipo 1: A + (B + D + D) + (E + B)
-Grafo final:
-                             A
-                             ---B
-                             ------D
-                             ------D
-                             ---E
-                             ------B
+Original:                       A + (B + D) + (E + (B + D))
+After normalization of type 1:  A + (B + D + D) + (E + B)
+Final Graph:
+                                A
+                                ---B
+                                ------D
+                                ------D
+                                ---E
+                                ------B
 ```
 
 Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#expression-group-repeat).
@@ -666,44 +666,44 @@ Vejamos um exemplo:
 **Expressão:**
 
 ```
-Expressão:          A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-Nível geral:        1   2     2   3       2   3     3     4   5   5     4     3
-Índice do nível:    0   0     1   0       2   0     1     0   0   1     1     2
+Expression:     A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+General Level:  1   2     2   3       2   3     3     4   5   5     4     3
+Level Index:    0   0     1   0       2   0     1     0   0   1     1     2
 ```
 
 **Hierarquia:**
 
 ```
-A (Indice do nível: 0)
-----B (Indice do nível: 0)
-----C (Indice do nível: 1)
-    ----Y (Indice do nível: 0)
-----D (Indice do nível: 2)
-    ----E (Indice do nível: 0)
-    ----F (Indice do nível: 1)
-        ----G (Indice do nível: 0)
-            ----B (Indice do nível: 0)
-            ----C (Indice do nível: 1)
-        ----Y (Indice do nível: 1)
-    ----Z (Indice do nível: 2)
+A (Level Index: 0)
+----B (Level Index: 0)
+----C (Level Index: 1)
+    ----Y (Level Index: 0)
+----D (Level Index: 2)
+    ----E (Level Index: 0)
+    ----F (Level Index: 1)
+        ----G (Level Index: 0)
+            ----B (Level Index: 0)
+            ----C (Level Index: 1)
+        ----Y (Level Index: 1)
+    ----Z (Level Index: 2)
 ```
 
 **<a name="sample-matrix" />Matriz de informação:**
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#00             | A        | 1           | 0 
-#01             | B        | 2           | 0 
-#02             | C        | 2           | 1 
-#03             | Y        | 3           | 0 
-#04             | D        | 2           | 2 
-#05             | E        | 3           | 0 
-#06             | F        | 3           | 1 
-#07             | G        | 4           | 0 
-#08             | B        | 5           | 0 
-#09             | C        | 5           | 1 
-#10             | Y        | 4           | 1 
-#11             | Z        | 3           | 2
+Index   | Entity | Level | Level Index
+#00     | A      | 1     | 0
+#01     | B      | 2     | 0
+#02     | C      | 2     | 1
+#03     | Y      | 3     | 0
+#04     | D      | 2     | 2
+#05     | E      | 3     | 0
+#06     | F      | 3     | 1
+#07     | G      | 4     | 0
+#08     | B      | 5     | 0
+#09     | C      | 5     | 1
+#10     | Y      | 4     | 1
+#11     | Z      | 3     | 2
 ```
 
 Perceba que a expressão mudou da _orientação horizontal_ para a _orientação vertical_ e todas as entidades foram empilhadas uma nas outras e respeitando a mesma ordem que elas tinha na expressão.
@@ -725,30 +725,30 @@ Vejamos a seguir o mesmo exemplo utilizado no tópico [Matriz de informação](h
 **Expressão:**
 
 ```
-Original:            A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-                               ^                                   ^
-Desnormalizada:      A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
-                                                                         ^
-Nível geral:         1   2     2   3       2   3     3     4   5     5   6       4     3 
-Índice do nível:     0   0     1   0       2   0     1     0   0     1   0       1     2
+Original:       A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+                          ^                                   ^
+Denormalized:   A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
+                                                                    ^
+General Level:  1   2     2   3       2   3     3     4   5     5   6       4     3 
+Level Index:    0   0     1   0       2   0     1     0   0     1   0       1     2
 ```
 
 **Hierarquia:**
 
 ```
-A (Indice do nível: 0)
-----B (Indice do nível: 0)
-----C (Indice do nível: 1) 
-    ----Y (Indice do nível: 0)
-----D (Indice do nível: 2)
-    ----E (Indice do nível: 0)
-    ----F (Indice do nível: 1)
-        ----G (Indice do nível: 0)
-            ----B (Indice do nível: 0)
-            ----C (Indice do nível: 1)
-                ----Y (Indice do nível: 0) *
-        ----Y (Indice do nível: 1)
-    ----Z (Indice do nível: 2)
+A (Level Index: 0)
+----B (Level Index: 0)
+----C (Level Index: 1) 
+    ----Y (Level Index: 0)
+----D (Level Index: 2)
+    ----E (Level Index: 0)
+    ----F (Level Index: 1)
+        ----G (Level Index: 0)
+            ----B (Level Index: 0)
+            ----C (Level Index: 1)
+                ----Y (Level Index: 0) *
+        ----Y (Level Index: 1)
+    ----Z (Level Index: 2)
 ```
 
 * Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão redeclarado dentro da entidade `G`.
@@ -766,20 +766,20 @@ A (Indice do nível: 0)
 Veja como ficou a expressão desnormalizada em forma de matriz:
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#00             | A        | 1           | 0 
-#01             | B        | 2           | 0 
-#02             | C        | 2           | 1 
-#03             | Y        | 3           | 0 
-#04             | D        | 2           | 2 
-#05             | E        | 3           | 0 
-#06             | F        | 3           | 1 
-#07             | G        | 4           | 0 
-#08             | B        | 5           | 0 
-#09             | C        | 5           | 1 
-#10             | Y *      | 6           | 0
-#11             | Y        | 4           | 1 
-#12             | Z        | 3           | 2 
+Index   | Entity | Level | Level Index
+#00     | A      | 1     | 0 
+#01     | B      | 2     | 0 
+#02     | C      | 2     | 1 
+#03     | Y      | 3     | 0 
+#04     | D      | 2     | 2 
+#05     | E      | 3     | 0 
+#06     | F      | 3     | 1 
+#07     | G      | 4     | 0 
+#08     | B      | 5     | 0 
+#09     | C      | 5     | 1 
+#10     | Y *    | 6     | 0
+#11     | Y      | 4     | 1 
+#12     | Z      | 3     | 2 
 ```
 
 * Foi criado uma nova linha com relação a versão original: A linha `#10` contém o novo caminho.
@@ -889,7 +889,7 @@ Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeir
 ```
                 A + B + ( C + Y ) + (D + C)
                           ^
-Nível geral:    1   2     2   3      2   3
+General Level:  1   2     2   3      2   3
 Index:          0   1     2   3      4   5
 ```
 
@@ -908,7 +908,7 @@ Para descobrir se uma entidade é a última do seu grupo de expressão (última 
 ```
                 A + B + ( C + Y ) + (D + C) + U
                               ^
-Nível geral:    1   2     2   3      2   3    2
+General Level:  1   2     2   3      2   3    2
 Index:          0   1     2   3      4   5    6
 ```
 
@@ -927,9 +927,9 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
 1. Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#02             | C        | 2           | 1 
-#03             | Y        | 3           | 0 
+Index   | Entity | Level | Level Index
+#02     | C      | 2     | 1 
+#03     | Y      | 3     | 0 
 ```
 
 * Se o resultado for menor que zero, é porque estamos na **entidade raiz** e não existe entidade anterior.
@@ -945,9 +945,9 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
 1. Para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#03             | Y        | 3           | 0 
-#04             | D        | 2           | 2 
+Index   | Entity | Level | Level Index
+#03     | Y      | 3     | 0 
+#04     | D      | 2     | 2 
 ```
 
 * Se o resultado for maior que a quantidade máxima de itens na matriz é porque estamos na última entidade da expressão e não existe uma próxima entidade.
@@ -1114,28 +1114,28 @@ Acabou a expressão e no final teremos o resultado: `E, F, Z`
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 
 ```
-             A + B
-Nível geral: 1   2
-             ^   *
-Parent of B: A
+                A + B
+General Level:  1   2
+                ^   *
+Parent of B:    A
 ```
 
 Se a entidade anterior for do mesmo nível da entidade deseja, deve-se ignora-la e continuar navegando para trás até encontrar a primeira entidade com o **nível geral** menor que o **nível geral** da entidade desejada.
 
 ```
-             A + B + J
-Nível geral: 1   2   2
-             ^       *
-Parent of J: A
+                A + B + J
+General Level:  1   2   2
+                ^       *
+Parent of J:    A
 ```
 
 Após encontrar a primeira ascendência, deve-se continuar navegando para trás, porém o **nível geral** a ser considerado agora será o da primeira ascendência e não mais da entidade desejada. Esse processo deve continuar até chegar na entidade raiz.
 
 ```
-              A + B + (J + Y)
-Nível geral:  1   2    2   3
-              ^        ^   *
-Parents of Y: J, A
+                A + B + (J + Y)
+General Level:  1   2    2   3
+                ^        ^   *
+Parents of Y:   J, A
 ```
 
 **Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
@@ -1531,7 +1531,7 @@ public class Expression : List<EntityItem>
     public string ToMatrixAsString()
     {
         var s = "";
-        s += "Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression \r\n";
+        s += "Index    | Entity  | Level    | General level   | LevelAtExpression \r\n";
 
         foreach (var i in this)
         {
@@ -1568,7 +1568,7 @@ class Program
 O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade `A`, teremos a seguinte matriz de informação:
 
 ```
-Index    | Name    | Level    | IndexAtLevel    | LevelAtExpression 
+Index    | Entity  | Level    | General Level   | LevelAtExpression 
 00       | A       | 01       | 00              | 01 
 01       | B       | 02       | 00              | 02 
 02       | C       | 03       | 00              | 03 

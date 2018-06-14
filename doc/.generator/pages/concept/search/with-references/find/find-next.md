@@ -9,9 +9,9 @@ Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz
 1. Para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#03             | Y        | 3           | 0 
-#04             | D        | 2           | 2 
+Index   | Entity | Level | Level Index
+#03     | Y      | 3     | 0 
+#04     | D      | 2     | 2 
 ```
 
 * Se o resultado for maior que a quantidade máxima de itens na matriz é porque estamos na última entidade da expressão e não existe uma próxima entidade.

@@ -9,30 +9,30 @@ Vejamos a seguir o mesmo exemplo utilizado no tópico <anchor-get name="search-m
 **Expressão:**
 
 ```
-Original:            A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-                               ^                                   ^
-Desnormalizada:      A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
-                                                                         ^
-Nível geral:         1   2     2   3       2   3     3     4   5     5   6       4     3 
-Índice do nível:     0   0     1   0       2   0     1     0   0     1   0       1     2
+Original:       A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
+                          ^                                   ^
+Denormalized:   A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
+                                                                    ^
+General Level:  1   2     2   3       2   3     3     4   5     5   6       4     3 
+Level Index:    0   0     1   0       2   0     1     0   0     1   0       1     2
 ```
 
 **Hierarquia:**
 
 ```
-A (Indice do nível: 0)
-----B (Indice do nível: 0)
-----C (Indice do nível: 1) 
-    ----Y (Indice do nível: 0)
-----D (Indice do nível: 2)
-    ----E (Indice do nível: 0)
-    ----F (Indice do nível: 1)
-        ----G (Indice do nível: 0)
-            ----B (Indice do nível: 0)
-            ----C (Indice do nível: 1)
-                ----Y (Indice do nível: 0) *
-        ----Y (Indice do nível: 1)
-    ----Z (Indice do nível: 2)
+A (Level Index: 0)
+----B (Level Index: 0)
+----C (Level Index: 1) 
+    ----Y (Level Index: 0)
+----D (Level Index: 2)
+    ----E (Level Index: 0)
+    ----F (Level Index: 1)
+        ----G (Level Index: 0)
+            ----B (Level Index: 0)
+            ----C (Level Index: 1)
+                ----Y (Level Index: 0) *
+        ----Y (Level Index: 1)
+    ----Z (Level Index: 2)
 ```
 
 * Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão redeclarado dentro da entidade `G`.
@@ -50,20 +50,20 @@ A (Indice do nível: 0)
 Veja como ficou a expressão desnormalizada em forma de matriz:
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#00             | A        | 1           | 0 
-#01             | B        | 2           | 0 
-#02             | C        | 2           | 1 
-#03             | Y        | 3           | 0 
-#04             | D        | 2           | 2 
-#05             | E        | 3           | 0 
-#06             | F        | 3           | 1 
-#07             | G        | 4           | 0 
-#08             | B        | 5           | 0 
-#09             | C        | 5           | 1 
-#10             | Y *      | 6           | 0
-#11             | Y        | 4           | 1 
-#12             | Z        | 3           | 2 
+Index   | Entity | Level | Level Index
+#00     | A      | 1     | 0 
+#01     | B      | 2     | 0 
+#02     | C      | 2     | 1 
+#03     | Y      | 3     | 0 
+#04     | D      | 2     | 2 
+#05     | E      | 3     | 0 
+#06     | F      | 3     | 1 
+#07     | G      | 4     | 0 
+#08     | B      | 5     | 0 
+#09     | C      | 5     | 1 
+#10     | Y *    | 6     | 0
+#11     | Y      | 4     | 1 
+#12     | Z      | 3     | 2 
 ```
 
 * Foi criado uma nova linha com relação a versão original: A linha `#10` contém o novo caminho.

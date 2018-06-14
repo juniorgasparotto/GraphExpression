@@ -9,9 +9,9 @@ Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz
 1. Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
 
 ```
-Índice geral    | Entidade | Nível geral | Índice do nível
-#02             | C        | 2           | 1 
-#03             | Y        | 3           | 0 
+Index   | Entity | Level | Level Index
+#02     | C      | 2     | 1 
+#03     | Y      | 3     | 0 
 ```
 
 * Se o resultado for menor que zero, é porque estamos na **entidade raiz** e não existe entidade anterior. 

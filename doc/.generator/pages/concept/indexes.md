@@ -14,22 +14,22 @@ A + B + C + ( D + E + ( F  + G ) )
 O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade do mesmo nível. Por exemplo:
 
 ```        
-                 A + B + C + ( D + E + ( F + G + Y) )
-Nível geral:     1   2   2     2   3     3   4   4
-Índice do nível: 0   0   1     2   0     1   0   1 
+                A + B + C + ( D + E + ( F + G + Y ) )
+General Level:  1   2   2     2   3     3   4   4
+Level Index:    0   0   1     2   0     1   0   1
 ```
 
 Por exemplo:
 
 ```
-A (Level 0)
-----B (Level 0)
-----C (Level 1)
-----D (Level 2)
-    ----E (Level 0)
-    ----F (Level 1)
-        ----G (Level 0)
-        ----Y (Level 1)
+A (Level Index: 0)
+----B (Level Index: 0)
+----C (Level Index: 1)
+----D (Level Index: 2)
+    ----E (Level Index: 0)
+    ----F (Level Index: 1)
+        ----G (Level Index: 0)
+        ----Y (Level Index: 1)
 ```
 
 * A entidade `A` é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.

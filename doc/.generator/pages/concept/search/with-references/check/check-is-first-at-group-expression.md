@@ -7,7 +7,7 @@ Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeir
 ```
                 A + B + ( C + Y ) + (D + C)
                           ^
-Nível geral:    1   2     2   3      2   3
+General Level:  1   2     2   3      2   3
 Index:          0   1     2   3      4   5
 ```
 

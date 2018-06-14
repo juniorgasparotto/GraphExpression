@@ -26,7 +26,7 @@ Vejam um exemplo de como elas são diferentes:
 
 ```
 Original:       A + (B + D) + (E + B)
-Grafo final:
+Final Graph:
                 A
                 ---B
                 ------D
@@ -37,15 +37,15 @@ Grafo final:
 Se pegarmos a expressão desnormalizada e extrairmos o seu grafo, teremos um grafo diferente do grafo original:
 
 ```
-Original:                    A + (B + D) + (E + (B + D))
-Após normalização de tipo 1: A + (B + D + D) + (E + B)
-Grafo final:
-                             A
-                             ---B
-                             ------D
-                             ------D
-                             ---E
-                             ------B
+Original:                       A + (B + D) + (E + (B + D))
+After normalization of type 1:  A + (B + D + D) + (E + B)
+Final Graph:
+                                A
+                                ---B
+                                ------D
+                                ------D
+                                ---E
+                                ------B
 ```
 
 Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico <anchor-get name="expression-group-repeat" />.

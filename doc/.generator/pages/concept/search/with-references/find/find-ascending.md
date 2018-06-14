@@ -3,28 +3,28 @@
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 
 ```
-             A + B
-Nível geral: 1   2
-             ^   *
-Parent of B: A
+                A + B
+General Level:  1   2
+                ^   *
+Parent of B:    A
 ```
 
 Se a entidade anterior for do mesmo nível da entidade deseja, deve-se ignora-la e continuar navegando para trás até encontrar a primeira entidade com o **nível geral** menor que o **nível geral** da entidade desejada. 
 
 ```
-             A + B + J
-Nível geral: 1   2   2
-             ^       *
-Parent of J: A
+                A + B + J
+General Level:  1   2   2
+                ^       *
+Parent of J:    A
 ```
 
 Após encontrar a primeira ascendência, deve-se continuar navegando para trás, porém o **nível geral** a ser considerado agora será o da primeira ascendência e não mais da entidade desejada. Esse processo deve continuar até chegar na entidade raiz.
 
 ```
-              A + B + (J + Y)
-Nível geral:  1   2    2   3
-              ^        ^   *
-Parents of Y: J, A
+                A + B + (J + Y)
+General Level:  1   2    2   3
+                ^        ^   *
+Parents of Y:   J, A
 ```
 
 **Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
