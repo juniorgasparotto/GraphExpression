@@ -1012,22 +1012,21 @@ A resposta seria:
 * Dentre as ocorrências encontradas, devemos encontrar e utilizar a primeira que tem descendentes e ignorar as demais.
   * _Ocorrência 1_:
     * `#00`: A entidade `A` tem o nível geral igual a `1`.
-    * `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
+    * `#01`: **A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
     * Pronto! Encontramos a ocorrência que tem a declaração do grupo de expressão da entidade `A`.
   * _Ocorrência 2_:
     * `#05`: Não é preciso verificar a segunda ocorrência da entidade `A`, pois já encontramos a sua declaração.
 * Retornar os descendentes da entidade `A` do índice `#00`:
   * `#00`: A entidade `A` tem o nível geral igual a `1`.
-  * `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
-  * `#02`:**A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `2`, é descendente**.
-  * `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
-  * `#04`:**A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, é descendente**.
-  * `#05`:**A entidade `A` é a próxima entidade depois de `D` e o seu nível geral é `3`, é descendente**.
-  * `#06`:**A entidade `C` é a próxima entidade depois de `A` e o seu nível geral é `3`, é descendente**.
-  * `#07`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
+  * `#01`: **A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
+  * `#02`: **A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `2`, é descendente**.
+  * `#03`: **A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
+  * `#04`: **A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, é descendente**.
+  * `#05`: **A entidade `A` é a próxima entidade depois de `D` e o seu nível geral é `3`, é descendente**.
+  * `#06`: **A entidade `C` é a próxima entidade depois de `A` e o seu nível geral é `3`, é descendente**.
   * A expressão terminou.
-  * Foram encontradas as seguintes entidades: `A, B, C, Y, D, A, C, Y`.
-* Remover as ocorrências que estão duplicadas: `Y, C`
+  * Foram encontradas as seguintes entidades: `A, B, C, Y, D, A, C`.
+* Remover as ocorrências que estão duplicadas: `Y`
 * Retornar o resultado: `A, B, C, Y, D, A`
 
 **Pesquisa profunda**
@@ -1089,6 +1088,8 @@ Index:          0   1    2   3     4   5   6    7
   * Foram encontradas as seguintes entidades: `Y`.
 * Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
 * Retornar o resultado: `Y`
+
+Por fim, é possível dizer que não precisamos atribuir um tratamento especial para **entidades com caminhos cíclicos** se estivemos usando uma _pesquisa superficial_. Vimos que a solução é a mesma nas duas situações.
 
 Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration).
 
