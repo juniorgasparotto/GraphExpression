@@ -1,4 +1,4 @@
-### Matriz de informação <header-set anchor-name="matrix-of-information" />
+### Matriz de informação <header-set anchor-name="search-matrix-of-information" />
 
 Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão. 
 

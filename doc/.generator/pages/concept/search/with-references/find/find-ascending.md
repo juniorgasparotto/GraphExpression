@@ -1,4 +1,4 @@
-### Encontrando todos os ascendentes de uma entidade <header-set anchor-name="search-method-get-entity-ascending" />
+### Encontrando todos os ascendentes de uma entidade <header-set anchor-name="search-find-ascending" />
 
 Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
 

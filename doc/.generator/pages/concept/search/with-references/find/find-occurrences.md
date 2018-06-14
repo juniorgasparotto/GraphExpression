@@ -1,4 +1,4 @@
-### Encontrando todas as ocorrências de uma entidade <header-set anchor-name="search-method-get-occurrences"/>
+### Encontrando todas as ocorrências de uma entidade <header-set anchor-name="search-find-occurrences"/>
 
 Para encontrar todas as ocorrências de uma entidade, devemos percorrer toda a matriz partindo do índice `0` até última posição da matriz.
 

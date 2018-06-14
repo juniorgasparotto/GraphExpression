@@ -1,4 +1,4 @@
-### Encontrando os filhos de uma entidade <header-set anchor-name="search-method-get-entity-children" />
+### Encontrando os filhos de uma entidade <header-set anchor-name="search-find-children" />
 
 Para iniciar esse tópico é preciso entender por completo o tópico <anchor-get name="search-find-descendants" />.
 

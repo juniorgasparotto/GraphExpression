@@ -1,4 +1,4 @@
-### Encontrando as "entidades pais" de uma expressão <header-set anchor-name="search-method-find-parents" />
+### Encontrando as "entidades pais" de uma expressão <header-set anchor-name="search-find-parents" />
 
 Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte técnica:
 
