@@ -921,11 +921,13 @@ No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á 
 
 ### <a name="search-method-get-entity-previous" />Retornando a entidade anterior
 
-Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o **índice geral** em `-1`.
+Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o seu **índice geral** em `-1`.
 
-Por exemplo:
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
-Com base no exemplo modelo, para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep).
+
+1. Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
@@ -937,11 +939,13 @@ Com base no exemplo modelo, para obter a entidade anterior da entidade `Y` da li
 
 ### <a name="search-method-get-entity-next" />Retornando a próxima entidade
 
-Para retornar a próxima entidade de uma determinada entidade, devemos somar o **índice geral** em `+1`.
+Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** em `+1`.
 
-Por exemplo:
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
-Com base no _exemplo modelo_, para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep).
+
+1. Para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
 
 ```
 Índice geral    | Entidade | Nível geral | Índice do nível
