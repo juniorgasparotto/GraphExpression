@@ -923,7 +923,7 @@ No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á 
 
 Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o seu **índice geral** em `-1`.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep).
 
@@ -941,7 +941,7 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
 
 Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** em `+1`.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep).
 

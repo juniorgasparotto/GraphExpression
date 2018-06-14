@@ -41,16 +41,16 @@
 
       <!-- With references -->
       <include href="doc/.generator/pages/concept/search/with-references/search-with-references.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/check/is-first-at-group-expression.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/check/is-last-at-group-expression.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-previous.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-next.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/check-is-first-at-group-expression.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/check-is-last-at-group-expression.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-previous.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-next.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/find-occurrences.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/check/has-children.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/get-descendants.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-children.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-ascending.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-parent.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/check-has-children.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-descendants.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-children.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-ascending.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-parent.md" />
 
       <!-- Impl -->
       <include href="doc/.generator/pages/concept/implementation-to-graph.md" />
