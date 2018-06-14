@@ -988,11 +988,13 @@ Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o s
 
 Devemos continuar navegando para frente até quando a próxima entidade tiver o **nível geral** igual ou menor ao **nível geral** da entidade corrente ou se a expressão não tiver mais entidades.
 
-**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, devemos ter um tratamento especial para entidades que contenham uma ascendente da própria entidade, ou seja, um **caminho cíclico**.
+**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, existem abordagens diferentes para cada uma delas. Além disso, devemos ter um tratamento especial para entidades que contenham uma ascendente da própria entidade, ou seja, um **caminho cíclico**.
 
 **Entidade com caminho cíclico:**
 
-Por exemplo, se quisermos encontrar os descendentes da entidade `A` que está no índice `#05`:
+Devemos ter alguns cuidados para encontrar os descendentes de entidades com caminhos cíclicos. Isso ocorre porque os grupos de expressão não podem ser redeclarados nessas situações.
+
+Por exemplo, como podemos encontrar os descendentes da entidade `A` que está no índice `#05`?
 
 ```
                 A + B + (C + Y) + (D + A + C)
@@ -1004,7 +1006,7 @@ Index:          0   1    2   3     4   5   6
 * A entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**.
 * Note que a entidade `A` contém descendentes (é a entidade raiz), mas é impossível descobrir isso se analisarmos a sua ocorrência do índice `#05`.
 
-Nesse caso, como podemos recuperar os descendentes da entidade `A` da ocorrência do índice `#05`? A resposta seria:
+A resposta seria:
 
 1. Encontrar todas as ocorrências da entidade `A`.
 2. Dentre as ocorrências encontradas, devemos encontrar e utilizar a primeira que tem descendentes e ignorar as demais.
@@ -1041,7 +1043,7 @@ Se uma entidade não tiver um **caminho cíclico**, podemos simplesmente continu
 
 **Pesquisa superficial**
 
-Na pesquisa superficial devemos ter alguns cuidados. Notem que na expressão abaixo chegamos no mesmo cenário de **entidades com caminhos cíclicos**.
+Na pesquisa superficial devemos ter alguns cuidados. Notem que na expressão abaixo chegamos em um cenário muito parecido com as **entidades com caminhos cíclicos**.
 
 Por exemplo, como podemos retornar os descendentes da entidade `C` do índice `#02`?
 
@@ -1056,7 +1058,7 @@ Index:          0   1   2    3   4    5   6     7
 * Essa expressão não esta **normalizada**, a entidade `C` deveria ter sido declarada o mais rápido possível, mas isso não ocorreu.
 * A entidade `C` contém descendentes. Seu grupo de expressão é declarado no índice `#05`.
 
-Nesse caso temos duas opções para retornar os descendentes da entidade `C`:
+Nesse caso temos duas opções:
 
 **Opção 1:**
 
