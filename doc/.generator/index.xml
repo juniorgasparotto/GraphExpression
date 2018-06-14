@@ -13,17 +13,17 @@
         <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png" />
       </a>
 
-      <include href="doc/.generator/pages/concept/presentation.md" />
-      <include href="doc/.generator/pages/concept/intro.md" />
-      <include href="doc/.generator/pages/concept/expression-group.md" />
-      <include href="doc/.generator/pages/concept/entity-root.md" />
-      <include href="doc/.generator/pages/concept/entity-final.md" />
+      <include href="doc/.generator/pages/concept/get-starting/presentation.md" />
+      <include href="doc/.generator/pages/concept/get-startingintro.md" />
+      <include href="doc/.generator/pages/concept/get-starting/expression-group.md" />
+      <include href="doc/.generator/pages/concept/get-starting/entity-root.md" />
+      <include href="doc/.generator/pages/concept/get-starting/entity-final.md" />
       <include href="doc/.generator/pages/concept/paths.md" />
-      <include href="doc/.generator/pages/concept/entity-info.md" />
-      <include href="doc/.generator/pages/concept/levels.md" />
-      <include href="doc/.generator/pages/concept/indexes.md" />
-      <include href="doc/.generator/pages/concept/navigation-right.md" />
-      <include href="doc/.generator/pages/concept/navigation-left.md" />
+      <include href="doc/.generator/pages/concept/entity-info/entity-info.md" />
+      <include href="doc/.generator/pages/concept/entity-info/levels.md" />
+      <include href="doc/.generator/pages/concept/entity-info/indexes.md" />
+      <include href="doc/.generator/pages/concept/entity-info/navigation-right.md" />
+      <include href="doc/.generator/pages/concept/entity-info/navigation-left.md" />
       <include href="doc/.generator/pages/concept/normalization/normalization.md" />
       <include href="doc/.generator/pages/concept/normalization/normalization-1.md" />
       <include href="doc/.generator/pages/concept/normalization/normalization-2.md" />
