@@ -43,10 +43,10 @@
       <include href="doc/.generator/pages/concept/search/with-references/search-with-references.md" />
       <include href="doc/.generator/pages/concept/search/with-references/check/is-first-at-group-expression.md" />
       <include href="doc/.generator/pages/concept/search/with-references/check/is-last-at-group-expression.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/check/has-children.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/find-occurrences.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-previous.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-next.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-occurrences.md" />
+      <include href="doc/.generator/pages/concept/search/with-references/check/has-children.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/get-descendants.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-children.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/get-entity-ascending.md" />
