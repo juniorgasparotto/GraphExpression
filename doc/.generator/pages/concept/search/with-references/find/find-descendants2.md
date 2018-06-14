@@ -28,34 +28,25 @@ A resposta seria:
 
 1. Encontrar todas as ocorrências da entidade `A`.
 2. Dentre as ocorrências encontradas, devemos encontrar e utilizar a primeira que tem descendentes e ignorar as demais.
-
-_Ocorrência 1_:
-
-* `#00`: A entidade `A` tem o nível geral igual a `1`.
-* `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
-
-Pronto! Encontramos a ocorrência que tem a declaração do grupo de expressão da entidade `A`.
-
-_Ocorrência 2_:
-
-* `#05`: Não é preciso verificar a segunda ocorrência da entidade `A`, pois já encontramos a sua declaração.
-
-3. Agora que achamos a ocorrência correta, devemos retornar os descendentes:
-
-* `#00`: A entidade `A` tem o nível geral igual a `1`.
-* `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
-* `#02`:**A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `2`, é descendente**.
-* `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
-* `#04`:**A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, é descendente**.
-* `#05`:**A entidade `A` é a próxima entidade depois de `D` e o seu nível geral é `3`, é descendente**.
-* `#06`:**A entidade `C` é a próxima entidade depois de `A` e o seu nível geral é `3`, é descendente**.
-* `#07`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
-* A expressão terminou.
-
-Foram encontradas as seguintes entidades: `A, B, C, Y, D, A, C, Y`.
-
-3. Remover as ocorrências que estão duplicadas: `Y, C`
-4. Retornar o resultado: `A, B, C, Y, D, A`
+    * _Ocorrência 1_:
+        * `#00`: A entidade `A` tem o nível geral igual a `1`.
+        * `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
+        * Pronto! Encontramos a ocorrência que tem a declaração do grupo de expressão da entidade `A`.
+    * _Ocorrência 2_:
+        * `#05`: Não é preciso verificar a segunda ocorrência da entidade `A`, pois já encontramos a sua declaração.
+3. Retornar os descendentes da entidade `A` do índice `#00`:
+    * `#00`: A entidade `A` tem o nível geral igual a `1`.
+    * `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
+    * `#02`:**A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `2`, é descendente**.
+    * `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
+    * `#04`:**A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, é descendente**.
+    * `#05`:**A entidade `A` é a próxima entidade depois de `D` e o seu nível geral é `3`, é descendente**.
+    * `#06`:**A entidade `C` é a próxima entidade depois de `A` e o seu nível geral é `3`, é descendente**.
+    * `#07`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
+    * A expressão terminou.
+    * Foram encontradas as seguintes entidades: `A, B, C, Y, D, A, C, Y`.
+4. Remover as ocorrências que estão duplicadas: `Y, C`
+5. Retornar o resultado: `A, B, C, Y, D, A`
 
 **Pesquisa profunda**
 
@@ -86,14 +77,11 @@ Utilizar a mesma lógica que foi explicada para **entidades com caminhos cíclic
 
 1. Seria encontrado a ocorrência do índice `#05` e a ocorrência do índice `#02` seria descartada.
 2. Agora que achamos a ocorrência correta, devemos retornar os descendentes:
-
-* `#05`: A entidade `C` tem o nível geral igual a `3`.
-* `#06`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
-* `#07`: A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
-* A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#07`.
-
-Foram encontradas as seguintes entidades: `Y`.
-
+    * `#05`: A entidade `C` tem o nível geral igual a `3`.
+    * `#06`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
+    * `#07`: A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
+    * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#07`.
+    * Foram encontradas as seguintes entidades: `Y`.
 3. Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
 4. Retornar o resultado: `Y`
 
@@ -103,12 +91,12 @@ A segunda opção pode apresentar uma melhor performance se a expressão nascer 
 
 1. Aplicar a <anchor-get name="normalization-3" /> para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
 
-```
-                A + B + (C + Y) + (D + A + C) + Z
-                         ^              
-General Level:  1   2    2   3     2   3   3    2
-Index:          0   1    2   3     4   5   6    7
-```
+    ```
+                    A + B + (C + Y) + (D + A + C) + Z
+                            ^              
+    General Level:  1   2    2   3     2   3   3    2
+    Index:          0   1    2   3     4   5   6    7
+    ```
 
 2. Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`.
 3. Recuperar os descendentes da primeira ocorrência da entidade `C` do índice `#02`.
