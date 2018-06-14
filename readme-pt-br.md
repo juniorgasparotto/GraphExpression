@@ -57,7 +57,6 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
     * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
     * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
-    * [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-has-children)
     * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-descendants)
     * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-children)
     * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-ascending)
@@ -885,7 +884,7 @@ Como existem infinitas opção de pesquisas usando uma entidade, abordaremos ape
 
 ### <a name="search-method-is-first-at-group-expression" />Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)
 
-Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
+Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
 
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
@@ -983,63 +982,124 @@ Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/E
   * `#10 (Y)`
 * Note que foi encontrado uma ocorrência a menos que na _pesquisa profunda_.
 
-### <a name="search-method-has-children" />Verificando se uma entidade contém filhos
+### <a name="search-method-get-descendants" />Encontrando todos os descendentes de uma entidade
 
-Para descobrir se uma entidade contém filhos, verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade contém filhos. Essa é a mesma técnica usada no tópico <error>The anchor 'search-deep-is-first-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico <error>The anchor 'search-deep-is-first-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
-Contudo, não podemos apenas verificar a **ocorrência da entidade**, pois não é garantido que o seu grupo de expressão foi declarado nesse momento. Nesse caso temos duas opções que serão explicadas adiante.
+Devemos continuar navegando para frente até quando a próxima entidade tiver o **nível geral** igual ou menor ao **nível geral** da entidade corrente ou se a expressão não tiver mais entidades.
 
-Essa limitação também serve para expressões **desnormalizadas**, isso por que ela não repete grupos de expressões que tem ascendências da entidade corrente.
+**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, devemos ter um tratamento especial para entidades que contenham uma ascendente da própria entidade, ou seja, um **caminho cíclico**.
 
-Por exemplo, se quisermos descobrir se a entidade `A` , que está no índice `#05`, contém filhos:
+**Entidade com caminho cíclico:**
+
+Por exemplo, se quisermos encontrar os descendentes da entidade `A` que está no índice `#05`:
 
 ```
-                A + B + ( C + Y ) + (D + A)
-                                         ^
-General Level:  1   2     2   3      2   3
-Index:          0   1     2   3      4   5
+                A + B + (C + Y) + (D + A + C)
+                                       ^
+General Level:  1   2    2   3     2   3   3
+Index:          0   1    2   3     4   5   6
 ```
 
-_Essa expressão está **desnormalizada** e a entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**._
+* A entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**.
+* Note que a entidade `A` contém descendentes (é a entidade raiz), mas é impossível descobrir isso se analisarmos a sua ocorrência do índice `#05`.
+
+Nesse caso, como podemos recuperar os descendentes da entidade `A` da ocorrência do índice `#05`? A resposta seria:
+
+1. Encontrar todas as ocorrências da entidade `A`.
+2. Dentre as ocorrências encontradas, devemos encontrar e utilizar a primeira que tem descendentes e ignorar as demais.
+
+_Ocorrência 1_:
+
+* `#00`: A entidade `A` tem o nível geral igual a `1`.
+* `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
+
+Pronto! Encontramos a ocorrência que tem a declaração do grupo de expressão da entidade `A`.
+
+_Ocorrência 2_:
+
+* `#05`: Não é preciso verificar a segunda ocorrência da entidade `A`, pois já encontramos a sua declaração.
+1. Agora que achamos a ocorrência correta, devemos retornar os descendentes:
+* `#00`: A entidade `A` tem o nível geral igual a `1`.
+* `#01`:**A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
+* `#02`:**A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `2`, é descendente**.
+* `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
+* `#04`:**A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, é descendente**.
+* `#05`:**A entidade `A` é a próxima entidade depois de `D` e o seu nível geral é `3`, é descendente**.
+* `#06`:**A entidade `C` é a próxima entidade depois de `A` e o seu nível geral é `3`, é descendente**.
+* `#07`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
+* A expressão terminou.
+
+Foram encontradas as seguintes entidades: `A, B, C, Y, D, A, C, Y`.
+
+1. Remover as ocorrências que estão duplicadas: `Y, C`
+2. Retornar o resultado: `A, B, C, Y, D, A`
+
+**Pesquisa profunda**
+
+Se uma entidade não tiver um **caminho cíclico**, podemos simplesmente continuar a pesquisa de descendentes da ocorrência corrente, pois é garantido que seu grupo de expressão foi redeclarado.
+
+**Pesquisa superficial**
+
+Na pesquisa superficial devemos ter alguns cuidados. Notem que na expressão abaixo chegamos no mesmo cenário de **entidades com caminhos cíclicos**.
+
+Por exemplo, como podemos retornar os descendentes da entidade `C` do índice `#02`?
+
+```
+                A + B + C + (D + A + (C + Y)) + Z
+                        ^              
+General Level:  1   2   2    2   3    3   4     2
+Index:          0   1   2    3   4    5   6     7
+```
+
+* A entidade `C` que está no índice `#02` não foi redeclarada, pois estamos usando a pesquisa superficial.
+* Essa expressão não esta **normalizada**, a entidade `C` deveria ter sido declarada o mais rápido possível, mas isso não ocorreu.
+* A entidade `C` contém descendentes. Seu grupo de expressão é declarado no índice `#05`.
+
+Nesse caso temos duas opções para retornar os descendentes da entidade `C`:
 
 **Opção 1:**
 
-1. Verificar se todas as ocorrências da entidade `A` contém filhos.
+Utilizar a mesma lógica que foi explicada para **entidades com caminhos cíclicos**. Com isso será avaliado todas as ocorrências da entidade `C` até encontrarmos a ocorrência que declara o seu grupo de expressão.
 
-Com isso, teríamos um resultado negativo ao analisar a ocorrência da entidade `A` que está no índice `#05` e um resultado positivo ao analisar a ocorrência da entidade `A` que está no índice `#00`.
+1. Seria encontrado a ocorrência do índice `#05` e a ocorrência do índice `#02` seria descartada.
+2. Agora que achamos a ocorrência correta, devemos retornar os descendentes:
+* `#05`: A entidade `C` tem o nível geral igual a `3`.
+* `#06`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
+* `#07`: A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
+* A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#07`.
 
-_Essa opção deve ser evitada se o seu propósito for retornar as entidades filhas, isso porque você retornaria as mesmas entidades em todas as ocorrências, nesse caso utilize a opção abaixo._
+Foram encontradas as seguintes entidades: `Y`.
+
+1. Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
+2. Retornar o resultado: `Y`
 
 **Opção 2:**
 
-1. Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização.
-2. Localizar a primeira ocorrência da entidade `A`. Deve-se encontrar a ocorrência que está no índice `#00`.
+A segunda opção pode apresentar uma melhor performance se a expressão nascer de forma normalizada, se isso estiver garantido, não precisamos executar o primeiro passo.
 
-Com isso, teríamos um resultado positivo ao analisar a ocorrência da entidade `A` que está no índice `#00` e não seria necessário verificar as outras ocorrências.
+1. Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
+
+```
+                A + B + (C + Y) + (D + A + C) + Z
+                         ^              
+General Level:  1   2    2   3     2   3   3    2
+Index:          0   1    2   3     4   5   6    7
+```
+
+1. Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`.
+2. Recuperar os descendentes da primeira ocorrência da entidade `C` do índice `#02`.
+* `#02`: A entidade `C` tem o nível geral igual a `2`.
+* `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
+* `#04`: A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
+* A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#04`.
+
+Foram encontradas as seguintes entidades: `Y`.
+
+1. Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
+2. Retornar o resultado: `Y`
 
 Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration).
-
-### <a name="search-method-get-descendants" />Encontrando todos os descendentes de uma entidade
-
-Se quisermos encontrar os descendentes de uma entidade, devemos verificar se a próxima entidade tem seu **nível geral** maior que o **nível geral** da entidade desejada, se tiver, essa entidade é sua descendente.
-
-Devemos continuar navegando para frente até quando a próxima entidade tiver o mesmo **nível geral** da entidade desejada ou se a expressão não tiver mais entidades.
-
-Com base no _exemplo modelo_, se quisermos pegar os descendentes da entidade `F`.
-
-* A entidade `F` tem o nível geral igual a `3`.
-* **A entidade `G` é a próxima entidade depois de `F` e o seu nível geral é `4`, é descendente**.
-* **A entidade `B` é a próxima entidade depois de `G` e o seu nível geral é `5`, é descendente**.
-* **A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `5`, é descendente**.
-* **A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `6`, é descendente**.
-* **A entidade `Y` é a próxima entidade depois de `Y` e o seu nível geral é `4`, é descendente**.
-* A entidade `Z` é a próxima entidade depois de `Y`, porém o seu nível é `3`, igual ao nível da entidade `F`, portanto não é descendente.
-
-Após eliminarmos as repetições de entidades, obtemos como resultado final as seguintes entidades descendentes: `G`, `B`, `C` e `Y`.
-
-**Observação:**
-
-Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
 ### <a name="search-method-get-entity-children" />Encontrando os filhos de uma entidade
 

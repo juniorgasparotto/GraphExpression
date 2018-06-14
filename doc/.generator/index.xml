@@ -46,8 +46,9 @@
       <include href="doc/.generator/pages/concept/search/with-references/find/find-previous.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/find-next.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/find-occurrences.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/check/check-has-children.md" />
-      <include href="doc/.generator/pages/concept/search/with-references/find/find-descendants.md" />
+      <!-- <include href="doc/.generator/pages/concept/search/with-references/check/check-has-children.md" /> -->
+      <!-- <include href="doc/.generator/pages/concept/search/with-references/find/find-descendants.md" /> -->
+      <include href="doc/.generator/pages/concept/search/with-references/find/find-descendants2.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/find-children.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/find-ascending.md" />
       <include href="doc/.generator/pages/concept/search/with-references/find/find-parent.md" />

@@ -1,6 +1,6 @@
 ### Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese) <header-set anchor-name="search-method-is-first-at-group-expression" />
 
-Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
+Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
 
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
