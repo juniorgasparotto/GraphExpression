@@ -1293,7 +1293,7 @@ Para entidades de maior complexidade, não seria possível o uso dos operadores 
 
 Nesse exemplo veremos como converter uma matriz de informação de volta para expressão de grafos.
 
-É importante destacar que esse código é simples e específico para o nosso exemplo. Embora ele possa ser útil para diversos propósitos devido a sua capacidade de identificar os momentos corretos de ínicio e fim de uma iteração de uma entidade.
+É importante destacar que esse código é simples e específico para o nosso exemplo. Embora ele possa ser útil para diversos propósitos devido a sua capacidade de identificar os momentos corretos de inicio e fim de uma iteração de uma entidade.
 
 ```csharp
 [DebuggerDisplay("{Entity.Name}")]
@@ -1424,7 +1424,7 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 
 * A classe `Expression` representa uma expressão de grafos como um todo. Ela herda de uma lista do tipo `EntityItem` para fazer jus ao que ela é dentro do conceito: Um conjunto de ocorrências de entidades com suas informações.
 * O método `ToExpressionAsString` retorna uma string que será a nossa expressão.
-* A lista contendo todas as ocorrências das entidades será percorrida complementamente. Da posição 0 até o final da lista. Cada iteração pode conter diversos níveis da expressão.
+* A lista contendo todas as ocorrências das entidades será percorrida completamente. Da posição 0 até o final da lista. Cada iteração pode conter diversos níveis da expressão.
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
 * Para cada iteração:
   * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
@@ -1434,7 +1434,7 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
   * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
     * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-check-is-last-at-group-expression)
 
-Com esses treixos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**
+Com esses trechos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**
 
 ## <a name="implementation-to-matrix" />Criando uma matriz de informações a partir de um grafo
 
