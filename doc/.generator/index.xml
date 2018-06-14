@@ -14,7 +14,7 @@
       </a>
 
       <include href="doc/.generator/pages/concept/get-starting/presentation.md" />
-      <include href="doc/.generator/pages/concept/get-startingintro.md" />
+      <include href="doc/.generator/pages/concept/get-starting/intro.md" />
       <include href="doc/.generator/pages/concept/get-starting/expression-group.md" />
       <include href="doc/.generator/pages/concept/get-starting/entity-root.md" />
       <include href="doc/.generator/pages/concept/get-starting/entity-final.md" />
