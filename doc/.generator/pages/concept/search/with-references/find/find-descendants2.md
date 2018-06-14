@@ -105,7 +105,7 @@ Index:          0   1    2   3     4   5   6    7
     * `#04`: A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
     * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#04`.
     * Foram encontradas as seguintes entidades: `Y`.
-4. Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
-5. Retornar o resultado: `Y`
+ 4. Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
+ 5. Retornar o resultado: `Y`
 
 Esse tema também foi abordado, de forma superficial, no tópico <anchor-get name="entity-declaration" />.
