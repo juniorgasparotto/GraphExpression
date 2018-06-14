@@ -720,7 +720,7 @@ A **pesquisa profunda** tem o objetivo de retornar a maior quantidade possíveis
 
 Para poder criar uma _pesquisa profunda_, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
-Vejamos a seguir o mesmo exemplo utilizado no tópico <error>The anchor 'matrix-of-information' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, porém agora, a expressão foi desnormalizada:
+Vejamos a seguir o mesmo exemplo utilizado no tópico [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-matrix-of-information), porém agora, a expressão foi desnormalizada:
 
 **Expressão:**
 
@@ -897,7 +897,7 @@ No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á 
 
 **Observação:**
 
-Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-find-descendants).
 
 ### <a name="search-check-is-last-at-group-expression" />Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)
 
@@ -973,7 +973,7 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
 
 A lógica será a mesma da **pesquisa profunda**, contudo não teremos as ocorrências decorrentes das redeclarações dos grupos de expressão.
 
-Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix) do tópico sobre <error>The anchor 'matrix-of-information' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix) do tópico sobre [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-matrix-of-information).
 
 1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
   * `#03 (Y)`
@@ -982,7 +982,7 @@ Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/E
 
 ### <a name="search-find-descendants" />Encontrando todos os descendentes de uma entidade
 
-Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico <error>The anchor 'search-deep-is-first-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-check-is-first-at-group-expression).
 
 Devemos continuar navegando para frente até quando a próxima entidade tiver o **nível geral** igual ou menor ao **nível geral** da entidade corrente ou se a expressão não tiver mais entidades.
 
@@ -1333,9 +1333,9 @@ public class EntityItem
 
 * Essa classe será nossa representação de cada linha da matriz de informação, ou seja, cada ocorrência de uma entidade dentro da expressão. Nela teremos todas as propriedades que uma ocorrência de uma entidade pode ter.
 * Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as técnicas:
-  * <error>The anchor 'search-deep-get-entity-previous' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
-  * <error>The anchor 'search-deep-get-entity-next' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
-  * <error>The anchor 'search-deep-get-entity-parent' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+  * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-find-previous)
+  * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-find-next)
+  * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-find-parent)
 
 ```csharp
 public class Expression : List<EntityItem>
@@ -1428,11 +1428,11 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
 * Para cada iteração:
   * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
-    * <error>The anchor 'search-deep-is-root' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+    * [Encontrando a entidade raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-find-root)
   * Se a entidade for a primeira do grupo de expressão, adiciona o caractere `(`
-    * <error>The anchor 'search-deep-is-first-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+    * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-check-is-first-at-group-expression)
   * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
-    * <error>The anchor 'search-deep-has-last-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+    * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-check-is-last-at-group-expression)
 
 Com esses treixos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**
 

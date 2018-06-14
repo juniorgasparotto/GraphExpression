@@ -19,7 +19,7 @@ Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz
 
 A lógica será a mesma da **pesquisa profunda**, contudo não teremos as ocorrências decorrentes das redeclarações dos grupos de expressão.
 
-Usaremos nesse exemplo a <anchor-get name="sample-matrix">matriz original</anchor-get> do tópico sobre <anchor-get name="matrix-of-information" />.
+Usaremos nesse exemplo a <anchor-get name="sample-matrix">matriz original</anchor-get> do tópico sobre <anchor-get name="search-matrix-of-information" />.
 
 1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
     * `#03 (Y)`

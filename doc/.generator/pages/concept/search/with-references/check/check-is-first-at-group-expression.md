@@ -15,4 +15,4 @@ No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á 
 
 **Observação:**
 
-Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico <anchor-get name="search-deep-has-children" />.
+Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico <anchor-get name="search-find-descendants" />.

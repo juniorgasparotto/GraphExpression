@@ -1,6 +1,6 @@
 ### Encontrando todos os descendentes de uma entidade <header-set anchor-name="search-find-descendants" />
 
-Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico <anchor-get name="search-deep-is-first-at-group-expression" />.
+Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico <anchor-get name="search-check-is-first-at-group-expression" />.
 
 Devemos continuar navegando para frente até quando a próxima entidade tiver o **nível geral** igual ou menor ao **nível geral** da entidade corrente ou se a expressão não tiver mais entidades.
 

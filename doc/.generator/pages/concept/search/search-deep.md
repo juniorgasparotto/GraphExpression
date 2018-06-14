@@ -4,7 +4,7 @@ A **pesquisa profunda** tem o objetivo de retornar a maior quantidade possíveis
 
 Para poder criar uma _pesquisa profunda_, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
-Vejamos a seguir o mesmo exemplo utilizado no tópico <anchor-get name="matrix-of-information" />, porém agora, a expressão foi desnormalizada:
+Vejamos a seguir o mesmo exemplo utilizado no tópico <anchor-get name="search-matrix-of-information" />, porém agora, a expressão foi desnormalizada:
 
 **Expressão:**
 

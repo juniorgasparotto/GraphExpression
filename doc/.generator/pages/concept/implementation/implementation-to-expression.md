@@ -42,9 +42,9 @@ public class EntityItem
 
 * Essa classe será nossa representação de cada linha da matriz de informação, ou seja, cada ocorrência de uma entidade dentro da expressão. Nela teremos todas as propriedades que uma ocorrência de uma entidade pode ter.
 * Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as técnicas:
-    * <anchor-get name="search-deep-get-entity-previous" />
-    * <anchor-get name="search-deep-get-entity-next" />
-    * <anchor-get name="search-deep-get-entity-parent" />
+    * <anchor-get name="search-find-previous" />
+    * <anchor-get name="search-find-next" />
+    * <anchor-get name="search-find-parent" />
 
 ```csharp
 public class Expression : List<EntityItem>
@@ -137,10 +137,10 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
 * Para cada iteração:
     * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
-        * <anchor-get name="search-deep-is-root" />
+        * <anchor-get name="search-find-root" />
     * Se a entidade for a primeira do grupo de expressão, adiciona o caractere `(`
-        * <anchor-get name="search-deep-is-first-at-group-expression" />
+        * <anchor-get name="search-check-is-first-at-group-expression" />
     * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
-        * <anchor-get name="search-deep-has-last-at-group-expression" />
+        * <anchor-get name="search-check-is-last-at-group-expression" />
 
 Com esses treixos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**

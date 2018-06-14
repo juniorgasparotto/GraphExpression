@@ -52,9 +52,9 @@
       <include href="doc/.generator/pages/concept/search/with-references/find/find-parent.md" />
 
       <!-- Impl -->
-      <include href="doc/.generator/pages/concept/implementation-to-graph.md" />
-      <include href="doc/.generator/pages/concept/implementation-to-expression.md" />
-      <include href="doc/.generator/pages/concept/implementation-to-matrix.md" />
+      <include href="doc/.generator/pages/concept/implementation/implementation-to-graph.md" />
+      <include href="doc/.generator/pages/concept/implementation/implementation-to-expression.md" />
+      <include href="doc/.generator/pages/concept/implementation/implementation-to-matrix.md" />
 
       <custom-translation>
         <default>
