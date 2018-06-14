@@ -57,7 +57,7 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
     * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
     * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
     * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
-    * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-descendants)
+    * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-find-descendants)
     * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-children)
     * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-ascending)
     * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-parent)
@@ -982,7 +982,7 @@ Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/E
   * `#10 (Y)`
 * Note que foi encontrado uma ocorrência a menos que na _pesquisa profunda_.
 
-### <a name="search-method-get-descendants" />Encontrando todos os descendentes de uma entidade
+### <a name="search-find-descendants" />Encontrando todos os descendentes de uma entidade
 
 Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico <error>The anchor 'search-deep-is-first-at-group-expression' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
 
@@ -1082,7 +1082,7 @@ Index:          0   1    2   3     4   5   6    7
 * Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`.
 * Recuperar os descendentes da primeira ocorrência da entidade `C` do índice `#02`.
   * `#02`: A entidade `C` tem o nível geral igual a `2`.
-  * `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
+  * `#03`: **A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
   * `#04`: A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
   * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#04`.
   * Foram encontradas as seguintes entidades: `Y`.
@@ -1095,9 +1095,13 @@ Esse tema também foi abordado, de forma superficial, no tópico [Declarações 
 
 ### <a name="search-method-get-entity-children" />Encontrando os filhos de uma entidade
 
-Seguindo a lógica da pesquisa acima, para encontrar apenas os filhos da entidade `D`, precisaríamos limitar o nível geral dos descendentes á: _[nível geral da entidade corrente] + 1_
+Para iniciar esse tópico é preciso entender por completo o tópico [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-find-descendants).
 
-Com base no _exemplo modelo_:
+A lógica é exatamente a mesma da pesquisa de descendentes, a única diferença é que o **nível geral** será limitado á: _[nível geral da entidade corrente] + 1_
+
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep).
+
+Com base nessa matriz, se quisermos encontrar todas as filhas da entidade `D` da linha `#04`:
 
 * A entidade `D` tem o nível geral igual a `2`.
 * **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`**.
@@ -1105,11 +1109,7 @@ Com base no _exemplo modelo_:
 * As próximas entidades depois de `F` são: `G`, `B`, `C`, `Y` e `Y`, todas tem níveis maiores que 3, então serão ignoradas.
 * **A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral também é 3, é filha de `D`**.
 
-Acabou a expressão e no final teremos as seguintes entidades descendentes: `E`, `F` e `Z`
-
-**Observação:**
-
-Essa técnica deve sempre ser aplicada na **primeira ocorrência** da entidade e não na **ocorrência corrente**, e não importa se a expressão está ou não desnormalizada. Isso foi explicado em detalhes no tópico <error>The anchor 'search-deep-has-children' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>.
+Acabou a expressão e no final teremos o resultado: `E, F, Z`
 
 ### <a name="search-method-get-entity-ascending" />Encontrando todos os ascendentes de uma entidade
 
@@ -1140,6 +1140,8 @@ Nível geral:  1   2    2   3
 Parents of Y: J, A
 ```
 
+**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+
 Por exemplo, se quisermos pegar os ascendentes da entidade `C` considerando todas as suas ocorrências na matriz do primeiro exemplo, teremos:
 
 **Ocorrência 1:**
@@ -1168,6 +1170,8 @@ Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, 
 ### <a name="search-method-get-entity-parent" />Encontrando os pais de uma entidade
 
 Seguindo a lógica da pesquisa acima, para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o nível geral dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o nível geral menor que a entidade desejada.
+
+**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
 
 Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocorrência:
 
