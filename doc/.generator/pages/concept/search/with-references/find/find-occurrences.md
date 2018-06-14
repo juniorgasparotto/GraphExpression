@@ -1,5 +1,28 @@
 ### Encontrando todas as ocorrências de uma entidade <header-set anchor-name="search-method-get-occurrences"/>
 
-Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo <anchor-get name="sample-matrix-desnormalizated" />, se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+Para encontrar todas as ocorrências de uma entidade, devemos percorrer toda a matriz partindo do índice `0` até última posição da matriz.
 
-Se essa mesma pesquisa fosse feita usando a **pesquisa superficial**, não teríamos encontrado a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+
+Sendo assim, é recomendado o uso da **pesquisa profunda** caso a sua necessidade seja obter o maior número possível de caminhos.
+
+**Pesquisa profunda**
+
+Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz desnormalizada</anchor-get> do tópico sobre <anchor-get name="search-deep" />.
+
+1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
+    * `#03 (Y)`
+    * `#10 (Y)`: Essa ocorrência é derivada da **desnormalização**.
+    * `#11 (Y)`
+
+**Pesquisa superficial**
+
+A lógica será a mesma da **pesquisa profunda**, contudo não teremos as ocorrências decorrentes das redeclarações dos grupos de expressão.
+
+Usaremos nesse exemplo a <anchor-get name="sample-matrix">matriz original</anchor-get> do tópico sobre <anchor-get name="matrix-of-information" />.
+
+1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
+    * `#03 (Y)`
+    * `#10 (Y)`
+
+* Note que foi encontrado uma ocorrência a menos que na _pesquisa profunda_.

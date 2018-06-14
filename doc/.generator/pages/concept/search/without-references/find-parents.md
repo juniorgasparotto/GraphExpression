@@ -7,7 +7,7 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 
 Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
 
-Sendo assim, nesse caso, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
+Sendo assim, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
 
 **Pesquisa profunda**
 

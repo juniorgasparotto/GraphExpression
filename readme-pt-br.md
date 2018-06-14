@@ -848,7 +848,7 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 
 Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
 
-Sendo assim, nesse caso, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
+Sendo assim, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
 
 **Pesquisa profunda**
 
@@ -957,9 +957,31 @@ Esse tema também foi abordado, de forma superficial, no tópico [Declarações 
 
 ### <a name="search-method-get-occurrences" />Encontrando todas as ocorrências de uma entidade
 
-Uma entidade pode ter mais de uma ocorrência em um grafo, no exemplo [Matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated), se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas `#3`, `#10` e `#11`.
+Para encontrar todas as ocorrências de uma entidade, devemos percorrer toda a matriz partindo do índice `0` até última posição da matriz.
 
-Se essa mesma pesquisa fosse feita usando a **pesquisa superficial**, não teríamos encontrado a linha `#10` e não seria possível obter o número correto de ocorrências dessa entidade.
+Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+
+Sendo assim, é recomendado o uso da **pesquisa profunda** caso a sua necessidade seja obter o maior número possível de caminhos.
+
+**Pesquisa profunda**
+
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-deep).
+
+1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
+  * `#03 (Y)`
+  * `#10 (Y)`: Essa ocorrência é derivada da **desnormalização**.
+  * `#11 (Y)`
+
+**Pesquisa superficial**
+
+A lógica será a mesma da **pesquisa profunda**, contudo não teremos as ocorrências decorrentes das redeclarações dos grupos de expressão.
+
+Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#sample-matrix) do tópico sobre [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#matrix-of-information).
+
+1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
+  * `#03 (Y)`
+  * `#10 (Y)`
+* Note que foi encontrado uma ocorrência a menos que na _pesquisa profunda_.
 
 ### <a name="search-method-get-entity-previous" />Retornando a entidade anterior
 
