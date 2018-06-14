@@ -1,4 +1,4 @@
-### Retornando a entidade anterior <header-set anchor-name="search-method-get-entity-previous" />
+### Encontrando a entidade anterior <header-set anchor-name="search-method-get-entity-previous" />
 
 Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o seu **índice geral** em `-1`.
 

@@ -1,4 +1,4 @@
-### Retornando a próxima entidade <header-set anchor-name="search-method-get-entity-next" />
+### Encontrando a próxima entidade <header-set anchor-name="search-method-get-entity-next" />
 
 Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** em `+1`. 
 

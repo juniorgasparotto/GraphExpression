@@ -54,8 +54,8 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
   * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-with-references)
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-first-at-group-expression)
     * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-is-last-at-group-expression)
-    * [Retornando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
-    * [Retornando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
+    * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-previous)
+    * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-entity-next)
     * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-occurrences)
     * [Verificando se uma entidade contém filhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-has-children)
     * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search-method-get-descendants)
@@ -830,7 +830,7 @@ Como existem infinitas opção de pesquisas dentro de um grafo, abordaremos apen
 
 Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual `0`.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 Com base na expressão a seguir, podemos afirmar que a entidade `A` é a **entidade raiz** da expressão.
 
@@ -846,7 +846,7 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 1. Recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
 2. Para cada linha encontrada, retornamos a sua **entidade anterior** que será sempre uma **entidade pai**.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
+**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em caso de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
 
 Sendo assim, é recomendado o uso da **pesquisa superficial** para evitar um processamento desnecessário.
 
@@ -887,7 +887,7 @@ Como existem infinitas opção de pesquisas usando uma entidade, abordaremos ape
 
 Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeira dentro do parênteses), verificamos se o seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a primeira de seu grupo de expressão.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 ```
                 A + B + ( C + Y ) + (D + C)
@@ -906,7 +906,7 @@ Não confunda essa técnica como sendo a solução para verificar se uma entidad
 
 Para descobrir se uma entidade é a última do seu grupo de expressão (última dentro do parênteses), verificamos se seu **nível geral** é maior que o nível geral da **próxima entidade**, se for, essa entidade é a última do seu grupo de expressão.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 ```
                 A + B + ( C + Y ) + (D + C) + U
@@ -919,7 +919,7 @@ No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á 
 
 * A entidade `U` do índice `#06` não tem uma próxima entidade, portanto ela é a última de seu grupo de expressão, embora ele esteja omitido por estarmos no **grupo de expressão raiz**.
 
-### <a name="search-method-get-entity-previous" />Retornando a entidade anterior
+### <a name="search-method-get-entity-previous" />Encontrando a entidade anterior
 
 Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o seu **índice geral** em `-1`.
 
@@ -937,7 +937,7 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
 
 * Se o resultado for menor que zero, é porque estamos na **entidade raiz** e não existe entidade anterior.
 
-### <a name="search-method-get-entity-next" />Retornando a próxima entidade
+### <a name="search-method-get-entity-next" />Encontrando a próxima entidade
 
 Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** em `+1`.
 
@@ -959,7 +959,7 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
 
 Para encontrar todas as ocorrências de uma entidade, devemos percorrer toda a matriz partindo do índice `0` até última posição da matriz.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
 
 Sendo assim, é recomendado o uso da **pesquisa profunda** caso a sua necessidade seja obter o maior número possível de caminhos.
 

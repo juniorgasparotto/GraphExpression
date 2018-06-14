@@ -2,7 +2,7 @@
 
 Para encontrar todas as ocorrências de uma entidade, devemos percorrer toda a matriz partindo do índice `0` até última posição da matriz.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
 
 Sendo assim, é recomendado o uso da **pesquisa profunda** caso a sua necessidade seja obter o maior número possível de caminhos.
 

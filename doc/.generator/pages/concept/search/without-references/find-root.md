@@ -2,7 +2,7 @@
 
 Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual `0`.
 
-Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 Com base na expressão a seguir, podemos afirmar que a entidade `A` é a **entidade raiz** da expressão.
 
