@@ -1071,7 +1071,7 @@ Utilizar a mesma lógica que foi explicada para **entidades com caminhos cíclic
 
 A segunda opção pode apresentar uma melhor performance se a expressão nascer de forma normalizada, se isso estiver garantido, não precisamos executar o primeiro passo.
 
-1. Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
+1 . Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
 
 ```
                 A + B + (C + Y) + (D + A + C) + Z
@@ -1080,15 +1080,7 @@ General Level:  1   2    2   3     2   3   3    2
 Index:          0   1    2   3     4   5   6    7
 ```
 
-1. Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`.
-2. Recuperar os descendentes da primeira ocorrência da entidade `C` do índice `#02`.
-  * `#02`: A entidade `C` tem o nível geral igual a `2`.
-  * `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
-  * `#04`: A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
-  * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#04`.
-  * Foram encontradas as seguintes entidades: `Y`.
-3. Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
-4. Retornar o resultado: `Y`
+2 . Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`. 3 . Recuperar os descendentes da primeira ocorrência da entidade `C` do índice `#02`. * `#02`: A entidade `C` tem o nível geral igual a `2`. * `#03`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**. * `#04`: A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente. * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#04`. * Foram encontradas as seguintes entidades: `Y`. 4 . Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma. 5 . Retornar o resultado: `Y`
 
 Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-declaration).
 
