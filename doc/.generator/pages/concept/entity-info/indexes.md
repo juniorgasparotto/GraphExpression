@@ -11,17 +11,17 @@ A + B + C + ( D + E + ( F  + G ) )
 0   1   2     3   4     5    6
 ```
 
-O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade do mesmo nível. Por exemplo:
+O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade do mesmo nível.
+
+Por exemplo:
 
 ```        
                 A + B + C + ( D + E + ( F + G + Y ) )
 Level:          1   2   2     2   3     3   4   4
 Level Index:    0   0   1     2   0     1   0   1
-```
 
-Por exemplo:
+Graph:
 
-```
 A (Level Index: 0)
 ----B (Level Index: 0)
 ----C (Level Index: 1)
