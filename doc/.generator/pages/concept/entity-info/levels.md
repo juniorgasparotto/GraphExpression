@@ -23,7 +23,7 @@ Por exemplo:
 ```
                         A + B + C + ( D + E + ( F + G ) )
 Level in expression:    1   1   1     2   2     3   3    
-General Level:          1   2   2     2   3     3   4   
+Level:                  1   2   2     2   3     3   4   
 ```
 
 Note que o _nível da expressão_ é bem similar ao _nível geral_. A única diferença está no valor da **entidade pai**, no nível geral esse número é sempre menor que o nível geral de seus filhos e no nível da expressão eles são iguais.

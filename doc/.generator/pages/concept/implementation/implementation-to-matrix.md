@@ -93,7 +93,7 @@ public class Expression : List<EntityItem>
     public string ToMatrixAsString()
     {
         var s = "";
-        s += "Index    | Entity  | Level    | General level   | LevelAtExpression \r\n";
+        s += "Index    | Entity  | Level    | Level Index     | LevelAtExpression \r\n";
 
         foreach (var i in this)
         {
@@ -130,7 +130,7 @@ class Program
 O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade `A`, teremos a seguinte matriz de informação:
 
 ```
-Index    | Entity  | Level    | General Level   | LevelAtExpression 
+Index    | Entity  | Level    | Level Index     | LevelAtExpression 
 00       | A       | 01       | 00              | 01 
 01       | B       | 02       | 00              | 02 
 02       | C       | 03       | 00              | 03 

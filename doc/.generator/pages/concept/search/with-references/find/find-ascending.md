@@ -4,7 +4,7 @@ Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a en
 
 ```
                 A + B
-General Level:  1   2
+Level:          1   2
                 ^   *
 Parent of B:    A
 ```
@@ -13,7 +13,7 @@ Se a entidade anterior for do mesmo nível da entidade deseja, deve-se ignora-la
 
 ```
                 A + B + J
-General Level:  1   2   2
+Level:          1   2   2
                 ^       *
 Parent of J:    A
 ```
@@ -22,7 +22,7 @@ Após encontrar a primeira ascendência, deve-se continuar navegando para trás,
 
 ```
                 A + B + (J + Y)
-General Level:  1   2    2   3
+Level:          1   2    2   3
                 ^        ^   *
 Parents of Y:   J, A
 ```

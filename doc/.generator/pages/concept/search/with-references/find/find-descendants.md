@@ -13,10 +13,10 @@ Devemos ter alguns cuidados para encontrar os descendentes de entidades com cami
 Por exemplo, como podemos encontrar os descendentes da entidade `A` que está no índice `#05`?
 
 ```
-                A + B + (C + Y) + (D + A + C)
-                                       ^
-General Level:  1   2    2   3     2   3   3
-Index:          0   1    2   3     4   5   6
+        A + B + (C + Y) + (D + A + C)
+                               ^
+Level:  1   2    2   3     2   3   3
+Index:  0   1    2   3     4   5   6
 ```
 
 * A entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**. 
@@ -56,10 +56,10 @@ Na pesquisa superficial devemos ter alguns cuidados. Notem que na expressão aba
 Por exemplo, como podemos retornar os descendentes da entidade `C` do índice `#02`?
 
 ```
-                A + B + C + (D + A + (C + Y)) + Z
-                        ^              
-General Level:  1   2   2    2   3    3   4     2
-Index:          0   1   2    3   4    5   6     7
+        A + B + C + (D + A + (C + Y)) + Z
+                ^              
+Level:  1   2   2    2   3    3   4     2
+Index:  0   1   2    3   4    5   6     7
 ```
 
 * A entidade `C` que está no índice `#02` não foi redeclarada, pois estamos usando a pesquisa superficial.
@@ -89,10 +89,10 @@ A segunda opção pode apresentar uma melhor performance se a expressão nascer 
 * Aplicar a <anchor-get name="normalization-3" /> para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
 
 ```
-                A + B + (C + Y) + (D + A + C) + Z
-                         ^              
-General Level:  1   2    2   3     2   3   3    2
-Index:          0   1    2   3     4   5   6    7
+        A + B + (C + Y) + (D + A + C) + Z
+                 ^              
+Level:  1   2    2   3     2   3   3    2
+Index:  0   1    2   3     4   5   6    7
 ```
 
 * Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`.

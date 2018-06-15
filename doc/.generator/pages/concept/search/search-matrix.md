@@ -10,7 +10,7 @@ Vejamos um exemplo:
 
 ```
 Expression:     A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-General Level:  1   2     2   3       2   3     3     4   5   5     4     3
+Level:          1   2     2   3       2   3     3     4   5   5     4     3
 Level Index:    0   0     1   0       2   0     1     0   0   1     1     2
 ```
 

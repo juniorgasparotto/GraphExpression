@@ -433,7 +433,7 @@ Por exemplo:
 ```
                         A + B + C + ( D + E + ( F + G ) )
 Level in expression:    1   1   1     2   2     3   3    
-General Level:          1   2   2     2   3     3   4   
+Level:                  1   2   2     2   3     3   4   
 ```
 
 Note que o _nível da expressão_ é bem similar ao _nível geral_. A única diferença está no valor da **entidade pai**, no nível geral esse número é sempre menor que o nível geral de seus filhos e no nível da expressão eles são iguais.
@@ -455,7 +455,7 @@ O **Índice do nível** determina em qual posição a entidade está com relaç�
 
 ```
                 A + B + C + ( D + E + ( F + G + Y ) )
-General Level:  1   2   2     2   3     3   4   4
+Level:          1   2   2     2   3     3   4   4
 Level Index:    0   0   1     2   0     1   0   1
 ```
 
@@ -669,7 +669,7 @@ Vejamos um exemplo:
 
 ```
 Expression:     A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
-General Level:  1   2     2   3       2   3     3     4   5   5     4     3
+Level:          1   2     2   3       2   3     3     4   5   5     4     3
 Level Index:    0   0     1   0       2   0     1     0   0   1     1     2
 ```
 
@@ -731,7 +731,7 @@ Original:       A + B + ( C + Y ) + ( D + E + ( F + ( G + B + C ) + Y ) + Z )
                           ^                                   ^
 Denormalized:   A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
                                                                     ^
-General Level:  1   2     2   3       2   3     3     4   5     5   6       4     3 
+Level:          1   2     2   3       2   3     3     4   5     5   6       4     3 
 Level Index:    0   0     1   0       2   0     1     0   0     1   0       1     2
 ```
 
@@ -889,10 +889,10 @@ Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeir
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 ```
-                A + B + ( C + Y ) + (D + C)
-                          ^
-General Level:  1   2     2   3      2   3
-Index:          0   1     2   3      4   5
+        A + B + ( C + Y ) + (D + C)
+                  ^
+Level:  1   2     2   3      2   3
+Index:  0   1     2   3      4   5
 ```
 
 No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á `2` e a sua próxima entidade `Y` tem o nível geral igual á `3`, sendo assim, ela é a primeira dentro de seu parênteses.
@@ -908,10 +908,10 @@ Para descobrir se uma entidade é a última do seu grupo de expressão (última 
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 ```
-                A + B + ( C + Y ) + (D + C) + U
-                              ^
-General Level:  1   2     2   3      2   3    2
-Index:          0   1     2   3      4   5    6
+        A + B + ( C + Y ) + (D + C) + U
+                      ^
+Level:  1   2     2   3      2   3    2
+Index:  0   1     2   3      4   5    6
 ```
 
 No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á `3` e a sua próxima entidade `D` tem o nível geral igual á `4`, sendo assim, ela é a última dentro de seu parênteses.
@@ -997,10 +997,10 @@ Devemos ter alguns cuidados para encontrar os descendentes de entidades com cami
 Por exemplo, como podemos encontrar os descendentes da entidade `A` que está no índice `#05`?
 
 ```
-                A + B + (C + Y) + (D + A + C)
-                                       ^
-General Level:  1   2    2   3     2   3   3
-Index:          0   1    2   3     4   5   6
+        A + B + (C + Y) + (D + A + C)
+                               ^
+Level:  1   2    2   3     2   3   3
+Index:  0   1    2   3     4   5   6
 ```
 
 * A entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**.
@@ -1040,10 +1040,10 @@ Na pesquisa superficial devemos ter alguns cuidados. Notem que na expressão aba
 Por exemplo, como podemos retornar os descendentes da entidade `C` do índice `#02`?
 
 ```
-                A + B + C + (D + A + (C + Y)) + Z
-                        ^              
-General Level:  1   2   2    2   3    3   4     2
-Index:          0   1   2    3   4    5   6     7
+        A + B + C + (D + A + (C + Y)) + Z
+                ^              
+Level:  1   2   2    2   3    3   4     2
+Index:  0   1   2    3   4    5   6     7
 ```
 
 * A entidade `C` que está no índice `#02` não foi redeclarada, pois estamos usando a pesquisa superficial.
@@ -1073,10 +1073,10 @@ A segunda opção pode apresentar uma melhor performance se a expressão nascer 
 * Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
 
 ```
-                A + B + (C + Y) + (D + A + C) + Z
-                         ^              
-General Level:  1   2    2   3     2   3   3    2
-Index:          0   1    2   3     4   5   6    7
+        A + B + (C + Y) + (D + A + C) + Z
+                 ^              
+Level:  1   2    2   3     2   3   3    2
+Index:  0   1    2   3     4   5   6    7
 ```
 
 * Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`.
@@ -1117,7 +1117,7 @@ Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a en
 
 ```
                 A + B
-General Level:  1   2
+Level:          1   2
                 ^   *
 Parent of B:    A
 ```
@@ -1126,7 +1126,7 @@ Se a entidade anterior for do mesmo nível da entidade deseja, deve-se ignora-la
 
 ```
                 A + B + J
-General Level:  1   2   2
+Level:          1   2   2
                 ^       *
 Parent of J:    A
 ```
@@ -1135,7 +1135,7 @@ Após encontrar a primeira ascendência, deve-se continuar navegando para trás,
 
 ```
                 A + B + (J + Y)
-General Level:  1   2    2   3
+Level:          1   2    2   3
                 ^        ^   *
 Parents of Y:   J, A
 ```
@@ -1533,7 +1533,7 @@ public class Expression : List<EntityItem>
     public string ToMatrixAsString()
     {
         var s = "";
-        s += "Index    | Entity  | Level    | General level   | LevelAtExpression \r\n";
+        s += "Index    | Entity  | Level    | Level Index     | LevelAtExpression \r\n";
 
         foreach (var i in this)
         {
@@ -1570,7 +1570,7 @@ class Program
 O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade `A`, teremos a seguinte matriz de informação:
 
 ```
-Index    | Entity  | Level    | General Level   | LevelAtExpression 
+Index    | Entity  | Level    | Level Index     | LevelAtExpression 
 00       | A       | 01       | 00              | 01 
 01       | B       | 02       | 00              | 02 
 02       | C       | 03       | 00              | 03 

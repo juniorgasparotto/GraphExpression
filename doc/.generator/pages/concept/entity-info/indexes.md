@@ -15,7 +15,7 @@ O **Índice do nível** determina em qual posição a entidade está com relaç�
 
 ```        
                 A + B + C + ( D + E + ( F + G + Y ) )
-General Level:  1   2   2     2   3     3   4   4
+Level:          1   2   2     2   3     3   4   4
 Level Index:    0   0   1     2   0     1   0   1
 ```
 

@@ -5,10 +5,10 @@ Para descobrir se uma entidade é a primeira do seu grupo de expressão (primeir
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
 ```
-                A + B + ( C + Y ) + (D + C)
-                          ^
-General Level:  1   2     2   3      2   3
-Index:          0   1     2   3      4   5
+        A + B + ( C + Y ) + (D + C)
+                  ^
+Level:  1   2     2   3      2   3
+Index:  0   1     2   3      4   5
 ```
 
 No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á `2` e a sua próxima entidade `Y` tem o nível geral igual á `3`, sendo assim, ela é a primeira dentro de seu parênteses.
