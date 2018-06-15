@@ -1,6 +1,8 @@
 # Informações de uma ocorrência <header-set anchor-name="entity-info" />
 
-Uma entidade, ou melhor, cada ocorrência de uma entidade na expressão, contém informações que são de extrema importância, veremos isso no tópico <anchor-get name="search" />.
+Uma entidade pode aparecer diversas vezes dentro de uma expressão e para cada uma dessas ocorrências temos um conjunto de informações que serão vistas neste tópico. 
+
+Essas informações são de extrema importância e veremos exemplos disso no tópico <anchor-get name="search" />.
 
 * <anchor-get name="levels" />
 * <anchor-get name="indexes" />

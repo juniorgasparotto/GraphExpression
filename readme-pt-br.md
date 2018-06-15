@@ -217,7 +217,7 @@ Nesse exemplo, removemos todas as ocorrências da entidade `B` da entidade `A` e
 
 ## <a name="expression-group" />Grupo de expressão
 
-Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar.
+O **grupos de expressão** é delimitado pelo uso de parenteses: `(` para abrir e `)` para fechar.
 
 A primeira entidade do grupo de expressão (após abrir parenteses) determina a entidade pai daquele grupo, ou seja, todas as entidades subsequentes serão suas filhas até que se feche os parenteses.
 
@@ -398,7 +398,9 @@ A + A + B + (C + A)
 
 # <a name="entity-info" />Informações de uma ocorrência
 
-Uma entidade, ou melhor, cada ocorrência de uma entidade na expressão, contém informações que são de extrema importância, veremos isso no tópico [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search).
+Uma entidade pode aparecer diversas vezes dentro de uma expressão e para cada uma dessas ocorrências temos um conjunto de informações que serão vistas neste tópico.
+
+Essas informações são de extrema importância e veremos exemplos disso no tópico [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#search).
 
 * [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#levels)
 * [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#indexes)

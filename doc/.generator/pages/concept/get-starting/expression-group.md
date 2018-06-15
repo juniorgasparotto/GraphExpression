@@ -1,6 +1,6 @@
 ## Grupo de expressão <header-set anchor-name="expression-group" />
 
-Os grupos são delimitados pelo uso de parenteses: `(` para abrir e `)` para fechar. 
+O **grupos de expressão** é delimitado pelo uso de parenteses: `(` para abrir e `)` para fechar. 
 
 A primeira entidade do grupo de expressão (após abrir parenteses) determina a entidade pai daquele grupo, ou seja, todas as entidades subsequentes serão suas filhas até que se feche os parenteses.
 
