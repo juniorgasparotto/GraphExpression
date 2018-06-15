@@ -549,7 +549,7 @@ A + (B + Y + Y) + (D + B)
 
 ## <a name="normalization-2" />Normalização - tipo 2
 
-A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final) no começo do seu grupo de expressão para ajudar na visualização da expressão.
+A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as [entidades finais](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md#entity-final) no começo do seu grupo de expressão para ajudar na visualização da expressão.
 
 ```
 A + (B + (C + D) + E) + F + G
