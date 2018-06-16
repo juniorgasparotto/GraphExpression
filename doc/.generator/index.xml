@@ -6,7 +6,7 @@
     </languages>
     <content>
       # Expression Graph
-      
+
       <custom-translation>
         <default>
 
@@ -24,7 +24,7 @@
 
   <page>
     <languages>
-      <language name="pt-br" output="concept-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md" />
+      <language name="pt-br" output="doc/concept-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md" />
       <!-- <language name="en-us" output="concept.md" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept.md" /> -->
     </languages>
     <content>
