@@ -8,7 +8,7 @@ Devemos continuar navegando para frente até quando a próxima entidade tiver o 
 
 **Entidade com caminho cíclico:**
 
-Devemos ter alguns cuidados para encontrar os descendentes de entidades com caminhos cíclicos. Isso ocorre porque os grupos de expressão não podem ser redeclarados nessas situações.
+Devemos ter alguns cuidados para encontrar os descendentes de entidades com caminhos cíclicos. Isso ocorre porque os grupos de expressões não podem ser redeclarados nessas situações.
 
 Por exemplo, como podemos encontrar os descendentes da entidade `A` que está no índice `#05`?
 
@@ -42,7 +42,7 @@ A resposta seria:
     * `#06`: **A entidade `C` é a próxima entidade depois de `A` e o seu nível geral é `3`, é descendente**.
     * A expressão terminou.
     * Foram encontradas as seguintes entidades: `A, B, C, Y, D, A, C`.
-* Remover as ocorrências que estão duplicadas: `Y`
+* Remover as ocorrências que estão duplicadas: `C`
 * Retornar o resultado: `A, B, C, Y, D, A`
 
 **Pesquisa profunda**

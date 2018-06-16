@@ -1,8 +1,31 @@
 ﻿<documentation>
-  <page>
+ <page>
     <languages>
       <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" />
       <!-- <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/ExpressionGraph" /> -->
+    </languages>
+    <content>
+      # Expression Graph
+      
+      <custom-translation>
+        <default>
+
+        </default>
+
+        <language name="en-us">
+          ---
+          <sub>This text was translated by a machine</sub>
+
+          https://github.com/juniorgasparotto/MarkdownGenerator
+        </language>
+      </custom-translation>
+    </content>
+  </page>
+
+  <page>
+    <languages>
+      <language name="pt-br" output="concept-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md" />
+      <!-- <language name="en-us" output="concept.md" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept.md" /> -->
     </languages>
     <content>
       <a href="https://github.com/juniorgasparotto/ExpressionGraph" rel="Inglês">
