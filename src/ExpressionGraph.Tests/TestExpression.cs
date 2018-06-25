@@ -156,34 +156,6 @@ namespace ExpressionGraph.Tests
             Assert.IsTrue(test == debug, "Test 14 - error");
         }
 
-        [TestMethod]
-        public void TestExpressionWithoutRepeat()
-        {
-            return;
-            var debug = GetExpression("A+(B+(C+C)+B)+A", out IEnumerable<HierarchicalEntity> entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-
-            debug = GetExpression("A+(B+C+(J+I))+(D+(B+C+(J+I)))", out entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-
-            debug = GetExpression("", out entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-
-            debug = GetExpression("", out entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-
-            debug = GetExpression("", out entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-
-            debug = GetExpression("", out entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-
-            debug = GetExpression("", out entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-
-            debug = GetExpression("", out entities, true, true, false).ToString();
-            Assert.IsTrue("" == debug);
-        }
 
         [TestMethod]
         public void TestExpressionMultiple()

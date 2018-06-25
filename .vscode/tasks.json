@@ -2,14 +2,49 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "GraphExpression.Tests - Build",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/ExpressionGraph.Console.NetCore20/ExpressionGraph.ConsoleApp.NetCore20.csproj"
+                "${workspaceFolder}/src/GraphExpression.Tests/GraphExpression.Tests.csproj"
             ],
-            "problemMatcher": "$msCompile"
-        }
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "GraphExpression.Tests - Execute",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "${workspaceFolder}/src/GraphExpression.Tests/GraphExpression.Tests.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "GraphExpression.Tests - Get Coverage",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "/p:CollectCoverage=true",
+                "/p:CoverletOutputFormat=lcov",
+                "/p:CoverletOutput=${workspaceFolder}/src/GraphExpression.Tests/bin/coverage/lcov",
+                "${workspaceFolder}/src/GraphExpression.Tests/GraphExpression.Tests.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
     ]
 }

@@ -2,5 +2,7 @@
     "cSpell.language": "pt-BR",
     "cSpell.words": [
         "Desnormalizando"
-    ]
+    ],
+    "dotnet-test-explorer.testProjectPath": "src\\GraphExpression.Tests",
+    // "coverage-gutters.lcovname": "D:\\Junior\\Projetos\\GITHUB.COM\\juniorgasparotto\\ExpressionGraph\\coverage\\lcov.info"
 }
