@@ -204,11 +204,12 @@ namespace GraphExpression
 
         public enum SiblingDirection
         {
+            Both,
             Next,
             Previous
         }
 
-        public IEnumerable<EntityItem<T>> Siblings(SiblingDirection direction, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
+        public IEnumerable<EntityItem<T>> Siblings(SiblingDirection direction = SiblingDirection.Both, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
         {
             EntityItem<T> item;
             if (direction == SiblingDirection.Previous)
