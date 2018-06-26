@@ -46,11 +46,6 @@ namespace GraphExpression
 
         #region Ancestors
 
-        public IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
-        {
-            return Ancestors(EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), depthStart, depthEnd);
-        }
-
         public IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? depthStart = null, int? depthEnd = null)
         {
             if (depthStart <= 0)
@@ -84,10 +79,42 @@ namespace GraphExpression
             }
         }
 
+        public IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
+        {
+            return Ancestors(EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), depthStart, depthEnd);
+        }
+
+        public IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
+        {
+            return Ancestors((EntityItemFilterDelegate2<T>)null, null, depthStart, depthEnd);
+        }
+
+        public IEnumerable<EntityItem<T>> Ancestors(int depthEnd)
+        {
+            return Ancestors(1, depthEnd);
+        }
+
+        #region AncestorsUntil
+
+        public IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
+        {
+            if (stop == null)
+                throw new ArgumentNullException("stop");
+
+            return Ancestors(filter, stop);
+        }
+
+        public IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
+        {
+            return AncestorsUntil(EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter));
+        }
+
+        #endregion
+
         #endregion
 
         #region Descendants
-        
+
         public IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? depthStart = null, int? depthEnd = null)
         {
             if (depthStart <= 0)

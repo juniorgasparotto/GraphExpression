@@ -11,7 +11,9 @@ namespace GraphExpression
 
         public static IEnumerable<EntityItem<T>> Ancestors<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
         {
-            return Ancestors(references, EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), depthStart, depthEnd);
+            foreach (var reference in references)
+                foreach (var item in reference.Ancestors(filter, stop, depthStart, depthEnd))
+                    yield return item;
         }
 
         public static IEnumerable<EntityItem<T>> Ancestors<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? depthStart = null, int? depthEnd = null)
@@ -23,12 +25,16 @@ namespace GraphExpression
         
         public static IEnumerable<EntityItem<T>> Ancestors<T>(this IEnumerable<EntityItem<T>> references, int depthEnd)
         {
-            return Ancestors(references, 1, depthEnd);
+            foreach (var reference in references)
+                foreach (var item in reference.Ancestors(depthEnd))
+                    yield return item;
         }
 
         public static IEnumerable<EntityItem<T>> Ancestors<T>(this IEnumerable<EntityItem<T>> references, int depthStart, int depthEnd)
         {
-            return Ancestors(references, (EntityItemFilterDelegate2 <T>)null, (EntityItemFilterDelegate2<T>)null, depthStart, depthEnd);
+            foreach (var reference in references)
+                foreach (var item in reference.Ancestors(depthStart, depthEnd))
+                    yield return item;
         }
 
         #endregion
@@ -37,22 +43,24 @@ namespace GraphExpression
 
         public static IEnumerable<EntityItem<T>> AncestorsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
         {
-            return AncestorsUntil(references, EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter));
+            foreach (var reference in references)
+                foreach (var item in reference.AncestorsUntil(stop, filter))
+                    yield return item;
         }
 
         public static IEnumerable<EntityItem<T>> AncestorsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
         {
-            if (stop == null)
-                throw new ArgumentNullException("stop");
-
-            return Ancestors(references, filter, stop);
+            foreach (var reference in references)
+                foreach (var item in reference.AncestorsUntil(stop, filter))
+                    yield return item;
         }
 
         #endregion
 
         public static IEnumerable<EntityItem<T>> Parents<T>(this IEnumerable<EntityItem<T>> references)
         {
-            return Ancestors(references, 1);
+            foreach (var reference in references)
+                yield return reference.Parent;
         }
     }
 }
