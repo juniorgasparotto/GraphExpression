@@ -59,7 +59,9 @@ namespace GraphExpression
 
         public static IEnumerable<EntityItem<T>> Children<T>(this IEnumerable<EntityItem<T>> references)
         {
-            return Descendants(references, 1);
+            foreach (var reference in references)
+                foreach (var item in reference.Children())
+                    yield return item;
         }
     }
 }

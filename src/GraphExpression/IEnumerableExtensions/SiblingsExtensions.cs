@@ -7,56 +7,51 @@ namespace GraphExpression
 {
     public static class SiblingsExtensions
     {
-        #region Siblings
-
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItem<T>.SiblingDirection direction, EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? positionStart = null, int? positionEnd = null)
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int? positionStart = null, int? positionEnd = null)
         {
-            return Siblings(references, direction, EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), positionStart, positionEnd);
-        }
-
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItem<T>.SiblingDirection direction, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
-        {
-            if (positionStart <= 0)
-                throw new ArgumentException("The 'positionStart' parameter can not be lower than 1.");
-
-            if (positionEnd <= 0)
-                throw new ArgumentException("The 'positionEnd' parameter can not be lower than 1.");
-
-            if (positionStart > positionEnd)
-                throw new ArgumentException("The 'positionStart' parameter can not be greater than the 'depthEnd' parameter.");
-
             foreach (var reference in references)
-                foreach (var item in reference.Siblings(direction, filter, stop, positionStart, positionEnd))
+                foreach (var item in reference.Siblings(filter, stop, direction, positionStart, positionEnd))
                     yield return item;
         }
 
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItem<T>.SiblingDirection direction, int positionEnd)
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int? positionStart = null, int? positionEnd = null)
         {
-            return Siblings(references, direction, 1, positionEnd);
+            foreach (var reference in references)
+                foreach (var item in reference.Siblings(filter, stop, direction, positionStart, positionEnd))
+                    yield return item;
         }
 
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItem<T>.SiblingDirection direction, int positionStart, int positionEnd)
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Both)
         {
-            return Siblings(references, direction, null, (EntityItemFilterDelegate2<T>)null, positionStart, positionEnd);
+            foreach (var reference in references)
+                foreach (var item in reference.Siblings(positionStart, positionEnd, direction))
+                    yield return item;
         }
 
-        #endregion
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, int positionEnd, SiblingDirection direction = SiblingDirection.Both)
+        {
+            foreach (var reference in references)
+                foreach (var item in reference.Siblings(positionEnd, direction))
+                    yield return item;
+        }
 
         #region SiblingsUntil
 
-        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItem<T>.SiblingDirection direction, EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
+        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Both)
         {
-            return SiblingsUntil(references, direction, EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter));
+            foreach (var reference in references)
+                foreach (var item in reference.SiblingsUntil(stop, filter, direction))
+                    yield return item;
         }
 
-        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItem<T>.SiblingDirection direction, EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
+        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Both)
         {
-            if (stop == null)
-                throw new ArgumentNullException("stop");
-
-            return Siblings(references, direction, filter, stop);
+            foreach (var reference in references)
+                foreach (var item in reference.SiblingsUntil(stop, filter, direction))
+                    yield return item;
         }
 
         #endregion
+
     }
 }

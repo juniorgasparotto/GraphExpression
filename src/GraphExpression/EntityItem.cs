@@ -6,7 +6,7 @@ using System.Linq;
 namespace GraphExpression
 {
     [DebuggerDisplay("{ToString()}")]
-    public class EntityItem<T>
+    public partial class EntityItem<T>
     {
         private readonly Expression<T> expression;
 
@@ -196,27 +196,36 @@ namespace GraphExpression
             return Descendants(1);
         }
 
-        #endregion
+#endregion
+#endregion 
+#region Siblings
 
-        #endregion 
-
-        #region Siblings
-
-        public enum SiblingDirection
+        public IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int ? positionStart = null, int? positionEnd = null)
         {
-            Both,
-            Next,
-            Previous
-        }
+            if (positionStart <= 0)
+                throw new ArgumentException("The 'positionStart' parameter can not be lower than 1.");
 
-        public IEnumerable<EntityItem<T>> Siblings(SiblingDirection direction = SiblingDirection.Both, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? positionStart = null, int? positionEnd = null)
-        {
+            if (positionEnd <= 0)
+                throw new ArgumentException("The 'positionEnd' parameter can not be lower than 1.");
+
+            if (positionStart > positionEnd)
+                throw new ArgumentException("The 'positionStart' parameter can not be greater than the 'depthEnd' parameter.");
+
+            if (direction == SiblingDirection.Both)
+            {
+                if (Parent != null)                
+                    foreach (var i in Parent.Children())
+                        if (i != this)
+                            yield return i;
+                yield break;
+            }
+
             EntityItem<T> item;
             if (direction == SiblingDirection.Previous)
                 item = this.Previous;
             else
                 item = this.Next;
-
+            
             var position = 1;
             while (item != null && this.Level <= item.Level)
             {
@@ -244,6 +253,41 @@ namespace GraphExpression
                     item = item.Next;
             }
         }
+
+        public IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int? positionStart = null, int? positionEnd = null)
+        {
+            return Siblings(EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), direction, positionStart, positionEnd);
+        }
+
+        public IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Both)
+        {
+            return Siblings((EntityItemFilterDelegate2<T>)null, null, direction, positionStart, positionEnd);
+        }
+
+        public IEnumerable<EntityItem<T>> Siblings(int positionEnd, SiblingDirection direction = SiblingDirection.Both)
+        {
+            return Siblings(1, positionEnd, direction);
+        }
+
+        #region SiblingsUntil
+
+        public IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Both)
+        {
+            if (stop == null)
+                throw new ArgumentNullException("stop");
+
+            return Siblings(filter, stop, direction);
+        }
+
+        public IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Both)
+        {
+            if (stop == null)
+                throw new ArgumentNullException("stop");
+
+            return Siblings(EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), direction);
+        }
+
+        #endregion
 
         #endregion
 

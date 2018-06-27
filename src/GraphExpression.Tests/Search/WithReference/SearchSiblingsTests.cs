@@ -10,42 +10,249 @@ namespace GraphExpression.Tests
         [Fact]
         public void SearchSiblings_Surface_CheckAllItems()
         {
-            var r = A + (B + C + (D + B)) + (F + (I + B));
+            var r = A + (B + C + (D + B) + E + F + (G + H) + I) + (W + (J + B) + (Y + P)) + P;
             var expression = new Expression<Entity>(A, f => f.Children);
-            Assert.Equal(8, expression.Count);
+            Assert.Equal(16, expression.Count);
+            Assert.Equal("A + (B + C + (D + B) + E + F + (G + H) + I) + (W + (J + B) + (Y + P)) + P", expression.ToExpressionAsString());
 
-            Assert.Equal("A + (B + C + (D + B) + E + F + (G + H) + I) + (F + (J + B) + Y) + P", expression.ToExpressionAsString());
+            var leftDirection = SiblingDirection.Previous;
+            var rigthDirection = SiblingDirection.Next;
+            
+            // A
             var items = expression.Find(A).ElementAt(0).Siblings().ToList();
             Assert.Empty(items);
 
-            items = expression.Find(B).ElementAt(0).Siblings().ToList();
-            Assert.Equal(2, items.Count());
-            TestItem(items[0], name: "B", index: 1);
-            TestItem(items[1], name: "F", index: 5);
-
-            items = expression.Find(C).ElementAt(0).Siblings().ToList();
-            Assert.Single(items);
-            TestItem(items[0], name: "D", index: 1);
-
-            items = expression.Find(D).ElementAt(0).Siblings().ToList();
+            items = expression.Find(A).ElementAt(0).Siblings(direction: leftDirection).ToList();
             Assert.Empty(items);
 
+            items = expression.Find(A).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Empty(items);
+
+            // B
+            items = expression.Find(B).ElementAt(0).Siblings().ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "W", index: 10);
+            TestItem(items[1], name: "P", index: 15);
+
+            items = expression.Find(B).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(B).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "W", index: 10);
+            TestItem(items[1], name: "P", index: 15);
+
+            // C
+            items = expression.Find(C).ElementAt(0).Siblings().ToList();
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "D", index: 3);
+            TestItem(items[1], name: "E", index: 5);
+            TestItem(items[2], name: "F", index: 6);
+            TestItem(items[3], name: "G", index: 7);
+            TestItem(items[4], name: "I", index: 9);
+
+            items = expression.Find(C).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(C).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "D", index: 3);
+            TestItem(items[1], name: "E", index: 5);
+            TestItem(items[2], name: "F", index: 6);
+            TestItem(items[3], name: "G", index: 7);
+            TestItem(items[4], name: "I", index: 9);
+
+            // D
+            items = expression.Find(D).ElementAt(0).Siblings().ToList();
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "C", index: 2);
+            TestItem(items[1], name: "E", index: 5);
+            TestItem(items[2], name: "F", index: 6);
+            TestItem(items[3], name: "G", index: 7);
+            TestItem(items[4], name: "I", index: 9);
+
+            items = expression.Find(D).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "C", index: 2);
+
+            items = expression.Find(D).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Equal(4, items.Count());
+            TestItem(items[0], name: "E", index: 5);
+            TestItem(items[1], name: "F", index: 6);
+            TestItem(items[2], name: "G", index: 7);
+            TestItem(items[3], name: "I", index: 9);
+
+            // B
             items = expression.Find(B).ElementAt(1).Siblings().ToList();
             Assert.Empty(items);
 
-            items = expression.Find(F).ElementAt(0).Siblings().ToList();
+            items = expression.Find(B).ElementAt(1).Siblings(direction: leftDirection).ToList();
             Assert.Empty(items);
 
-            items = expression.Find(I).ElementAt(0).Siblings().ToList();
-            Assert.Equal(2, items.Count());
-            TestItem(items[0], name: "F", index: 5);
-            TestItem(items[1], name: "A", index: 0);
+            items = expression.Find(B).ElementAt(1).Siblings(direction: rigthDirection).ToList();
+            Assert.Empty(items);
 
-            items = expression.Find(B).ElementAt(2).Siblings().ToList();
+            // E
+            items = expression.Find(E).ElementAt(0).Siblings().ToList();
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "C", index: 2);
+            TestItem(items[1], name: "D", index: 3);
+            TestItem(items[2], name: "F", index: 6);
+            TestItem(items[3], name: "G", index: 7);
+            TestItem(items[4], name: "I", index: 9);
+
+            items = expression.Find(E).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "D", index: 3);
+            TestItem(items[1], name: "C", index: 2);
+
+            items = expression.Find(E).ElementAt(0).Siblings(direction: rigthDirection).ToList();
             Assert.Equal(3, items.Count());
-            TestItem(items[0], name: "I", index: 6);
-            TestItem(items[1], name: "F", index: 5);
-            TestItem(items[2], name: "A", index: 0);
+            TestItem(items[0], name: "F", index: 6);
+            TestItem(items[1], name: "G", index: 7);
+            TestItem(items[2], name: "I", index: 9);
+
+            // F
+            items = expression.Find(F).ElementAt(0).Siblings().ToList();
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "C", index: 2);
+            TestItem(items[1], name: "D", index: 3);
+            TestItem(items[2], name: "E", index: 5);
+            TestItem(items[3], name: "G", index: 7);
+            TestItem(items[4], name: "I", index: 9);
+
+            items = expression.Find(F).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Equal(3, items.Count());
+            TestItem(items[0], name: "E", index: 5);
+            TestItem(items[1], name: "D", index: 3);
+            TestItem(items[2], name: "C", index: 2);
+
+            items = expression.Find(F).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "G", index: 7);
+            TestItem(items[1], name: "I", index: 9);
+
+            // G
+            items = expression.Find(G).ElementAt(0).Siblings().ToList();            
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "C", index: 2);
+            TestItem(items[1], name: "D", index: 3);
+            TestItem(items[2], name: "E", index: 5);
+            TestItem(items[3], name: "F", index: 6);
+            TestItem(items[4], name: "I", index: 9);
+
+            items = expression.Find(G).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Equal(4, items.Count());
+            TestItem(items[0], name: "F", index: 6);
+            TestItem(items[1], name: "E", index: 5);
+            TestItem(items[2], name: "D", index: 3);
+            TestItem(items[3], name: "C", index: 2);
+
+            items = expression.Find(G).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "I", index: 9);
+
+            // H
+            items = expression.Find(H).ElementAt(0).Siblings().ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(H).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(H).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Empty(items);
+
+            // I
+            items = expression.Find(I).ElementAt(0).Siblings().ToList();
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "C", index: 2);
+            TestItem(items[1], name: "D", index: 3);
+            TestItem(items[2], name: "E", index: 5);
+            TestItem(items[3], name: "F", index: 6);
+            TestItem(items[4], name: "G", index: 7);
+
+            items = expression.Find(I).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Equal(5, items.Count());
+            TestItem(items[0], name: "G", index: 7);
+            TestItem(items[1], name: "F", index: 6);
+            TestItem(items[2], name: "E", index: 5);
+            TestItem(items[3], name: "D", index: 3);
+            TestItem(items[4], name: "C", index: 2);
+
+            items = expression.Find(I).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Empty(items);
+
+            // W
+            items = expression.Find(W).ElementAt(0).Siblings().ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "B", index: 1);
+            TestItem(items[1], name: "P", index: 15);
+
+            items = expression.Find(W).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "B", index: 1);
+
+            items = expression.Find(W).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "P", index: 15);
+
+            // J
+            items = expression.Find(J).ElementAt(0).Siblings().ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "Y", index: 13);
+
+            items = expression.Find(J).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(J).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "Y", index: 13);
+
+            // B
+            items = expression.Find(B).ElementAt(2).Siblings().ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(B).ElementAt(2).Siblings(direction: leftDirection).ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(B).ElementAt(2).Siblings(direction: rigthDirection).ToList();
+            Assert.Empty(items);
+
+            // Y
+            items = expression.Find(Y).ElementAt(0).Siblings().ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "J", index: 11);
+
+            items = expression.Find(Y).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Single(items);
+            TestItem(items[0], name: "J", index: 11);
+
+            items = expression.Find(Y).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Empty(items);
+
+            // P
+            items = expression.Find(P).ElementAt(0).Siblings().ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(P).ElementAt(0).Siblings(direction: leftDirection).ToList();
+            Assert.Empty(items);
+
+            items = expression.Find(P).ElementAt(0).Siblings(direction: rigthDirection).ToList();
+            Assert.Empty(items);
+
+            // P
+            items = expression.Find(P).ElementAt(1).Siblings().ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "B", index: 1);
+            TestItem(items[1], name: "W", index: 10);
+
+            items = expression.Find(P).ElementAt(1).Siblings(direction: leftDirection).ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "W", index: 10);
+            TestItem(items[1], name: "B", index: 1);
+
+            items = expression.Find(P).ElementAt(1).Siblings(direction: rigthDirection).ToList();
+            Assert.Empty(items);
         }
 
         [Fact]
