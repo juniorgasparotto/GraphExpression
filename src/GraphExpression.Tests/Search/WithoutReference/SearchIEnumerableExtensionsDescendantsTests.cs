@@ -98,13 +98,28 @@ namespace GraphExpression.Tests
         }
 
         [Fact]
-        public void SearchDescendants_CheckDescendantsUntil_StopWhenFoundEntity()
+        public void SearchDescendants_CheckDescendantsUntil_StopWhenUntilDepth()
         {
             var r = A + (B + (C + (D + (E + (F + G)))));
             var expression = new Expression<Entity>(A, f => f.Children);
             Assert.Equal("A + (B + (C + (D + (E + (F + G)))))", expression.ToExpressionAsString());
             //                      1    2    3    4   5
             var items = expression.Where(f => f.Index == 1).DescendantsUntil((f, depht) => depht == 4).ToList();
+            Assert.Equal(4, items.Count);
+            TestItem(items[0], "C", 2);
+            TestItem(items[1], "D", 3);
+            TestItem(items[2], "E", 4);
+            TestItem(items[3], "F", 5);
+        }
+
+        [Fact]
+        public void SearchDescendants_CheckDescendantsUntil_StopWhenFoundEntity()
+        {
+            var r = A + (B + (C + (D + (E + (F + G)))));
+            var expression = new Expression<Entity>(A, f => f.Children);
+            Assert.Equal("A + (B + (C + (D + (E + (F + G)))))", expression.ToExpressionAsString());
+            //                      1    2    3    4   5
+            var items = expression.Where(f => f.Index == 1).DescendantsUntil(f => f.Entity.Name == "F").ToList();
             Assert.Equal(4, items.Count);
             TestItem(items[0], "C", 2);
             TestItem(items[1], "D", 3);

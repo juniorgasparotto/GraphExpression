@@ -190,6 +190,32 @@ namespace GraphExpression.Tests
         }
 
         [Fact]
+        public void SearchDescendants_Deep_CheckUntilStop_StopWhenFoundFirstEntity()
+        {
+            var r = A + (B + C + (D + B)) + (F + (I + B));
+            var expression = new Expression<Entity>(A, f => f.Children, true);
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            var items = expression.Find(F).ElementAt(0).DescendantsUntil(f => f.Entity.Name == "C").ToList();
+            Assert.Equal(3, items.Count());
+            TestItem(items[0], name: "I", index: 6);
+            TestItem(items[1], name: "B", index: 7);
+            TestItem(items[2], name: "C", index: 8);
+        }
+
+        [Fact]
+        public void SearchDescendants_Deep_CheckUntilStopWithDepth_StopWhenFoundFirstMod2()
+        {
+            var r = A + (B + C + (D + B)) + (F + (I + B));
+            var expression = new Expression<Entity>(A, f => f.Children, true);
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            // Depth of F:                              1    2   3    3   4                                          
+            var items = expression.Find(F).ElementAt(0).DescendantsUntil((f, depth) => depth % 2 == 0).ToList();
+            Assert.Equal(2, items.Count());
+            TestItem(items[0], name: "I", index: 6);
+            TestItem(items[1], name: "B", index: 7);
+        }
+
+        [Fact]
         public void SearchDescendants_Deep_CheckFilterWithDepth_ReturnGreatGrandchildren()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
