@@ -29,7 +29,7 @@ namespace GraphExpression
             get
             {
                 var previous = this.Previous;
-                while(previous != null)
+                while (previous != null)
                 {
                     if (previous.Level < this.Level)
                         return previous;
@@ -196,11 +196,13 @@ namespace GraphExpression
             return Descendants(1);
         }
 
-#endregion
-#endregion 
-#region Siblings
+        #endregion
 
-        public IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int ? positionStart = null, int? positionEnd = null)
+        #endregion
+
+        #region Siblings
+
+        public IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int? positionStart = null, int? positionEnd = null)
         {
             if (positionStart <= 0)
                 throw new ArgumentException("The 'positionStart' parameter can not be lower than 1.");
@@ -211,37 +213,44 @@ namespace GraphExpression
             if (positionStart > positionEnd)
                 throw new ArgumentException("The 'positionStart' parameter can not be greater than the 'depthEnd' parameter.");
 
+            EntityItem<T> item;
+            var refLevel = Level;
+
             if (direction == SiblingDirection.Both)
             {
-                if (Parent != null)                
-                    foreach (var i in Parent.Children())
-                        if (i != this)
-                            yield return i;
-                yield break;
+                // GET NEXT FROM THE PARENT D (A is parent and B is first child):
+                // ( A + B + C + D )
+                //               ^
+                //   *   ^
+                // item = B
+                item = this.Parent?.Next;
+                direction = SiblingDirection.Next;
             }
-
-            EntityItem<T> item;
-            if (direction == SiblingDirection.Previous)
-                item = this.Previous;
+            else if (direction == SiblingDirection.Previous)
+                item = Previous;
             else
-                item = this.Next;
-            
+                item = Next;
+
             var position = 1;
-            while (item != null && this.Level <= item.Level)
+            while (item != null && refLevel <= item.Level)
             {
-                var depth = Math.Abs(item.Level - this.Level);
+                var depth = Math.Abs(item.Level - refLevel);
                 if (depth == 0)
                 {
-                    if (!positionStart.HasValue || !positionEnd.HasValue || (position >= positionStart && position <= positionEnd))
+                    // The current element can not be returned as its own sibling
+                    if (item != this)
                     {
-                        var filterResult = (filter == null || filter(item, position));
-                        var stopResult = (stop != null && stop(item, position));
+                        if (!positionStart.HasValue || !positionEnd.HasValue || (position >= positionStart && position <= positionEnd))
+                        {
+                            var filterResult = (filter == null || filter(item, position));
+                            var stopResult = (stop != null && stop(item, position));
 
-                        if (filterResult)
-                            yield return item;
+                            if (filterResult)
+                                yield return item;
 
-                        if (stopResult)
-                            break;
+                            if (stopResult)
+                                break;
+                        }
                     }
 
                     position++;
@@ -284,7 +293,7 @@ namespace GraphExpression
             if (stop == null)
                 throw new ArgumentNullException("stop");
 
-            return Siblings(EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), direction);
+            return Siblings(EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(filter), EntityItemFilterDelegateUtils<T>.ConvertToMajorDelegate(stop), direction);
         }
 
         #endregion
