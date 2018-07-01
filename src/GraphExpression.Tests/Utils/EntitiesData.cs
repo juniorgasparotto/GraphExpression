@@ -38,5 +38,21 @@ namespace GraphExpression.Tests
         public Entity Z { get; } = new Entity("Z");
         public Entity W { get; } = new Entity("W");
         public Entity Y { get; } = new Entity("Y");
+
+        protected void TestEntityItem(EntityItem<Entity> item, bool isRoot, bool isLast, bool isFirstInParent, bool isLastInParent, string name, int index, int indexAtLevel, int level, int levelAtExpression, string previous, string next, string parent)
+        {
+            Assert.Equal(isRoot, item.IsRoot);
+            Assert.Equal(isLast, item.IsLast);
+            Assert.Equal(isFirstInParent, item.IsFirstInParent);
+            Assert.Equal(isLastInParent, item.IsLastInParent);
+            Assert.Equal(name, item.Entity.Name);
+            Assert.Equal(index, item.Index);
+            Assert.Equal(indexAtLevel, item.IndexAtLevel);
+            Assert.Equal(level, item.Level);
+            Assert.Equal(levelAtExpression, item.LevelAtExpression);
+            Assert.Equal(next, item.Next?.Entity.Name);
+            Assert.Equal(parent, item.Parent?.Entity.Name);
+            Assert.Equal(previous, item.Previous?.Entity.Name);
+        }
     }
 }
