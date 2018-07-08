@@ -13,7 +13,7 @@ namespace GraphExpression.Tests
             
         }
 
-        private static void TestItem(EntityItem<Entity> item, string name, int index)
+        private static void TestItem(EntityItem<CircularEntity> item, string name, int index)
         {
             Assert.Equal(name, item.Entity.Name);
             Assert.Equal(index, item.Index);

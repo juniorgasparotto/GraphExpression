@@ -4,21 +4,21 @@ using System.Diagnostics;
 namespace GraphExpression
 {
     [DebuggerDisplay("{ToString()}")]
-    public class Entity : List<Entity>
+    public class CircularEntity : List<CircularEntity>
     {
         public string Name { get; private set; }
-        public Entity(string name) => this.Name = name;
+        public CircularEntity(string name) => this.Name = name;
 
         // only didatic
-        public IEnumerable<Entity> Children { get => this; }
+        public IEnumerable<CircularEntity> Children { get => this; }
 
-        public static Entity operator +(Entity a, Entity b)
+        public static CircularEntity operator +(CircularEntity a, CircularEntity b)
         {
             a.Add(b);
             return a;
         }
 
-        public static Entity operator -(Entity a, Entity b)
+        public static CircularEntity operator -(CircularEntity a, CircularEntity b)
         {
             a.Remove(b);
             return a;

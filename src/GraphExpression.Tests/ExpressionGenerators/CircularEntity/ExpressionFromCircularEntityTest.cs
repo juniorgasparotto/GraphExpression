@@ -5,24 +5,24 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class ExpressionFromHierarchyEntityTest : EntitiesData
+    public class ExpressionFromCircularEntityTest : EntitiesData
     {
         [Fact]
         public void CreateManualExpression_Surface_ReturnExpressionAsString()
         {
-            var expression = new Expression<Entity>();
-            expression.Add(new EntityItem<Entity>(expression) { Entity = A, Index = 0, IndexAtLevel = 0, Level = 1 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = B, Index = 1, IndexAtLevel = 0, Level = 2 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = C, Index = 2, IndexAtLevel = 1, Level = 2 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = Y, Index = 3, IndexAtLevel = 0, Level = 3 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = D, Index = 4, IndexAtLevel = 2, Level = 2 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = E, Index = 5, IndexAtLevel = 0, Level = 3 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = F, Index = 6, IndexAtLevel = 1, Level = 3 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = G, Index = 7, IndexAtLevel = 0, Level = 4 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = B, Index = 8, IndexAtLevel = 0, Level = 5 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = C, Index = 9, IndexAtLevel = 1, Level = 5 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = Y, Index = 10, IndexAtLevel = 1, Level = 4 });
-            expression.Add(new EntityItem<Entity>(expression) { Entity = Z, Index = 11, IndexAtLevel = 2, Level = 3 });
+            var expression = new Expression<CircularEntity>();
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = A, Index = 0, IndexAtLevel = 0, Level = 1 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = B, Index = 1, IndexAtLevel = 0, Level = 2 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = C, Index = 2, IndexAtLevel = 1, Level = 2 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Y, Index = 3, IndexAtLevel = 0, Level = 3 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = D, Index = 4, IndexAtLevel = 2, Level = 2 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = E, Index = 5, IndexAtLevel = 0, Level = 3 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = F, Index = 6, IndexAtLevel = 1, Level = 3 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = G, Index = 7, IndexAtLevel = 0, Level = 4 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = B, Index = 8, IndexAtLevel = 0, Level = 5 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = C, Index = 9, IndexAtLevel = 1, Level = 5 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Y, Index = 10, IndexAtLevel = 1, Level = 4 });
+            expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Z, Index = 11, IndexAtLevel = 2, Level = 3 });
             var expressionString = expression.ToExpressionAsString();
             Assert.Equal("A + B + (C + Y) + (D + E + (F + (G + B + C) + Y) + Z)", expressionString);
         }
@@ -31,7 +31,7 @@ namespace GraphExpression.Tests
         public void CreateAutomaticExpression_Surface_VerifyMatrix()
         {
             var r = A + (B + (C + A) + A) + (D + D + E + (F + (G + A + C) + Y) + Z) + G;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(15, expression.Count);
             TestEntityItem(expression[0], isRoot: true, isLast: false, isFirstInParent: true, isLastInParent: false, name: "A", index: 0, indexAtLevel: 0, level: 1, levelAtExpression: 1, previous: null, next: "B", parent: null);
             TestEntityItem(expression[1], isRoot: false, isLast: false, isFirstInParent: true, isLastInParent: false, name: "B", index: 1, indexAtLevel: 0, level: 2, levelAtExpression: 2, previous: "A", next: "C", parent: "A");
@@ -54,7 +54,7 @@ namespace GraphExpression.Tests
         public void CreateAutomaticExpression_Deep_VerifyMatrix()
         {
             var r = A + (B + (C + A) + A) + (D + D + E + (F + (G + A + C) + Y) + Z) + G;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal(19, expression.Count);
             TestEntityItem(expression[0], isRoot: true, isLast: false, isFirstInParent: true, isLastInParent: false, name: "A", index: 0, indexAtLevel: 0, level: 1, levelAtExpression: 1, previous: null, next: "B", parent: null);
             TestEntityItem(expression[1], isRoot: false, isLast: false, isFirstInParent: true, isLastInParent: false, name: "B", index: 1, indexAtLevel: 0, level: 2, levelAtExpression: 2, previous: "A", next: "C", parent: "A");
@@ -81,7 +81,7 @@ namespace GraphExpression.Tests
         public void CreateExpressionAsString_2Entities_WithoutParameterEncloseParenthesisInRoot_ReturnExpressionWithoutRootParenthesis()
         {
             var r = A + B;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(2, expression.Count);
             Assert.Equal("A + B", expression.ToExpressionAsString());
         }
@@ -90,7 +90,7 @@ namespace GraphExpression.Tests
         public void CreateExpressionAsString_2Entities_WithParameterEncloseParenthesisInRoot_ReturnExpressionWithRootParenthesis()
         {
             var r = A + B;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(2, expression.Count);
             Assert.Equal("(A + B)", expression.ToExpressionAsString(true));
         }
@@ -98,7 +98,7 @@ namespace GraphExpression.Tests
         [Fact]
         public void CreateExpressionAsString_1Entities_WithoutParameterEncloseParenthesisInRoot_ReturnExpressionWithoutRootParenthesis()
         {
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Single(expression);
             Assert.Equal("A", expression.ToExpressionAsString());
         }
@@ -106,7 +106,7 @@ namespace GraphExpression.Tests
         [Fact]
         public void CreateExpressionAsString_1Entities_WithParameterEncloseParenthesisInRoot_ReturnExpressionWithRootParenthesis()
         {
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Single(expression);
             Assert.Equal("(A)", expression.ToExpressionAsString(true));
         }
@@ -115,7 +115,7 @@ namespace GraphExpression.Tests
         public void CreateCiclicalExpression_Deep_Direct_ReturnNotRepeat()
         {
             var r = A + A;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(2, expression.Count);
             Assert.Equal("A + A", expression.ToExpressionAsString());
         }
@@ -124,7 +124,7 @@ namespace GraphExpression.Tests
         public void CreateCiclicalExpression_Deep_Indirect_ReturnNotRepeat()
         {
             var r = A + (C + A) + C;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal(5, expression.Count);
             Assert.Equal("A + (C + A) + (C + A)", expression.ToExpressionAsString());
         }
@@ -133,7 +133,7 @@ namespace GraphExpression.Tests
         public void CreateCiclicalExpression_Surface_Direct_ReturnNotRepeat()
         {
             var r = A + A;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(2, expression.Count);
             Assert.Equal("A + A", expression.ToExpressionAsString());
         }
@@ -142,7 +142,7 @@ namespace GraphExpression.Tests
         public void CreateCiclicalExpression_Surface_Indirect_ReturnNotRepeat()
         {
             var r = A + (C + A) + C;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(4, expression.Count);
             Assert.Equal("A + (C + A) + C", expression.ToExpressionAsString());
         }
@@ -151,7 +151,7 @@ namespace GraphExpression.Tests
         public void CreateCiclicalExpression_Surface_IndirectMultiLevel_ReturnNotRepeat()
         {
             var r = A + (B + (C + (D + B))) + C;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(6, expression.Count);
             Assert.Equal("A + (B + (C + (D + B))) + C", expression.ToExpressionAsString());
         }
@@ -160,7 +160,7 @@ namespace GraphExpression.Tests
         public void CreateCiclicalExpression_Deep_IndirectMultiLevel_ReturnNotRepeat()
         {
             var r = A + (B + (C + (D + B))) + C;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal(9, expression.Count);
             Assert.Equal("A + (B + (C + (D + B))) + (C + (D + (B + C)))", expression.ToExpressionAsString());
         }

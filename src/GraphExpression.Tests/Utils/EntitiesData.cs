@@ -12,34 +12,34 @@ namespace GraphExpression.Tests
 
         }
 
-        public Entity A { get; } = new Entity("A");
-        public Entity B { get; } = new Entity("B");
-        public Entity C { get; } = new Entity("C");
-        public Entity D { get; } = new Entity("D");
-        public Entity E { get; } = new Entity("E");
-        public Entity F { get; } = new Entity("F");
-        public Entity G { get; } = new Entity("G");
-        public Entity H { get; } = new Entity("H");
-        public Entity I { get; } = new Entity("I");
-        public Entity J { get; } = new Entity("J");
-        public Entity L { get; } = new Entity("L");
-        public Entity K { get; } = new Entity("K");
-        public Entity M { get; } = new Entity("M");
-        public Entity N { get; } = new Entity("N");
-        public Entity O { get; } = new Entity("O");
-        public Entity P { get; } = new Entity("P");
-        public Entity Q { get; } = new Entity("Q");
-        public Entity R { get; } = new Entity("R");
-        public Entity S { get; } = new Entity("S");
-        public Entity T { get; } = new Entity("T");
-        public Entity U { get; } = new Entity("U");
-        public Entity V { get; } = new Entity("V");
-        public Entity X { get; } = new Entity("X");
-        public Entity Z { get; } = new Entity("Z");
-        public Entity W { get; } = new Entity("W");
-        public Entity Y { get; } = new Entity("Y");
+        public CircularEntity A { get; } = new CircularEntity("A");
+        public CircularEntity B { get; } = new CircularEntity("B");
+        public CircularEntity C { get; } = new CircularEntity("C");
+        public CircularEntity D { get; } = new CircularEntity("D");
+        public CircularEntity E { get; } = new CircularEntity("E");
+        public CircularEntity F { get; } = new CircularEntity("F");
+        public CircularEntity G { get; } = new CircularEntity("G");
+        public CircularEntity H { get; } = new CircularEntity("H");
+        public CircularEntity I { get; } = new CircularEntity("I");
+        public CircularEntity J { get; } = new CircularEntity("J");
+        public CircularEntity L { get; } = new CircularEntity("L");
+        public CircularEntity K { get; } = new CircularEntity("K");
+        public CircularEntity M { get; } = new CircularEntity("M");
+        public CircularEntity N { get; } = new CircularEntity("N");
+        public CircularEntity O { get; } = new CircularEntity("O");
+        public CircularEntity P { get; } = new CircularEntity("P");
+        public CircularEntity Q { get; } = new CircularEntity("Q");
+        public CircularEntity R { get; } = new CircularEntity("R");
+        public CircularEntity S { get; } = new CircularEntity("S");
+        public CircularEntity T { get; } = new CircularEntity("T");
+        public CircularEntity U { get; } = new CircularEntity("U");
+        public CircularEntity V { get; } = new CircularEntity("V");
+        public CircularEntity X { get; } = new CircularEntity("X");
+        public CircularEntity Z { get; } = new CircularEntity("Z");
+        public CircularEntity W { get; } = new CircularEntity("W");
+        public CircularEntity Y { get; } = new CircularEntity("Y");
 
-        protected void TestEntityItem(EntityItem<Entity> item, bool isRoot, bool isLast, bool isFirstInParent, bool isLastInParent, string name, int index, int indexAtLevel, int level, int levelAtExpression, string previous, string next, string parent)
+        protected void TestEntityItem(EntityItem<CircularEntity> item, bool isRoot, bool isLast, bool isFirstInParent, bool isLastInParent, string name, int index, int indexAtLevel, int level, int levelAtExpression, string previous, string next, string parent)
         {
             Assert.Equal(isRoot, item.IsRoot);
             Assert.Equal(isLast, item.IsLast);

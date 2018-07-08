@@ -11,7 +11,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Surface_CheckAllItems()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(8, expression.Count);
 
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + B))", expression.ToExpressionAsString());
@@ -58,7 +58,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Deep_CheckAllItems()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal(11, expression.Count);
 
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
@@ -128,7 +128,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Deep_CheckFilter()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
 
             var items = expression.Where(f => f.Index == 10).Ancestors(f => f.Entity.Name == "B" || f.Entity.Name == "A").ToList();
@@ -141,7 +141,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Deep_CheckFilterWithDepth()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             //Depth of D: 4                        3    2    1
             var items = expression.Where(f => f.Index == 9).Ancestors((f, depth) => depth == 1).ToList();
@@ -165,7 +165,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Deep_CheckStop_StopWhenFoundSpecifyAncestor()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             var items = expression.Where(f => f.Index == 10).Ancestors(null, f => f.Entity.Name == "F").ToList();
             Assert.Equal(4, items.Count());
@@ -179,7 +179,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Deep_CheckStopWithDepth_StopWhenFoundFirstMod2()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             //Depth of B: 3                        2    1    
             var items = expression.Where(f => f.Index == 7).Ancestors(null, (f, depth) => depth % 2 == 0).ToList();
@@ -192,7 +192,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Deep_CheckFilterWithStartAndEndDepth_ReturnUntilGreatGrandfather()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             //Depth of D: 4                        3    2    1                                     
             var items = expression.Where(f => f.Index == 9).Ancestors(1, 3).ToList();
@@ -206,7 +206,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_Deep_CheckFilterWithEndDepth_ReturnUntilGreatGrandfather()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             //Depth of D: 4                        3    2    1                                     
             var items = expression.Where(f => f.Index == 9).Ancestors(3).ToList();
@@ -220,7 +220,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_CheckUntil_ReturnUntilFoundDepthWithMod2()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             //Depth of B: 3                        2    1    
             var items = expression.Where(f => f.Index == 7).AncestorsUntil((f, depth) => depth % 2 == 0).ToList();
@@ -233,7 +233,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_CheckUntil_ReturnUntilFoundSpecifyEntity()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             //Depth of B: 3                        2    1    
             var items = expression.Where(f => f.Index == 7).AncestorsUntil(f => f.Entity.Name == "I").ToList();
@@ -245,7 +245,7 @@ namespace GraphExpression.Tests
         public void SearchAncestors_CheckParents_ReturnOnlyFathers()
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
             //                                               ^            ^   
             var items = expression.Where(f => f.Index == 7 || f.Index == 10).Parents().ToList();
@@ -254,7 +254,7 @@ namespace GraphExpression.Tests
             TestItem(items[1], name: "D", index: 9);
         }
 
-        private static void TestItem(EntityItem<Entity> item, string name, int index)
+        private static void TestItem(EntityItem<CircularEntity> item, string name, int index)
         {
             Assert.Equal(name, item.Entity.Name);
             Assert.Equal(index, item.Index);

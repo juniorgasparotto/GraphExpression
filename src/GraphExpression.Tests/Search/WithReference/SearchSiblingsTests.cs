@@ -11,7 +11,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_Surface_CheckAllItems()
         {
             var r = A + (B + C + (D + B) + E + F + (G + H) + I) + (W + (J + B) + (Y + P)) + P;
-            var expression = new Expression<Entity>(A, f => f.Children);
+            var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(16, expression.Count);
             Assert.Equal("A + (B + C + (D + B) + E + F + (G + H) + I) + (W + (J + B) + (Y + P)) + P", expression.ToExpressionAsString());
 
@@ -259,7 +259,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_Deep_CheckFilter()
         {
             var r = A + (D + I) + I + (B + C + J + D + Y);
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (D + I) + I + (B + C + J + (D + I) + Y)", expression.ToExpressionAsString());
 
             var items = expression.Find(D).ElementAt(1).Siblings(f => f.Entity.Name == "C" || f.Entity.Name == "Y").ToList();
@@ -288,7 +288,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_Deep_CheckFilterWithPosition()
         {
             var r = A + (D + I) + I + (B + C + J + D + Y);
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + (D + I) + I + (B + C + J + (D + I) + Y)", expression.ToExpressionAsString());
             // ALL:                              1   2    3        4  
 
@@ -323,7 +323,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_Deep_CheckStop_StopWhenFoundSpecifyEntity()
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
 
             var items = expression.Find(C).ElementAt(0).Siblings(null, f => f.Entity.Name == "D").ToList();
@@ -346,7 +346,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_Deep_CheckStopWithPosition_StopWhenFoundFirstMod2()
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -376,7 +376,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_CheckUntil_ReturnUntilFoundPositionWithMod2()
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -406,7 +406,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_CheckUntil_ReturnUntilFoundSpecifyEntity()
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -435,7 +435,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_Deep_CheckFilterWithStartAndEndPosition_ReturnUntilPosEnd()
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -463,7 +463,7 @@ namespace GraphExpression.Tests
         public void SearchSiblings_Deep_CheckFilterEndPos_ReturnUntilPosEnd()
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
-            var expression = new Expression<Entity>(A, f => f.Children, true);
+            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -488,7 +488,7 @@ namespace GraphExpression.Tests
             TestItem(items[1], name: "C", index: 2);
         }
         
-        private static void TestItem(EntityItem<Entity> item, string name, int index)
+        private static void TestItem(EntityItem<CircularEntity> item, string name, int index)
         {
             Assert.Equal(name, item.Entity.Name);
             Assert.Equal(index, item.Index);

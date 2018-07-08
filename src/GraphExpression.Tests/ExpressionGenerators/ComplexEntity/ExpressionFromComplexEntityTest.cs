@@ -5,13 +5,13 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class ExpressionFromComplexEntityTest : EntitiesData
+    public class ExpressionFromComplexEntityTest
     {
         [Fact]
         public void CreateManualExpression_Surface_ReturnExpressionAsString()
         {
-            var expression = new Expression<Entity>();
-            
+            var a = A.Create();
+            var expression = a.AsExpression();
         }
     }
 }
