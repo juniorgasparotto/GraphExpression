@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace GraphExpression
 {
     public static class ExpressionComplexExtensions
     {
-        public static Expression<ComplexEntity> AsExpression(this object entityRoot)
+        public static Expression<object, ComplexEntity> AsExpression(this object entityRoot)
         {
-            var _root = new ComplexEntity(entityRoot);
-            var expression = new Expression<ComplexEntity>(_root, e => GetChildren(e));
+            var expression = new Expression<object, ComplexEntity>(entityRoot, e => GetChildren(e));
             return expression;
         }
 
-        private static IEnumerable<ComplexEntity> GetChildren(ComplexEntity entity)
+        private static IEnumerable<object> GetChildren(object parent)
         {
-            var properties = entity.GetType().GetProperties();
+            if (IsSystemType(parent.GetType()))
+                yield break;
+
+            var properties = parent.GetType().GetProperties();
             foreach(var p in properties)
                 yield return new PropertyEntity(entity, p);
 
-            var fields = entity.GetType().GetFields();
+            var fields = parent.GetType().GetFields();
             foreach (var f in fields)
                 yield return new FieldEntity(entity, f);
         }

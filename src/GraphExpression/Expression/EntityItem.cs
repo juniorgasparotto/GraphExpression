@@ -304,8 +304,8 @@ namespace GraphExpression
 
         public override string ToString()
         {
-            if (expression.ToStringCallBack != null)
-                return expression.ToStringCallBack(this);
+            if (expression.Serializer?.SerializeItemCallback != null)
+                return expression.Serializer?.SerializeItemCallback(this);
 
             return this.Entity?.ToString();
         }

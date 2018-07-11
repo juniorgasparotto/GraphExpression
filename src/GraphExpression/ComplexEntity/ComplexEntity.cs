@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 
 namespace GraphExpression
 {
-    public class ComplexEntity
+    public class ComplexEntity : EntityItem<object>
     {
-        public object Entity { get; internal set; }
-
-        public ComplexEntity(object entity = null)
+        public ComplexEntity(Expression<object> expression) : base(expression)
         {
-            this.Entity = entity;
         }
     }
 }

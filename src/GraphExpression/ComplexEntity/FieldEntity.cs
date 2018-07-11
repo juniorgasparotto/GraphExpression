@@ -8,10 +8,10 @@ namespace GraphExpression
     {
         public FieldInfo Field { get; private set; }
 
-        public FieldEntity(ComplexEntity parent, FieldInfo field)
+        public FieldEntity(Expression<object> expression, object parent, FieldInfo field) : base(expression)
         {
             this.Field = field;
-            this.Entity = field.GetValue(parent.Entity);
+            this.Entity = field.GetValue(parent);
         }
     }
 }

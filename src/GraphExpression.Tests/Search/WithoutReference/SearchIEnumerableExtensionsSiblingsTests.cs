@@ -1,4 +1,5 @@
 using ExpressionGraph.Serialization;
+using GraphExpression.Serialization;
 using System;
 using System.Linq;
 using Xunit;
@@ -13,7 +14,7 @@ namespace GraphExpression.Tests
             var r = A + (B + C + (D + B) + E + F + (G + H) + I) + (W + (J + B) + (Y + P)) + P;
             var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(16, expression.Count);
-            Assert.Equal("A + (B + C + (D + B) + E + F + (G + H) + I) + (W + (J + B) + (Y + P)) + P", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B) + E + F + (G + H) + I) + (W + (J + B) + (Y + P)) + P", expression.AsSerializer().Serialize());
 
             var leftDirection = SiblingDirection.Previous;
             var rigthDirection = SiblingDirection.Next;
@@ -260,7 +261,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (D + I) + I + (B + C + J + D + Y);
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (D + I) + I + (B + C + J + (D + I) + Y)", expression.ToExpressionAsString());
+            Assert.Equal("A + (D + I) + I + (B + C + J + (D + I) + Y)", expression.AsSerializer().Serialize());
             // Index:     0    1   2    3    4   5   6    7   8    9              
 
             var items = expression.Where(f => f.Index == 7).Siblings(f => f.Entity.Name == "C" || f.Entity.Name == "Y").ToList();
@@ -290,7 +291,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (D + I) + I + (B + C + J + D + Y);
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (D + I) + I + (B + C + J + (D + I) + Y)", expression.ToExpressionAsString());
+            Assert.Equal("A + (D + I) + I + (B + C + J + (D + I) + Y)", expression.AsSerializer().Serialize());
             //            0    1   2    3    4   5   6    7   8    9   
             // ALL:                              1   2    3        4  
 
@@ -326,7 +327,7 @@ namespace GraphExpression.Tests
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
+            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.AsSerializer().Serialize());
             //            0   1   2    3   4    5   6      7   8    9   10     11  12
 
             var items = expression.Where(f => f.Index == 2).Siblings(null, f => f.Entity.Name == "D").ToList();
@@ -350,7 +351,7 @@ namespace GraphExpression.Tests
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
+            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.AsSerializer().Serialize());
             //            0   1   2    3   4    5   6      7   8    9   10     11  12
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -381,7 +382,7 @@ namespace GraphExpression.Tests
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
+            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.AsSerializer().Serialize());
             //            0   1   2    3   4    5   6      7   8    9   10     11  12
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -412,7 +413,7 @@ namespace GraphExpression.Tests
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
+            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.AsSerializer().Serialize());
             //            0   1   2    3   4    5   6      7   8    9   10     11  12
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -442,7 +443,7 @@ namespace GraphExpression.Tests
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
+            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.AsSerializer().Serialize());
             //            0   1   2    3   4    5   6      7   8    9   10     11  12
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2
@@ -471,7 +472,7 @@ namespace GraphExpression.Tests
         {
             var r = A + B + C + (D + F + (J + I)) + D + J;
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.ToExpressionAsString());
+            Assert.Equal("A + B + C + (D + F + (J + I)) + (D + F + (J + I)) + (J + I)", expression.AsSerializer().Serialize());
             //            0   1   2    3   4    5   6      7   8    9   10     11  12
             // ALL:           1   2    3                   4                   5
             // NEXT FROM D0:                               1                   2

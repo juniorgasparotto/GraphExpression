@@ -1,5 +1,4 @@
-using ExpressionGraph.Serialization;
-using System;
+using GraphExpression.Serialization;
 using System.Linq;
 using Xunit;
 
@@ -14,7 +13,7 @@ namespace GraphExpression.Tests
             var expression = new Expression<CircularEntity>(A, f => f.Children);
             Assert.Equal(8, expression.Count);
 
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + B))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + B))", expression.AsSerializer().Serialize());
             var items = expression.Find(A).ElementAt(0).Ancestors().ToList();
             Assert.Empty(items);
 
@@ -61,7 +60,7 @@ namespace GraphExpression.Tests
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
             Assert.Equal(11, expression.Count);
 
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
 
             var items = expression.Find(A).ElementAt(0).Ancestors().ToList();
             Assert.Empty(items);
@@ -129,7 +128,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
 
             var items = expression.Find(B).ElementAt(3).Ancestors(f => f.Entity.Name == "B" || f.Entity.Name == "A").ToList();
             Assert.Equal(2, items.Count());
@@ -142,7 +141,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
             //Depth of D: 4                        3    2    1
             var items = expression.Find(D).ElementAt(1).Ancestors((f, depth) => depth == 1).ToList();
             Assert.Single(items);
@@ -166,7 +165,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
             var items = expression.Find(B).ElementAt(3).Ancestors(null, f => f.Entity.Name == "F").ToList();
             Assert.Equal(4, items.Count());
             TestItem(items[0], name: "D", index: 9);
@@ -180,7 +179,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
             //Depth of B: 3                        2    1    
             var items = expression.Find(B).ElementAt(2).Ancestors(null, (f, depth) => depth % 2 == 0).ToList();
             Assert.Equal(2, items.Count());
@@ -193,7 +192,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
             //Depth of D: 4                        3    2    1                                     
             var items = expression.Find(D).ElementAt(1).Ancestors(1, 3).ToList();
             Assert.Equal(3, items.Count());
@@ -207,7 +206,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
             //Depth of D: 4                        3    2    1                                     
             var items = expression.Find(D).ElementAt(1).Ancestors(3).ToList();
             Assert.Equal(3, items.Count());
@@ -221,7 +220,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
             //Depth of B: 3                        2    1    
             var items = expression.Find(B).ElementAt(2).AncestorsUntil((f, depth) => depth % 2 == 0).ToList();
             Assert.Equal(2, items.Count());
@@ -234,7 +233,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + C + (D + B)) + (F + (I + B));
             var expression = new Expression<CircularEntity>(A, f => f.Children, true);
-            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.ToExpressionAsString());
+            Assert.Equal("A + (B + C + (D + B)) + (F + (I + (B + C + (D + B))))", expression.AsSerializer().Serialize());
             //Depth of B: 3                        2    1    
             var items = expression.Find(B).ElementAt(2).AncestorsUntil(f => f.Entity.Name == "I").ToList();
             Assert.Single(items);

@@ -1,4 +1,5 @@
 using ExpressionGraph.Serialization;
+using GraphExpression.Serialization;
 using System;
 using System.Linq;
 using Xunit;
@@ -12,6 +13,7 @@ namespace GraphExpression.Tests
         {
             var a = A.Create();
             var expression = a.AsExpression();
+            var expressionStr = expression.AsSerializer().Serialize();
         }
     }
 }

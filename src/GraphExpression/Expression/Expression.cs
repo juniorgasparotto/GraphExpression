@@ -1,14 +1,28 @@
-﻿using System;
+﻿using GraphExpression.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphExpression
 {
-    public class Expression<T> : List<EntityItem<T>>
+    public class Expression<T> : Expression<T, EntityItem<T>>
+    {
+        public Expression()
+        {
+        }
+
+        public Expression(T root, Func<T, IEnumerable<T>> childrenCallback, bool deep = false)
+            : base(root, childrenCallback, deep)
+        {
+        }
+    }
+
+    public class Expression<T, TEntityItem> : List<TEntityItem>
+        where TEntityItem : EntityItem<T>
     {
         private readonly Func<T, IEnumerable<T>> childrenCallback;
         public bool Deep { get; }
-        public Func<EntityItem<T>, string> ToStringCallBack { get; set; }
+        public SerializationAsExpression<T> Serializer { get; set; }
 
         public Expression()
         {
@@ -28,15 +42,7 @@ namespace GraphExpression
             // only when is root entity
             if (Count == 0)
             {
-                var rootItem = new EntityItem<T>(this)
-                {
-                    Entity = parent,
-                    Index = 0,
-                    IndexAtLevel = 0,
-                    LevelAtExpression = level,
-                    Level = level
-                };
-
+                var rootItem = GetEntityItem(parent, 0, 0, level, level);
                 Add(rootItem);
             }
 
@@ -48,13 +54,7 @@ namespace GraphExpression
             foreach (var child in children)
             {
                 var previous = this.Last();
-                var childItem = new EntityItem<T>(this)
-                {
-                    Entity = child,
-                    Index = Count,
-                    IndexAtLevel = indexLevel++,
-                    Level = level,
-                };
+                var childItem = GetEntityItem(child, Count, indexLevel++, 0, level);
 
                 Add(childItem);
 
@@ -76,6 +76,17 @@ namespace GraphExpression
                     childItem.LevelAtExpression = parentItem.LevelAtExpression;
                 }
             }
+        }
+
+        private TEntityItem GetEntityItem(T entity, int index, int indexAtLevel, int levelAtExpression, int level)
+        {
+            var item = (TEntityItem)Activator.CreateInstance(typeof(TEntityItem), this);
+            item.Entity = entity;
+            item.Index = index;
+            item.IndexAtLevel = indexAtLevel;
+            item.LevelAtExpression = levelAtExpression;
+            item.Level = level;
+            return item;
         }
 
         private bool HasAncestorEqualsTo(EntityItem<T> entityItem)
@@ -112,45 +123,5 @@ namespace GraphExpression
         //    }
         //    return s;
         //}
-
-        public string ToExpressionAsString(bool encloseParenthesisInRoot = false)
-        {
-            var parenthesisToClose = new Stack<EntityItem<T>>();
-            var output = "";
-            foreach (var item in this)
-            {
-                var next = item.Next;
-                var isFirstInParenthesis = item.IsFirstInParent;
-                var isLastInParenthesis = item.IsLastInParent;
-
-                if (!item.IsRoot) output += " + ";
-
-                if ((!item.IsRoot && isFirstInParenthesis) || (item.IsRoot && encloseParenthesisInRoot))
-                {
-                    output += "(";
-                    parenthesisToClose.Push(item);
-                }
-
-                output += item.Entity.ToString();
-
-                if (isLastInParenthesis)
-                {
-                    int countToClose;
-
-                    if (next == null)
-                        countToClose = parenthesisToClose.Count;
-                    else
-                        countToClose = item.Level - next.Level;
-
-                    for (var i = countToClose; i > 0; i--)
-                    {
-                        parenthesisToClose.Pop();
-                        output += ")";
-                    }
-                }
-            }
-
-            return output;
-        }
     }
 }
