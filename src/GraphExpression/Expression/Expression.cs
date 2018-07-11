@@ -5,20 +5,7 @@ using System.Linq;
 
 namespace GraphExpression
 {
-    public class Expression<T> : Expression<T, EntityItem<T>>
-    {
-        public Expression()
-        {
-        }
-
-        public Expression(T root, Func<T, IEnumerable<T>> childrenCallback, bool deep = false)
-            : base(root, childrenCallback, deep)
-        {
-        }
-    }
-
-    public class Expression<T, TEntityItem> : List<TEntityItem>
-        where TEntityItem : EntityItem<T>
+    public class Expression<T> : List<EntityItem<T>>
     {
         private readonly Func<T, IEnumerable<T>> childrenCallback;
         public bool Deep { get; }
@@ -78,9 +65,16 @@ namespace GraphExpression
             }
         }
 
-        private TEntityItem GetEntityItem(T entity, int index, int indexAtLevel, int levelAtExpression, int level)
+        private EntityItem<T> GetEntityItem(T entity, int index, int indexAtLevel, int levelAtExpression, int level)
         {
-            var item = (TEntityItem)Activator.CreateInstance(typeof(TEntityItem), this);
+            EntityItem<T> item;
+
+            // merge situation
+            if (typeof(T) == typeof(EntityItem<>))
+                item = entity as EntityItem<T>;
+            else
+                item = new EntityItem<T>(this);
+
             item.Entity = entity;
             item.Index = index;
             item.IndexAtLevel = indexAtLevel;

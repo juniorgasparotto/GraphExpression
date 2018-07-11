@@ -8,7 +8,8 @@ namespace GraphExpression
     {
         public PropertyInfo Property { get; private set; }
 
-        public PropertyEntity(Expression<object> expression, object parent, PropertyInfo property) : base(expression)
+        public PropertyEntity(Expression<object> expression, object parent, PropertyInfo property) 
+            : base(expression)
         {
             this.Property = property;
             this.Entity = property.GetValue(parent);

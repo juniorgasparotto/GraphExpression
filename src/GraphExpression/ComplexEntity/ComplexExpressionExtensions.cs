@@ -3,26 +3,27 @@ using System.Collections.Generic;
 
 namespace GraphExpression
 {
-    public static class ExpressionComplexExtensions
+    public static class ComplexExpressionExtensions
     {
-        public static Expression<object, ComplexEntity> AsExpression(this object entityRoot)
+        public static Expression<object> AsExpression(this object entityRoot)
         {
-            var expression = new Expression<object, ComplexEntity>(entityRoot, e => GetChildren(e));
+            Expression<object> expression = null;
+            expression = new Expression<object>(entityRoot, e => GetChildren(expression, e));
             return expression;
         }
 
-        private static IEnumerable<object> GetChildren(object parent)
+        private static IEnumerable<object> GetChildren(Expression<object> expression, object parent)
         {
             if (IsSystemType(parent.GetType()))
                 yield break;
 
             var properties = parent.GetType().GetProperties();
             foreach(var p in properties)
-                yield return new PropertyEntity(entity, p);
+                yield return new PropertyEntity(expression, parent, p);
 
             var fields = parent.GetType().GetFields();
             foreach (var f in fields)
-                yield return new FieldEntity(entity, f);
+                yield return new FieldEntity(expression, parent, f);
         }
 
         private static bool IsSystemType(Type type)
