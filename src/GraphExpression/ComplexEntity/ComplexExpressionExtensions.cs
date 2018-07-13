@@ -12,18 +12,20 @@ namespace GraphExpression
             return expression;
         }
 
-        private static IEnumerable<object> GetChildren(Expression<object> expression, object parent)
+        private static IEnumerable<EntityItem<object>> GetChildren(Expression<object> expression, EntityItem<object> parent)
         {
-            if (IsSystemType(parent.GetType()))
+            var entityParent = parent.Entity;
+
+            if (IsSystemType(entityParent.GetType()))
                 yield break;
 
-            var properties = parent.GetType().GetProperties();
+            var properties = entityParent.GetType().GetProperties();
             foreach(var p in properties)
-                yield return new PropertyEntity(expression, parent, p);
+                yield return new PropertyEntity(expression, entityParent, p);
 
-            var fields = parent.GetType().GetFields();
+            var fields = entityParent.GetType().GetFields();
             foreach (var f in fields)
-                yield return new FieldEntity(expression, parent, f);
+                yield return new FieldEntity(expression, entityParent, f);
         }
 
         private static bool IsSystemType(Type type)

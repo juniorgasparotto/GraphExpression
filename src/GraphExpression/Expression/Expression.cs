@@ -5,9 +5,25 @@ using System.Linq;
 
 namespace GraphExpression
 {
+    public class Expression<T, TWrapper> : Expression<T>
+    {
+        public Expression()
+        {
+        }
+
+        public Expression(T root, Func<T, IEnumerable<T>> childrenCallback,  bool deep = false)
+        {
+            this.Deep = deep;
+            this.getChildrenEntityItemsCallback = childrenCallback;
+
+            if (root != null)
+                Build(root);
+        }
+    }
+
     public class Expression<T> : List<EntityItem<T>>
     {
-        private readonly Func<T, IEnumerable<T>> childrenCallback;
+        private readonly Func<T, IEnumerable<EntityItem<T>>> getChildrenEntityItemsCallback;
         public bool Deep { get; }
         public SerializationAsExpression<T> Serializer { get; set; }
 
@@ -18,7 +34,10 @@ namespace GraphExpression
         public Expression(T root, Func<T, IEnumerable<T>> childrenCallback, bool deep = false)
         {
             this.Deep = deep;
-            this.childrenCallback = childrenCallback;
+            this.getChildrenEntityItemsCallback = e =>
+            {
+                return NewEntityItem(childrenCallback(e));
+            };
 
             if (root != null)
                 Build(root);
@@ -29,7 +48,7 @@ namespace GraphExpression
             // only when is root entity
             if (Count == 0)
             {
-                var rootItem = GetEntityItem(parent, 0, 0, level, level);
+                var rootItem = GetItemWrapper(parent, 0, 0, level, level);
                 Add(rootItem);
             }
 
@@ -37,11 +56,11 @@ namespace GraphExpression
             var parentItem = this.Last();
 
             level++;
-            var children = childrenCallback(parent);
+            var children = getChildrenEntityItemsCallback(parent);
             foreach (var child in children)
             {
                 var previous = this.Last();
-                var childItem = GetEntityItem(child, Count, indexLevel++, 0, level);
+                var childItem = GetItemWrapper(child, Count, indexLevel++, 0, level);
 
                 Add(childItem);
 
@@ -53,7 +72,7 @@ namespace GraphExpression
                 else
                     continueBuild = !IsEntityDeclared(childItem);
 
-                if (continueBuild && childrenCallback(child).Any())
+                if (continueBuild && getChildrenEntityItemsCallback(child).Any())
                 {
                     childItem.LevelAtExpression = parentItem.LevelAtExpression + 1;
                     Build(child, level);
@@ -65,22 +84,23 @@ namespace GraphExpression
             }
         }
 
-        private EntityItem<T> GetEntityItem(T entity, int index, int indexAtLevel, int levelAtExpression, int level)
+        protected IEnumerable<EntityItem<T>> CreateEntityItemWrapper(IEnumerable<T> children)
         {
-            EntityItem<T> item;
+            foreach (var child in children)
+            {
+                yield return new EntityItem<T>(this)
+                {
+                    Entity = child
+                };
+            }
+        }
 
-            // merge situation
-            if (typeof(T) == typeof(EntityItem<>))
-                item = entity as EntityItem<T>;
-            else
-                item = new EntityItem<T>(this);
-
-            item.Entity = entity;
-            item.Index = index;
-            item.IndexAtLevel = indexAtLevel;
-            item.LevelAtExpression = levelAtExpression;
-            item.Level = level;
-            return item;
+        private void FillItemWrapper(EntityItem<T> entityItem, int index, int indexAtLevel, int levelAtExpression, int level)
+        {
+            entityItem.Index = index;
+            entityItem.IndexAtLevel = indexAtLevel;
+            entityItem.LevelAtExpression = levelAtExpression;
+            entityItem.Level = level;
         }
 
         private bool HasAncestorEqualsTo(EntityItem<T> entityItem)

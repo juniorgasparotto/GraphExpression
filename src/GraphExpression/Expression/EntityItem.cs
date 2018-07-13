@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace GraphExpression
 {
-    [DebuggerDisplay("{ToString()}")]
     public partial class EntityItem<T>
     {
         private readonly Expression<T> expression;
