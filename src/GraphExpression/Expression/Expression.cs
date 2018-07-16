@@ -5,25 +5,9 @@ using System.Linq;
 
 namespace GraphExpression
 {
-    public class Expression<T, TWrapper> : Expression<T>
-    {
-        public Expression()
-        {
-        }
-
-        public Expression(T root, Func<T, IEnumerable<T>> childrenCallback,  bool deep = false)
-        {
-            this.Deep = deep;
-            this.getChildrenEntityItemsCallback = childrenCallback;
-
-            if (root != null)
-                Build(root);
-        }
-    }
-
     public class Expression<T> : List<EntityItem<T>>
     {
-        private readonly Func<T, IEnumerable<EntityItem<T>>> getChildrenEntityItemsCallback;
+        private readonly Func<Expression<T>, EntityItem<T>, IEnumerable<EntityItem<T>>> getChildrenCallback;
         public bool Deep { get; }
         public SerializationAsExpression<T> Serializer { get; set; }
 
@@ -31,60 +15,69 @@ namespace GraphExpression
         {
         }
 
+        public Expression(Func<Expression<T>, EntityItem<T>> getRootCallback, Func<Expression<T>, EntityItem<T>, IEnumerable<EntityItem<T>>> childrenCallback, bool deep = false)
+        {
+            this.Deep = deep;
+            this.getChildrenCallback = childrenCallback;
+
+            if (getRootCallback != null)
+                Build(getRootCallback(this));
+        }
+
         public Expression(T root, Func<T, IEnumerable<T>> childrenCallback, bool deep = false)
         {
             this.Deep = deep;
-            this.getChildrenEntityItemsCallback = e =>
+            this.getChildrenCallback = (expr, e) =>
             {
-                return NewEntityItem(childrenCallback(e));
+                return CreateEntityItems(childrenCallback(e.Entity));
             };
 
             if (root != null)
-                Build(root);
+                Build(new EntityItem<T>(this) { Entity = root });
         }
 
-        private void Build(T parent, int level = 1)
+        private void Build(EntityItem<T> parent, int level = 1)
         {
             // only when is root entity
             if (Count == 0)
             {
-                var rootItem = GetItemWrapper(parent, 0, 0, level, level);
-                Add(rootItem);
+                FillItemWrapper(parent, 0, 0, level, level);
+                Add(parent);
             }
 
             var indexLevel = 0;
             var parentItem = this.Last();
 
             level++;
-            var children = getChildrenEntityItemsCallback(parent);
+            var children = getChildrenCallback(this, parent);
             foreach (var child in children)
             {
                 var previous = this.Last();
-                var childItem = GetItemWrapper(child, Count, indexLevel++, 0, level);
+                FillItemWrapper(child, Count, indexLevel++, 0, level);
 
-                Add(childItem);
+                Add(child);
 
                 // if:   IS 'deep' and the entity already declareted in expression, don't build the children of item.
                 // else: if current entity exists in ancestors (to INFINITE LOOP), don't build the children of item.
                 var continueBuild = true;
                 if (Deep)
-                    continueBuild = !HasAncestorEqualsTo(childItem);
+                    continueBuild = !HasAncestorEqualsTo(child);
                 else
-                    continueBuild = !IsEntityDeclared(childItem);
+                    continueBuild = !IsEntityDeclared(child);
 
-                if (continueBuild && getChildrenEntityItemsCallback(child).Any())
+                if (continueBuild && getChildrenCallback(this, child).Any())
                 {
-                    childItem.LevelAtExpression = parentItem.LevelAtExpression + 1;
+                    child.LevelAtExpression = parentItem.LevelAtExpression + 1;
                     Build(child, level);
                 }
                 else
                 {
-                    childItem.LevelAtExpression = parentItem.LevelAtExpression;
+                    child.LevelAtExpression = parentItem.LevelAtExpression;
                 }
             }
         }
 
-        protected IEnumerable<EntityItem<T>> CreateEntityItemWrapper(IEnumerable<T> children)
+        protected IEnumerable<EntityItem<T>> CreateEntityItems(IEnumerable<T> children)
         {
             foreach (var child in children)
             {

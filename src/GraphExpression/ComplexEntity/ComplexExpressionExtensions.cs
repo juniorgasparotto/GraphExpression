@@ -8,7 +8,7 @@ namespace GraphExpression
         public static Expression<object> AsExpression(this object entityRoot)
         {
             Expression<object> expression = null;
-            expression = new Expression<object>(entityRoot, e => GetChildren(expression, e));
+            //expression = new Expression<object>(entityRoot, (expr, e) => GetChildren(expression, e));
             return expression;
         }
 
