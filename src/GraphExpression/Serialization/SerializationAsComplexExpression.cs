@@ -9,14 +9,14 @@ namespace GraphExpression.Serialization
         public string PropertySymbol { get; set; }
         public string FieldSymbol { get; set; }
 
-        public SerializationAsComplexExpression(Expression<ComplexEntity> expression) : base(expression)
+        public SerializationAsComplexExpression(Expression<ComplexEntity> expression) 
+            : base(expression)
         {
-            SerializeItemCallback = SerializeItem;
             PropertySymbol = "@";
             FieldSymbol = "!";
         }
 
-        private string SerializeItem(EntityItem<ComplexEntity> item)
+        public override string SerializeItem(EntityItem<ComplexEntity> item)
         {
             string strEntityType, strType, strContainer;
             if (item.Entity is PropertyEntity prop)

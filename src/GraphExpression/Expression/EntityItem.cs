@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphExpression.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -303,8 +304,8 @@ namespace GraphExpression
 
         public override string ToString()
         {
-            if (expression.Serializer?.SerializeItemCallback != null)
-                return expression.Serializer?.SerializeItemCallback(this);
+            if (expression.DefaultSerializer?.SerializeItem(this) != null)
+                return expression.DefaultSerializer?.SerializeItem(this);
 
             return this.Entity?.ToString();
         }

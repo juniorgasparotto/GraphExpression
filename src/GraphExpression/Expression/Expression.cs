@@ -9,7 +9,7 @@ namespace GraphExpression
     {
         private readonly Func<Expression<T>, EntityItem<T>, IEnumerable<EntityItem<T>>> getChildrenCallback;
         public bool Deep { get; }
-        public SerializationAsExpression<T> Serializer { get; set; }
+        public ISerialization<T> DefaultSerializer { get; set; }
 
         public Expression()
         {
@@ -41,7 +41,7 @@ namespace GraphExpression
             // only when is root entity
             if (Count == 0)
             {
-                FillItemWrapper(parent, 0, 0, level, level);
+                PopulateEntityItem(parent, 0, 0, level, level);
                 Add(parent);
             }
 
@@ -53,7 +53,7 @@ namespace GraphExpression
             foreach (var child in children)
             {
                 var previous = this.Last();
-                FillItemWrapper(child, Count, indexLevel++, 0, level);
+                PopulateEntityItem(child, Count, indexLevel++, 0, level);
 
                 Add(child);
 
@@ -88,7 +88,7 @@ namespace GraphExpression
             }
         }
 
-        private void FillItemWrapper(EntityItem<T> entityItem, int index, int indexAtLevel, int levelAtExpression, int level)
+        private void PopulateEntityItem(EntityItem<T> entityItem, int index, int indexAtLevel, int levelAtExpression, int level)
         {
             entityItem.Index = index;
             entityItem.IndexAtLevel = indexAtLevel;

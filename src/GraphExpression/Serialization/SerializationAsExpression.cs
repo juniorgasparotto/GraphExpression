@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace GraphExpression.Serialization
 {
-    public class SerializationAsExpression<T>
+    public class SerializationAsExpression<T> : ISerialization<T>
     {
         private readonly Expression<T> expression;
 
         public bool EncloseParenthesisInRoot { get; set; }
-        public Func<EntityItem<T>, string> SerializeItemCallback { get; set; }
 
         public SerializationAsExpression(Expression<T> expression)
         {
             this.expression = expression;
-            this.SerializeItemCallback = SerializeItem;
         }
 
         public virtual string Serialize()
@@ -34,7 +32,7 @@ namespace GraphExpression.Serialization
                     parenthesisToClose.Push(item);
                 }
 
-                output += SerializeItemCallback(item);
+                output += SerializeItem(item);
 
                 if (isLastInParenthesis)
                 {
@@ -56,7 +54,7 @@ namespace GraphExpression.Serialization
             return output;
         }
 
-        private string SerializeItem(EntityItem<T> item)
+        public virtual string SerializeItem(EntityItem<T> item)
         {
             return item.Entity?.ToString();
         }
