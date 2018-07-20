@@ -3,7 +3,6 @@ using System.Diagnostics;
 
 namespace GraphExpression
 {
-    [DebuggerDisplay("{ToString()}")]
     public class CircularEntity : List<CircularEntity>
     {
         public string Name { get; private set; }

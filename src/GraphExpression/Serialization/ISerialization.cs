@@ -5,6 +5,6 @@ namespace GraphExpression.Serialization
     public interface ISerialization<T>
     {
         string Serialize();
-        string SerializeItem(EntityItem<T> item);
+        Func<EntityItem<T>, string> SerializeItem { get; }
     }
 }

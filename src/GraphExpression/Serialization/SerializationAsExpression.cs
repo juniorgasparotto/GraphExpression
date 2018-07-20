@@ -8,10 +8,12 @@ namespace GraphExpression.Serialization
         private readonly Expression<T> expression;
 
         public bool EncloseParenthesisInRoot { get; set; }
+        public Func<EntityItem<T>, string> SerializeItem { get; }
 
-        public SerializationAsExpression(Expression<T> expression)
+        public SerializationAsExpression(Expression<T> expression, Func<EntityItem<T>, string> serializeItem = null)
         {
             this.expression = expression;
+            this.SerializeItem = serializeItem ?? (i => i.Entity?.ToString());
         }
 
         public virtual string Serialize()
@@ -52,11 +54,6 @@ namespace GraphExpression.Serialization
             }
 
             return output;
-        }
-
-        public virtual string SerializeItem(EntityItem<T> item)
-        {
-            return item.Entity?.ToString();
         }
     }
 }

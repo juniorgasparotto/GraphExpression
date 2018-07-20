@@ -24,7 +24,7 @@ namespace GraphExpression.Tests
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = C, Index = 9, IndexAtLevel = 1, Level = 5 });
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Y, Index = 10, IndexAtLevel = 1, Level = 4 });
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Z, Index = 11, IndexAtLevel = 2, Level = 3 });
-            var expressionString = expression.AsSerializer().Serialize();
+            var expressionString = new SerializationAsExpression<CircularEntity>(expression).Serialize();
             Assert.Equal("A + B + (C + Y) + (D + E + (F + (G + B + C) + Y) + Z)", expressionString);
         }
 
@@ -32,7 +32,7 @@ namespace GraphExpression.Tests
         public void CreateAutomaticExpression_Surface_VerifyMatrix()
         {
             var r = A + (B + (C + A) + A) + (D + D + E + (F + (G + A + C) + Y) + Z) + G;
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Equal(15, expression.Count);
             TestEntityItem(expression[0], isRoot: true, isLast: false, isFirstInParent: true, isLastInParent: false, name: "A", index: 0, indexAtLevel: 0, level: 1, levelAtExpression: 1, previous: null, next: "B", parent: null);
             TestEntityItem(expression[1], isRoot: false, isLast: false, isFirstInParent: true, isLastInParent: false, name: "B", index: 1, indexAtLevel: 0, level: 2, levelAtExpression: 2, previous: "A", next: "C", parent: "A");
@@ -55,7 +55,7 @@ namespace GraphExpression.Tests
         public void CreateAutomaticExpression_Deep_VerifyMatrix()
         {
             var r = A + (B + (C + A) + A) + (D + D + E + (F + (G + A + C) + Y) + Z) + G;
-            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
+            var expression = A.AsExpression(f => f.Children, true);
             Assert.Equal(19, expression.Count);
             TestEntityItem(expression[0], isRoot: true, isLast: false, isFirstInParent: true, isLastInParent: false, name: "A", index: 0, indexAtLevel: 0, level: 1, levelAtExpression: 1, previous: null, next: "B", parent: null);
             TestEntityItem(expression[1], isRoot: false, isLast: false, isFirstInParent: true, isLastInParent: false, name: "B", index: 1, indexAtLevel: 0, level: 2, levelAtExpression: 2, previous: "A", next: "C", parent: "A");
@@ -82,18 +82,18 @@ namespace GraphExpression.Tests
         public void CreateExpressionAsString_2Entities_WithoutParameterEncloseParenthesisInRoot_ReturnExpressionWithoutRootParenthesis()
         {
             var r = A + B;
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Equal(2, expression.Count);
-            Assert.Equal("A + B", expression.AsSerializer().Serialize());
+            Assert.Equal("A + B", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
         public void CreateExpressionAsString_2Entities_WithParameterEncloseParenthesisInRoot_ReturnExpressionWithRootParenthesis()
         {
             var r = A + B;
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Equal(2, expression.Count);
-            var serializer = expression.AsSerializer();
+            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
             serializer.EncloseParenthesisInRoot = true;
             Assert.Equal("(A + B)", serializer.Serialize());
         }
@@ -101,17 +101,17 @@ namespace GraphExpression.Tests
         [Fact]
         public void CreateExpressionAsString_1Entities_WithoutParameterEncloseParenthesisInRoot_ReturnExpressionWithoutRootParenthesis()
         {
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Single(expression);
-            Assert.Equal("A", expression.AsSerializer().Serialize());
+            Assert.Equal("A", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
         public void CreateExpressionAsString_1Entities_WithParameterEncloseParenthesisInRoot_ReturnExpressionWithRootParenthesis()
         {
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Single(expression);
-            var serializer = expression.AsSerializer();
+            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
             serializer.EncloseParenthesisInRoot = true;
             Assert.Equal("(A)", serializer.Serialize());
         }
@@ -120,54 +120,54 @@ namespace GraphExpression.Tests
         public void CreateCiclicalExpression_Deep_Direct_ReturnNotRepeat()
         {
             var r = A + A;
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Equal(2, expression.Count);
-            Assert.Equal("A + A", expression.AsSerializer().Serialize());
+            Assert.Equal("A + A", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
         public void CreateCiclicalExpression_Deep_Indirect_ReturnNotRepeat()
         {
             var r = A + (C + A) + C;
-            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
+            var expression = A.AsExpression(f => f.Children, true);
             Assert.Equal(5, expression.Count);
-            Assert.Equal("A + (C + A) + (C + A)", expression.AsSerializer().Serialize());
+            Assert.Equal("A + (C + A) + (C + A)", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
         public void CreateCiclicalExpression_Surface_Direct_ReturnNotRepeat()
         {
             var r = A + A;
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Equal(2, expression.Count);
-            Assert.Equal("A + A", expression.AsSerializer().Serialize());
+            Assert.Equal("A + A", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
         public void CreateCiclicalExpression_Surface_Indirect_ReturnNotRepeat()
         {
             var r = A + (C + A) + C;
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Equal(4, expression.Count);
-            Assert.Equal("A + (C + A) + C", expression.AsSerializer().Serialize());
+            Assert.Equal("A + (C + A) + C", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
         public void CreateCiclicalExpression_Surface_IndirectMultiLevel_ReturnNotRepeat()
         {
             var r = A + (B + (C + (D + B))) + C;
-            var expression = new Expression<CircularEntity>(A, f => f.Children);
+            var expression = A.AsExpression(f => f.Children);
             Assert.Equal(6, expression.Count);
-            Assert.Equal("A + (B + (C + (D + B))) + C", expression.AsSerializer().Serialize());
+            Assert.Equal("A + (B + (C + (D + B))) + C", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
         public void CreateCiclicalExpression_Deep_IndirectMultiLevel_ReturnNotRepeat()
         {
             var r = A + (B + (C + (D + B))) + C;
-            var expression = new Expression<CircularEntity>(A, f => f.Children, true);
+            var expression = A.AsExpression(f => f.Children, true);
             Assert.Equal(9, expression.Count);
-            Assert.Equal("A + (B + (C + (D + B))) + (C + (D + (B + C)))", expression.AsSerializer().Serialize());
+            Assert.Equal("A + (B + (C + (D + B))) + (C + (D + (B + C)))", expression.DefaultSerializer.Serialize());
         }
 
         //[Fact]
@@ -255,7 +255,7 @@ namespace GraphExpression.Tests
         //private void Test(string str, bool deep = false)
         //{
         //    var expression = new Expression(A, deep);
-        //    Assert.Equal(str, expression.AsSerializer().Serialize());
+        //    Assert.Equal(str, expression.DefaultSerializer.Serialize());
         //    A.Clear();
         //    B.Clear();
         //    C.Clear();

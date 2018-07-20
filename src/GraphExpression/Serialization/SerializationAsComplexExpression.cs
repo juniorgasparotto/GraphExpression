@@ -10,13 +10,14 @@ namespace GraphExpression.Serialization
         public string FieldSymbol { get; set; }
 
         public SerializationAsComplexExpression(Expression<ComplexEntity> expression) 
-            : base(expression)
+            : base(expression, )
         {
             PropertySymbol = "@";
             FieldSymbol = "!";
+            SerializeItem = ;
         }
 
-        public override string SerializeItem(EntityItem<ComplexEntity> item)
+        private string SerializeItemInternal(EntityItem<ComplexEntity> item)
         {
             string strEntityType, strType, strContainer;
             if (item.Entity is PropertyEntity prop)
