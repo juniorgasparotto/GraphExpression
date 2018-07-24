@@ -5,7 +5,7 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class CSharpExpressionTest : EntitiesData
+    public class ConceptTest : EntitiesData
     {
         [Fact]
         public void CSharpExpression_CreateGraph()

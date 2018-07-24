@@ -6,14 +6,27 @@ namespace GraphExpression.Serialization
     public class SerializationAsExpression<T> : ISerialization<T>
     {
         private readonly Expression<T> expression;
+        private Func<EntityItem<T>, string> serializeItem;
 
         public bool EncloseParenthesisInRoot { get; set; }
-        public Func<EntityItem<T>, string> SerializeItem { get; }
 
-        public SerializationAsExpression(Expression<T> expression, Func<EntityItem<T>, string> serializeItem = null)
+        public Func<EntityItem<T>, string> SerializeItem
+        {
+            get
+            {
+                if (serializeItem == null)
+                    return (i) => i.Entity?.ToString();
+                return serializeItem;
+            }
+            set
+            {
+                serializeItem = value;
+            }
+        }
+
+        public SerializationAsExpression(Expression<T> expression)
         {
             this.expression = expression;
-            this.SerializeItem = serializeItem ?? (i => i.Entity?.ToString());
         }
 
         public virtual string Serialize()

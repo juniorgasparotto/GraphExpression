@@ -3,50 +3,64 @@ using System.Globalization;
 
 namespace GraphExpression.Serialization
 {
-    public class SerializationAsComplexExpression : SerializationAsExpression<ComplexEntity>
+    public class SerializationAsComplexExpression : SerializationAsExpression<object>
     {
         public IncludePartsEnum IncludeParts { get; set; }
         public string PropertySymbol { get; set; }
         public string FieldSymbol { get; set; }
 
-        public SerializationAsComplexExpression(Expression<ComplexEntity> expression) 
-            : base(expression, )
+        public SerializationAsComplexExpression(Expression<object> expression)
+            : base(expression)
         {
             PropertySymbol = "@";
             FieldSymbol = "!";
-            SerializeItem = ;
+            SerializeItem = SerializeItemInternal;
         }
 
-        private string SerializeItemInternal(EntityItem<ComplexEntity> item)
+        private string SerializeItemInternal(EntityItem<object> item)
         {
-            string strEntityType, strType, strContainer;
-            if (item.Entity is PropertyEntity prop)
+            string strEntityType = null;
+            string strType = null;
+            string strContainer = null;
+            string strValue = null;
+            Type type = null;
+
+            if (item is PropertyEntity prop)
             {
                 strEntityType = PropertySymbol;
-                strType = prop.Property.PropertyType.FullName;
+                type = prop.Property.PropertyType;
                 strContainer = prop.Property.Name;
             }
-            else if (item.Entity is FieldEntity field)
+            else if (item is FieldEntity field)
             {
                 strEntityType = FieldSymbol;
-                strType = field.Field.FieldType.FullName;
+                type = field.Field.FieldType;
                 strContainer = field.Field.Name;
             }
             else
             {
                 strEntityType = "";
-                strType = item.Entity.Entity.GetType().FullName;
+                type = item.Entity.GetType();
                 strContainer = null;
             }
 
-            var value = ToLiteral(item.Entity.Entity);
+            if (IncludeParts.HasFlag(IncludePartsEnum.TypeName))
+                strType = type.Name;
+            else if (IncludeParts.HasFlag(IncludePartsEnum.FullTypeName))
+                strType = type.FullName;
+
+            if (IncludeParts.HasFlag(IncludePartsEnum.Value))
+                strValue = ToLiteral(item.Entity);
+
             var output = strEntityType + strType;
             output += strContainer == null ? "" : "." + strContainer;
 
-            if (value != null)
-                output += ":" + value;
-            else if (item.Entity.Entity != null) // When is not primitive entity use hashcode
-                output += "." + item.Entity.Entity.GetHashCode();
+            if (strValue != null)
+                output += ":" + strValue;
+            else if (item.Entity != null) // When is not primitive entity use hashcode
+                output += "." + item.Entity.GetHashCode();
+            else
+                output += ": null";
 
             return output;
         }
