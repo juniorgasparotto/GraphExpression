@@ -11,14 +11,9 @@ namespace GraphExpression.Tests
         [Fact]
         public void CreateManualExpression_Surface_ReturnExpressionAsString()
         {
-            var b = new CircularEntity("A");
-            b.Add(new CircularEntity("B"));
-            b.Add(new CircularEntity("C"));
-            var expression = b.AsExpression(f => f).DefaultSerializer.Serialize();
-
-            //var a = A.Create();
-            //var expression = a.AsExpression();
-            //var expressionStr = expression.DefaultSerializer.Serialize();
+            var a = A.Create();
+            var expression = a.AsExpression();
+            var expressionStr = expression.DefaultSerializer.Serialize();
         }
     }
 }

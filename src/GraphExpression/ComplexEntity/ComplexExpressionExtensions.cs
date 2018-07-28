@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphExpression.Serialization;
+using System;
 using System.Collections.Generic;
 
 namespace GraphExpression
@@ -8,6 +9,7 @@ namespace GraphExpression
         public static Expression<object> AsExpression(this object entityRoot)
         {
             var expression = new Expression<object>(expr => new ComplexEntity(expr) { Entity = entityRoot }, (expr, e) => GetChildren(expr, e));
+            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
             return expression;
         }
 

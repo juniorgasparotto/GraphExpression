@@ -3,9 +3,10 @@ using System.Globalization;
 
 namespace GraphExpression.Serialization
 {
-    public class SerializationAsComplexExpression : SerializationAsExpression<object>
+    public partial class SerializationAsComplexExpression : SerializationAsExpression<object>
     {
-        public IncludePartsEnum IncludeParts { get; set; }
+        public ShowTypeOptions ShowType { get; set; }
+        public IValueFormatter ValueFormatter { get; set; }
         public string PropertySymbol { get; set; }
         public string FieldSymbol { get; set; }
 
@@ -15,11 +16,13 @@ namespace GraphExpression.Serialization
             PropertySymbol = "@";
             FieldSymbol = "!";
             SerializeItem = SerializeItemInternal;
+            ValueFormatter = new DefaultValueFormatter();
         }
 
         private string SerializeItemInternal(EntityItem<object> item)
         {
-            string strEntityType = null;
+            string parts = null;
+            string strSymbol = null;
             string strType = null;
             string strContainer = null;
             string strValue = null;
@@ -27,132 +30,65 @@ namespace GraphExpression.Serialization
 
             if (item is PropertyEntity prop)
             {
-                strEntityType = PropertySymbol;
+                strSymbol = PropertySymbol;
                 type = prop.Property.PropertyType;
                 strContainer = prop.Property.Name;
             }
             else if (item is FieldEntity field)
             {
-                strEntityType = FieldSymbol;
+                strSymbol = FieldSymbol;
                 type = field.Field.FieldType;
                 strContainer = field.Field.Name;
             }
             else
             {
-                strEntityType = "";
-                type = item.Entity.GetType();
-                strContainer = null;
+                type = GetType(item.Entity);
             }
 
-            if (IncludeParts.HasFlag(IncludePartsEnum.TypeName))
+            if (ShowType == ShowTypeOptions.TypeName)
                 strType = type.Name;
-            else if (IncludeParts.HasFlag(IncludePartsEnum.FullTypeName))
+            else if (ShowType == ShowTypeOptions.FullTypeName)
                 strType = type.FullName;
 
-            if (IncludeParts.HasFlag(IncludePartsEnum.Value))
-                strValue = ToLiteral(item.Entity);
+            if (!string.IsNullOrWhiteSpace(strType) && string.IsNullOrWhiteSpace(strContainer))
+                parts = $"{strType}";
+            else if (!string.IsNullOrWhiteSpace(strType) && !string.IsNullOrWhiteSpace(strContainer))
+                parts = $"{strType}.{strContainer}";            
+            else if (string.IsNullOrWhiteSpace(strType) && !string.IsNullOrWhiteSpace(strContainer))
+                parts = $"{strContainer}";
 
-            var output = strEntityType + strType;
-            output += strContainer == null ? "" : "." + strContainer;
+            // Get value
+            strValue = ValueFormatter.Format(type, item.Entity);
 
-            if (strValue != null)
-                output += ":" + strValue;
-            else if (item.Entity != null) // When is not primitive entity use hashcode
-                output += "." + item.Entity.GetHashCode();
-            else
-                output += ": null";
-
-            return output;
-        }
-
-        private string ToLiteral(object input)
-        {
-            string output = null;
-
-            if (input != null)
+            // When is not primitive entity use hashcode
+            var separatorValue = ": ";
+            if (strValue == null && item.Entity != null)
             {
-                var type = input.GetType();
-                if (type == typeof(DateTimeOffset))
-                {
-                    output = ToLiteral(((DateTimeOffset)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture));
-                }
-                else if (type == typeof(IntPtr) || type == typeof(UIntPtr))
-                {
-                    output = input.ToString();
-                }
-                else
-                {
-                    switch (Type.GetTypeCode(type))
-                    {
-                        case TypeCode.Byte:
-                        case TypeCode.SByte:
-                        case TypeCode.UInt16:
-                        case TypeCode.UInt32:
-                        case TypeCode.UInt64:
-                        case TypeCode.Int16:
-                        case TypeCode.Int32:
-                        case TypeCode.Int64:
-                            output = input.ToString();
-                            break;
-                        case TypeCode.DateTime:
-                            output = ToLiteral(((DateTime)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture));
-                            break;
-                        case TypeCode.Boolean:
-                            output = ((bool)input) ? "true" : "false";
-                            break;
-                        case TypeCode.Decimal:
-                            output = ((Decimal)input).ToString(CultureInfo.InvariantCulture);
-                            break;
-                        case TypeCode.Double:
-                            output = ((Double)input).ToString(CultureInfo.InvariantCulture);
-                            break;
-                        case TypeCode.Single:
-                            output = ((Double)((Single)input)).ToString(CultureInfo.InvariantCulture);
-                            break;
-                        case TypeCode.Object:
-                            //if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-                            //{
-                            //    output = ToLiteral(Nullable.GetUnderlyingType(type));
-                            //}
-                            //else
-                            //{
-                            //    output = ToLiteral(input.ToString());
-                            //}
-                            break;
-                        default:
-                            output = StringToLiteral(input.ToString());
-                            break;
-                    }
-                }
+                strValue = item.Entity.GetHashCode().ToString();
+                separatorValue = ".";
+            }
+            else if (strValue == null)
+            {
+                strValue = "null";
             }
 
-            return output;
+            if (string.IsNullOrWhiteSpace(strSymbol)
+                && string.IsNullOrWhiteSpace(parts))
+                separatorValue = null;
+
+            return $"{{{strSymbol}{parts}{separatorValue}{strValue}}}";
         }
 
-        /// <summary>
-        /// To Verbatim
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        private string StringToLiteral(string input)
+        private Type GetType<T>(T obj)
         {
-            using (var writer = new System.IO.StringWriter())
-            {
-                using (var provider = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("CSharp"))
-                {
-                    provider.GenerateCodeFromExpression(new System.CodeDom.CodePrimitiveExpression(input), writer, null);
-                    return writer.ToString();
-                }
-            }
+            return typeof(T);
         }
 
-        [Flags]
-        public enum IncludePartsEnum
+        public enum ShowTypeOptions
         {
-            TypeName = 0,
+            None,
+            TypeName,
             FullTypeName = 2,
-            PropertyOrFieldName = 4,
-            Value = 8
         }
     }
 }
