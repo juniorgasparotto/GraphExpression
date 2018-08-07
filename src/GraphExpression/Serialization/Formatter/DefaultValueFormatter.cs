@@ -5,7 +5,7 @@ namespace GraphExpression.Serialization
 {
     public class DefaultValueFormatter : IValueFormatter
     {
-        public string Format(Type type, object value)
+        public virtual string Format(Type type, object value)
         {
             return ToLiteral(value);
         }

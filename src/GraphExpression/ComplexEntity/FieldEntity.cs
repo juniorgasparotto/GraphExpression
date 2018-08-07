@@ -9,7 +9,8 @@ namespace GraphExpression
         public FieldEntity(Expression<object> expression, object parent, FieldInfo field) : base(expression)
         {
             this.Field = field;
-            this.Entity = field.GetValue(parent);
+            if (parent != null)
+                this.Entity = field.GetValue(parent);
         }
     }
 }

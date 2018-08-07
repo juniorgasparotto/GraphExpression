@@ -9,12 +9,14 @@ namespace GraphExpression.Serialization
         public IValueFormatter ValueFormatter { get; set; }
         public string PropertySymbol { get; set; }
         public string FieldSymbol { get; set; }
+        public bool EncloseItem { get; set; }
 
         public SerializationAsComplexExpression(Expression<object> expression)
             : base(expression)
         {
             PropertySymbol = "@";
             FieldSymbol = "!";
+            EncloseItem = true;
             SerializeItem = SerializeItemInternal;
             ValueFormatter = new DefaultValueFormatter();
         }
@@ -76,7 +78,10 @@ namespace GraphExpression.Serialization
                 && string.IsNullOrWhiteSpace(parts))
                 separatorValue = null;
 
-            return $"{{{strSymbol}{parts}{separatorValue}{strValue}}}";
+            var encloseStart = EncloseItem ? "{" : null;
+            var encloseEnd = EncloseItem ? "}" : null;
+
+            return $"{encloseStart}{strSymbol}{parts}{separatorValue}{strValue}{encloseEnd}";
         }
 
         private Type GetType<T>(T obj)

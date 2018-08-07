@@ -2,23 +2,23 @@
 
 namespace GraphExpression.Serialization
 {
-    public class TruncateFormatter : IValueFormatter
+    public class TruncateFormatter : DefaultValueFormatter
     {
-        private readonly int maxLenght;
+        private readonly int maxLength;
 
         public TruncateFormatter(int maxLenght)
         {
-            this.maxLenght = maxLenght;
+            this.maxLength = maxLenght;
         }
 
-        public string Format(Type type, object value)
+        public override string Format(Type type, object value)
         {
             if (value is string str)
-                return Truncate(str, maxLenght);
-            return null;
+                return base.Format(type, Truncate(str));
+            return base.Format(type, value);
         }
 
-        private string Truncate(string value, int maxLength)
+        private string Truncate(string value)
         {
             if (string.IsNullOrEmpty(value)) return value;
             return value.Length <= maxLength ? value : value.Substring(0, maxLength);

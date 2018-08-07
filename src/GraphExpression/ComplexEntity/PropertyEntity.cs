@@ -12,7 +12,8 @@ namespace GraphExpression
             : base(expression)
         {
             this.Property = property;
-            this.Entity = property.GetValue(parent);
+            if (parent != null)
+                this.Entity = property.GetValue(parent);
         }
     }
 }
