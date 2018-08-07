@@ -6,12 +6,10 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class SerializationComplexEntityTest
+    public class PropertyEntityTest
     {
         public int PropInt { get; set; } = 100;
         public string PropString { get; set; } = "abc \" def \"ghi\"";
-        public string field1 = "ABC";
-
 
         [Fact]
         public void Normal()
@@ -85,7 +83,7 @@ namespace GraphExpression.Tests
             var serialization = GetSerialization(expression);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@String.PropString: \"abc \\\" def \\\"ghi\\\"\"}", result);
+            Assert.Equal("{@PropString: \"abc \\\" def \\\"ghi\\\"\"}", result);
         }
 
         [Fact]
@@ -96,7 +94,7 @@ namespace GraphExpression.Tests
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@String.PropString: null}", result);
+            Assert.Equal("{@PropString: null}", result);
         }
 
         [Fact]
@@ -115,7 +113,7 @@ namespace GraphExpression.Tests
         }
 
         [Fact]
-        public void ValueString_Null_Container_WithoutTypeAndEncloseAndSymbolProperty()
+        public void ValueString_Null_Parent_WithoutTypeAndEncloseAndSymbolProperty()
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
@@ -150,28 +148,6 @@ namespace GraphExpression.Tests
             var result = prop1Complex.ToString();
             Assert.Equal("{@PropString: \"abc\"}", result);
         }
-
-        //[Fact]
-        //public void PropertyIntWithValue_SerilazationFull_ReturnEntityItemAsString()
-        //{
-        //    var expression = GetExpression();
-        //    var serialization = GetSerialization(expression);
-        //    var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("Prop1"));
-        //    var result = prop1Complex.ToString();
-        //    Assert.Equal("{@Prop1: 100}", result);
-        //}
-
-        //[Fact]
-        //public void PropertyIntWithValue_SerilazationFullAndChangePropertySymbol_ReturnEntityItemAsString()
-        //{
-        //    var expression = GetExpression();
-        //    var serialization = GetSerialization(expression);
-        //    serialization.PropertySymbol = "*";
-        //    serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
-        //    var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("Prop1"));
-        //    var result = prop1Complex.ToString();
-        //    Assert.Equal("{*System.Int32.Prop1: 100}", result);
-        //}
 
         private System.Reflection.PropertyInfo GetPropertyByName(string name)
         {

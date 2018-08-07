@@ -6,5 +6,11 @@
             : base(expression)
         {
         }
+
+        public ComplexEntity(Expression<object> expression, object entity)
+            : base(expression)
+        {
+            this.Entity = entity;
+        }
     }
 }

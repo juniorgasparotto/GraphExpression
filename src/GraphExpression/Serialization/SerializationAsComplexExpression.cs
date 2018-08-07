@@ -44,7 +44,7 @@ namespace GraphExpression.Serialization
             }
             else
             {
-                type = GetType(item.Entity);
+                type = item.Entity?.GetType();
             }
 
             if (ShowType == ShowTypeOptions.TypeName)
@@ -82,11 +82,6 @@ namespace GraphExpression.Serialization
             var encloseEnd = EncloseItem ? "}" : null;
 
             return $"{encloseStart}{strSymbol}{parts}{separatorValue}{strValue}{encloseEnd}";
-        }
-
-        private Type GetType<T>(T obj)
-        {
-            return typeof(T);
         }
 
         public enum ShowTypeOptions
