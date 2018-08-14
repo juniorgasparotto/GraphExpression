@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ExpressionGraph.Serialization
 {
-    public class ExpressionSerializer
+    public class DeserializerExpression
     {
         public IEnumerable<HierarchicalEntity> FromString(params string[] expressions)
         {
@@ -20,7 +20,6 @@ namespace ExpressionGraph.Serialization
                 result = new List<HierarchicalEntity>();
             else
                 result = new List<HierarchicalEntity>(paramsOfExpressions);
-
 
             foreach (var expression in expressions)
             {

@@ -15,9 +15,9 @@ namespace GraphExpression
 
         private static IEnumerable<EntityItem<object>> GetChildren(Expression<object> expression, EntityItem<object> parent)
         {
-            var entityParent = parent.Entity;
+            var entityParent = parent?.Entity;
 
-            if (IsSystemType(entityParent.GetType()))
+            if (entityParent == null || IsSystemType(entityParent.GetType()))
                 yield break;
 
             var properties = entityParent.GetType().GetProperties();

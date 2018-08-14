@@ -5,13 +5,13 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class DeserializeTest
+    public class DeserializerExpressionTest
     {
         [Fact]
         public void Deserialize_WithRootParenthesis()
         {
             var strExp = "(A + B + C + D)";
-            var serializer = new ExpressionSerializer();
+            var serializer = new DeserializerExpression();
             var entity = serializer.FromString(strExp).ToList();
 
             Assert.Equal(4, entity.Count);

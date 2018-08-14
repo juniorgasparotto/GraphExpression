@@ -13,13 +13,13 @@ namespace ExpressionGraph
 
         public static IEnumerable<HierarchicalEntity> FromString(params string[] expressions)
         {
-            var converter = new ExpressionSerializer();
+            var converter = new DeserializerExpression();
             return converter.FromString(expressions);
         }
 
         public static IEnumerable<HierarchicalEntity> FromString(List<HierarchicalEntity> paramsOfExpressions, params string[] expressions)
         {
-            var converter = new ExpressionSerializer();
+            var converter = new DeserializerExpression();
             return converter.FromString(paramsOfExpressions, expressions);
         }
 

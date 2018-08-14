@@ -6,41 +6,42 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class PropertyEntityTest
+    public class SerializationFieldEntityTest
     {
-        public int PropInt { get; set; } = 100;
-        public string PropString { get; set; } = "abc \" def \"ghi\"";
+        public int fieldInt = 100;
+        public string fieldString = "abc \" def \"ghi\"";
 
         [Fact]
         public void Normal()
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@PropInt: 100}", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
+            var result = field.ToString();
+            Assert.Equal("{!fieldInt: 100}", result);
         }
 
+        
         [Fact]
         public void EncloseItem()
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.EncloseItem = false;
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("@PropInt: 100", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
+            var result = field.ToString();
+            Assert.Equal("!fieldInt: 100", result);
         }
 
         [Fact]
-        public void PropertySymbol()
+        public void FieldSymbol()
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.PropertySymbol = "*";
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{*PropInt: 100}", result);
+            serialization.FieldSymbol = "*";
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
+            var result = field.ToString();
+            Assert.Equal("{*fieldInt: 100}", result);
         }
 
         [Fact]
@@ -49,9 +50,9 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@System.Int32.PropInt: 100}", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
+            var result = field.ToString();
+            Assert.Equal("{!System.Int32.fieldInt: 100}", result);
         }
 
         [Fact]
@@ -60,9 +61,9 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@PropInt: 100}", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
+            var result = field.ToString();
+            Assert.Equal("{!fieldInt: 100}", result);
         }
 
         [Fact]
@@ -71,9 +72,9 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.TypeName;
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@Int32.PropInt: 100}", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
+            var result = field.ToString();
+            Assert.Equal("{!Int32.fieldInt: 100}", result);
         }
 
         [Fact]
@@ -81,9 +82,9 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: \"abc \\\" def \\\"ghi\\\"\"}", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
+            var result = field.ToString();
+            Assert.Equal("{!fieldString: \"abc \\\" def \\\"ghi\\\"\"}", result);
         }
 
         [Fact]
@@ -91,40 +92,40 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            this.PropString = null;
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: null}", result);
+            this.fieldString = null;
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
+            var result = field.ToString();
+            Assert.Equal("{!fieldString: null}", result);
         }
 
         [Fact]
-        public void ValueString_Null_WithoutTypeAndEncloseAndSymbolProperty()
+        public void ValueString_Null_WithoutTypeAndEncloseAndSymbolField()
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.PropertySymbol = null;
+            serialization.FieldSymbol = null;
             serialization.EncloseItem = false;
 
-            this.PropString = null;
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("PropString: null", result);
+            this.fieldString = null;
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
+            var result = field.ToString();
+            Assert.Equal("fieldString: null", result);
         }
 
         [Fact]
-        public void ValueString_Null_Parent_WithoutTypeAndEncloseAndSymbolProperty()
+        public void ValueString_Null_Parent_WithoutTypeAndEncloseAndSymbolField()
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.PropertySymbol = null;
+            serialization.FieldSymbol = null;
             serialization.EncloseItem = false;
 
-            this.PropString = null;
-            var prop1Complex = new PropertyEntity(expression, null, GetPropertyByName("PropString"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("PropString: null", result);
+            this.fieldString = null;
+            var field = new FieldEntity(expression, null, GetFieldByName("fieldString"));
+            var result = field.ToString();
+            Assert.Equal("fieldString: null", result);
         }
 
         [Fact]
@@ -133,9 +134,9 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ValueFormatter = new TruncateFormatter(3);
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: \"abc\"}", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
+            var result = field.ToString();
+            Assert.Equal("{!fieldString: \"abc\"}", result);
         }
 
         [Fact]
@@ -144,14 +145,14 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ValueFormatter = new TruncateFormatter(3);
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
-            var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: \"abc\"}", result);
+            var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
+            var result = field.ToString();
+            Assert.Equal("{!fieldString: \"abc\"}", result);
         }
 
-        private System.Reflection.PropertyInfo GetPropertyByName(string name)
+        private System.Reflection.FieldInfo GetFieldByName(string name)
         {
-            return this.GetType().GetProperties().Where(p => p.Name == name).First();
+            return this.GetType().GetFields().Where(p => p.Name == name).First();
         }
 
         private Expression<object> GetExpression()

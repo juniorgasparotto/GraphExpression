@@ -6,7 +6,7 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class ComplexEntityTest
+    public class SerializationComplexEntityTest
     {
         [Fact]
         public void Normal()
@@ -37,7 +37,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"{{GraphExpression.Tests.ComplexEntityTest.{this.GetHashCode()}}}", result);
+            Assert.Equal($"{{GraphExpression.Tests.SerializationComplexEntityTest.{this.GetHashCode()}}}", result);
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.TypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"{{ComplexEntityTest.{this.GetHashCode()}}}", result);
+            Assert.Equal($"{{SerializationComplexEntityTest.{this.GetHashCode()}}}", result);
         }
 
         [Fact]

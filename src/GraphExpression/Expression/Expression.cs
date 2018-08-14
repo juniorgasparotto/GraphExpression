@@ -112,7 +112,7 @@ namespace GraphExpression
 
         private bool IsEntityDeclared(EntityItem<T> entityItem)
         {
-            return this.Any(e => e != entityItem && e.Entity.Equals(entityItem.Entity));
+            return this.Any(e => e != entityItem && e.Entity?.Equals(entityItem.Entity) == true);
         }
 
         //public string ToMatrixAsString()
