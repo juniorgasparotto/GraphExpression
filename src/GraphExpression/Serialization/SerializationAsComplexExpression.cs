@@ -42,6 +42,17 @@ namespace GraphExpression.Serialization
                 type = field.Field.FieldType;
                 strContainer = field.Field.Name;
             }
+            else if (item is DynamicItem dynItem)
+            {
+                strSymbol = PropertySymbol;
+                type = item.Entity?.GetType();
+                strContainer = dynItem.Property;
+            }
+            else if (item is ListItemEntity listItem)
+            {
+                type = item.Entity?.GetType();
+                strContainer = $"[{listItem.Key.ToString()}]";
+            }
             else
             {
                 type = item.Entity?.GetType();

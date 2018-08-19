@@ -2,6 +2,7 @@ using ExpressionGraph.Serialization;
 using GraphExpression.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using Xunit;
 
@@ -9,6 +10,11 @@ namespace GraphExpression.Tests
 {
     public class ExpressionFromComplexEntityTest
     {
+        public class Empty
+        {
+
+        }
+
         public class A
         {
             public string A_PropString { get; set; }
@@ -62,6 +68,17 @@ namespace GraphExpression.Tests
 
             var result = expression.DefaultSerializer.Serialize();
             var expected = $"{{{a.GetHashCode()}}} + {{@A_PropString: \"Value\"}} + ({{@A_PropB.{a.A_PropB.GetHashCode()}}} + {{@B_PropString: \"B_Value\"}} + {{@A_Circular.{a.A_PropB.A_Circular.GetHashCode()}}} + ({{@A_NonCircular.{a.A_PropB.A_NonCircular.GetHashCode()}}} + {{@A_PropString: null}} + {{@A_PropB: null}}))";
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void CreateEmptyEntity_ReturnExpressionAsString()
+        {
+            var empty = new Empty();
+            var expression = empty.AsExpression();
+            var result = expression.DefaultSerializer.Serialize();
+            var expected = $"{{{empty.GetHashCode()}}}";
+            Assert.Single(expression);
             Assert.Equal(expected, result);
         }
 

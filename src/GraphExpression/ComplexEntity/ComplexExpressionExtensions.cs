@@ -17,7 +17,30 @@ namespace GraphExpression
         {
             var entityParent = parent?.Entity;
 
-            if (entityParent == null || IsSystemType(entityParent.GetType()))
+            if (entityParent == null)
+                yield break;
+
+            if (entityParent is Array list)
+            {
+                for(var i = 0; i < list.Length; i++)
+                {
+                    yield return new ListItemEntity(expression, entityParent, i, list.GetValue(i));
+                }
+            }
+            else if (entityParent is System.Dynamic.ExpandoObject)
+            {
+                var dyn = (System.Collections.IEnumerable)entityParent;
+                foreach (KeyValuePair<string, object> p in dyn)
+                    yield return new DynamicItem(expression, entityParent, p.Key, p.Value);
+            }
+            else if (entityParent is System.Collections.IEnumerable)
+            {
+            }
+            else if (entityParent is System.Collections.IDictionary)
+            {
+            }
+
+            if (IsSystemType(entityParent.GetType()))
                 yield break;
 
             var properties = entityParent.GetType().GetProperties();
