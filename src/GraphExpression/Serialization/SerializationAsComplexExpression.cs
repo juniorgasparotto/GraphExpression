@@ -42,11 +42,21 @@ namespace GraphExpression.Serialization
                 type = field.Field.FieldType;
                 strContainer = field.Field.Name;
             }
-            else if (item is DynamicItem dynItem)
+            else if (item is DynamicItemEntity dynItem)
             {
                 strSymbol = PropertySymbol;
                 type = item.Entity?.GetType();
                 strContainer = dynItem.Property;
+            }
+            else if (item is ArrayItemEntity arrayItem)
+            {
+                type = item.Entity?.GetType();
+                strContainer = $"[{arrayItem.Key.ToString()}]";
+            }
+            else if (item is DictionaryItemEntity dicItem)
+            {
+                type = item.Entity?.GetType();
+                strContainer = $"[{dicItem.Key.GetHashCode()}]";
             }
             else if (item is ListItemEntity listItem)
             {
@@ -58,10 +68,13 @@ namespace GraphExpression.Serialization
                 type = item.Entity?.GetType();
             }
 
-            if (ShowType == ShowTypeOptions.TypeName)
-                strType = type.Name;
-            else if (ShowType == ShowTypeOptions.FullTypeName)
-                strType = type.FullName;
+            if (type != null)
+            {
+                if (ShowType == ShowTypeOptions.TypeName)
+                    strType = type.Name;
+                else if (ShowType == ShowTypeOptions.FullTypeName)
+                    strType = type.FullName;
+            }
 
             if (!string.IsNullOrWhiteSpace(strType) && string.IsNullOrWhiteSpace(strContainer))
                 parts = $"{strType}";

@@ -1,9 +1,3 @@
-using ExpressionGraph.Serialization;
-using GraphExpression.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
 using Xunit;
 
 namespace GraphExpression.Tests
@@ -23,6 +17,9 @@ namespace GraphExpression.Tests
             var result = expression.DefaultSerializer.Serialize();
             var expected = $"{{{anonimous.GetHashCode()}}} + {{@Prop1: 124}} + {{@Prop2: null}}";
             Assert.Equal(3, expression.Count);
+            Assert.IsType<ComplexEntity>(expression[0]);
+            Assert.IsType<PropertyEntity>(expression[1]);
+            Assert.IsType<PropertyEntity>(expression[2]);
             Assert.Equal(expected, result);
         }
     }

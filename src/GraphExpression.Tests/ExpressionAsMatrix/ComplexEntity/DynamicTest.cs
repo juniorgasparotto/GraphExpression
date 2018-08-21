@@ -1,9 +1,4 @@
-using ExpressionGraph.Serialization;
-using GraphExpression.Serialization;
-using System;
-using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 using Xunit;
 
 namespace GraphExpression.Tests
@@ -22,7 +17,12 @@ namespace GraphExpression.Tests
             var expression = ((object)dyn).AsExpression();
             var result = expression.DefaultSerializer.Serialize();
             var expected = $"{{{dyn.GetHashCode()}}} + {{@A: 123}} + ({{@B.{dyn.B.GetHashCode()}}} + {{@C: \"abc\"}})";
+
             Assert.Equal(4, expression.Count);
+            Assert.IsType<ComplexEntity>(expression[0]);
+            Assert.IsType<DynamicItemEntity>(expression[1]);
+            Assert.IsType<DynamicItemEntity>(expression[2]);
+            Assert.IsType<DynamicItemEntity>(expression[3]);
             Assert.Equal(expected, result);
         }
     }

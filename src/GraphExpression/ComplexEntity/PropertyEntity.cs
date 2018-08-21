@@ -4,15 +4,16 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class ListItemEntity : ComplexEntity
+    public class PropertyEntity : ComplexEntity
     {
-        public object Key { get; private set; }
+        public PropertyInfo Property { get; private set; }
 
-        public ListItemEntity(Expression<object> expression, object parent, object key, object value) 
+        public PropertyEntity(Expression<object> expression, object parent, PropertyInfo property) 
             : base(expression)
         {
-            this.Key = key;
-            this.Entity = value;
+            this.Property = property;
+            if (parent != null)
+                this.Entity = property.GetValue(parent);
         }
     }
 }
