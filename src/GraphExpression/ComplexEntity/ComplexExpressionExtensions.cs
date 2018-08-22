@@ -1,6 +1,7 @@
 ﻿using GraphExpression.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphExpression
 {
@@ -20,10 +21,17 @@ namespace GraphExpression
             if (entityParent == null)
                 yield break;
 
+            // get all items from collections
             if (entityParent is Array arrayList)
             {
-                for(var i = 0; i < arrayList.Length; i++)
-                    yield return new ArrayItemEntity(expression, i, arrayList.GetValue(i));
+                var list = new List<ArrayItemEntity>();
+                ReflectionUtils.IterateArrayMultidimensional(arrayList, indices =>
+                {
+                    list.Add(new ArrayItemEntity(expression, indices, arrayList.GetValue(indices)));
+                });
+
+                foreach (var i in list)
+                    yield return i;
             }
             else if (entityParent is System.Dynamic.ExpandoObject)
             {
@@ -42,13 +50,19 @@ namespace GraphExpression
                     yield return new ListItemEntity(expression, i, list[i]);
             }
 
+            // ignore deep in internal classes
             if (IsSystemType(entityParent.GetType()))
                 yield break;
 
+            // get all propertis: 
+            // 1) ignore indexed (this[...]) with GetIndexParameters > 0
+            // 2) ignore properties with only setters
             var properties = entityParent.GetType().GetProperties();
             foreach(var p in properties)
-                yield return new PropertyEntity(expression, entityParent, p);
+                if (!p.GetIndexParameters().Any() && p.GetGetMethod() != null)
+                    yield return new PropertyEntity(expression, entityParent, p);
 
+            // get all fields
             var fields = entityParent.GetType().GetFields();
             foreach (var f in fields)
                 yield return new FieldEntity(expression, entityParent, f);

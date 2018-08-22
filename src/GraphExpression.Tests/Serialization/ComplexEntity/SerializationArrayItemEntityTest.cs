@@ -24,6 +24,16 @@ namespace GraphExpression.Tests
         }
 
         [Fact]
+        public void Multidimensional()
+        {
+            var expression = GetExpression();
+            var serialization = GetSerialization(expression);
+            var listItem = new ArrayItemEntity(expression, new int[] { 10, 10, 10 }, "value");
+            var result = listItem.ToString();
+            Assert.Equal("{[10,10,10]: \"value\"}", result);
+        }
+
+        [Fact]
         public void ComplexValue()
         {
             var expression = GetExpression();

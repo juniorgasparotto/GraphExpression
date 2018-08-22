@@ -24,5 +24,35 @@ namespace GraphExpression.Tests
             Assert.IsType<ArrayItemEntity>(expression[3]);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void CreateMultidimensionalArray_ReturnExpressionAsString()
+        {
+            // Three-dimensional array.
+            var array3D = new int[2,2,3] 
+            { 
+                { { 1, 2, 3 }, { 4, 5, 6 } },
+                { { 7, 8, 9 }, { 10, 11, 12 } }
+            };
+
+            var expression = array3D.AsExpression();
+            var result = expression.DefaultSerializer.Serialize();
+            var expected = $"{{{array3D.GetHashCode()}}}" + " + {[0,0,0]: 1} + {[0,0,1]: 2} + {[0,0,2]: 3} + {[0,1,0]: 4} + {[0,1,1]: 5} + {[0,1,2]: 6} + {[1,0,0]: 7} + {[1,0,1]: 8} + {[1,0,2]: 9} + {[1,1,0]: 10} + {[1,1,1]: 11} + {[1,1,2]: 12}";
+            Assert.Equal(13, expression.Count);
+            Assert.IsType<ComplexEntity>(expression[0]);
+            Assert.IsType<ArrayItemEntity>(expression[1]);
+            Assert.IsType<ArrayItemEntity>(expression[2]);
+            Assert.IsType<ArrayItemEntity>(expression[3]);
+            Assert.IsType<ArrayItemEntity>(expression[4]);
+            Assert.IsType<ArrayItemEntity>(expression[5]);
+            Assert.IsType<ArrayItemEntity>(expression[6]);
+            Assert.IsType<ArrayItemEntity>(expression[7]);
+            Assert.IsType<ArrayItemEntity>(expression[8]);
+            Assert.IsType<ArrayItemEntity>(expression[9]);
+            Assert.IsType<ArrayItemEntity>(expression[10]);
+            Assert.IsType<ArrayItemEntity>(expression[11]);
+            Assert.IsType<ArrayItemEntity>(expression[12]);
+            Assert.Equal(expected, result);
+        }
     }
 }

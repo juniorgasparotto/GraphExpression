@@ -25,9 +25,9 @@ namespace GraphExpression.Tests
 
         public class Lists
         {
-            public string[] ArrayStrings { get; set; }
-            public List<string> ListStrings { get; set; }
-            public Dictionary<int, string> DictionaryIntString { get; set; }
+            //public string[] ArrayStrings { get; set; }
+            //public List<string> ListStrings { get; set; }
+            //public Dictionary<int, string> DictionaryIntString { get; set; }
             public string this[int index]
             {
                 get => "this value";

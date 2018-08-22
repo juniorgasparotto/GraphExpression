@@ -51,7 +51,7 @@ namespace GraphExpression.Serialization
             else if (item is ArrayItemEntity arrayItem)
             {
                 type = item.Entity?.GetType();
-                strContainer = $"[{arrayItem.Key.ToString()}]";
+                strContainer = $"[{string.Join(",", arrayItem.Key)}]";
             }
             else if (item is DictionaryItemEntity dicItem)
             {

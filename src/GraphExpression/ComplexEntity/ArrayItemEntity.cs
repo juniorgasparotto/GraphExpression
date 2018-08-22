@@ -6,9 +6,16 @@ namespace GraphExpression
 {
     public class ArrayItemEntity : ComplexEntity
     {
-        public long Key { get; private set; }
+        public int[] Key { get; private set; }
 
-        public ArrayItemEntity(Expression<object> expression, long key, object value) 
+        public ArrayItemEntity(Expression<object> expression, int key, object value)
+            : base(expression)
+        {
+            this.Key = new int[] { key };
+            this.Entity = value;
+        }
+
+        public ArrayItemEntity(Expression<object> expression, int[] key, object value)
             : base(expression)
         {
             this.Key = key;
