@@ -5,14 +5,14 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class DynamicReader : IReader
+    public class DynamicReader : IComplexItemReader
     {
-        public bool CanRead(object entity)
+        public bool CanRead(ComplexBuilder builder, object entity)
         {
             return entity is System.Dynamic.ExpandoObject;
         }
 
-        public IEnumerable<ComplexEntity> GetValues(Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetItems(ComplexBuilder builder, Expression<object> expression, object entity)
         {
             var dyn = (System.Collections.IEnumerable)entity;
             foreach (KeyValuePair<string, object> item in dyn)

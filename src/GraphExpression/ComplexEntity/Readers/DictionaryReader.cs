@@ -5,14 +5,14 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class DictionaryReader : IReader
+    public class DictionaryReader : IComplexItemReader
     {
-        public bool CanRead(object entity)
+        public bool CanRead(ComplexBuilder builder, object entity)
         {
             return entity is System.Collections.IDictionary;
         }
 
-        public IEnumerable<ComplexEntity> GetValues(Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetItems(ComplexBuilder builder, Expression<object> expression, object entity)
         {
             var dic = (System.Collections.IDictionary)entity;
             foreach (var key in dic.Keys)

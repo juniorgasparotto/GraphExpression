@@ -107,5 +107,13 @@ namespace GraphExpression
                     IterateArrayMultidimensional(inObject, callback, newIndices);
             }
         }
+
+        public static bool IsSystemType(Type type)
+        {
+            var typeName = type.Namespace ?? "";
+            if (typeName.StartsWith("System") || typeName.StartsWith("Microsoft"))
+                return true;
+            return false;
+        }
     }
 }

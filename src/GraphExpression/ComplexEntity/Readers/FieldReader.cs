@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 
 namespace GraphExpression
 {
-    public class ListReader : IComplexItemReader
+    public class FieldReader : IComplexItemReader
     {
         public bool CanRead(ComplexBuilder builder, object entity)
         {
-            return entity is System.Collections.IList;
+            return builder.CanReadMembers(entity);
         }
 
         public IEnumerable<ComplexEntity> GetItems(ComplexBuilder builder, Expression<object> expression, object entity)
         {
-            var list = (System.Collections.IList)entity;
-            for (var i = 0; i < list.Count; i++)
-                yield return new ListItemEntity(expression, i, list[i]);
+            var fields = builder.GetFields(entity);
+            foreach (var f in fields)
+                yield return new FieldEntity(expression, entity, f);
         }
     }
 }

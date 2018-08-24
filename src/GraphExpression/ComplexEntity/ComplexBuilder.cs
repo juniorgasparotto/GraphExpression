@@ -8,29 +8,32 @@ namespace GraphExpression
 {
     public class ComplexBuilder
     {
-        public List<IReader> Readers { get;set; }
+        public List<IComplexItemReader> InstanceReaders { get;set; }
+        public List<IComplexItemReader> MemberReaders { get;set; }
         public Func<object, IEnumerable<PropertyInfo>> GetProperties { get;set; }
         public Func<object, IEnumerable<FieldInfo>> GetFields { get;set; }
+        public Func<object, bool> CanReadMembers { get; set; }
 
         public ComplexBuilder()
         {
-            Readers = new List<IReader>();
-            Readers.Add(new ArrayReader());
-            Readers.Add(new DynamicReader());
-            Readers.Add(new DictionaryReader());
-            Readers.Add(new ListReader());
+            // is recommended this readers order:
+            // 1) Array
+            // 2) ExpandoObject (Dynamic): is IDictionary too
+            // 3) IDictionary
+            // 4) IList
+            InstanceReaders = new List<IComplexItemReader>();
+            InstanceReaders.Add(new ArrayReader());
+            InstanceReaders.Add(new DynamicReader());
+            InstanceReaders.Add(new DictionaryReader());
+            InstanceReaders.Add(new ListReader());
+
+            MemberReaders = new List<IComplexItemReader>();
+            MemberReaders.Add(new PropertyReader());
+            MemberReaders.Add(new FieldReader());
 
             GetProperties = (entity) => entity.GetType().GetProperties();
             GetFields = (entity) => entity.GetType().GetFields();
-        }
-
-        public bool CanContinue(Type type)
-        {
-            var typeName = type.Namespace ?? "";
-            if (typeName == "System" || typeName.StartsWith("System.") ||
-                typeName == "Microsoft" || typeName.StartsWith("Microsoft."))
-                return true;
-            return false;
+            CanReadMembers = (entity) => !ReflectionUtils.IsSystemType(entity.GetType());
         }
     }
 }
