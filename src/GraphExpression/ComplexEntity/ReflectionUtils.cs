@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GraphExpression
 {
-    public static class ReflectionUtils
+    internal static class ReflectionUtils
     {
         public static IEnumerable<Type> GetAllParentTypes(Type type, bool includeSelf = true, bool includeInterfaces = true)
         {
