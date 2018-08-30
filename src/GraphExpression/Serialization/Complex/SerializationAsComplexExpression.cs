@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace GraphExpression.Serialization
 {
@@ -7,6 +9,7 @@ namespace GraphExpression.Serialization
     {
         public ShowTypeOptions ShowType { get; set; }
         public IValueFormatter ValueFormatter { get; set; }
+        public List<IEntitySerialize> ItemsSerialize { get; private set; }
         public string PropertySymbol { get; set; }
         public string FieldSymbol { get; set; }
         public bool EncloseItem { get; set; }
@@ -19,6 +22,16 @@ namespace GraphExpression.Serialization
             EncloseItem = true;
             SerializeItem = SerializeItemInternal;
             ValueFormatter = new DefaultValueFormatter();
+            ItemsSerialize = new List<IEntitySerialize>()
+            {
+                new ObjectSerialize(),
+                new PropertySerialize(),
+                new FieldSerialize(),
+                new ArrayItemSerialize(),
+                new DynamicItemSerialize(),
+                new ListItemSerialize(),
+                new DictionaryItemSerialize(),
+            };
         }
 
         private string SerializeItemInternal(EntityItem<object> item)
@@ -30,42 +43,16 @@ namespace GraphExpression.Serialization
             string strValue = null;
             Type type = null;
 
-            if (item is PropertyEntity prop)
+            var itemSerialize = ItemsSerialize
+                .Where(f => f.CanSerialize(this, item))
+                .LastOrDefault();
+
+            if (itemSerialize != null)
             {
-                strSymbol = PropertySymbol;
-                type = prop.Property.PropertyType;
-                strContainer = prop.Property.Name;
-            }
-            else if (item is FieldEntity field)
-            {
-                strSymbol = FieldSymbol;
-                type = field.Field.FieldType;
-                strContainer = field.Field.Name;
-            }
-            else if (item is DynamicItemEntity dynItem)
-            {
-                strSymbol = PropertySymbol;
-                type = item.Entity?.GetType();
-                strContainer = dynItem.Property;
-            }
-            else if (item is ArrayItemEntity arrayItem)
-            {
-                type = item.Entity?.GetType();
-                strContainer = $"[{string.Join(",", arrayItem.Key)}]";
-            }
-            else if (item is DictionaryItemEntity dicItem)
-            {
-                type = item.Entity?.GetType();
-                strContainer = $"[{dicItem.Key.GetHashCode()}]";
-            }
-            else if (item is ListItemEntity listItem)
-            {
-                type = item.Entity?.GetType();
-                strContainer = $"[{listItem.Key.ToString()}]";
-            }
-            else
-            {
-                type = item.Entity?.GetType();
+                var info = itemSerialize.GetSerializeInfo(this, item);
+                type = info.Type;
+                strSymbol = info.Symbol;
+                strContainer = info.ContainerName;
             }
 
             if (type != null)

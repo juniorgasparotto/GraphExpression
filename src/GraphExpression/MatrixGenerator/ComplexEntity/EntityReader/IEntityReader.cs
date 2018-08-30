@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public interface IComplexItemReader
+    public interface IEntityReader
     {
         bool CanRead(ComplexBuilder builder, object entity);
-        IEnumerable<ComplexEntity> GetItems(ComplexBuilder builder, Expression<object> expression, object entity);
+        IEnumerable<ComplexEntity> GetChildren(ComplexBuilder builder, Expression<object> expression, object entity);
     }
 }

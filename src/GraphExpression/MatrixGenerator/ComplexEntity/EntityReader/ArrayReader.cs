@@ -5,14 +5,14 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class ArrayReader : IComplexItemReader
+    public class ArrayReader : IEntityReader
     {
         public bool CanRead(ComplexBuilder builder, object entity)
         {
             return entity is Array;
         }
 
-        public IEnumerable<ComplexEntity> GetItems(ComplexBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetChildren(ComplexBuilder builder, Expression<object> expression, object entity)
         {
             var arrayList = (Array)entity;
             var list = new List<ArrayItemEntity>();

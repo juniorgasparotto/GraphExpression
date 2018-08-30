@@ -22,17 +22,15 @@ namespace GraphExpression
             if (entityParent == null)
                 yield break;
 
-            // find instance reader
-            var instanceReader = builder.InstanceReaders.Where(f => f.CanRead(builder, entityParent)).FirstOrDefault();
-            if (instanceReader != null)
-                foreach (var item in instanceReader.GetItems(builder, expression, entityParent))
-                    yield return item;
+            // Find the reader, the last "reader" is the most important
+            var instanceReader = builder
+                .Readers
+                .Where(f => f.CanRead(builder, entityParent))
+                .LastOrDefault();
 
-            // get members
-            foreach(var memberReader in builder.MemberReaders)
-                if (memberReader.CanRead(builder, entityParent))
-                    foreach (var item in memberReader.GetItems(builder, expression, entityParent))
-                        yield return item;
+            if (instanceReader != null)
+                foreach (var item in instanceReader.GetChildren(builder, expression, entityParent))
+                    yield return item;
         }
     }
 }

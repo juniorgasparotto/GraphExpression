@@ -6,14 +6,14 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class FieldReader : IComplexItemReader
+    public class FieldReader : IMemberReader
     {
         public bool CanRead(ComplexBuilder builder, object entity)
         {
             return builder.CanReadMembers(entity);
         }
 
-        public IEnumerable<ComplexEntity> GetItems(ComplexBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetMembers(ComplexBuilder builder, Expression<object> expression, object entity)
         {
             var fields = builder.GetFields(entity);
             foreach (var f in fields)
