@@ -45,7 +45,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
+            serialization.ShowType = ShowTypeOptions.FullTypeName;
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
             Assert.Equal("{@System.Int32.PropInt: 100}", result);
@@ -56,7 +56,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
+            serialization.ShowType = ShowTypeOptions.None;
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
             Assert.Equal("{@PropInt: 100}", result);
@@ -67,7 +67,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.TypeName;
+            serialization.ShowType = ShowTypeOptions.TypeName;
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
             Assert.Equal("{@Int32.PropInt: 100}", result);

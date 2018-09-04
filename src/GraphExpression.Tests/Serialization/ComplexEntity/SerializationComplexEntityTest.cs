@@ -34,7 +34,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
+            serialization.ShowType = ShowTypeOptions.FullTypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
             Assert.Equal($"{{GraphExpression.Tests.SerializationComplexEntityTest.{this.GetHashCode()}}}", result);
@@ -45,7 +45,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
+            serialization.ShowType = ShowTypeOptions.None;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
             Assert.Equal($"{{{this.GetHashCode()}}}", result);
@@ -56,7 +56,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.TypeName;
+            serialization.ShowType = ShowTypeOptions.TypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
             Assert.Equal($"{{SerializationComplexEntityTest.{this.GetHashCode()}}}", result);

@@ -48,7 +48,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
+            serialization.ShowType = ShowTypeOptions.FullTypeName;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
             Assert.Equal("{@System.Int32.PropInt: 100}", result);
@@ -59,7 +59,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
+            serialization.ShowType = ShowTypeOptions.None;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
             Assert.Equal("{@PropInt: 100}", result);
@@ -70,7 +70,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.TypeName;
+            serialization.ShowType = ShowTypeOptions.TypeName;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
             Assert.Equal("{@Int32.PropInt: 100}", result);
@@ -102,7 +102,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
+            serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
@@ -117,7 +117,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
+            serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 

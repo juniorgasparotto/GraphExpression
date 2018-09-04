@@ -89,12 +89,5 @@ namespace GraphExpression.Serialization
 
             return $"{encloseStart}{strSymbol}{parts}{separatorValue}{strValue}{encloseEnd}";
         }
-
-        public enum ShowTypeOptions
-        {
-            None,
-            TypeName,
-            FullTypeName = 2,
-        }
     }
 }

@@ -62,7 +62,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
+            serialization.ShowType = ShowTypeOptions.FullTypeName;
             var listItem = new CollectionItemEntity(expression, 1, 100);
             var result = listItem.ToString();
             Assert.Equal("{System.Int32.[1]: 100}", result);
@@ -73,7 +73,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
+            serialization.ShowType = ShowTypeOptions.None;
             var listItem = new CollectionItemEntity(expression, 1000, 100);
             var result = listItem.ToString();
             Assert.Equal("{[1000]: 100}", result);
@@ -84,7 +84,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.TypeName;
+            serialization.ShowType = ShowTypeOptions.TypeName;
             var listItem = new CollectionItemEntity(expression, 1000, 100);
             var result = listItem.ToString();
             Assert.Equal("{Int32.[1000]: 100}", result);
@@ -105,7 +105,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
+            serialization.ShowType = ShowTypeOptions.None;
             serialization.EncloseItem = false;
 
             var listItem = new CollectionItemEntity(expression, 1000, null);

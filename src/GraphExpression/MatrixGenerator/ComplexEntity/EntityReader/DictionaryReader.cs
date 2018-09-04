@@ -40,6 +40,7 @@ namespace GraphExpression
             }
             else if (entity is DictionaryEntry entry)
             {
+                // Read properties: "Key" and "Value"
                 foreach (var memberReader in builder.MemberReaders)
                 {
                     var items = memberReader.GetMembers(builder, expression, entity);

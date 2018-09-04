@@ -42,5 +42,30 @@ namespace GraphExpression
                 GetFields = (entity) => entity.GetType().GetFields();
             }
         }
+
+        public Expression<object> Build(object entityRoot, bool deep = false)
+        {
+            var expression = new Expression<object>(expr => new ComplexEntity(expr, entityRoot), (expr, e) => GetChildren(expr, e), deep);
+            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
+            return expression;
+        }
+
+        private IEnumerable<EntityItem<object>> GetChildren(Expression<object> expression, EntityItem<object> parent)
+        {
+            var entityParent = parent?.Entity;
+
+            if (entityParent == null)
+                yield break;
+
+            // Find the reader, the last "reader" is the most important
+            var instanceReader = 
+                Readers
+                .Where(f => f.CanRead(this, entityParent))
+                .LastOrDefault();
+
+            if (instanceReader != null)
+                foreach (var item in instanceReader.GetChildren(this, expression, entityParent))
+                    yield return item;
+        }
     }
 }
