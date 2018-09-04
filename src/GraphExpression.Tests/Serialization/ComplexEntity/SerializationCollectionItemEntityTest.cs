@@ -6,7 +6,7 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class SerializationListItemEntityTest
+    public class SerializationCollectionItemEntityTest
     {
         public class ComplexItem
         {
@@ -18,7 +18,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            var listItem = new ListItemEntity(expression, 0, "value");
+            var listItem = new CollectionItemEntity(expression, 0, "value");
             var result = listItem.ToString();
             Assert.Equal("{[0]: \"value\"}", result);
         }
@@ -29,7 +29,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             var value = new ComplexItem();
-            var listItem = new ListItemEntity(expression, 0, value);
+            var listItem = new CollectionItemEntity(expression, 0, value);
             var result = listItem.ToString();
             Assert.Equal($"{{[0].{value.GetHashCode()}}}", result);
         }
@@ -40,7 +40,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.EncloseItem = false;
-            var listItem = new ListItemEntity(expression, 1, "value");
+            var listItem = new CollectionItemEntity(expression, 1, "value");
             var result = listItem.ToString();
             Assert.Equal("[1]: \"value\"", result);
         }
@@ -50,9 +50,9 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.PropertySymbol = "*";
-            serialization.FieldSymbol = "*";
-            var listItem = new ListItemEntity(expression, 1, "value");
+            serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = "*";
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
+            var listItem = new CollectionItemEntity(expression, 1, "value");
             var result = listItem.ToString();
             Assert.Equal("{[1]: \"value\"}", result);
         }
@@ -63,7 +63,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.FullTypeName;
-            var listItem = new ListItemEntity(expression, 1, 100);
+            var listItem = new CollectionItemEntity(expression, 1, 100);
             var result = listItem.ToString();
             Assert.Equal("{System.Int32.[1]: 100}", result);
         }
@@ -74,7 +74,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            var listItem = new ListItemEntity(expression, 1000, 100);
+            var listItem = new CollectionItemEntity(expression, 1000, 100);
             var result = listItem.ToString();
             Assert.Equal("{[1000]: 100}", result);
         }
@@ -85,7 +85,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.TypeName;
-            var listItem = new ListItemEntity(expression, 1000, 100);
+            var listItem = new CollectionItemEntity(expression, 1000, 100);
             var result = listItem.ToString();
             Assert.Equal("{Int32.[1000]: 100}", result);
         }
@@ -95,7 +95,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            var listItem = new ListItemEntity(expression, 1000, null);
+            var listItem = new CollectionItemEntity(expression, 1000, null);
             var result = listItem.ToString();
             Assert.Equal("{[1000]: null}", result);
         }
@@ -108,7 +108,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
             serialization.EncloseItem = false;
 
-            var listItem = new ListItemEntity(expression, 1000, null);
+            var listItem = new CollectionItemEntity(expression, 1000, null);
             var result = listItem.ToString();
             Assert.Equal("[1000]: null", result);
         }

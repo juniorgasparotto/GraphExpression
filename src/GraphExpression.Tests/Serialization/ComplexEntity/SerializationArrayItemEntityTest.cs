@@ -60,8 +60,8 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.PropertySymbol = "*";
-            serialization.FieldSymbol = "*";
+            serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = "*";
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
             var listItem = new ArrayItemEntity(expression, 1, "value");
             var result = listItem.ToString();
             Assert.Equal("{[1]: \"value\"}", result);

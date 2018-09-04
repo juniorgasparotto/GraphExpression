@@ -44,7 +44,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.FieldSymbol = "*";
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
             Assert.Equal($"{{*field.{field.GetHashCode()}}}", result);
@@ -100,7 +100,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.FieldSymbol = null;
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             this.field = null;
@@ -115,7 +115,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.FieldSymbol = null;
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             this.field = null;

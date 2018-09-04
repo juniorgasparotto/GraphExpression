@@ -12,7 +12,6 @@ namespace GraphExpression
         public List<IMemberReader> MemberReaders { get; private set; }
         public Func<object, IEnumerable<PropertyInfo>> GetProperties { get; set; }
         public Func<object, IEnumerable<FieldInfo>> GetFields { get; set; }
-        public Func<object, bool> CanReadMembers { get; set; }
 
         public ComplexBuilder(bool addDefaultConfig = true)
         {
@@ -26,8 +25,8 @@ namespace GraphExpression
                 // 2) ExpandoObject inherit IDictionary: Must be sorted below IDictionary
                 Readers = new List<IEntityReader>
                 {
-                    new ObjectReader(),
-                    new ListReader(),
+                    new DefaultReader(),
+                    new CollectionReader(),
                     new ArrayReader(),
                     new DictionaryReader(),
                     new DynamicReader(),
@@ -41,7 +40,6 @@ namespace GraphExpression
 
                 GetProperties = (entity) => entity.GetType().GetProperties();
                 GetFields = (entity) => entity.GetType().GetFields();
-                CanReadMembers = (entity) => !ReflectionUtils.IsSystemType(entity.GetType());
             }
         }
     }

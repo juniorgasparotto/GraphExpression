@@ -10,15 +10,11 @@ namespace GraphExpression.Serialization
         public ShowTypeOptions ShowType { get; set; }
         public IValueFormatter ValueFormatter { get; set; }
         public List<IEntitySerialize> ItemsSerialize { get; private set; }
-        public string PropertySymbol { get; set; }
-        public string FieldSymbol { get; set; }
         public bool EncloseItem { get; set; }
 
         public SerializationAsComplexExpression(Expression<object> expression)
             : base(expression)
-        {
-            PropertySymbol = "@";
-            FieldSymbol = "!";
+        {   
             EncloseItem = true;
             SerializeItem = SerializeItemInternal;
             ValueFormatter = new DefaultValueFormatter();
@@ -29,8 +25,7 @@ namespace GraphExpression.Serialization
                 new FieldSerialize(),
                 new ArrayItemSerialize(),
                 new DynamicItemSerialize(),
-                new ListItemSerialize(),
-                new DictionaryItemSerialize(),
+                new CollectionItemSerialize(),
             };
         }
 
@@ -51,7 +46,7 @@ namespace GraphExpression.Serialization
             {
                 var info = itemSerialize.GetSerializeInfo(this, item);
                 type = info.Type;
-                strSymbol = info.Symbol;
+                strSymbol = itemSerialize.Symbol;
                 strContainer = info.ContainerName;
             }
 

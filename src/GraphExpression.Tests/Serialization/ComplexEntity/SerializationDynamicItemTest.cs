@@ -34,7 +34,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.PropertySymbol = "*";
+            serialization.ItemsSerialize.OfType<DynamicItemSerialize>().First().Symbol = "*";
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
             Assert.Equal("{*PropInt: 100}", result);
@@ -89,7 +89,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             var dynamicItem = new DynamicItemEntity(expression, "PropString", null);
-            serialization.PropertySymbol = null;
+            serialization.ItemsSerialize.OfType<DynamicItemSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             var result = dynamicItem.ToString();

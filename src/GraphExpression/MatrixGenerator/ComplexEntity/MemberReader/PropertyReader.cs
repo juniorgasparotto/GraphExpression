@@ -8,11 +8,6 @@ namespace GraphExpression
 {
     public class PropertyReader : IMemberReader
     {
-        public bool CanRead(ComplexBuilder builder, object entity)
-        {
-            return builder.CanReadMembers(entity);
-        }
-
         public IEnumerable<ComplexEntity> GetMembers(ComplexBuilder builder, Expression<object> expression, object entity)
         {
             // get all propertis: 

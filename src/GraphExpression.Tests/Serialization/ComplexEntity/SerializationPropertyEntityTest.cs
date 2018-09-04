@@ -37,7 +37,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.PropertySymbol = "*";
+            serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = "*";
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
             Assert.Equal("{*PropInt: 100}", result);
@@ -103,7 +103,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.PropertySymbol = null;
+            serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             this.PropString = null;
@@ -118,7 +118,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.PropertySymbol = null;
+            serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             this.PropString = null;

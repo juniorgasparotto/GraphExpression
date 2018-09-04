@@ -20,7 +20,6 @@ namespace GraphExpression.Tests
             var result = field.ToString();
             Assert.Equal("{!fieldInt: 100}", result);
         }
-
         
         [Fact]
         public void EncloseItem()
@@ -38,7 +37,7 @@ namespace GraphExpression.Tests
         {
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
-            serialization.FieldSymbol = "*";
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
             var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
             var result = field.ToString();
             Assert.Equal("{*fieldInt: 100}", result);
@@ -104,7 +103,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.FieldSymbol = null;
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             this.fieldString = null;
@@ -119,7 +118,7 @@ namespace GraphExpression.Tests
             var expression = GetExpression();
             var serialization = GetSerialization(expression);
             serialization.ShowType = SerializationAsComplexExpression.ShowTypeOptions.None;
-            serialization.FieldSymbol = null;
+            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             this.fieldString = null;

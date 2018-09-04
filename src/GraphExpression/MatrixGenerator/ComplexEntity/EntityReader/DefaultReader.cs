@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class ObjectReader : IEntityReader
+    public class DefaultReader : IEntityReader
     {
         public bool CanRead(ComplexBuilder builder, object entity)
         {
-            return true;
+            return !ReflectionUtils.IsSystemType(entity.GetType());
         }
 
         public IEnumerable<ComplexEntity> GetChildren(ComplexBuilder builder, Expression<object> expression, object entity)
@@ -18,12 +18,9 @@ namespace GraphExpression
             // read members
             foreach (var memberReader in builder.MemberReaders)
             {
-                if (memberReader.CanRead(builder, entity))
-                {
-                    var items = memberReader.GetMembers(builder, expression, entity);
-                    foreach (var item in items)
-                        yield return item;
-                }
+                var items = memberReader.GetMembers(builder, expression, entity);
+                foreach (var item in items)
+                    yield return item;
             }
         }
     }

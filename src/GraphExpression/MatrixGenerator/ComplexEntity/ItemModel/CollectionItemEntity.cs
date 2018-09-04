@@ -4,11 +4,11 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class DictionaryItemEntity : ComplexEntity
+    public class CollectionItemEntity : ComplexEntity
     {
-        public object Key { get; private set; }
+        public long Key { get; private set; }
 
-        public DictionaryItemEntity(Expression<object> expression, object key, object value) 
+        public CollectionItemEntity(Expression<object> expression, long key, object value) 
             : base(expression)
         {
             this.Key = key;
