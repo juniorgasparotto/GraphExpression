@@ -71,7 +71,6 @@
     <Compile Include="TestsReflection.cs" />
     <Compile Include="deleted\TestClass2.cs" />
     <Compile Include="ObjectsSeveralTypes.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

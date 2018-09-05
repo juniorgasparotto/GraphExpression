@@ -54,5 +54,29 @@ namespace GraphExpression.Tests
             Assert.IsType<ArrayItemEntity>(expression[12]);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void CreateJaggedArray_ReturnExpressionAsString()
+        {
+            // Three-dimensional array.
+            int[][] jaggedArray = new int[2][];
+            jaggedArray[0] = new int[2];
+            jaggedArray[0][0] = 10;
+            jaggedArray[0][1] = 20;
+            jaggedArray[1] = new int[1];
+            jaggedArray[1][0] = 10;
+
+            var expression = jaggedArray.AsExpression();
+            var result = expression.DefaultSerializer.Serialize();
+            var expected = $"{{{jaggedArray.GetHashCode()}}} + ({{[0].{jaggedArray[0].GetHashCode()}}} + {{[0]: 10}} + {{[1]: 20}}) + ({{[1].{jaggedArray[1].GetHashCode()}}} + {{[0]: 10}})";
+            Assert.Equal(6, expression.Count);
+            Assert.IsType<ComplexEntity>(expression[0]);
+            Assert.IsType<ArrayItemEntity>(expression[1]);
+            Assert.IsType<ArrayItemEntity>(expression[2]);
+            Assert.IsType<ArrayItemEntity>(expression[3]);
+            Assert.IsType<ArrayItemEntity>(expression[4]);
+            Assert.IsType<ArrayItemEntity>(expression[5]);
+            Assert.Equal(expected, result);
+        }
     }
 }
