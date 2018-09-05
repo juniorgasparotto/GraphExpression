@@ -64,8 +64,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_DateTime()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTime"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@DateTime: \"2000-01-01T01:01:01.000+00:00\"}", result);
@@ -74,8 +74,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_DateTimeNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeNullable"));
@@ -96,8 +96,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Int()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Int"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Int: -2147483648}", result);
@@ -106,8 +106,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_IntNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("IntNullable"));
@@ -128,8 +128,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Long()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Long"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Long: 9223372036854775807}", result);
@@ -138,8 +138,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_LongNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("LongNullable"));
@@ -160,8 +160,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_DateTimeOffset()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeOffset"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@DateTimeOffset: \"2000-01-01T00:00:00.000+00:00\"}", result);
@@ -170,8 +170,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_DateTimeOffsetNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeOffsetNullable"));
@@ -192,8 +192,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_IntPtr()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("IntPtr"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@IntPtr: 9223372036854775807}", result);
@@ -202,8 +202,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_IntPtrNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("IntPtrNullable"));
@@ -224,8 +224,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UIntPtr()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UIntPtr"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@UIntPtr: 18446744073709551615}", result);
@@ -234,8 +234,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UIntPtrNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UIntPtrNullable"));
@@ -256,8 +256,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Byte()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Byte"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Byte: 255}", result);
@@ -266,8 +266,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_ByteNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("ByteNullable"));
@@ -288,8 +288,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_SByte()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("SByte"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@SByte: -128}", result);
@@ -298,8 +298,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_SByteNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("SByteNullable"));
@@ -320,8 +320,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UInt16()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt16"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@UInt16: 65535}", result);
@@ -330,8 +330,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UInt16Nullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt16Nullable"));
@@ -352,8 +352,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UInt32()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt32"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@UInt32: 0}", result);
@@ -362,8 +362,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UInt32Nullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt32Nullable"));
@@ -384,8 +384,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UInt64()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt64"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@UInt64: 18446744073709551615}", result);
@@ -394,8 +394,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_UInt64Nullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt64Nullable"));
@@ -416,8 +416,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Int16()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Int16"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Int16: -32768}", result);
@@ -426,8 +426,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Int16Nullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Int16Nullable"));
@@ -448,8 +448,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Boolean()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Boolean"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Boolean: true}", result);
@@ -458,8 +458,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_BooleanNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("BooleanNullable"));
@@ -480,8 +480,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Decimal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Decimal"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Decimal: -79228162514264337593543950335}", result);
@@ -490,8 +490,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_DecimalNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DecimalNullable"));
@@ -512,8 +512,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Single()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Single"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Single: 3.40282346638529E+38}", result);
@@ -522,8 +522,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_SingleNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("SingleNullable"));
@@ -544,8 +544,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_Char()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Char"));
             var result = fieldEntity.ToString();
             Assert.Equal("{@Char: \"Ê\"}", result);
@@ -554,8 +554,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void CheckValue_CharNullable()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("CharNullable"));
@@ -574,18 +574,6 @@ namespace GraphExpression.Tests
         private System.Reflection.PropertyInfo GetPropertyByName(string name)
         {
             return this.GetType().GetProperties().Where(p => p.Name == name).First();
-        }
-
-        private Expression<object> GetExpression()
-        {
-            var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
-            return expression;
-        }
-
-        private SerializationAsComplexExpression GetSerialization(Expression<object> expression)
-        {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
         }
     }
 }

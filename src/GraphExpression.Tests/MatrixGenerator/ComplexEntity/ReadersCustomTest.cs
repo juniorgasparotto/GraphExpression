@@ -80,7 +80,7 @@ namespace GraphExpression.Tests
             };
 
             var expression = test.AsExpression(builder);
-            var serialization = GetSerialization(expression);
+            var serialization = Utils.GetSerialization(expression);
             serialization.ItemsSerialize.Add(new MethodSerialize());
 
             var result = serialization.Serialize();
@@ -92,18 +92,6 @@ namespace GraphExpression.Tests
             Assert.IsType<PropertyEntity>(expression[3]);
             Assert.IsType<MethodEntity>(expression[4]);
             Assert.Equal(expected, result);
-        }
-
-        private Expression<object> GetExpression()
-        {
-            var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
-            return expression;
-        }
-
-        private SerializationAsComplexExpression GetSerialization(Expression<object> expression)
-        {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
         }
     }
 }

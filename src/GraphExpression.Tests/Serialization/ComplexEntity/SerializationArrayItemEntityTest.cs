@@ -16,8 +16,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Normal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var listItem = new ArrayItemEntity(expression, 0, "value");
             var result = listItem.ToString();
             Assert.Equal("{[0]: \"value\"}", result);
@@ -26,8 +26,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Multidimensional()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var listItem = new ArrayItemEntity(expression, new int[] { 10, 10, 10 }, "value");
             var result = listItem.ToString();
             Assert.Equal("{[10,10,10]: \"value\"}", result);
@@ -36,8 +36,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ComplexValue()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var value = new ComplexItem();
             var listItem = new ArrayItemEntity(expression, 0, value);
             var result = listItem.ToString();
@@ -47,8 +47,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void EncloseItem()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.EncloseItem = false;
             var listItem = new ArrayItemEntity(expression, 1, "value");
             var result = listItem.ToString();
@@ -58,8 +58,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void PropertyAndFieldSymbol_NotImpactInResult()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = "*";
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
             var listItem = new ArrayItemEntity(expression, 1, "value");
@@ -70,8 +70,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeFull()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var listItem = new ArrayItemEntity(expression, 1, 100);
             var result = listItem.ToString();
@@ -81,8 +81,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeNone()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             var listItem = new ArrayItemEntity(expression, 1000, 100);
             var result = listItem.ToString();
@@ -92,8 +92,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeOnlyName()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
             var listItem = new ArrayItemEntity(expression, 1000, 100);
             var result = listItem.ToString();
@@ -103,8 +103,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueNull()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var listItem = new ArrayItemEntity(expression, 1000, null);
             var result = listItem.ToString();
             Assert.Equal("{[1000]: null}", result);
@@ -113,26 +113,14 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueNull_WithoutTypeAndEnclose()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.EncloseItem = false;
 
             var listItem = new ArrayItemEntity(expression, 1000, null);
             var result = listItem.ToString();
             Assert.Equal("[1000]: null", result);
-        }
-
-        private Expression<object> GetExpression()
-        {
-            var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
-            return expression;
-        }
-
-        private SerializationAsComplexExpression GetSerialization(Expression<object> expression)
-        {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
         }
     }
 }

@@ -14,8 +14,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Normal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
             Assert.Equal("{@PropInt: 100}", result);
@@ -24,8 +24,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void EncloseItem()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.EncloseItem = false;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
@@ -35,8 +35,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void PropertySymbol()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = "*";
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
@@ -46,8 +46,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeFull()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
@@ -57,8 +57,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeNone()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
@@ -68,8 +68,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeOnlyName()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
@@ -79,8 +79,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Normal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
             Assert.Equal("{@PropString: \"abc \\\" def \\\"ghi\\\"\"}", result);
@@ -89,8 +89,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Null()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
@@ -100,8 +100,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Null_WithoutTypeAndEncloseAndSymbolProperty()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
@@ -115,8 +115,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Null_Parent_WithoutTypeAndEncloseAndSymbolProperty()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
@@ -130,8 +130,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_TruncateValue()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ValueFormatter = new TruncateFormatter(3);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
@@ -141,8 +141,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_TruncateValue2()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ValueFormatter = new TruncateFormatter(3);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
@@ -152,18 +152,6 @@ namespace GraphExpression.Tests
         private System.Reflection.PropertyInfo GetPropertyByName(string name)
         {
             return this.GetType().GetProperties().Where(p => p.Name == name).First();
-        }
-
-        private Expression<object> GetExpression()
-        {
-            var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
-            return expression;
-        }
-
-        private SerializationAsComplexExpression GetSerialization(Expression<object> expression)
-        {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
         }
     }
 }

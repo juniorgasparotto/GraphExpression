@@ -14,8 +14,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Normal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
             var result = field.ToString();
             Assert.Equal("{!fieldInt: 100}", result);
@@ -24,8 +24,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void EncloseItem()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.EncloseItem = false;
             var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
             var result = field.ToString();
@@ -35,8 +35,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void FieldSymbol()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
             var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
             var result = field.ToString();
@@ -46,8 +46,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeFull()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
             var result = field.ToString();
@@ -57,8 +57,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeNone()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
             var result = field.ToString();
@@ -68,8 +68,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeOnlyName()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
             var field = new FieldEntity(expression, this, GetFieldByName("fieldInt"));
             var result = field.ToString();
@@ -79,8 +79,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Normal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
             Assert.Equal("{!fieldString: \"abc \\\" def \\\"ghi\\\"\"}", result);
@@ -89,8 +89,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Null()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             this.fieldString = null;
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
@@ -100,8 +100,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Null_WithoutTypeAndEncloseAndSymbolField()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
@@ -115,8 +115,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_Null_Parent_WithoutTypeAndEncloseAndSymbolField()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
@@ -130,8 +130,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_TruncateValue()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ValueFormatter = new TruncateFormatter(3);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
@@ -141,8 +141,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueString_TruncateValue2()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ValueFormatter = new TruncateFormatter(3);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
@@ -152,18 +152,6 @@ namespace GraphExpression.Tests
         private System.Reflection.FieldInfo GetFieldByName(string name)
         {
             return this.GetType().GetFields().Where(p => p.Name == name).First();
-        }
-
-        private Expression<object> GetExpression()
-        {
-            var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
-            return expression;
-        }
-
-        private SerializationAsComplexExpression GetSerialization(Expression<object> expression)
-        {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
         }
     }
 }

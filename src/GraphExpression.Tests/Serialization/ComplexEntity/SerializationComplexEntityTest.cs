@@ -11,8 +11,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Normal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
             Assert.Equal($"{{{this.GetHashCode()}}}", result);
@@ -21,8 +21,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void EncloseItem()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.EncloseItem = false;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
@@ -32,8 +32,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeFull()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
@@ -43,8 +43,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeNone()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
@@ -54,8 +54,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeOnlyName()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
@@ -65,8 +65,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Value_Null()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var complex = new ComplexEntity(expression, null);
             var result = complex.ToString();
             Assert.Equal("{null}", result);
@@ -75,8 +75,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Value_Null_AndNotEnclose()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.EncloseItem = false;
             var complex = new ComplexEntity(expression, null);
             var result = complex.ToString();
@@ -86,18 +86,6 @@ namespace GraphExpression.Tests
         private System.Reflection.FieldInfo GetFieldByName(string name)
         {
             return this.GetType().GetFields().Where(p => p.Name == name).First();
-        }
-
-        private Expression<object> GetExpression()
-        {
-            var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
-            return expression;
-        }
-
-        private SerializationAsComplexExpression GetSerialization(Expression<object> expression)
-        {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
         }
     }
 }

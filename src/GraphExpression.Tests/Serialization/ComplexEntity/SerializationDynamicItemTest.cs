@@ -11,8 +11,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void Normal()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
             Assert.Equal("{@PropInt: 100}", result);
@@ -21,8 +21,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void EncloseItem()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.EncloseItem = false;
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
@@ -32,8 +32,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void PropertySymbol()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ItemsSerialize.OfType<DynamicItemSerialize>().First().Symbol = "*";
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
@@ -43,8 +43,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeFull()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
@@ -54,8 +54,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeNone()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
@@ -65,8 +65,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ShowTypeOnlyName()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.TypeName;
             var dynamicItem = new DynamicItemEntity(expression, "PropInt", 100);
             var result = dynamicItem.ToString();
@@ -76,8 +76,8 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueNull()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var dynamicItem = new DynamicItemEntity(expression, "PropString", null);
             var result = dynamicItem.ToString();
             Assert.Equal("{@PropString: null}", result);
@@ -86,26 +86,14 @@ namespace GraphExpression.Tests
         [Fact]
         public void ValueNull_WithoutTypeAndEncloseAndSymbolProperty()
         {
-            var expression = GetExpression();
-            var serialization = GetSerialization(expression);
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
             var dynamicItem = new DynamicItemEntity(expression, "PropString", null);
             serialization.ItemsSerialize.OfType<DynamicItemSerialize>().First().Symbol = null;
             serialization.EncloseItem = false;
 
             var result = dynamicItem.ToString();
             Assert.Equal("PropString: null", result);
-        }
-
-        private Expression<object> GetExpression()
-        {
-            var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
-            return expression;
-        }
-
-        private SerializationAsComplexExpression GetSerialization(Expression<object> expression)
-        {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
         }
     }
 }
