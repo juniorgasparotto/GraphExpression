@@ -1,4 +1,4 @@
-using ExpressionGraph.Serialization;
+
 using GraphExpression.Serialization;
 using System;
 using System.Linq;
@@ -8,6 +8,20 @@ namespace GraphExpression.Tests
 {
     public class ExpressionAsMatrixOfCircularEntityTest : EntitiesData
     {
+        [Fact]
+        public void CreateAutomaticExpressionShort_Surface_VerifyMatrix()
+        {
+            var r = A + (B + C) + (D + B + A);
+            var expression = A.AsExpression(f => f.Children, false);
+            Assert.Equal(6, expression.Count);
+            TestEntityItem(expression[0], isRoot: true, isLast: false, isFirstInParent: true, isLastInParent: false, name: "A", index: 0, indexAtLevel: 0, level: 1, levelAtExpression: 1, previous: null, next: "B", parent: null);
+            TestEntityItem(expression[1], isRoot: false, isLast: false, isFirstInParent: true, isLastInParent: false, name: "B", index: 1, indexAtLevel: 0, level: 2, levelAtExpression: 2, previous: "A", next: "C", parent: "A");
+            TestEntityItem(expression[2], isRoot: false, isLast: false, isFirstInParent: false, isLastInParent: true, name: "C", index: 2, indexAtLevel: 0, level: 3, levelAtExpression: 2, previous: "B", next: "D", parent: "B");
+            TestEntityItem(expression[3], isRoot: false, isLast: false, isFirstInParent: true, isLastInParent: false, name: "D", index: 3, indexAtLevel: 1, level: 2, levelAtExpression: 2, previous: "C", next: "B", parent: "A");
+            TestEntityItem(expression[4], isRoot: false, isLast: false, isFirstInParent: false, isLastInParent: false, name: "B", index: 4, indexAtLevel: 0, level: 3, levelAtExpression: 2, previous: "D", next: "A", parent: "D");
+            TestEntityItem(expression[5], isRoot: false, isLast: true, isFirstInParent: false, isLastInParent: true, name: "A", index: 5, indexAtLevel: 1, level: 3, levelAtExpression: 2, previous: "B", next: null, parent: "D");
+        }
+
         [Fact]
         public void CreateManualExpression_Surface_ReturnExpressionAsString()
         {
@@ -76,6 +90,6 @@ namespace GraphExpression.Tests
             TestEntityItem(expression[16], isRoot: false, isLast: false, isFirstInParent: false, isLastInParent: false, name: "A", index: 16, indexAtLevel: 0, level: 3, levelAtExpression: 2, previous: "G", next: "C", parent: "G");
             TestEntityItem(expression[17], isRoot: false, isLast: false, isFirstInParent: true, isLastInParent: false, name: "C", index: 17, indexAtLevel: 1, level: 3, levelAtExpression: 3, previous: "A", next: "A", parent: "G");
             TestEntityItem(expression[18], isRoot: false, isLast: true, isFirstInParent: false, isLastInParent: true, name: "A", index: 18, indexAtLevel: 0, level: 4, levelAtExpression: 3, previous: "C", next: null, parent: "C");
-        }
+        }        
     }
 }

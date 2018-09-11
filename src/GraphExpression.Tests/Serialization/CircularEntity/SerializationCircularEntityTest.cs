@@ -1,4 +1,4 @@
-using ExpressionGraph.Serialization;
+
 using GraphExpression.Serialization;
 using System;
 using System.Linq;
@@ -116,8 +116,20 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + (C + (D + B))) + C;
             var expression = A.AsExpression(f => f.Children, true);
+            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
             Assert.Equal(9, expression.Count);
             Assert.Equal("A + (B + (C + (D + B))) + (C + (D + (B + C)))", expression.DefaultSerializer.Serialize());
+        }
+
+        [Fact]
+        public void CreateCiclicalExpression_Deep_CustomSerializeItem_ReturnExpression()
+        {
+            var r = A + (B + (C + (D + B))) + C;
+            var expression = A.AsExpression(f => f.Children, true);
+            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
+            serializer.SerializeItem = (item) => item.Entity.Name.ToLower();
+            Assert.Equal(9, expression.Count);
+            Assert.Equal("a + (b + (c + (d + b))) + (c + (d + (b + c)))", expression.DefaultSerializer.Serialize());
         }
     }
 }

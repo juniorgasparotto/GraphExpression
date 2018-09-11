@@ -3,7 +3,7 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class ExpressionFromComplexEntityTest
+    public class SpecialTest
     {
         public class Empty
         {
@@ -21,17 +21,6 @@ namespace GraphExpression.Tests
             public string B_PropString { get; set; }
             public A A_Circular { get; set; }
             public A A_NonCircular { get; set; }
-        }
-
-        public class Lists
-        {
-            //public string[] ArrayStrings { get; set; }
-            //public List<string> ListStrings { get; set; }
-            //public Dictionary<int, string> DictionaryIntString { get; set; }
-            public string this[int index]
-            {
-                get => "this value";
-            }
         }
 
         [Fact]

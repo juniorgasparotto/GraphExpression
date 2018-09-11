@@ -9,6 +9,9 @@ namespace GraphExpression
     public partial class EntityItem<T>
     {
         private readonly Expression<T> expression;
+        private EntityItem<T> previous;
+        private EntityItem<T> next;
+        private EntityItem<T> parent;
 
         public EntityItem(Expression<T> expression)
         {
@@ -20,28 +23,57 @@ namespace GraphExpression
         public int Level { get; set; }
         public int LevelAtExpression { get; set; }
 
-        public EntityItem<T> Previous { get => expression.ElementAtOrDefault(Index - 1); }
+        public EntityItem<T> Previous
+        {
+            get
+            {
+                if (previous == null)
+                    previous = expression.ElementAtOrDefault(Index - 1);
+                return previous;
+            }
+            set => previous = value;
+        }
+
         public T Entity { get; set; }
-        public EntityItem<T> Next { get => expression.ElementAtOrDefault(Index + 1); }
+
+        public EntityItem<T> Next
+        {
+            get
+            {
+                if (next == null)
+                    next = expression.ElementAtOrDefault(Index + 1);
+                return next;
+            }
+            set => next = value;
+        }
 
         public EntityItem<T> Parent
         {
             get
             {
-                var previous = this.Previous;
-                while (previous != null)
+                if (parent == null)
                 {
-                    if (previous.Level < this.Level)
-                        return previous;
-                    previous = previous.Previous;
+                    var previous = this.Previous;
+                    while (previous != null)
+                    {
+                        if (previous.Level < this.Level)
+                        {
+                            parent = previous;
+                            break;
+                        }
+
+                        previous = previous.Previous;
+                    }
                 }
-                return null;
+
+                return parent;
             }
+            set => parent = value;
         }
 
         public bool IsRoot { get => Index == 0; }
         public bool IsLast { get => Next == null; }
-        public bool IsFirstInParent { get => Next != null && Level < Next.Level; }
+        public bool IsFirstInParent { get => IsRoot || (Next != null && Level < Next.Level); }
         public bool IsLastInParent { get => Next == null || Level > Next.Level; }
 
         #region Ancestors

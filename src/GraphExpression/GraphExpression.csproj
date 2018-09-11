@@ -19,4 +19,13 @@
     <Folder Include="Serialization\Circular\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="NCalc">
+      <HintPath>lib\NCalc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

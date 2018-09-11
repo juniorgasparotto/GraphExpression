@@ -31,42 +31,72 @@ namespace GraphExpression.Serialization
 
         public virtual string Serialize()
         {
-            var parenthesisToClose = new Stack<EntityItem<T>>();
             var output = "";
-            foreach (var item in expression)
-            {
-                var next = item.Next;
-                var isFirstInParenthesis = item.IsFirstInParent;
-                var isLastInParenthesis = item.IsLastInParent;
-
-                if (!item.IsRoot) output += " + ";
-
-                if ((!item.IsRoot && isFirstInParenthesis) || (item.IsRoot && EncloseParenthesisInRoot == true))
-                {
-                    output += "(";
-                    parenthesisToClose.Push(item);
-                }
-
-                output += SerializeItem(item);
-
-                if (isLastInParenthesis)
-                {
-                    int countToClose;
-
-                    if (next == null)
-                        countToClose = parenthesisToClose.Count;
-                    else
-                        countToClose = item.Level - next.Level;
-
-                    for (var i = countToClose; i > 0; i--)
+            expression.IterationAll
+                (
+                    itemBeginGroupExpression =>
                     {
-                        parenthesisToClose.Pop();
-                        output += ")";
+                        if (itemBeginGroupExpression.IsRoot)
+                        {
+                            if (EncloseParenthesisInRoot)
+                                output = "(";
+
+                            output += itemBeginGroupExpression.ToString();
+                        }
+                        else
+                        {
+                            output += " + ";
+                            if (itemBeginGroupExpression.IsFirstInParent)
+                                output += "(";
+
+                            output += itemBeginGroupExpression.ToString();
+                        }
+                    },
+                    itemEndGroupExpression =>
+                    {
+                        if (!itemEndGroupExpression.IsRoot || (itemEndGroupExpression.IsRoot && EncloseParenthesisInRoot))
+                            output += ")";
                     }
-                }
-            }
+                );
 
             return output;
+
+            //var parenthesisToClose = new Stack<EntityItem<T>>();
+            //var output = "";
+            //foreach (var item in expression)
+            //{
+            //    var next = item.Next;
+            //    var isFirstInParenthesis = item.IsFirstInParent;
+            //    var isLastInParenthesis = item.IsLastInParent;
+
+            //    if (!item.IsRoot) output += " + ";
+
+            //    if ((!item.IsRoot && isFirstInParenthesis) || (item.IsRoot && EncloseParenthesisInRoot == true))
+            //    {
+            //        output += "(";
+            //        parenthesisToClose.Push(item);
+            //    }
+
+            //    output += SerializeItem(item);
+
+            //    if (isLastInParenthesis)
+            //    {
+            //        int countToClose;
+
+            //        if (next == null)
+            //            countToClose = parenthesisToClose.Count;
+            //        else
+            //            countToClose = item.Level - next.Level;
+
+            //        for (var i = countToClose; i > 0; i--)
+            //        {
+            //            parenthesisToClose.Pop();
+            //            output += ")";
+            //        }
+            //    }
+            //}
+
+            //return output;
         }
     }
 }
