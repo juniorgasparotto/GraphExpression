@@ -1,22 +1,17 @@
-﻿using GraphExpression.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace GraphExpression
 {
     public partial class EntityItem<T>
     {
+        #region Fields and properties 
+
         private readonly Expression<T> expression;
         private EntityItem<T> previous;
-        private EntityItem<T> next;
+        private EntityItem<T> next; 
         private EntityItem<T> parent;
-
-        public EntityItem(Expression<T> expression)
-        {
-            this.expression = expression;
-        }
 
         public int Index { get; set; }
         public int IndexAtLevel { get; set; }
@@ -75,6 +70,14 @@ namespace GraphExpression
         public bool IsLast { get => Next == null; }
         public bool IsFirstInParent { get => IsRoot || (Next != null && Level < Next.Level); }
         public bool IsLastInParent { get => Next == null || Level > Next.Level; }
+        public PathItem<T> Path { get; set; }
+       
+        #endregion
+
+        public EntityItem(Expression<T> expression)
+        {
+            this.expression = expression;
+        }
 
         #region Ancestors
 
