@@ -7,13 +7,19 @@ namespace GraphExpression
 {
     public partial class Expression<T> : List<EntityItem<T>>
     {
-        public static bool EnableNonRecursiveAlgorithm = false;
+        /*
+         * This control of which algorithm is used for study purposes only. 
+         * The Recursive Build feature helps in understanding the code and 
+         * introduces new contributors. However, the idea is that "buildNonRecursive" 
+         * is the default, although it is more complex, is more flexibility and 
+         * perhaps greater performance.
+         */
+        public static bool EnableNonRecursiveAlgorithm = true;
 
         /*
-         * This functionality has been designed to always exist, however, 
-         * it is not essential to the concept of graph expression and has 
-         * not been extensively tested, so in case of possible problems, 
-         * I created this mechanism to disable functionality.
+         * This functionality is designed to always exist, however, it is not essential 
+         * to the concept of graph expression and can be disabled in general if you 
+         * need to improve performance.
          */
         public static bool EnableGraphInfo = true;
 
@@ -141,7 +147,10 @@ namespace GraphExpression
                 if (EnableGraphInfo)
                 {
                     this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();
-                    parent.Path = this.GraphInfo.CreatePath(children, level, parent.Entity, default(T));
+                    parent.Path = this.GraphInfo.CreatePath(null, level, parent.Entity, default(T));
+
+                    if (!children.Any())
+                        this.GraphInfo.EndPath();
                 }
             }
 

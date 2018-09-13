@@ -20,7 +20,7 @@
             }
         }
 
-        internal Edge(Vertex<T> source = null, Vertex<T> target = null, decimal weight = 0)
+        public Edge(Vertex<T> source = null, Vertex<T> target = null, decimal weight = 0)
         {
             this.Source = source;
             this.Target = target;

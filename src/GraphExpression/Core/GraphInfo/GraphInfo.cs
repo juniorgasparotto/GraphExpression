@@ -6,6 +6,8 @@ namespace GraphExpression
 {
     public class GraphInfo<T>
     {
+        private static List<T> globalIds = new List<T>();
+
         #region Fields
         
         private List<Vertex<T>> vertexes;
@@ -19,27 +21,27 @@ namespace GraphExpression
 
         #region Public properties
 
-        public IEnumerable<Edge<T>> Edges
+        public IReadOnlyList<Edge<T>> Edges
         {
             get
             {
-                return edges.AsEnumerable();
+                return edges.AsReadOnly();
             }
         }
 
-        public IEnumerable<Vertex<T>> Vertexes
+        public IReadOnlyList<Vertex<T>> Vertexes
         {
             get
             {
-                return vertexes.AsEnumerable();
+                return vertexes.AsReadOnly();
             }
         }
 
-        public IEnumerable<Path<T>> Paths
+        public IReadOnlyList<Path<T>> Paths
         {
             get
             {
-                return paths.AsEnumerable();
+                return paths.AsReadOnly();
             }
         }
 
@@ -53,12 +55,23 @@ namespace GraphExpression
             this.edges = new List<Edge<T>>();
         }
 
-        public PathItem<T> CreatePath(object iteration, int level, T entity, T entityParent)
+        public PathItem<T> CreatePath(object parentIterationRef, int level, T entity, T entityParent)
         {
             Vertex<T> vertex = FindVertexFirstOccurrence(entity);
             if (vertex == null)
             {
-                vertex = new Vertex<T>(entity);
+                long globalEntity = -1;
+                
+                if (entity != null)
+                    globalEntity = globalIds.IndexOf(entity);
+
+                if (globalEntity == -1)
+                {
+                    globalEntity = globalIds.Count;
+                    globalIds.Add(entity);
+                }
+
+                vertex = new Vertex<T>(entity, globalEntity);
                 vertexes.Add(vertex);
             }
 
@@ -88,7 +101,7 @@ namespace GraphExpression
             }
 
             // create path item
-            return AddInCurrentPath(iteration, level, edge);
+            return AddInCurrentPath(parentIterationRef, level, edge);
         }
 
         public void EndPath()
@@ -116,26 +129,26 @@ namespace GraphExpression
 
         private Vertex<T> FindVertexFirstOccurrence(T entity)
         {
-            return this.vertexes.FirstOrDefault(e => e.Entity?.Equals(entity) == true);
+            return vertexes.FirstOrDefault(e => e.Entity?.Equals(entity) == true);
         }
 
-        private PathItem<T> AddInCurrentPath(object iteration, int level, Edge<T> edge)
+        private PathItem<T> AddInCurrentPath(object parentIterationRef, int level, Edge<T> edge)
         {
             if (this.currentPath == null)
             {
                 this.currentPath = new Path<T>();
 
-                if (lastPath != null && lastPath.Where(f => f.Iteration == iteration).Any())
+                if (lastPath != null && lastPath.Items.Where(f => f.ParentIterationRef == parentIterationRef).Any())
                 {
-                    foreach (var path in lastPath)
-                        if (path.Iteration == iteration)
+                    foreach (var item in lastPath.Items)
+                        if (item.ParentIterationRef == parentIterationRef)
                             break;
                         else
-                            this.currentPath.Add(path);
+                            this.currentPath.Add(item);
                 }
             }
 
-            var pathItem = new PathItem<T>(iteration, edge, level);
+            var pathItem = new PathItem<T>(this.currentPath, parentIterationRef, edge, level);
             this.currentPath.Add(pathItem);
             return pathItem;
         }

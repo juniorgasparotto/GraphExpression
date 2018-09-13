@@ -7,8 +7,9 @@ namespace GraphExpression
         private HashSet<Vertex<T>> parents;
         private HashSet<Vertex<T>> children;
 
+        public long Id { get; private set; }
         public T Entity { get; private set; }
-        public int CountVisited { get; internal set; }
+        public int CountVisited { get; set; }
 
         public IEnumerable<Vertex<T>> Parents
         { 
@@ -86,9 +87,10 @@ namespace GraphExpression
             }
         }
 
-        internal Vertex(T entity)
+        public Vertex(T entity, long id)
         {
-            this.Entity = entity;            
+            this.Id = id;
+            this.Entity = entity;
             this.parents = new HashSet<Vertex<T>>();
             this.children = new HashSet<Vertex<T>>();
         }
@@ -101,7 +103,7 @@ namespace GraphExpression
             return this.Entity?.Equals(obj.Entity) == true;
         }
 
-        internal void AddIndegree(Vertex<T> parent)
+        public void AddIndegree(Vertex<T> parent)
         {
             // if is Root parent is null
             if (parent != null)
