@@ -55,53 +55,53 @@ namespace GraphExpression
             this.edges = new List<Edge<T>>();
         }
 
-        public PathItem<T> CreatePath(object parentIterationRef, int level, T entity, T entityParent)
+        public PathItem<T> CreatePath(object parentIterationRef, int level, EntityItem<T> entityItem, EntityItem<T> entityItemParent)
         {
-            Vertex<T> vertex = FindVertexFirstOccurrence(entity);
+            Vertex<T> vertex = FindVertexFirstOccurrence(entityItem.Entity);
             if (vertex == null)
             {
                 long globalEntity = -1;
                 
-                if (entity != null)
-                    globalEntity = globalIds.IndexOf(entity);
+                if (entityItem.Entity != null)
+                    globalEntity = globalIds.IndexOf(entityItem.Entity);
 
                 if (globalEntity == -1)
                 {
                     globalEntity = globalIds.Count;
-                    globalIds.Add(entity);
+                    globalIds.Add(entityItem.Entity);
                 }
 
-                vertex = new Vertex<T>(entity, globalEntity);
+                vertex = new Vertex<T>(entityItem.Entity, globalEntity);
                 vertexes.Add(vertex);
             }
 
             vertex.CountVisited++;
 
-            // Get parent vertex
-            Vertex<T> vertexParent = null;
-            if (entityParent != null)
-            {
-                vertexParent = vertexes.Where(f => f.Entity?.Equals(entityParent) == true).FirstOrDefault();
-                vertex.AddIndegree(vertexParent);
-            }
+            // Set parent (indegree) to current entity
+            if (entityItemParent != null)
+                vertex.AddParent(entityItem, entityItemParent);
 
-            var edge = edges.LastOrDefault(f => f.Source?.AreEquals(vertexParent) == true && f.Target?.AreEquals(vertex) == true);
-            if (edge == null)
-            {
-                edge = new Edge<T>
-                {
-                    Source = vertexParent,
-                    Target = vertex
-                };
+            entityItem.Vertex = vertex;
+            entityItem.Edge = new Edge<T>(entityItemParent, entityItem, 0);            
+            edges.Add(entityItem.Edge);
 
-                //if (graph.Configuration.AssignEdgeWeightCallback != null)
-                //    graph.Configuration.AssignEdgeWeightCallback(entity, entityParent);
+            //var edge = edges.LastOrDefault(f => f.Source?.AreEquals(vertexParent) == true && f.Target?.AreEquals(vertex) == true);
+            //if (edge == null)
+            //{
+            //    edge = new Edge<T>
+            //    {
+            //        Source = vertexParent,
+            //        Target = vertex
+            //    };
 
-                edges.Add(edge);
-            }
+            //    //if (graph.Configuration.AssignEdgeWeightCallback != null)
+            //    //    graph.Configuration.AssignEdgeWeightCallback(entity, entityParent);
+
+            //    edges.Add(edge);
+            //}
 
             // create path item
-            return AddInCurrentPath(parentIterationRef, level, edge);
+            return AddInCurrentPath(parentIterationRef, level, entityItem, vertex.Id);
         }
 
         public void EndPath()
@@ -132,7 +132,7 @@ namespace GraphExpression
             return vertexes.FirstOrDefault(e => e.Entity?.Equals(entity) == true);
         }
 
-        private PathItem<T> AddInCurrentPath(object parentIterationRef, int level, Edge<T> edge)
+        private PathItem<T> AddInCurrentPath(object parentIterationRef, int level, EntityItem<T> entityItem, long id)
         {
             if (this.currentPath == null)
             {
@@ -148,7 +148,7 @@ namespace GraphExpression
                 }
             }
 
-            var pathItem = new PathItem<T>(this.currentPath, parentIterationRef, edge, level);
+            var pathItem = new PathItem<T>(this.currentPath, id, parentIterationRef, entityItem, level);
             this.currentPath.Add(pathItem);
             return pathItem;
         }

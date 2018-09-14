@@ -147,7 +147,7 @@ namespace GraphExpression
                 if (EnableGraphInfo)
                 {
                     this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();
-                    parent.Path = this.GraphInfo.CreatePath(null, level, parent.Entity, default(T));
+                    parent.Path = this.GraphInfo.CreatePath(null, level, parent, null);
 
                     if (!children.Any())
                         this.GraphInfo.EndPath();
@@ -168,19 +168,22 @@ namespace GraphExpression
                
                 // Create GraphInfo if enabled
                 if (EnableGraphInfo)
-                    child.Path = this.GraphInfo.CreatePath(children, level, child.Entity, parent.Entity);
-
-                // if:   IS 'deep' and the entity already declareted in expression, don't build the children of item.
-                // else: if current entity exists in ancestors (to INFINITE LOOP), don't build the children of item.
-                var continueBuild = true;
-                if (Deep)
-                    continueBuild = !HasAncestorEqualsTo(child);
-                else
-                    continueBuild = !IsEntityDeclared(child);
+                    child.Path = this.GraphInfo.CreatePath(children, level, child, parent);
 
                 var grandchildren = getChildrenCallback(this, child);
 
-                if (continueBuild && grandchildren.Any())
+                // if:   IS 'deep' and the entity already declareted in expression, don't build the children of item.
+                // else: if current entity exists in ancestors (to INFINITE LOOP), don't build the children of item.
+                var continueBuild = grandchildren.Any();
+                if (continueBuild)
+                {
+                    if (Deep)
+                        continueBuild = !HasAncestorEqualsTo(child);
+                    else
+                        continueBuild = !IsEntityDeclared(child);
+                }
+
+                if (continueBuild)
                 {
                     child.LevelAtExpression = parentItem.LevelAtExpression + 1;
                     Build(child, grandchildren, level);
@@ -238,7 +241,7 @@ namespace GraphExpression
                     if (EnableGraphInfo)
                     {
                         this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();                        
-                        current.Path = this.GraphInfo.CreatePath(iteration, iteration.Level, current.Entity, parent == null ? default(T) : parent.Entity);
+                        current.Path = this.GraphInfo.CreatePath(iteration, iteration.Level, current, parent);
                     }
 
                     var hasChildren = children != null && children.Any();

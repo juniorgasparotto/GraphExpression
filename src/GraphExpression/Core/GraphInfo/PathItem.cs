@@ -5,14 +5,16 @@
         private Path<T> path;
 
         public int Level { get; private set; }
-        public Edge<T> Edge { get; private set; }
+        public EntityItem<T> Item { get; private set; }
         public object ParentIterationRef { get; private set; }
+        public long VertexId { get; set; }
         public string Identity { get; set; }
 
-        public PathItem(Path<T> path, object parentIterationRef, Edge<T> edge, int level)
+        public PathItem(Path<T> path, long vertexId, object parentIterationRef, EntityItem<T> item, int level)
         {
             this.path = path;
-            this.Edge = edge;
+            this.VertexId = vertexId;
+            this.Item = item;
             this.Level = level;
             this.ParentIterationRef = parentIterationRef;
         }
@@ -24,12 +26,12 @@
             if (showEntityDesc)
             {
                 var output = "";
-                foreach (var item in path.Items)
+                foreach (var pathItem in path.Items)
                 {
-                    var desc = $"[{item.Edge.Target?.ToString()}]";
+                    var desc = $"[{pathItem.Item?.ToString()}]";
                     output += (output == "") ? desc : "." + desc;
 
-                    if (item == this)
+                    if (pathItem == this)
                         break; ;
                 }
                 return output;
@@ -46,6 +48,5 @@
         }
 
         #endregion
-
     }
 }

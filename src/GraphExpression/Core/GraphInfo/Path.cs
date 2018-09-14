@@ -35,18 +35,18 @@ namespace GraphExpression
             return (this.Identity == obj.Identity);
         }
 
-        public IEnumerable<PathItem<T>> GetPrevious(Iteration<T> limit)
-        {
-            foreach (var pathItem in this.pathItems)
-                if (pathItem.ParentIterationRef == limit)
-                    break;
-                else
-                    yield return pathItem;
-        }
+        //public IEnumerable<PathItem<T>> GetPrevious(Iteration<T> limit)
+        //{
+        //    foreach (var pathItem in this.pathItems)
+        //        if (pathItem.ParentIterationRef == limit)
+        //            break;
+        //        else
+        //            yield return pathItem;
+        //}
 
         public void SetType()
         {
-            if (this.pathItems.First().Edge.Target?.AreEquals(this.pathItems.Last().Edge.Target) == true)
+            if (this.pathItems.First().Item?.AreEntityEquals(this.pathItems.Last().Item) == true)
             {
                 this.PathType = PathType.Circuit;
             }
@@ -55,7 +55,7 @@ namespace GraphExpression
                 PathItem<T> last = null;
                 foreach (var current in pathItems)
                 {
-                    if (last != null && current.Edge.Target?.AreEquals(last.Edge.Target) == true)
+                    if (last != null && current.Item?.AreEntityEquals(last.Item) == true)
                     {
                         this.PathType = PathType.Circle;
                         break;
@@ -72,7 +72,7 @@ namespace GraphExpression
 
         public void Add(PathItem<T> item)
         {   
-            this.Identity += (string.IsNullOrWhiteSpace(this.Identity) ? "" : ".") + "[" + item.Edge.Target.Id.ToString() + "]";
+            this.Identity += (string.IsNullOrWhiteSpace(this.Identity) ? "" : ".") + "[" + item.VertexId + "]";
             item.Identity = this.Identity;
             this.pathItems.Add(item);
         }
@@ -86,7 +86,7 @@ namespace GraphExpression
                 var output = "";
                 foreach (var item in pathItems)
                 {
-                    var desc = $"[{item.Edge.Target?.ToString()}]";
+                    var desc = $"[{item.Item?.ToString()}]";
                     output += (output == "") ? desc : "." + desc;
                 }
                 return output;

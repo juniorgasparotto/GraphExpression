@@ -5,8 +5,8 @@
         private bool? isLoop = false;
 
         public decimal Weight { get; set; }
-        public Vertex<T> Source { get; internal set; }
-        public Vertex<T> Target { get; internal set; }
+        public EntityItem<T> Source { get; internal set; }
+        public EntityItem<T> Target { get; internal set; }
 
         // Laço em português
         public bool IsLoop
@@ -14,13 +14,13 @@
             get
             {
                 if (isLoop != null)
-                    isLoop = this.Source?.AreEquals(this.Target) == true;
+                    isLoop = this.Source?.AreEntityEquals(this.Target) == true;
 
                 return isLoop.Value;
             }
         }
 
-        public Edge(Vertex<T> source = null, Vertex<T> target = null, decimal weight = 0)
+        public Edge(EntityItem<T> source = null, EntityItem<T> target = null, decimal weight = 0)
         {
             this.Source = source;
             this.Target = target;
@@ -30,18 +30,18 @@
         // Anti-paralelo em português
         public bool IsAntiparallel(Edge<T> compare)
         {
-            if (this.Source?.AreEquals(compare.Target) == true && this.Target?.AreEquals(compare.Source) == true)
+            if (this.Source?.AreEntityEquals(compare.Target) == true && this.Target?.AreEntityEquals(compare.Source) == true)
                 return true;
             return false;
         }
 
-        public bool AreEquals(Edge<T> obj)
-        {
-            if (ReferenceEquals(obj, null))
-                return false;
+        //public bool AreEquals(Edge<T> obj)
+        //{
+        //    if (ReferenceEquals(obj, null))
+        //        return false;
 
-            return (this.Source == obj.Source && this.Target == obj.Target);
-        }
+        //    return (this.Source.AreEntityEquals(obj.Source) && this.Target.AreEntityEquals(obj.Target));
+        //}
 
         #region Overrides
 

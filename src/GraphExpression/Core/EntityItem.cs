@@ -71,12 +71,22 @@ namespace GraphExpression
         public bool IsFirstInParent { get => IsRoot || (Next != null && Level < Next.Level); }
         public bool IsLastInParent { get => Next == null || Level > Next.Level; }
         public PathItem<T> Path { get; set; }
-       
+        public Edge<T> Edge { get; set; }
+        public Vertex<T> Vertex { get; set; }
+
         #endregion
 
         public EntityItem(Expression<T> expression)
         {
             this.expression = expression;
+        }
+
+        public bool AreEntityEquals(EntityItem<T> compare)
+        {
+            if (compare == null)
+                return false;
+
+            return Entity?.Equals(compare.Entity) == true;
         }
 
         #region Ancestors

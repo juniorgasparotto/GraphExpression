@@ -4,14 +4,14 @@ namespace GraphExpression
 {
     public class Vertex<T>
     {
-        private HashSet<Vertex<T>> parents;
-        private HashSet<Vertex<T>> children;
+        private List<EntityItem<T>> parents;
+        private List<EntityItem<T>> children;
 
         public long Id { get; private set; }
         public T Entity { get; private set; }
         public int CountVisited { get; set; }
 
-        public IEnumerable<Vertex<T>> Parents
+        public IReadOnlyList<EntityItem<T>> Parents
         { 
             get 
             {
@@ -19,7 +19,7 @@ namespace GraphExpression
             }
         }
 
-        public IEnumerable<Vertex<T>> Children
+        public IReadOnlyList<EntityItem<T>> Children
         {
             get
             {
@@ -91,8 +91,8 @@ namespace GraphExpression
         {
             this.Id = id;
             this.Entity = entity;
-            this.parents = new HashSet<Vertex<T>>();
-            this.children = new HashSet<Vertex<T>>();
+            this.parents = new List<EntityItem<T>>();
+            this.children = new List<EntityItem<T>>();
         }
 
         public bool AreEquals(Vertex<T> obj)
@@ -103,13 +103,13 @@ namespace GraphExpression
             return this.Entity?.Equals(obj.Entity) == true;
         }
 
-        public void AddIndegree(Vertex<T> parent)
+        public void AddParent(EntityItem<T> current, EntityItem<T> parent)
         {
             // if is Root parent is null
-            if (parent != null)
+            if (parent?.Vertex != null)
             {
                 this.parents.Add(parent);
-                parent.children.Add(this);
+                parent.Vertex.children.Add(current);
             }
         }
 
