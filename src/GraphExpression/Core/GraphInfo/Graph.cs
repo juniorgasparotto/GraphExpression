@@ -33,6 +33,9 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Return only the last paths of the graph.
+        /// </summary>
         public IReadOnlyList<Path<T>> Paths
         {
             get
@@ -74,8 +77,9 @@ namespace GraphExpression
             vertex.AddParent(entityItem.Parent); // Indegrees
             entityItem.Parent?.Vertex.AddChild(entityItem); // Outdegrees
             entityItem.Vertex = vertex;
+            entityItem.Edge = new Edge<T>(entityItem.Parent, entityItem, 0);
             entityItem.Path = new Path<T>(entityItem);
-            edges.Add(entityItem.Path.Edge);
+            edges.Add(entityItem.Edge);
 
             //var edge = edges.LastOrDefault(f => f.Source?.AreEquals(vertexParent) == true && f.Target?.AreEquals(vertex) == true);
             //if (edge == null)
@@ -99,11 +103,6 @@ namespace GraphExpression
         public void EndPath(Path<T> lastPath)
         {
             this.paths.Add(lastPath);
-
-            //this.paths.Add(currentPath);
-            //this.lastPath = this.currentPath;
-            //this.currentPath.SetType();
-            //this.currentPath = null;
         }
 
         public bool ContainsGraph(Graph<T> graph)
@@ -125,6 +124,14 @@ namespace GraphExpression
         {
             return vertexes.FirstOrDefault(e => e.Entity?.Equals(entity) == true);
         }
+
+        //public void EndPath(Path<T> lastPath)
+        //{
+            //this.paths.Add(currentPath);
+            //this.lastPath = this.currentPath;
+            //this.currentPath.SetType();
+            //this.currentPath = null;
+        //}
 
         //private void AddInCurrentPath(EntityItem<T> entityItem)
         //{

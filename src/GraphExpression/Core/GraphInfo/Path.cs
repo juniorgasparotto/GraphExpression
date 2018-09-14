@@ -11,8 +11,6 @@ namespace GraphExpression
         private IEnumerable<EntityItem<T>> items;
         private string identity;
 
-        public Edge<T> Edge { get; private set; }
-
         public IEnumerable<EntityItem<T>> Items
         {
             get
@@ -77,8 +75,7 @@ namespace GraphExpression
         }
 
         public Path(EntityItem<T> entityItem)
-        {
-            this.Edge = new Edge<T>(entityItem.Parent, entityItem, 0);
+        {            
             this.entityItem = entityItem;
         }
 

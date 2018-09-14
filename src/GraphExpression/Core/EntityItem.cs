@@ -72,10 +72,11 @@ namespace GraphExpression
         public bool IsLastInParent { get => Next == null || Level > Next.Level; }
 
         #region Graph info
-        public Path<T> Path { get; set; }
         public Vertex<T> Vertex { get; set; }
+        public Edge<T> Edge { get; set; }
+        public Path<T> Path { get; set; }
         //public object ParentIterationRef { get; internal set; }
-        #endregion Graph info
+        #endregion
 
         #endregion
 
