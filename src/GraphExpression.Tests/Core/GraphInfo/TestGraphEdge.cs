@@ -19,12 +19,12 @@ namespace GraphExpression.Tests
             A = A + (B + C + D) + A + (I + (J + C) + A);
 
             var vertexesSources = new HierarchicalEntity[] { A, B, C, D, I, J };
-            var graphs = new List<GraphInfo<HierarchicalEntity>>();
+            var graphs = new List<Graph<HierarchicalEntity>>();
 
             foreach (var v in vertexesSources)
             {
                 var expression = v.AsExpression(f => f.Children);
-                graphs.Add(expression.GraphInfo);
+                graphs.Add(expression.Graph);
             }
 
             var res = "";
@@ -57,12 +57,12 @@ namespace GraphExpression.Tests
             A = A + (B + C + D) + A + (I + (J + C) + A);
 
             var vertexesSources = new HierarchicalEntity[] { A, B, C, D, I, J };
-            var graphs = new List<GraphInfo<HierarchicalEntity>>();
+            var graphs = new List<Graph<HierarchicalEntity>>();
 
             foreach (var v in vertexesSources)
             {
                 var expression = v.AsExpression(f => f.Children);
-                graphs.Add(expression.GraphInfo);
+                graphs.Add(expression.Graph);
             }
 
             var res = "";

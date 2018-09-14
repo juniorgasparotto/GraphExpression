@@ -27,7 +27,7 @@ namespace GraphExpression
 
         public bool Deep { get; }
         public ISerialization<T> DefaultSerializer { get; set; }
-        public GraphInfo<T> GraphInfo { get; private set; }        
+        public Graph<T> Graph { get; private set; }        
 
         public Expression()
         {
@@ -146,12 +146,12 @@ namespace GraphExpression
                 // Create GraphInfo if enabled
                 if (EnableGraphInfo)
                 {
-                    this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();
+                    this.Graph = this.Graph ?? new Graph<T>();
                     //parent.ParentIterationRef = null;
-                    this.GraphInfo.SetGraphInfo(parent);
+                    this.Graph.SetGraphInfo(parent);
 
                     if (!children.Any())
-                        this.GraphInfo.EndPath(parent.Path);
+                        this.Graph.EndPath(parent.Path);
                 }
             }
 
@@ -171,7 +171,7 @@ namespace GraphExpression
                 if (EnableGraphInfo)
                 {
                     //child.ParentIterationRef = children;
-                    this.GraphInfo.SetGraphInfo(child);
+                    this.Graph.SetGraphInfo(child);
                 }
 
                 // if:   IS 'deep' and the entity already declareted in expression, don't build the children of item.
@@ -199,7 +199,7 @@ namespace GraphExpression
                     child.LevelAtExpression = level - 1;
 
                     if (EnableGraphInfo)
-                        this.GraphInfo.EndPath(child.Path);
+                        this.Graph.EndPath(child.Path);
                 }
             }
         }
@@ -237,9 +237,9 @@ namespace GraphExpression
                     // Create GraphInfo if enabled
                     if (EnableGraphInfo)
                     {
-                        this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();
+                        this.Graph = this.Graph ?? new Graph<T>();
                         //current.ParentIterationRef = iteration;
-                        this.GraphInfo.SetGraphInfo(current);
+                        this.Graph.SetGraphInfo(current);
                     }
 
                     bool continueBuild;
@@ -275,7 +275,7 @@ namespace GraphExpression
                         current.LevelAtExpression = iteration.Level - 1;
 
                         if (EnableGraphInfo)
-                            this.GraphInfo.EndPath(current.Path);
+                            this.Graph.EndPath(current.Path);
                     }
                 }
 

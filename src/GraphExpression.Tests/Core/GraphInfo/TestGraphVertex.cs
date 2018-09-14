@@ -18,7 +18,7 @@ namespace GraphExpression.Tests
             var graph = SPL.AsExpression(f => f.Children, true);
             var output = graph.DefaultSerializer.Serialize();
             Assert.Equal("SPL + (COR + PAL) + (SAN + PAL + (COR + PAL))", output);
-            var spl = graph.GraphInfo.Vertexes.ElementAt(0);
+            var spl = graph.Graph.Vertexes.ElementAt(0);
             
             // number of visit in vertex
             Assert.Equal(1, spl.CountVisited);
@@ -40,7 +40,7 @@ namespace GraphExpression.Tests
             Assert.Equal("COR", spl.Children.ElementAt(0).ToString());
             Assert.Equal("SAN", spl.Children.ElementAt(1).ToString());
 
-            var cor = graph.GraphInfo.Vertexes.ElementAt(1);
+            var cor = graph.Graph.Vertexes.ElementAt(1);
 
             // number of visit in vertex
             Assert.True(cor.CountVisited == 2);
@@ -66,7 +66,7 @@ namespace GraphExpression.Tests
             Assert.True(cor.Children.ElementAt(1).ToString() == "PAL");
             Assert.True(cor.Children.ElementAt(1).Index == 6);
 
-            var pal = graph.GraphInfo.Vertexes.ElementAt(2);
+            var pal = graph.Graph.Vertexes.ElementAt(2);
 
             // number of visit in vertex
             Assert.Equal(3, pal.CountVisited);
@@ -95,7 +95,7 @@ namespace GraphExpression.Tests
             // verify all children
             Assert.Empty(pal.Children);
 
-            var san = graph.GraphInfo.Vertexes.ElementAt(3);
+            var san = graph.Graph.Vertexes.ElementAt(3);
 
             // number of visit in vertex
             Assert.Equal(1, san.CountVisited);

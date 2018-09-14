@@ -5,7 +5,7 @@ namespace GraphExpression
 {
     public static class PathExtension
     {
-        public static IEnumerable<Path<T>> ToPaths<T>(this IEnumerable<GraphInfo<T>> source)
+        public static IEnumerable<Path<T>> ToPaths<T>(this IEnumerable<Graph<T>> source)
         {
             return source.SelectMany(f => f.Paths);
         }

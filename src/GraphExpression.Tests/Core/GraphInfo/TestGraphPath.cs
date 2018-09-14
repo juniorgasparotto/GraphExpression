@@ -19,12 +19,12 @@ namespace GraphExpression.Tests
             A = A + (B + C + D) + A + (I + (J + C) + A);
 
             var vertexesSources = new HierarchicalEntity[] { A, B, C, D, I, J };
-            var graphs = new List<GraphInfo<HierarchicalEntity>>();
+            var graphs = new List<Graph<HierarchicalEntity>>();
 
             foreach (var v in vertexesSources)
             {
                 var expression = v.AsExpression(f => f.Children);
-                graphs.Add(expression.GraphInfo);
+                graphs.Add(expression.Graph);
             }
 
             var graph = graphs.ElementAt(0);
@@ -103,12 +103,12 @@ namespace GraphExpression.Tests
             A = A + (B + C + D) + D + (E + B) + F + (G + G + C) + (H + C);
 
             var vertexesSources = new HierarchicalEntity[] { A, B, C, D, E, F, G, H };
-            var graphs = new List<GraphInfo<HierarchicalEntity>>();
+            var graphs = new List<Graph<HierarchicalEntity>>();
 
             foreach (var v in vertexesSources)
             {
                 var expression = v.AsExpression(f => f.Children, true);
-                graphs.Add(expression.GraphInfo);
+                graphs.Add(expression.Graph);
             }
 
             var graphsClean = graphs.RemoveCoexistents();

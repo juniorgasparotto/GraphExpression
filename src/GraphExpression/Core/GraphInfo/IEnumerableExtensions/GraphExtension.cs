@@ -6,7 +6,7 @@ namespace GraphExpression
 {
     public static class GraphInfoExtension
     {
-        public static IEnumerable<GraphInfo<T>> RemoveCoexistents<T>(this IEnumerable<GraphInfo<T>> source)
+        public static IEnumerable<Graph<T>> RemoveCoexistents<T>(this IEnumerable<Graph<T>> source)
         {
             var listRet = source.ToList();
             foreach (var graph in source)

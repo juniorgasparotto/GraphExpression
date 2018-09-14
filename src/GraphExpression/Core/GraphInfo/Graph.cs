@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GraphExpression
 {
-    public class GraphInfo<T>
+    public class Graph<T>
     {
         #region Fields
         
@@ -43,7 +43,7 @@ namespace GraphExpression
 
         #endregion
 
-        public GraphInfo()
+        public Graph()
         {
             this.paths = new List<Path<T>>();
             this.vertexes = new List<Vertex<T>>();
@@ -99,9 +99,14 @@ namespace GraphExpression
         public void EndPath(Path<T> lastPath)
         {
             this.paths.Add(lastPath);
+
+            //this.paths.Add(currentPath);
+            //this.lastPath = this.currentPath;
+            //this.currentPath.SetType();
+            //this.currentPath = null;
         }
 
-        public bool ContainsGraph(GraphInfo<T> graph)
+        public bool ContainsGraph(Graph<T> graph)
         {
             var countExist = 0;
             foreach (var pathTest in graph.paths)

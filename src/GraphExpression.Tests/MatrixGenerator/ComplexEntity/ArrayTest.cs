@@ -16,7 +16,7 @@ namespace GraphExpression.Tests
 
             var expression = values.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var pathTest = expression.GraphInfo.Paths[0].ToString();
+            var pathTest = expression.Graph.Paths[0].ToString();
 
             var expected = $"{{{values.GetHashCode()}}} + {{[0]: \"value1\"}} + {{[1]: \"value2\"}} + {{[2]: \"value3\"}}";
             Assert.Equal(4, expression.Count);
