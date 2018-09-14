@@ -139,13 +139,5 @@ namespace GraphExpression
 
         //    this.currentPath.Add(entityItem);
         //}
-
-        //private bool ExistsVertexInPrevious(Iteration<T> endpoint, Vertex<T> vertex)
-        //{
-        //    if (this.currentPath != null)
-        //        return this.currentPath.GetPrevious(endpoint).Where(f => f.Edge.Target?.AreEquals(vertex) == true).Any();
-
-        //    return false;
-        //}
     }
 }

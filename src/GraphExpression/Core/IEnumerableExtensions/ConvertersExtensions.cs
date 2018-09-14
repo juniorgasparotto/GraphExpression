@@ -9,7 +9,7 @@ namespace GraphExpression
     {
         public static IEnumerable<T> ToEntities<T>(this IEnumerable<EntityItem<T>> itemsToConvert, bool distinct = true)
         {
-            var query = itemsToConvert.Where(f => f.GetType() == typeof(EntityItem<T>)).Select(f => f.Entity);
+            var query = itemsToConvert.Select(f => f.Entity);
             if (distinct)
                 return query.Distinct();
 
