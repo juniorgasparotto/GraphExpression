@@ -8,29 +8,9 @@ namespace GraphExpression
     public class Path<T>
     {
         private readonly EntityItem<T> entityItem;
-        private IEnumerable<EntityItem<T>> items;
         private string identity;
 
-        public IEnumerable<EntityItem<T>> Items
-        {
-            get
-            {
-                if (items == null)
-                {
-                    var items = new Stack<EntityItem<T>>();
-                    items.Push(entityItem);
-
-                    var parent = entityItem.Parent;
-                    while (parent != null)
-                    {
-                        items.Push(parent);
-                        parent = parent.Parent;
-                    }
-                    this.items = items;
-                }
-                return items;
-            }
-        }
+        public IEnumerable<EntityItem<T>> Items { get; }
 
         public string Identity
         {
@@ -62,7 +42,7 @@ namespace GraphExpression
                 else
                 {
                     EntityItem<T> last = null;
-                    foreach (var current in this.items)
+                    foreach (var current in this.Items)
                     {
                         if (last != null && current.AreEntityEquals(last) == true)
                             return PathType.Circle;
@@ -77,6 +57,19 @@ namespace GraphExpression
         public Path(EntityItem<T> entityItem)
         {            
             this.entityItem = entityItem;
+
+            var parent = this.entityItem.Parent;
+            if (parent != null)
+            {
+                this.Items = new List<EntityItem<T>>(parent.Path.Items)
+                {
+                    entityItem
+                };
+            }
+            else
+            {
+                this.Items = new EntityItem<T>[] { entityItem };
+            }
         }
 
         public bool ContainsPath(Path<T> pathTest)
