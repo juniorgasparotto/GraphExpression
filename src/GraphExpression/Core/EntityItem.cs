@@ -70,9 +70,12 @@ namespace GraphExpression
         public bool IsLast { get => Next == null; }
         public bool IsFirstInParent { get => IsRoot || (Next != null && Level < Next.Level); }
         public bool IsLastInParent { get => Next == null || Level > Next.Level; }
-        public PathItem<T> Path { get; set; }
-        public Edge<T> Edge { get; set; }
+
+        #region Graph info
+        public Path<T> Path { get; set; }
         public Vertex<T> Vertex { get; set; }
+        //public object ParentIterationRef { get; internal set; }
+        #endregion Graph info
 
         #endregion
 

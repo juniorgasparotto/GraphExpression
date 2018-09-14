@@ -1,24 +1,85 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace GraphExpression
 {
     public class Path<T>
     {
-        private List<PathItem<T>> pathItems;
+        private readonly EntityItem<T> entityItem;
+        private IEnumerable<EntityItem<T>> items;
+        private string identity;
 
-        public string Identity { get; private set; }
-        public PathType PathType { get; private set; }
+        public Edge<T> Edge { get; private set; }
 
-        public IReadOnlyList<PathItem<T>> Items
+        public IEnumerable<EntityItem<T>> Items
         {
-            get => pathItems.AsReadOnly();
+            get
+            {
+                if (items == null)
+                {
+                    var items = new Stack<EntityItem<T>>();
+                    items.Push(entityItem);
+
+                    var parent = entityItem.Parent;
+                    while (parent != null)
+                    {
+                        items.Push(parent);
+                        parent = parent.Parent;
+                    }
+                    this.items = items;
+                }
+                return items;
+            }
         }
 
-        public Path()
+        public string Identity
         {
-            this.pathItems = new List<PathItem<T>>();
+            get
+            {
+                if (identity == null)
+                {
+                    var items = Items;
+                    foreach (var item in items)
+                    {
+                        var separator = (string.IsNullOrWhiteSpace(this.identity) ? "" : ".");
+                        this.identity += $"{separator}[{item.Vertex.Id}]";
+                    }
+                }
+                return identity;
+            }
+        }
+
+        public PathType PathType
+        {
+            get
+            {
+                var items = Items;
+                
+                if (items.First().AreEntityEquals(items.Last()) == true)
+                {
+                    return PathType.Circuit;
+                }
+                else
+                {
+                    EntityItem<T> last = null;
+                    foreach (var current in this.items)
+                    {
+                        if (last != null && current.AreEntityEquals(last) == true)
+                            return PathType.Circle;
+                        last = current;
+                    }
+
+                    return PathType.Simple;
+                }
+            }
+        }
+
+        public Path(EntityItem<T> entityItem)
+        {
+            this.Edge = new Edge<T>(entityItem.Parent, entityItem, 0);
+            this.entityItem = entityItem;
         }
 
         public bool ContainsPath(Path<T> pathTest)
@@ -35,48 +96,6 @@ namespace GraphExpression
             return (this.Identity == obj.Identity);
         }
 
-        //public IEnumerable<PathItem<T>> GetPrevious(Iteration<T> limit)
-        //{
-        //    foreach (var pathItem in this.pathItems)
-        //        if (pathItem.ParentIterationRef == limit)
-        //            break;
-        //        else
-        //            yield return pathItem;
-        //}
-
-        public void SetType()
-        {
-            if (this.pathItems.First().Item?.AreEntityEquals(this.pathItems.Last().Item) == true)
-            {
-                this.PathType = PathType.Circuit;
-            }
-            else
-            {
-                PathItem<T> last = null;
-                foreach (var current in pathItems)
-                {
-                    if (last != null && current.Item?.AreEntityEquals(last.Item) == true)
-                    {
-                        this.PathType = PathType.Circle;
-                        break;
-                    }
-                    else
-                    {
-                        this.PathType = PathType.Simple;
-                    }
-
-                    last = current;
-                }
-            }
-        }
-
-        public void Add(PathItem<T> item)
-        {   
-            this.Identity += (string.IsNullOrWhiteSpace(this.Identity) ? "" : ".") + "[" + item.VertexId + "]";
-            item.Identity = this.Identity;
-            this.pathItems.Add(item);
-        }
-
         #region Overrides
 
         public string ToString(bool showEntityDesc)
@@ -84,9 +103,9 @@ namespace GraphExpression
             if (showEntityDesc)
             {
                 var output = "";
-                foreach (var item in pathItems)
+                foreach (var item in Items)
                 {
-                    var desc = $"[{item.Item?.ToString()}]";
+                    var desc = $"[{item.ToString()}]";
                     output += (output == "") ? desc : "." + desc;
                 }
                 return output;

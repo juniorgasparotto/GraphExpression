@@ -103,14 +103,17 @@ namespace GraphExpression
             return this.Entity?.Equals(obj.Entity) == true;
         }
 
-        public void AddParent(EntityItem<T> current, EntityItem<T> parent)
+        public void AddParent(EntityItem<T> parent)
         {
             // if is Root parent is null
-            if (parent?.Vertex != null)
-            {
+            if (parent != null)
                 this.parents.Add(parent);
-                parent.Vertex.children.Add(current);
-            }
+        }
+
+        public void AddChild(EntityItem<T> child)
+        {
+            if (child != null)
+                this.children.Add(child);
         }
 
         #region Overrides

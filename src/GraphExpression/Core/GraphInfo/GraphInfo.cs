@@ -6,15 +6,11 @@ namespace GraphExpression
 {
     public class GraphInfo<T>
     {
-        private static List<T> globalIds = new List<T>();
-
         #region Fields
         
         private List<Vertex<T>> vertexes;
         private List<Edge<T>> edges;
         private List<Path<T>> paths;
-        private Path<T> currentPath;
-        private Path<T> lastPath;
         //private bool? isHamiltonian = null;
 
         #endregion
@@ -50,25 +46,24 @@ namespace GraphExpression
         public GraphInfo()
         {
             this.paths = new List<Path<T>>();
-            this.currentPath = new Path<T>();
             this.vertexes = new List<Vertex<T>>();
             this.edges = new List<Edge<T>>();
         }
 
-        public PathItem<T> CreatePath(object parentIterationRef, int level, EntityItem<T> entityItem, EntityItem<T> entityItemParent)
+        public void SetGraphInfo(EntityItem<T> entityItem)
         {
             Vertex<T> vertex = FindVertexFirstOccurrence(entityItem.Entity);
             if (vertex == null)
             {
                 long globalEntity = -1;
-                
+
                 if (entityItem.Entity != null)
-                    globalEntity = globalIds.IndexOf(entityItem.Entity);
+                    globalEntity = VertexContainer<T>.Vertexes.IndexOf(entityItem.Entity);
 
                 if (globalEntity == -1)
                 {
-                    globalEntity = globalIds.Count;
-                    globalIds.Add(entityItem.Entity);
+                    globalEntity = VertexContainer<T>.Vertexes.Count;
+                    VertexContainer<T>.Vertexes.Add(entityItem.Entity);
                 }
 
                 vertex = new Vertex<T>(entityItem.Entity, globalEntity);
@@ -76,14 +71,11 @@ namespace GraphExpression
             }
 
             vertex.CountVisited++;
-
-            // Set parent (indegree) to current entity
-            if (entityItemParent != null)
-                vertex.AddParent(entityItem, entityItemParent);
-
+            vertex.AddParent(entityItem.Parent); // Indegrees
+            entityItem.Parent?.Vertex.AddChild(entityItem); // Outdegrees
             entityItem.Vertex = vertex;
-            entityItem.Edge = new Edge<T>(entityItemParent, entityItem, 0);            
-            edges.Add(entityItem.Edge);
+            entityItem.Path = new Path<T>(entityItem);
+            edges.Add(entityItem.Path.Edge);
 
             //var edge = edges.LastOrDefault(f => f.Source?.AreEquals(vertexParent) == true && f.Target?.AreEquals(vertex) == true);
             //if (edge == null)
@@ -101,15 +93,12 @@ namespace GraphExpression
             //}
 
             // create path item
-            return AddInCurrentPath(parentIterationRef, level, entityItem, vertex.Id);
+            //this.AddInCurrentPath(entityItem);;            
         }
 
-        public void EndPath()
+        public void EndPath(Path<T> lastPath)
         {
-            this.paths.Add(currentPath);
-            this.lastPath = this.currentPath;
-            this.currentPath.SetType();
-            this.currentPath = null;
+            this.paths.Add(lastPath);
         }
 
         public bool ContainsGraph(GraphInfo<T> graph)
@@ -132,26 +121,24 @@ namespace GraphExpression
             return vertexes.FirstOrDefault(e => e.Entity?.Equals(entity) == true);
         }
 
-        private PathItem<T> AddInCurrentPath(object parentIterationRef, int level, EntityItem<T> entityItem, long id)
-        {
-            if (this.currentPath == null)
-            {
-                this.currentPath = new Path<T>();
+        //private void AddInCurrentPath(EntityItem<T> entityItem)
+        //{
+        //    if (this.currentPath == null)
+        //    {
+        //        this.currentPath = new Path<T>();
 
-                if (lastPath != null && lastPath.Items.Where(f => f.ParentIterationRef == parentIterationRef).Any())
-                {
-                    foreach (var item in lastPath.Items)
-                        if (item.ParentIterationRef == parentIterationRef)
-                            break;
-                        else
-                            this.currentPath.Add(item);
-                }
-            }
+        //        if (lastPath != null && lastPath.Items.Where(f => f.ParentIterationRef == entityItem.ParentIterationRef).Any())
+        //        {
+        //            foreach (var item in lastPath.Items)
+        //                if (item.ParentIterationRef == entityItem.ParentIterationRef)
+        //                    break;
+        //                else
+        //                    this.currentPath.Add(item);
+        //        }
+        //    }
 
-            var pathItem = new PathItem<T>(this.currentPath, id, parentIterationRef, entityItem, level);
-            this.currentPath.Add(pathItem);
-            return pathItem;
-        }
+        //    this.currentPath.Add(entityItem);
+        //}
 
         //private bool ExistsVertexInPrevious(Iteration<T> endpoint, Vertex<T> vertex)
         //{

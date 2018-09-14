@@ -35,14 +35,6 @@
             return false;
         }
 
-        //public bool AreEquals(Edge<T> obj)
-        //{
-        //    if (ReferenceEquals(obj, null))
-        //        return false;
-
-        //    return (this.Source.AreEntityEquals(obj.Source) && this.Target.AreEntityEquals(obj.Target));
-        //}
-
         #region Overrides
 
         public override string ToString()

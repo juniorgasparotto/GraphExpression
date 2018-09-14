@@ -14,7 +14,7 @@ namespace GraphExpression
          * is the default, although it is more complex, is more flexibility and 
          * perhaps greater performance.
          */
-        public static bool EnableNonRecursiveAlgorithm = true;
+        public static bool EnableNonRecursiveAlgorithm = false;
 
         /*
          * This functionality is designed to always exist, however, it is not essential 
@@ -147,10 +147,11 @@ namespace GraphExpression
                 if (EnableGraphInfo)
                 {
                     this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();
-                    parent.Path = this.GraphInfo.CreatePath(null, level, parent, null);
+                    //parent.ParentIterationRef = null;
+                    this.GraphInfo.SetGraphInfo(parent);
 
                     if (!children.Any())
-                        this.GraphInfo.EndPath();
+                        this.GraphInfo.EndPath(parent.Path);
                 }
             }
 
@@ -165,35 +166,40 @@ namespace GraphExpression
 
                 PopulateEntityItem(child, parent, previous, Count, indexLevel++, 0, level);
                 Add(child);
-               
+
                 // Create GraphInfo if enabled
                 if (EnableGraphInfo)
-                    child.Path = this.GraphInfo.CreatePath(children, level, child, parent);
-
-                var grandchildren = getChildrenCallback(this, child);
+                {
+                    //child.ParentIterationRef = children;
+                    this.GraphInfo.SetGraphInfo(child);
+                }
 
                 // if:   IS 'deep' and the entity already declareted in expression, don't build the children of item.
                 // else: if current entity exists in ancestors (to INFINITE LOOP), don't build the children of item.
-                var continueBuild = grandchildren.Any();
+                bool continueBuild;
+                if (Deep)
+                    continueBuild = !HasAncestorEqualsTo(child);
+                else
+                    continueBuild = !IsEntityDeclared(child);
+
+                IEnumerable<EntityItem<T>> grandchildren = null;
                 if (continueBuild)
                 {
-                    if (Deep)
-                        continueBuild = !HasAncestorEqualsTo(child);
-                    else
-                        continueBuild = !IsEntityDeclared(child);
+                    grandchildren = getChildrenCallback(this, child);
+                    continueBuild = grandchildren.Any();
                 }
 
                 if (continueBuild)
                 {
-                    child.LevelAtExpression = parentItem.LevelAtExpression + 1;
+                    child.LevelAtExpression = level;
                     Build(child, grandchildren, level);
                 }
                 else
                 {
-                    child.LevelAtExpression = parentItem.LevelAtExpression;
+                    child.LevelAtExpression = level - 1;
 
                     if (EnableGraphInfo)
-                        this.GraphInfo.EndPath();
+                        this.GraphInfo.EndPath(child.Path);
                 }
             }
         }
@@ -224,28 +230,32 @@ namespace GraphExpression
                     if (previous != null)
                         previous.Next = current;
 
-                    bool exists;
-                    if (Deep)
-                        exists = HasAncestorEqualsTo(parent, current.Entity);
-                    else
-                        exists = IsEntityDeclared(current);
-
-                    IEnumerable<EntityItem<T>> children = null;
-                    if (!exists)
-                        children = getChildrenCallback(this, current);
-
                     // Populate EntityItem
                     PopulateEntityItem(current, parent, previous, Count, iteration.IndexAtLevel++, 0, iteration.Level);
+                    Add(current);
 
                     // Create GraphInfo if enabled
                     if (EnableGraphInfo)
                     {
-                        this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();                        
-                        current.Path = this.GraphInfo.CreatePath(iteration, iteration.Level, current, parent);
+                        this.GraphInfo = this.GraphInfo ?? new GraphInfo<T>();
+                        //current.ParentIterationRef = iteration;
+                        this.GraphInfo.SetGraphInfo(current);
                     }
 
-                    var hasChildren = children != null && children.Any();
-                    if (hasChildren)
+                    bool continueBuild;
+                    if (Deep)
+                        continueBuild = !HasAncestorEqualsTo(parent, current.Entity);
+                    else
+                        continueBuild = !IsEntityDeclared(current);
+
+                    IEnumerable<EntityItem<T>> children = null;
+                    if (continueBuild)
+                    {
+                        children = getChildrenCallback(this, current);
+                        continueBuild = children.Any();
+                    }
+
+                    if (continueBuild)
                     {
                         current.LevelAtExpression = iteration.Level;
 
@@ -265,10 +275,8 @@ namespace GraphExpression
                         current.LevelAtExpression = iteration.Level - 1;
 
                         if (EnableGraphInfo)
-                            this.GraphInfo.EndPath();
+                            this.GraphInfo.EndPath(current.Path);
                     }
-
-                    this.Add(current);
                 }
 
                 // Remove iteration because is empty
