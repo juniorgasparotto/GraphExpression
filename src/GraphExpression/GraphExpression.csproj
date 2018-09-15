@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Serialization\Circular\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Antlr3.Runtime">
       <HintPath>lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
