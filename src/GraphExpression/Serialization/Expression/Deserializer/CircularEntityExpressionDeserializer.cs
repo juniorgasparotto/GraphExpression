@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GraphExpression.Serialization
 {
-    public class DeserializationExpression
+    public class CircularEntityExpressionDeserializer
     {
         public IEnumerable<CircularEntity> FromString(params string[] expressions)
         {

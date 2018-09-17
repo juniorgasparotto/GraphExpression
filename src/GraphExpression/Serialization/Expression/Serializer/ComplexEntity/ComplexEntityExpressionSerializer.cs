@@ -4,18 +4,15 @@ using System.Linq;
 
 namespace GraphExpression.Serialization
 {
-    public partial class SerializationAsComplexExpression : SerializationAsExpression<object>
+    public partial class ComplexEntityExpressionSerializer : ExpressionSerializerBase<object>
     {
         public ShowTypeOptions ShowType { get; set; }
-        public IValueFormatter ValueFormatter { get; set; }
         public List<IEntitySerialize> ItemsSerialize { get; private set; }
-        public bool EncloseItem { get; set; }
 
-        public SerializationAsComplexExpression(Expression<object> expression)
+        public ComplexEntityExpressionSerializer(Expression<object> expression)
             : base(expression)
         {   
             EncloseItem = true;
-            SerializeItem = SerializeItemInternal;
             ValueFormatter = new DefaultValueFormatter();
             ItemsSerialize = new List<IEntitySerialize>()
             {
@@ -28,7 +25,7 @@ namespace GraphExpression.Serialization
             };
         }
 
-        private string SerializeItemInternal(EntityItem<object> item)
+        public override string SerializeItem(EntityItem<object> item)
         {
             string parts = null;
             string strSymbol = null;

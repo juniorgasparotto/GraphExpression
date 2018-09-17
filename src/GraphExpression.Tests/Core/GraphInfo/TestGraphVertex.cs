@@ -15,7 +15,7 @@ namespace GraphExpression.Tests
 
             SPL = SPL + (COR + PAL) + (SAN + PAL + COR);
 
-            var graph = SPL.AsExpression(f => f.Children, true);
+            var graph = SPL.AsExpression(f => f.Children, null, true);
             var output = graph.DefaultSerializer.Serialize();
             Assert.Equal("SPL + (COR + PAL) + (SAN + PAL + (COR + PAL))", output);
             var spl = graph.Graph.Vertexes.ElementAt(0);

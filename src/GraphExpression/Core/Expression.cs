@@ -26,7 +26,7 @@ namespace GraphExpression
         private readonly Func<Expression<T>, EntityItem<T>, IEnumerable<EntityItem<T>>> getChildrenCallback;
 
         public bool Deep { get; }
-        public ISerialization<T> DefaultSerializer { get; set; }
+        public ISerialize<T> DefaultSerializer { get; set; }
         public Graph<T> Graph { get; private set; }        
 
         public Expression()

@@ -11,13 +11,13 @@ namespace GraphExpression.Tests
         public static Expression<object> CreateEmptyExpression()
         {
             var expression = new Expression<object>();
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
+            expression.DefaultSerializer = new ComplexEntityExpressionSerializer(expression);
             return expression;
         }
 
-        public static SerializationAsComplexExpression GetSerialization(Expression<object> expression)
+        public static ComplexEntityExpressionSerializer GetSerialization(Expression<object> expression)
         {
-            return (SerializationAsComplexExpression)expression.DefaultSerializer;
+            return (ComplexEntityExpressionSerializer)expression.DefaultSerializer;
         }
     }
 }

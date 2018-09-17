@@ -3,17 +3,31 @@ using System.Collections.Generic;
 
 namespace GraphExpression.Serialization
 {
-    public class SerializationAsExpression<T> : ISerialization<T>
+    public abstract class ExpressionSerializerBase<T> : ISerialize<T>
     {
+        private IValueFormatter valueFormatter;
         private readonly Expression<T> expression;
 
         public bool EncloseParenthesisInRoot { get; set; }
-        public Func<EntityItem<T>, string> SerializeItem { get; set; }
+        public bool EncloseItem { get; set; }
 
-        public SerializationAsExpression(Expression<T> expression)
+        public IValueFormatter ValueFormatter
+        {
+            get
+            {
+                if (valueFormatter == null)
+                    valueFormatter = new DefaultValueFormatter();
+                return valueFormatter;
+            }
+            set
+            {
+                valueFormatter = value;
+            }
+        }
+
+        public ExpressionSerializerBase(Expression<T> expression)
         {
             this.expression = expression;
-            this.SerializeItem = SerializeItemInternal;
         }
 
         public virtual string Serialize()
@@ -49,9 +63,6 @@ namespace GraphExpression.Serialization
             return output;
         }
 
-        private string SerializeItemInternal(EntityItem<T> item)
-        {
-            return item.Entity.ToString();
-        }
+        public abstract string SerializeItem(EntityItem<T> item);
     }
 }

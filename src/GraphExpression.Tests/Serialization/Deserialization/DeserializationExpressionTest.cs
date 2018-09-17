@@ -10,7 +10,7 @@ namespace GraphExpression.Tests
         public void Deserialize_WithRootParenthesis()
         {
             var strExp = "(A + B + C + D)";
-            var serializer = new DeserializationExpression();
+            var serializer = new CircularEntityExpressionDeserializer();
             var entity = serializer.FromString(strExp).ToList();
 
             Assert.Equal(4, entity.Count);

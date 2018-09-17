@@ -5,12 +5,12 @@ namespace GraphExpression.Serialization
 {
     public class DefaultValueFormatter : IValueFormatter
     {
-        public virtual string Format(Type type, object value)
+        public virtual string Format(Type type, object value, bool trimQuotesIfNonSpaces = false)
         {
-            return ToLiteral(value);
+            return ToLiteral(value, trimQuotesIfNonSpaces);
         }
 
-        private string ToLiteral(object input)
+        private string ToLiteral(object input, bool trimQuotesIfNonSpaces)
         {
             string output = null;
 
@@ -19,7 +19,7 @@ namespace GraphExpression.Serialization
                 var type = input.GetType();
                 if (type == typeof(DateTimeOffset))
                 {
-                    output = ToLiteral(((DateTimeOffset)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture));
+                    output = ToLiteral(((DateTimeOffset)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotesIfNonSpaces);
                 }
                 else if (type == typeof(IntPtr) || type == typeof(UIntPtr))
                 {
@@ -40,7 +40,7 @@ namespace GraphExpression.Serialization
                             output = input.ToString();
                             break;
                         case TypeCode.DateTime:
-                            output = ToLiteral(((DateTime)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture));
+                            output = ToLiteral(((DateTime)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotesIfNonSpaces);
                             break;
                         case TypeCode.Boolean:
                             output = ((bool)input) ? "true" : "false";
@@ -58,6 +58,8 @@ namespace GraphExpression.Serialization
                             break;
                         default:
                             output = StringToLiteral(input.ToString());
+                            if (!output.Contains(" ") && trimQuotesIfNonSpaces)
+                                output = output.Trim('"');
                             break;
                     }
                 }

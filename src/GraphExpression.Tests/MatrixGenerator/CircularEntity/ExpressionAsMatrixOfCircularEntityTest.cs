@@ -38,7 +38,7 @@ namespace GraphExpression.Tests
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = C, Index = 9, IndexAtLevel = 1, Level = 5 });
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Y, Index = 10, IndexAtLevel = 1, Level = 4 });
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Z, Index = 11, IndexAtLevel = 2, Level = 3 });
-            var expressionString = new SerializationAsExpression<CircularEntity>(expression).Serialize();
+            var expressionString = new CircularEntityExpressionSerializer<CircularEntity>(expression, i => i.Name).Serialize();
             Assert.Equal("A + B + (C + Y) + (D + E + (F + (G + B + C) + Y) + Z)", expressionString);
         }
 

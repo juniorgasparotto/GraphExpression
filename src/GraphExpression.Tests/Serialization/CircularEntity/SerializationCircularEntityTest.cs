@@ -24,7 +24,7 @@ namespace GraphExpression.Tests
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = C, Index = 9, IndexAtLevel = 1, Level = 5 });
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Y, Index = 10, IndexAtLevel = 1, Level = 4 });
             expression.Add(new EntityItem<CircularEntity>(expression) { Entity = Z, Index = 11, IndexAtLevel = 2, Level = 3 });
-            var expressionString = new SerializationAsExpression<CircularEntity>(expression).Serialize();
+            var expressionString = new CircularEntityExpressionSerializer<CircularEntity>(expression, f=> f.Name).Serialize();
             Assert.Equal("A + B + (C + Y) + (D + E + (F + (G + B + C) + Y) + Z)", expressionString);
         }
 
@@ -43,7 +43,7 @@ namespace GraphExpression.Tests
             var r = A + B;
             var expression = A.AsExpression(f => f.Children);
             Assert.Equal(2, expression.Count);
-            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
+            var serializer = expression.DefaultSerializer as CircularEntityExpressionSerializer<CircularEntity>;
             serializer.EncloseParenthesisInRoot = true;
             Assert.Equal("(A + B)", serializer.Serialize());
         }
@@ -61,7 +61,7 @@ namespace GraphExpression.Tests
         {
             var expression = A.AsExpression(f => f.Children);
             Assert.Single(expression);
-            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
+            var serializer = expression.DefaultSerializer as CircularEntityExpressionSerializer<CircularEntity>;
             serializer.EncloseParenthesisInRoot = true;
             Assert.Equal("(A)", serializer.Serialize());
         }
@@ -116,7 +116,7 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + (C + (D + B))) + C;
             var expression = A.AsExpression(f => f.Children, true);
-            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
+            var serializer = expression.DefaultSerializer as CircularEntityExpressionSerializer<CircularEntity>;
             Assert.Equal(9, expression.Count);
             Assert.Equal("A + (B + (C + (D + B))) + (C + (D + (B + C)))", expression.DefaultSerializer.Serialize());
         }
@@ -126,8 +126,8 @@ namespace GraphExpression.Tests
         {
             var r = A + (B + (C + (D + B))) + C;
             var expression = A.AsExpression(f => f.Children, true);
-            var serializer = expression.DefaultSerializer as SerializationAsExpression<CircularEntity>;
-            serializer.SerializeItem = (item) => item.Entity.Name.ToLower();
+            var serializer = expression.DefaultSerializer as CircularEntityExpressionSerializer<CircularEntity>;
+            serializer.EntityNameCallback = (item) => item.Name.ToLower();
             Assert.Equal(9, expression.Count);
             Assert.Equal("a + (b + (c + (d + b))) + (c + (d + (b + c)))", expression.DefaultSerializer.Serialize());
         }

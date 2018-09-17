@@ -11,7 +11,7 @@ namespace GraphExpression.Serialization
             this.maxLength = maxLenght;
         }
 
-        public override string Format(Type type, object value)
+        public override string Format(Type type, object value, bool addQuotesForNonSpacesValues = true)
         {
             if (value is string str)
                 return base.Format(type, Truncate(str));

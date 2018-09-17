@@ -46,7 +46,7 @@ namespace GraphExpression
         public Expression<object> Build(object entityRoot, bool deep = false)
         {
             var expression = new Expression<object>(expr => new ComplexEntity(expr, entityRoot), (expr, e) => GetChildren(expr, e), deep);
-            expression.DefaultSerializer = new SerializationAsComplexExpression(expression);
+            expression.DefaultSerializer = new ComplexEntityExpressionSerializer(expression);
             return expression;
         }
 

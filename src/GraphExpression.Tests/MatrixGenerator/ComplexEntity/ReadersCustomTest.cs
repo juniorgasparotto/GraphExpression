@@ -45,12 +45,12 @@ namespace GraphExpression.Tests
         {
             public string Symbol { get; set; } = null;
 
-            public bool CanSerialize(SerializationAsComplexExpression serializer, EntityItem<object> item)
+            public bool CanSerialize(ComplexEntityExpressionSerializer serializer, EntityItem<object> item)
             {
                 return item is MethodEntity;
             }
 
-            public (Type Type, string ContainerName) GetSerializeInfo(SerializationAsComplexExpression serializer, EntityItem<object> item)
+            public (Type Type, string ContainerName) GetSerializeInfo(ComplexEntityExpressionSerializer serializer, EntityItem<object> item)
             {
                 var cast = (MethodEntity)item;
                 return (
