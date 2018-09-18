@@ -3,7 +3,8 @@
     public enum ShowTypeOptions
     {
         None,
+        TypeNameOnlyNonStruct,
         TypeName,
-        FullTypeName = 2,
+        FullTypeName
     }
 }

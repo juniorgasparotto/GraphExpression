@@ -15,7 +15,7 @@ namespace GraphExpression.Tests
             var serialization = Utils.GetSerialization(expression);
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"{this.GetHashCode()}", result);
+            Assert.Equal($"{this.GetType().Name}.{this.GetHashCode()}", result);
         }
 
         [Fact]

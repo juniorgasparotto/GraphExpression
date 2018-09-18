@@ -18,7 +18,7 @@ namespace GraphExpression.Tests
             var result = expression.DefaultSerializer.Serialize();
             var pathTest = expression.Graph.Paths[0].ToString();
 
-            var expected = $"{{{values.GetHashCode()}}} + {{[0]: \"value1\"}} + {{[1]: \"value2\"}} + {{[2]: \"value3\"}}";
+            var expected = $"{{{values.GetType().Name}.{values.GetHashCode()}}} + {{[0]: \"value1\"}} + {{[1]: \"value2\"}} + {{[2]: \"value3\"}}";
             Assert.Equal(4, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<ArrayItemEntity>(expression[1]);
@@ -39,7 +39,7 @@ namespace GraphExpression.Tests
 
             var expression = array3D.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{array3D.GetHashCode()}}}" + " + {[0,0,0]: 1} + {[0,0,1]: 2} + {[0,0,2]: 3} + {[0,1,0]: 4} + {[0,1,1]: 5} + {[0,1,2]: 6} + {[1,0,0]: 7} + {[1,0,1]: 8} + {[1,0,2]: 9} + {[1,1,0]: 10} + {[1,1,1]: 11} + {[1,1,2]: 12}";
+            var expected = $"{{{array3D.GetType().Name}.{array3D.GetHashCode()}}}" + " + {[0,0,0]: 1} + {[0,0,1]: 2} + {[0,0,2]: 3} + {[0,1,0]: 4} + {[0,1,1]: 5} + {[0,1,2]: 6} + {[1,0,0]: 7} + {[1,0,1]: 8} + {[1,0,2]: 9} + {[1,1,0]: 10} + {[1,1,1]: 11} + {[1,1,2]: 12}";
             Assert.Equal(13, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<ArrayItemEntity>(expression[1]);
@@ -70,7 +70,7 @@ namespace GraphExpression.Tests
 
             var expression = jaggedArray.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{jaggedArray.GetHashCode()}}} + ({{[0].{jaggedArray[0].GetHashCode()}}} + {{[0]: 10}} + {{[1]: 20}}) + ({{[1].{jaggedArray[1].GetHashCode()}}} + {{[0]: 10}})";
+            var expected = $"{{{jaggedArray.GetType().Name}.{jaggedArray.GetHashCode()}}} + ({{[0].{jaggedArray[0].GetHashCode()}}} + {{[0]: 10}} + {{[1]: 20}}) + ({{[1].{jaggedArray[1].GetHashCode()}}} + {{[0]: 10}})";
             Assert.Equal(6, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<ArrayItemEntity>(expression[1]);

@@ -100,9 +100,9 @@ namespace GraphExpression.Tests
 
             var expression = A.AsExpression();
             Assert.Equal(3, expression.Graph.Edges.Count);
-            Assert.Equal($", {A.GetHashCode()}", expression.Graph.Edges[0].ToString());
-            Assert.Equal($"{A.GetHashCode()}, @Prop1: 10", expression.Graph.Edges[1].ToString());
-            Assert.Equal($"{A.GetHashCode()}, @Prop2: \"Test 2\"", expression.Graph.Edges[2].ToString());
+            Assert.Equal($", {A.GetType().Name}.{A.GetHashCode()}", expression.Graph.Edges[0].ToString());
+            Assert.Equal($"{A.GetType().Name}.{A.GetHashCode()}, @Prop1: 10", expression.Graph.Edges[1].ToString());
+            Assert.Equal($"{A.GetType().Name}.{A.GetHashCode()}, @Prop2: \"Test 2\"", expression.Graph.Edges[2].ToString());
         }
 
         [Fact]

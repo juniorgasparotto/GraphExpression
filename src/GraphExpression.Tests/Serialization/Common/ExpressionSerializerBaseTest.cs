@@ -43,7 +43,7 @@ namespace GraphExpression.Tests.Serialization.Common
             };
 
             var expression = A.AsExpression();
-            Assert.Equal($"{{{A.GetHashCode()}}} + {{@P: 1}}", expression.DefaultSerializer.Serialize());
+            Assert.Equal($"{{{A.GetType().Name}.{A.GetHashCode()}}} + {{@P: 1}}", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace GraphExpression.Tests.Serialization.Common
             var expression = A.AsExpression();
             var serializer = expression.GetSerializer<ComplexEntityExpressionSerializer>();
             serializer.EncloseItem = false;
-            Assert.Equal($"{A.GetHashCode()} + @P: 1", expression.DefaultSerializer.Serialize());
+            Assert.Equal($"{A.GetType().Name}.{A.GetHashCode()} + @P: 1", expression.DefaultSerializer.Serialize());
         }
     }
 }

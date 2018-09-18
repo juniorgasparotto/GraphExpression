@@ -162,8 +162,8 @@ namespace GraphExpression.Tests
             };
 
             var expression = A.AsExpression();
-            Assert.Equal($"[{A.GetHashCode()}]", expression[0].Path.ToString());
-            Assert.Equal($"[{A.GetHashCode()}].[@Prop1: 10]", expression[1].Path.ToString());
+            Assert.Equal($"[{A.GetType().Name}.{A.GetHashCode()}]", expression[0].Path.ToString());
+            Assert.Equal($"[{A.GetType().Name}.{A.GetHashCode()}].[@Prop1: 10]", expression[1].Path.ToString());
         }
 
         [Fact]

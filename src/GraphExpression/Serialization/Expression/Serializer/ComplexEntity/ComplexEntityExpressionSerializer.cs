@@ -13,6 +13,7 @@ namespace GraphExpression.Serialization
             : base(expression)
         {   
             EncloseItem = true;
+            ShowType = ShowTypeOptions.TypeNameOnlyNonStruct;
             ValueFormatter = new DefaultValueFormatter();
             ItemsSerialize = new List<IEntitySerialize>()
             {
@@ -48,7 +49,9 @@ namespace GraphExpression.Serialization
 
             if (type != null)
             {
-                if (ShowType == ShowTypeOptions.TypeName)
+                if (ShowType == ShowTypeOptions.TypeNameOnlyNonStruct && item.GetType() == typeof(ComplexEntity))
+                    strType = type.Name;
+                else if (ShowType == ShowTypeOptions.TypeName)
                     strType = type.Name;
                 else if (ShowType == ShowTypeOptions.FullTypeName)
                     strType = type.FullName;
