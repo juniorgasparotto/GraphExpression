@@ -9,13 +9,24 @@ namespace GraphExpression.Tests
     public class SerializationComplexEntityTest
     {
         [Fact]
-        public void Normal()
+        public void Normal_ShowTypeOnlyRoot()
         {
             var expression = Utils.CreateEmptyExpression();
             var serialization = Utils.GetSerialization(expression);
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
             Assert.Equal($"{this.GetType().Name}.{this.GetHashCode()}", result);
+        }
+
+        [Fact]
+        public void NotShowTypeInRoot()
+        {
+            var expression = Utils.CreateEmptyExpression();
+            var serialization = Utils.GetSerialization(expression);
+            serialization.ShowType = ShowTypeOptions.None;
+            var complex = new ComplexEntity(expression, this);
+            var result = complex.ToString();
+            Assert.Equal($"{this.GetHashCode()}", result);
         }
 
         [Fact]
