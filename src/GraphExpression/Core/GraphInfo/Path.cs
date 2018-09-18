@@ -88,27 +88,15 @@ namespace GraphExpression
 
         #region Overrides
 
-        public string ToString(bool showEntityDesc)
-        {
-            if (showEntityDesc)
-            {
-                var output = "";
-                foreach (var item in Items)
-                {
-                    var desc = $"[{item.ToString()}]";
-                    output += (output == "") ? desc : "." + desc;
-                }
-                return output;
-            }
-            else
-            {
-                return this.Identity;
-            }
-        }
-
         public override string ToString()
         {
-            return this.ToString(true);
+            var output = "";
+            foreach (var item in Items)
+            {
+                var desc = $"[{item.ToString()}]";
+                output += (output == "") ? desc : "." + desc;
+            }
+            return output;
         }
 
         #endregion

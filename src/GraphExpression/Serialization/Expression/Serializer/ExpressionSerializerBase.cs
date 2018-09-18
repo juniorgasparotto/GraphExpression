@@ -42,7 +42,7 @@ namespace GraphExpression.Serialization
                             if (EncloseParenthesisInRoot)
                                 output = "(";
 
-                            output += itemBeginGroupExpression.ToString();
+                            output += GetEnclosedValue(SerializeItem(itemBeginGroupExpression));
                         }
                         else
                         {
@@ -50,7 +50,7 @@ namespace GraphExpression.Serialization
                             if (itemBeginGroupExpression.IsFirstInParent)
                                 output += "(";
 
-                            output += itemBeginGroupExpression.ToString();
+                            output += GetEnclosedValue(SerializeItem(itemBeginGroupExpression));
                         }
                     },
                     itemEndGroupExpression =>
@@ -64,5 +64,13 @@ namespace GraphExpression.Serialization
         }
 
         public abstract string SerializeItem(EntityItem<T> item);
+
+        private string GetEnclosedValue(string value)
+        {
+            var encloseStart = EncloseItem ? "{" : null;
+            var encloseEnd = EncloseItem ? "}" : null;
+
+            return $"{encloseStart}{value}{encloseEnd}";
+        }
     }
 }

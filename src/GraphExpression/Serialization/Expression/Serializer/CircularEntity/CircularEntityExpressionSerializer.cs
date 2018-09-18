@@ -8,6 +8,7 @@ namespace GraphExpression.Serialization
         private readonly Expression<T> expression;
 
         public Func<T, object> EntityNameCallback { get; set; }
+        public bool TrimQuotesIfValueHasNoSpaces { get; set; } = true;
 
         public CircularEntityExpressionSerializer(Expression<T> expression, Func<T, object> entityNameCallback)
             : base(expression)
@@ -23,7 +24,7 @@ namespace GraphExpression.Serialization
             if (item.Entity == null)
                 value = "null";
             else
-                value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity), true);
+                value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity), TrimQuotesIfValueHasNoSpaces);
 
             var encloseStart = EncloseItem ? "{" : null;
             var encloseEnd = EncloseItem ? "}" : null;

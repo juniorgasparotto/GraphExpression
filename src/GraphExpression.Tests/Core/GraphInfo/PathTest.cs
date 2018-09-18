@@ -4,22 +4,22 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class TestGraphPath
+    public class PathTest
     {
         [Fact]
-        public void TestPathStringAndContainsGraph()
+        public void VerifyIfGraphContainAnotherGraph_MustContainsGraph()
         {
-            var A = new HierarchicalEntity("A");
-            var B = new HierarchicalEntity("B");
-            var C = new HierarchicalEntity("C");
-            var D = new HierarchicalEntity("D");
-            var I = new HierarchicalEntity("I");
-            var J = new HierarchicalEntity("J");
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            var D = new CircularEntity("D");
+            var I = new CircularEntity("I");
+            var J = new CircularEntity("J");
 
             A = A + (B + C + D) + A + (I + (J + C) + A);
 
-            var vertexesSources = new HierarchicalEntity[] { A, B, C, D, I, J };
-            var graphs = new List<Graph<HierarchicalEntity>>();
+            var vertexesSources = new CircularEntity[] { A, B, C, D, I, J };
+            var graphs = new List<Graph<CircularEntity>>();
 
             foreach (var v in vertexesSources)
             {
@@ -52,11 +52,11 @@ namespace GraphExpression.Tests
             Assert.Equal("I", graph.Vertexes.ElementAt(4).ToString());
             Assert.Equal("J", graph.Vertexes.ElementAt(5).ToString());
             Assert.Equal(5, graph.Paths.Count());
-            Assert.Equal("[A].[B].[C]", graph.Paths.ElementAt(0).ToString(true));
-            Assert.Equal("[A].[B].[D]", graph.Paths.ElementAt(1).ToString(true));
-            Assert.Equal("[A].[A]", graph.Paths.ElementAt(2).ToString(true));
-            Assert.Equal("[A].[I].[J].[C]", graph.Paths.ElementAt(3).ToString(true));
-            Assert.Equal("[A].[I].[A]", graph.Paths.ElementAt(4).ToString(true));
+            Assert.Equal("[A].[B].[C]", graph.Paths.ElementAt(0).ToString());
+            Assert.Equal("[A].[B].[D]", graph.Paths.ElementAt(1).ToString());
+            Assert.Equal("[A].[A]", graph.Paths.ElementAt(2).ToString());
+            Assert.Equal("[A].[I].[J].[C]", graph.Paths.ElementAt(3).ToString());
+            Assert.Equal("[A].[I].[A]", graph.Paths.ElementAt(4).ToString());
             Assert.True(graph.ContainsGraph(graph1));
             Assert.True(graph.ContainsGraph(graph2));
             Assert.True(graph.ContainsGraph(graph3));
@@ -68,42 +68,42 @@ namespace GraphExpression.Tests
             var pathsClean = graphsClean.ToPaths().RemoveCoexistents();
 
             Assert.Equal(2, graphsClean.Count());
-            Assert.Equal("[A].[B].[C]", paths.ElementAt(0).ToString(true));
-            Assert.Equal("[A].[B].[D]", paths.ElementAt(1).ToString(true));
-            Assert.Equal("[A].[A]", paths.ElementAt(2).ToString(true));
-            Assert.Equal("[A].[I].[J].[C]", paths.ElementAt(3).ToString(true));
-            Assert.Equal("[A].[I].[A]", paths.ElementAt(4).ToString(true));
-            Assert.Equal("[I].[J].[C]", paths.ElementAt(5).ToString(true));
-            Assert.Equal("[I].[A].[B].[C]", paths.ElementAt(6).ToString(true));
-            Assert.Equal("[I].[A].[B].[D]", paths.ElementAt(7).ToString(true));
-            Assert.Equal("[I].[A].[A]", paths.ElementAt(8).ToString(true));
-            Assert.Equal("[I].[A].[I]", paths.ElementAt(9).ToString(true));
+            Assert.Equal("[A].[B].[C]", paths.ElementAt(0).ToString());
+            Assert.Equal("[A].[B].[D]", paths.ElementAt(1).ToString());
+            Assert.Equal("[A].[A]", paths.ElementAt(2).ToString());
+            Assert.Equal("[A].[I].[J].[C]", paths.ElementAt(3).ToString());
+            Assert.Equal("[A].[I].[A]", paths.ElementAt(4).ToString());
+            Assert.Equal("[I].[J].[C]", paths.ElementAt(5).ToString());
+            Assert.Equal("[I].[A].[B].[C]", paths.ElementAt(6).ToString());
+            Assert.Equal("[I].[A].[B].[D]", paths.ElementAt(7).ToString());
+            Assert.Equal("[I].[A].[A]", paths.ElementAt(8).ToString());
+            Assert.Equal("[I].[A].[I]", paths.ElementAt(9).ToString());
             Assert.Equal(this.GetOutputPaths(pathsClean), this.GetOutputPaths(paths.RemoveCoexistents()));
-            Assert.Equal("[A].[I].[J].[C]", pathsClean.ElementAt(0).ToString(true));
-            Assert.Equal("[A].[I].[A]", pathsClean.ElementAt(1).ToString(true));
-            Assert.Equal("[I].[A].[B].[C]", pathsClean.ElementAt(2).ToString(true));
-            Assert.Equal("[I].[A].[B].[D]", pathsClean.ElementAt(3).ToString(true));
-            Assert.Equal("[I].[A].[A]", pathsClean.ElementAt(4).ToString(true));
-            Assert.Equal("[I].[A].[I]", pathsClean.ElementAt(5).ToString(true));
+            Assert.Equal("[A].[I].[J].[C]", pathsClean.ElementAt(0).ToString());
+            Assert.Equal("[A].[I].[A]", pathsClean.ElementAt(1).ToString());
+            Assert.Equal("[I].[A].[B].[C]", pathsClean.ElementAt(2).ToString());
+            Assert.Equal("[I].[A].[B].[D]", pathsClean.ElementAt(3).ToString());
+            Assert.Equal("[I].[A].[A]", pathsClean.ElementAt(4).ToString());
+            Assert.Equal("[I].[A].[I]", pathsClean.ElementAt(5).ToString());
         }
 
         [Fact]
-        public void TestRemoveCoexistents()
+        public void RemoveCoexistents_CheckPathsAfterRemove_AllOk()
         {
-            var A = new HierarchicalEntity("A");
-            var B = new HierarchicalEntity("B");
-            var C = new HierarchicalEntity("C");
-            var D = new HierarchicalEntity("D");
-            var E = new HierarchicalEntity("E");
-            var F = new HierarchicalEntity("F");
-            var G = new HierarchicalEntity("G");
-            var H = new HierarchicalEntity("H");
-            var J = new HierarchicalEntity("J");
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            var D = new CircularEntity("D");
+            var E = new CircularEntity("E");
+            var F = new CircularEntity("F");
+            var G = new CircularEntity("G");
+            var H = new CircularEntity("H");
+            var J = new CircularEntity("J");
 
             A = A + (B + C + D) + D + (E + B) + F + (G + G + C) + (H + C);
 
-            var vertexesSources = new HierarchicalEntity[] { A, B, C, D, E, F, G, H };
-            var graphs = new List<Graph<HierarchicalEntity>>();
+            var vertexesSources = new CircularEntity[] { A, B, C, D, E, F, G, H };
+            var graphs = new List<Graph<CircularEntity>>();
 
             foreach (var v in vertexesSources)
             {
@@ -123,12 +123,25 @@ namespace GraphExpression.Tests
             Assert.Equal(outputClean, expectedClean);
         }
 
-        private string GetOutputPaths(IEnumerable<Path<HierarchicalEntity>> paths)
+        //[Fact]
+        //public void VerifyToString()
+        //{
+        //    var A = new HierarchicalEntity("A");
+        //    var B = new HierarchicalEntity("B");
+        //    var C = new HierarchicalEntity("C");
+
+        //    A = A + (B + C);
+        //    var expression = A.AsExpression();
+
+        //    Assert.Equal("", expression[2].Path.ToString());
+        //}
+
+        private string GetOutputPaths(IEnumerable<Path<CircularEntity>> paths)
         {
             var output = "";
             foreach (var path in paths)
             {
-                output += path.ToString(true);
+                output += path.ToString();
                 output += "\r\n";
             }
 

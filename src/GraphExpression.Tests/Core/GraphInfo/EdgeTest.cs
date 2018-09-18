@@ -4,22 +4,22 @@ using Xunit;
 
 namespace GraphExpression.Tests
 {
-    public class TestGraphEdge
+    public class EdgeTest
     {
         [Fact]
         public void TestGraphEdgeAntiparallel()
         {
-            var A = new HierarchicalEntity("A");
-            var B = new HierarchicalEntity("B");
-            var C = new HierarchicalEntity("C");
-            var D = new HierarchicalEntity("D");
-            var I = new HierarchicalEntity("I");
-            var J = new HierarchicalEntity("J");
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            var D = new CircularEntity("D");
+            var I = new CircularEntity("I");
+            var J = new CircularEntity("J");
 
             A = A + (B + C + D) + A + (I + (J + C) + A);
 
-            var vertexesSources = new HierarchicalEntity[] { A, B, C, D, I, J };
-            var graphs = new List<Graph<HierarchicalEntity>>();
+            var vertexesSources = new CircularEntity[] { A, B, C, D, I, J };
+            var graphs = new List<Graph<CircularEntity>>();
 
             foreach (var v in vertexesSources)
             {
@@ -47,17 +47,17 @@ namespace GraphExpression.Tests
         [Fact]
         public void TestGraphEdgeLoop()
         {
-            var A = new HierarchicalEntity("A");
-            var B = new HierarchicalEntity("B");
-            var C = new HierarchicalEntity("C");
-            var D = new HierarchicalEntity("D");
-            var I = new HierarchicalEntity("I");
-            var J = new HierarchicalEntity("J");
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            var D = new CircularEntity("D");
+            var I = new CircularEntity("I");
+            var J = new CircularEntity("J");
 
             A = A + (B + C + D) + A + (I + (J + C) + A);
 
-            var vertexesSources = new HierarchicalEntity[] { A, B, C, D, I, J };
-            var graphs = new List<Graph<HierarchicalEntity>>();
+            var vertexesSources = new CircularEntity[] { A, B, C, D, I, J };
+            var graphs = new List<Graph<CircularEntity>>();
 
             foreach (var v in vertexesSources)
             {
