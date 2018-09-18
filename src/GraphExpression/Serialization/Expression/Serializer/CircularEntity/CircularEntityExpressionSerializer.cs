@@ -25,11 +25,8 @@ namespace GraphExpression.Serialization
                 value = "null";
             else
                 value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity), TrimQuotesIfValueHasNoSpaces);
-
-            var encloseStart = EncloseItem ? "{" : null;
-            var encloseEnd = EncloseItem ? "}" : null;
-
-            return $"{encloseStart}{value}{encloseEnd}";
+            
+            return value;
         }
     }
 }

@@ -218,9 +218,9 @@ namespace GraphExpression.Tests
             A = A + (B + B + D) + B;
             var expression = A.AsExpression(f => f.Children);
 
-            var vertexA = VertexContainer<CircularEntity>.Vertexes.IndexOf(expression.Graph.Vertexes[0].Entity);
-            var vertexB = VertexContainer<CircularEntity>.Vertexes.IndexOf(expression.Graph.Vertexes[1].Entity);
-            var vertexD = VertexContainer<CircularEntity>.Vertexes.IndexOf(expression.Graph.Vertexes[2].Entity);
+            var vertexA = VertexContainer<CircularEntity>.GetEntityId(expression.Graph.Vertexes[0].Entity).Id;
+            var vertexB = VertexContainer<CircularEntity>.GetEntityId(expression.Graph.Vertexes[1].Entity).Id;
+            var vertexD = VertexContainer<CircularEntity>.GetEntityId(expression.Graph.Vertexes[2].Entity).Id;
             Assert.Equal(vertexA, expression.Graph.Vertexes[0].Id);
             Assert.Equal(vertexB, expression.Graph.Vertexes[1].Id);
             Assert.Equal(vertexD, expression.Graph.Vertexes[2].Id);

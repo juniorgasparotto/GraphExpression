@@ -18,17 +18,6 @@ namespace GraphExpression.Tests
             var serialization = Utils.GetSerialization(expression);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@PropInt: 100}", result);
-        }
-
-        [Fact]
-        public void EncloseItem()
-        {
-            var expression = Utils.CreateEmptyExpression();
-            var serialization = Utils.GetSerialization(expression);
-            serialization.EncloseItem = false;
-            var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
-            var result = prop1Complex.ToString();
             Assert.Equal("@PropInt: 100", result);
         }
 
@@ -40,7 +29,7 @@ namespace GraphExpression.Tests
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = "*";
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{*PropInt: 100}", result);
+            Assert.Equal("*PropInt: 100", result);
         }
 
         [Fact]
@@ -51,7 +40,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@System.Int32.PropInt: 100}", result);
+            Assert.Equal("@System.Int32.PropInt: 100", result);
         }
 
         [Fact]
@@ -62,7 +51,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.None;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@PropInt: 100}", result);
+            Assert.Equal("@PropInt: 100", result);
         }
 
         [Fact]
@@ -73,7 +62,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.TypeName;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropInt"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@Int32.PropInt: 100}", result);
+            Assert.Equal("@Int32.PropInt: 100", result);
         }
 
         [Fact]
@@ -83,7 +72,7 @@ namespace GraphExpression.Tests
             var serialization = Utils.GetSerialization(expression);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: \"abc \\\" def \\\"ghi\\\"\"}", result);
+            Assert.Equal("@PropString: \"abc \\\" def \\\"ghi\\\"\"", result);
         }
 
         [Fact]
@@ -94,17 +83,16 @@ namespace GraphExpression.Tests
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: null}", result);
+            Assert.Equal("@PropString: null", result);
         }
 
         [Fact]
-        public void ValueString_Null_WithoutTypeAndEncloseAndSymbolProperty()
+        public void ValueString_Null_WithoutTypeAndSymbolProperty()
         {
             var expression = Utils.CreateEmptyExpression();
             var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
-            serialization.EncloseItem = false;
 
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
@@ -113,13 +101,12 @@ namespace GraphExpression.Tests
         }
 
         [Fact]
-        public void ValueString_Null_Parent_WithoutTypeAndEncloseAndSymbolProperty()
+        public void ValueString_Null_Parent_WithoutTypeAndSymbolProperty()
         {
             var expression = Utils.CreateEmptyExpression();
             var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = null;
-            serialization.EncloseItem = false;
 
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, null, GetPropertyByName("PropString"));
@@ -135,7 +122,7 @@ namespace GraphExpression.Tests
             serialization.ValueFormatter = new TruncateFormatter(3);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: \"abc\"}", result);
+            Assert.Equal("@PropString: \"abc\"", result);
         }
 
         [Fact]
@@ -146,7 +133,7 @@ namespace GraphExpression.Tests
             serialization.ValueFormatter = new TruncateFormatter(3);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("{@PropString: \"abc\"}", result);
+            Assert.Equal("@PropString: \"abc\"", result);
         }
 
         private System.Reflection.PropertyInfo GetPropertyByName(string name)

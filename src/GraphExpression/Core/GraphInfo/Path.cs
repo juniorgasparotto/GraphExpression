@@ -34,19 +34,21 @@ namespace GraphExpression
             get
             {
                 var items = Items;
-                
-                if (items.First().AreEntityEquals(items.Last()) == true)
+
+                var first = items.First();
+                var last = items.Last();
+                if (first != last && first.AreEntityEquals(last) == true)
                 {
                     return PathType.Circuit;
                 }
                 else
                 {
-                    EntityItem<T> last = null;
+                    EntityItem<T> lastIteration = null;
                     foreach (var current in this.Items)
                     {
-                        if (last != null && current.AreEntityEquals(last) == true)
+                        if (lastIteration != null && current.AreEntityEquals(lastIteration) == true)
                             return PathType.Circle;
-                        last = current;
+                        lastIteration = current;
                     }
 
                     return PathType.Simple;

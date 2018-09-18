@@ -133,6 +133,11 @@ namespace GraphExpression
             }
         }
 
+        public S GetSerializer<S>()
+        {
+            return (S)DefaultSerializer;
+        }
+
         #region build/recursive and non-recursive
 
         private void Build(EntityItem<T> parent, IEnumerable<EntityItem<T>> children, int level = 1)

@@ -15,20 +15,9 @@ namespace GraphExpression.Tests
             var serialization = Utils.GetSerialization(expression);
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"{{{this.GetHashCode()}}}", result);
-        }
-
-        [Fact]
-        public void EncloseItem()
-        {
-            var expression = Utils.CreateEmptyExpression();
-            var serialization = Utils.GetSerialization(expression);
-            serialization.EncloseItem = false;
-            var complex = new ComplexEntity(expression, this);
-            var result = complex.ToString();
             Assert.Equal($"{this.GetHashCode()}", result);
         }
-        
+
         [Fact]
         public void ShowTypeFull()
         {
@@ -37,7 +26,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"{{GraphExpression.Tests.SerializationComplexEntityTest.{this.GetHashCode()}}}", result);
+            Assert.Equal($"GraphExpression.Tests.SerializationComplexEntityTest.{this.GetHashCode()}", result);
         }
 
         [Fact]
@@ -48,7 +37,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.None;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"{{{this.GetHashCode()}}}", result);
+            Assert.Equal($"{this.GetHashCode()}", result);
         }
 
         [Fact]
@@ -59,7 +48,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.TypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"{{SerializationComplexEntityTest.{this.GetHashCode()}}}", result);
+            Assert.Equal($"SerializationComplexEntityTest.{this.GetHashCode()}", result);
         }
 
         [Fact]
@@ -67,17 +56,6 @@ namespace GraphExpression.Tests
         {
             var expression = Utils.CreateEmptyExpression();
             var serialization = Utils.GetSerialization(expression);
-            var complex = new ComplexEntity(expression, null);
-            var result = complex.ToString();
-            Assert.Equal("{null}", result);
-        }
-
-        [Fact]
-        public void Value_Null_AndNotEnclose()
-        {
-            var expression = Utils.CreateEmptyExpression();
-            var serialization = Utils.GetSerialization(expression);
-            serialization.EncloseItem = false;
             var complex = new ComplexEntity(expression, null);
             var result = complex.ToString();
             Assert.Equal("null", result);

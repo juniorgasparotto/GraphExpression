@@ -80,10 +80,7 @@ namespace GraphExpression.Serialization
                 && string.IsNullOrWhiteSpace(parts))
                 separatorValue = null;
 
-            var encloseStart = EncloseItem ? "{" : null;
-            var encloseEnd = EncloseItem ? "}" : null;
-
-            return $"{encloseStart}{strSymbol}{parts}{separatorValue}{strValue}{encloseEnd}";
+            return $"{strSymbol}{parts}{separatorValue}{strValue}";
         }
     }
 }

@@ -1,6 +1,4 @@
-
 using GraphExpression.Serialization;
-using System;
 using System.Linq;
 using Xunit;
 
@@ -25,17 +23,6 @@ namespace GraphExpression.Tests
             var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal($"{{!field.{field.GetHashCode()}}}", result);
-        }
-        
-        [Fact]
-        public void EncloseItem()
-        {
-            var expression = Utils.CreateEmptyExpression();
-            var serialization = Utils.GetSerialization(expression);
-            serialization.EncloseItem = false;
-            var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
-            var result = fieldEntity.ToString();
             Assert.Equal($"!field.{field.GetHashCode()}", result);
         }
 
@@ -47,7 +34,7 @@ namespace GraphExpression.Tests
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal($"{{*field.{field.GetHashCode()}}}", result);
+            Assert.Equal($"*field.{field.GetHashCode()}", result);
         }
 
         [Fact]
@@ -58,7 +45,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal($"{{!GraphExpression.Tests.SerializationValueComplexTest+ComplexItem.field.{field.GetHashCode()}}}", result);
+            Assert.Equal($"!GraphExpression.Tests.SerializationValueComplexTest+ComplexItem.field.{field.GetHashCode()}", result);
         }
 
         [Fact]
@@ -69,7 +56,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.None;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal($"{{!field.{field.GetHashCode()}}}", result);
+            Assert.Equal($"!field.{field.GetHashCode()}", result);
         }
 
         [Fact]
@@ -80,7 +67,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.TypeName;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal($"{{!ComplexItem.field.{field.GetHashCode()}}}", result);
+            Assert.Equal($"!ComplexItem.field.{field.GetHashCode()}", result);
         }
 
         [Fact]
@@ -91,17 +78,16 @@ namespace GraphExpression.Tests
             this.field = null;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal("{!field: null}", result);
+            Assert.Equal("!field: null", result);
         }
 
         [Fact]
-        public void Value_Null_WithoutTypeAndEncloseAndSymbolField()
+        public void Value_Null_WithoutTypeAndSymbolField()
         {
             var expression = Utils.CreateEmptyExpression();
             var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
-            serialization.EncloseItem = false;
 
             this.field = null;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
@@ -110,13 +96,12 @@ namespace GraphExpression.Tests
         }
 
         [Fact]
-        public void Value_Null_Parent_WithoutTypeAndEncloseAndSymbolField()
+        public void Value_Null_Parent_WithoutTypeAndSymbolField()
         {
             var expression = Utils.CreateEmptyExpression();
             var serialization = Utils.GetSerialization(expression);
             serialization.ShowType = ShowTypeOptions.None;
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = null;
-            serialization.EncloseItem = false;
 
             this.field = null;
             var fieldEntity = new FieldEntity(expression, null, GetFieldByName("field"));

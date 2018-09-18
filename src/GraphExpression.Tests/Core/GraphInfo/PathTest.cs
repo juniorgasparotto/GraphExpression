@@ -7,6 +7,166 @@ namespace GraphExpression.Tests
     public class PathTest
     {
         [Fact]
+        public void VerifyExpressionPaths_ShouldBeProgressivePath()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            var D = new CircularEntity("D");
+            A = A + (B + (C + D));
+            var expression = A.AsExpression(f => f.Children);
+            Assert.Equal(4, expression.Count);
+            Assert.Equal("[A]", expression[0].Path.ToString());
+            Assert.Equal("[A].[B]", expression[1].Path.ToString());
+            Assert.Equal("[A].[B].[C]", expression[2].Path.ToString());
+            Assert.Equal("[A].[B].[C].[D]", expression[3].Path.ToString());
+        }
+
+        [Fact]
+        public void VerifyLastPaths_ShouldHasOnlyLastPaths()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            var D = new CircularEntity("D");
+            A = A + (B + C) + D;
+            var expression = A.AsExpression(f => f.Children);
+
+            Assert.Equal(4, expression.Count);
+            Assert.Equal(2, expression.Graph.Paths.Count);
+            Assert.Equal("[A].[B].[C]", expression.Graph.Paths[0].ToString());
+            Assert.Equal("[A].[D]", expression.Graph.Paths[1].ToString());
+        }
+        
+        [Fact]
+        public void VerifyIdentity_ShouldEqualsVertexContainer()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            A = A + (B + C);
+            var expression = A.AsExpression(f => f.Children);
+
+            var vertexA = VertexContainer<CircularEntity>.GetEntityId(A).Id;
+            var vertexB = VertexContainer<CircularEntity>.GetEntityId(B).Id;
+            var vertexC = VertexContainer<CircularEntity>.GetEntityId(C).Id;
+
+            Assert.Equal(3, expression.Count);
+            Assert.Equal($"[{vertexA}]", expression[0].Path.Identity);
+            Assert.Equal($"[{vertexA}].[{vertexB}]", expression[1].Path.Identity);
+            Assert.Equal($"[{vertexA}].[{vertexB}].[{vertexC}]", expression[2].Path.Identity);
+        }
+
+        [Fact]
+        public void VerifyPathItems_ShouldEqualsInExpression()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            A = A + (B + C);
+            var expression = A.AsExpression(f => f.Children);
+
+            Assert.Equal(3, expression.Count);
+            Assert.Single(expression[0].Path.Items);
+            Assert.Same(expression[0], expression[0].Path.Items.ElementAt(0));
+
+            Assert.Equal(2, expression[1].Path.Items.Count());
+            Assert.Same(expression[0], expression[1].Path.Items.ElementAt(0));
+            Assert.Same(expression[1], expression[1].Path.Items.ElementAt(1));
+
+            Assert.Equal(3, expression[2].Path.Items.Count());
+            Assert.Same(expression[0], expression[2].Path.Items.ElementAt(0));
+            Assert.Same(expression[1], expression[2].Path.Items.ElementAt(1));
+            Assert.Same(expression[2], expression[2].Path.Items.ElementAt(2));
+        }
+
+        [Fact]
+        public void VerifyPathType_AllIsSimple()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            A = A + (B + C);
+            var expression = A.AsExpression(f => f.Children);
+
+            Assert.Equal(3, expression.Count);
+            Assert.Equal(PathType.Simple, expression[0].Path.PathType);
+            Assert.Equal(PathType.Simple, expression[1].Path.PathType);
+            Assert.Equal(PathType.Simple, expression[2].Path.PathType);
+        }
+
+        [Fact]
+        public void VerifyPathType_RepeatEntityInLastPath_ReturnCircuitForEntityB()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            A = A + (B + A);
+            var expression = A.AsExpression(f => f.Children);
+
+            Assert.Equal(3, expression.Count);
+            Assert.Equal(PathType.Simple, expression[0].Path.PathType);
+            Assert.Equal(PathType.Simple, expression[1].Path.PathType);
+            Assert.Equal(PathType.Circuit, expression[2].Path.PathType);
+        }
+
+        [Fact]
+        public void VerifyPathType_RepeatCircularEntityB_ReturnCircleForEntityB()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            A = A + (B + B);
+            var expression = A.AsExpression(f => f.Children);
+
+            Assert.Equal(3, expression.Count);
+            Assert.Equal(PathType.Simple, expression[0].Path.PathType);
+            Assert.Equal(PathType.Simple, expression[1].Path.PathType);
+            Assert.Equal(PathType.Circle, expression[2].Path.PathType);
+        }
+
+        [Fact]
+        public void VerifyContainGraph()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity("B");
+            var C = new CircularEntity("C");
+            var D = new CircularEntity("D");
+            var E = new CircularEntity("E");
+            var F = new CircularEntity("F");
+
+            A = A + (B + (C + D)) + (F + C);
+
+            // A + (B + (C + D)) + (F + (C + D)) 
+            // Deep (repeat C in final)
+            var expressionA = A.AsExpression(f => f.Children, true);
+            var expressionC = C.AsExpression(f => f.Children);
+
+            Assert.Equal(7, expressionA.Count);
+            Assert.Equal(2, expressionC.Count);
+
+            // A.B.C.D contains C.D
+            Assert.True(expressionA[3].Path.ContainsPath(expressionC[1].Path));
+            Assert.True(expressionA[6].Path.ContainsPath(expressionC[1].Path));
+
+            // check if all paths in graphC exists in graphA
+            Assert.True(expressionA.Graph.ContainsGraph(expressionC.Graph));
+        }
+
+        [Fact]
+        public void VerifyToStringInComplexEntity_ReturnEdgeToString()
+        {
+            var A = new
+            {
+                Prop1 = 10
+            };
+
+            var expression = A.AsExpression();
+            Assert.Equal($"[{A.GetHashCode()}]", expression[0].Path.ToString());
+            Assert.Equal($"[{A.GetHashCode()}].[@Prop1: 10]", expression[1].Path.ToString());
+        }
+
+        [Fact]
         public void VerifyIfGraphContainAnotherGraph_MustContainsGraph()
         {
             var A = new CircularEntity("A");

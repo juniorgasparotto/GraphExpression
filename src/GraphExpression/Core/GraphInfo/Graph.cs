@@ -58,18 +58,15 @@ namespace GraphExpression
             Vertex<T> vertex = FindVertexFirstOccurrence(entityItem.Entity);
             if (vertex == null)
             {
-                long globalEntity = -1;
+                VertexContainer<T>.EntityId globalEntity = null;
 
                 if (entityItem.Entity != null)
-                    globalEntity = VertexContainer<T>.Vertexes.IndexOf(entityItem.Entity);
+                    globalEntity = VertexContainer<T>.GetEntityId(entityItem.Entity);
 
-                if (globalEntity == -1)
-                {
-                    globalEntity = VertexContainer<T>.Vertexes.Count;
-                    VertexContainer<T>.Vertexes.Add(entityItem.Entity);
-                }
+                if (globalEntity == null)
+                    globalEntity = VertexContainer<T>.Add(entityItem.Entity);
 
-                vertex = new Vertex<T>(entityItem.Entity, globalEntity);
+                vertex = new Vertex<T>(entityItem.Entity, globalEntity.Id);
                 vertexes.Add(vertex);
             }
 
