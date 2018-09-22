@@ -2,7 +2,7 @@ using GraphExpression.Serialization;
 using System.Linq;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.Serialization
 {
     public class SerializationValueComplexTest
     {
@@ -45,7 +45,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal($"!GraphExpression.Tests.SerializationValueComplexTest+ComplexItem.field.{field.GetHashCode()}", result);
+            Assert.Equal($"!GraphExpression.Tests.Serialization.SerializationValueComplexTest+ComplexItem.field.{field.GetHashCode()}", result);
         }
 
         [Fact]

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace GraphExpression
+namespace GraphExpression.Utils
 {
     internal static class ReflectionUtils
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.MatrixGenerator
 {
     public class ReadersCustomTest
     {

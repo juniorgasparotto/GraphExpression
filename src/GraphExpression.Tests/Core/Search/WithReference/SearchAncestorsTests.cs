@@ -1,8 +1,7 @@
-using GraphExpression.Serialization;
 using System.Linq;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.Core
 {
     public class SearchAncestorsTests : EntitiesData
     {

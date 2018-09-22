@@ -3,23 +3,32 @@ using System.Diagnostics;
 
 namespace GraphExpression
 {
-    public class CircularEntity : List<CircularEntity>
+    [DebuggerDisplay("{Name}")]
+    public class CircularEntity
     {
-        public string Name { get; private set; }
-        public CircularEntity(string name) => this.Name = name;
+        private readonly List<CircularEntity> children;
 
-        // only didatic
-        public IEnumerable<CircularEntity> Children { get => this; }
+        public string Name { get; private set; }
+        public int Count => children.Count;
+        public CircularEntity this[int index] => children[index];
+
+        public CircularEntity(string name)
+        {
+            this.children = new List<CircularEntity>();
+            this.Name = name;
+        }
+
+        public IEnumerable<CircularEntity> Children { get => children; }
 
         public static CircularEntity operator +(CircularEntity a, CircularEntity b)
         {
-            a.Add(b);
+            a.children.Add(b);
             return a;
         }
 
         public static CircularEntity operator -(CircularEntity a, CircularEntity b)
         {
-            a.Remove(b);
+            a.children.Remove(b);
             return a;
         }
 

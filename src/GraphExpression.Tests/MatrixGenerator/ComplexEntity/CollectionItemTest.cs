@@ -1,9 +1,8 @@
-
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.MatrixGenerator
 {
     public class CollectionItemTest
     {

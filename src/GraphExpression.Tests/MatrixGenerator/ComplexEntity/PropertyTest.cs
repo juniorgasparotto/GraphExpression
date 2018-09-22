@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.MatrixGenerator
 {
     public class PropertyTest
     {

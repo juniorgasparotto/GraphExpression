@@ -1,10 +1,7 @@
-
 using GraphExpression.Serialization;
-using System;
-using System.Linq;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.Serialization
 {
     public class SerializationCircularEntityTest : EntitiesData
     {

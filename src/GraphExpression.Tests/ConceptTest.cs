@@ -24,7 +24,7 @@ namespace GraphExpression.Tests
             Assert.Equal("A", B[1].Name);
 
             // C
-            Assert.Single(C);
+            Assert.Single(C.Children);
             Assert.Equal("A", C[0].Name);
 
             // D
@@ -35,7 +35,7 @@ namespace GraphExpression.Tests
             Assert.Equal("Z", D[3].Name);
 
             // E
-            Assert.Empty(E);
+            Assert.Empty(E.Children);
 
             // F
             Assert.Equal(2, F.Count);
@@ -48,10 +48,10 @@ namespace GraphExpression.Tests
             Assert.Equal("C", G[1].Name);
 
             // Y
-            Assert.Empty(Y);
+            Assert.Empty(Y.Children);
 
             // Z
-            Assert.Empty(Z);
+            Assert.Empty(Z.Children);
         }
     }
 }

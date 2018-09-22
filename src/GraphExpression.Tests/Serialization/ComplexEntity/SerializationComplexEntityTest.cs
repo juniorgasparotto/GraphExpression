@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.Serialization
 {
     public class SerializationComplexEntityTest
     {
@@ -37,7 +37,7 @@ namespace GraphExpression.Tests
             serialization.ShowType = ShowTypeOptions.FullTypeName;
             var complex = new ComplexEntity(expression, this);
             var result = complex.ToString();
-            Assert.Equal($"GraphExpression.Tests.SerializationComplexEntityTest.{this.GetHashCode()}", result);
+            Assert.Equal($"GraphExpression.Tests.Serialization.SerializationComplexEntityTest.{this.GetHashCode()}", result);
         }
 
         [Fact]

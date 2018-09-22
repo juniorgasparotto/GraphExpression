@@ -1,7 +1,7 @@
 using System.Dynamic;
 using Xunit;
 
-namespace GraphExpression.Tests
+namespace GraphExpression.Tests.MatrixGenerator
 {
     public class DynamicTest
     {

@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using GraphExpression.Serialization;
 
-namespace GraphExpression.Tests.Serialization.Common
+namespace GraphExpression.Tests.Serialization
 {
     public class ExpressionSerializerBaseTest
     {
