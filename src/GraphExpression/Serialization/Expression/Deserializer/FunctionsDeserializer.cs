@@ -1,15 +1,14 @@
-﻿using GraphExpression.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace GraphExpression.Serialization
 {
-    public class ContainerDeserializer<T>
+    public class FunctionsDeserializer<T>
     {
         private readonly Func<string, T> createEntityCallback;
         public IDictionary<string, T> Entities { get; set; }
 
-        public ContainerDeserializer(Func<string, T> createEntityCallback, Dictionary<string, T> entities = null)
+        public FunctionsDeserializer(Func<string, T> createEntityCallback = null, Dictionary<string, T> entities = null)
         {
             this.createEntityCallback = createEntityCallback;
             this.Entities = entities ?? new Dictionary<string, T>();

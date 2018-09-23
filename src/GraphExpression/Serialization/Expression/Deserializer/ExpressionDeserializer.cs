@@ -18,25 +18,27 @@ namespace GraphExpression.Serialization
             Validation.ArgumentNotNull(expression, nameof(expression));
             Validation.ArgumentNotNull(createEntityCallback, nameof(createEntityCallback));
 
-            var container = new ContainerDeserializer<T>(createEntityCallback, new Dictionary<string, T>());
-            return Deserialize(expression, container);
+            var functions = new FunctionsDeserializer<T>(createEntityCallback, new Dictionary<string, T>());
+            return Deserialize(expression, functions);
         }
 
         public T Deserialize(string expression)
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
             
-            var container = new ContainerDeserializer<T>(null, new Dictionary<string, T>());
-            return Deserialize(expression, (ContainerDeserializer<T>)null);
+            var functions = new FunctionsDeserializer<T>(null, new Dictionary<string, T>());
+            return Deserialize(expression, (FunctionsDeserializer<T>)null);
         }
 
-        public T Deserialize(string expression, ContainerDeserializer<T> container)
+        public T Deserialize(string expression, FunctionsDeserializer<T> functions)
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
-            Validation.ArgumentNotNull(container, nameof(container));
+            Validation.ArgumentNotNull(functions, nameof(functions));
 
-            var compile = CSharpScript.Create(expression).GetCompilation();
-            var root = compile.SyntaxTrees.Single().GetRoot();
+            //var compile = CSharpScript.Create(expression).GetCompilation();
+
+            var origTree = CSharpSyntaxTree.ParseText(expression, CSharpParseOptions.Default.WithKind(SourceCodeKind.Script));
+            var root = origTree.GetRoot();
 
             var descentands = root.DescendantNodes().Where(n =>
             {
@@ -72,15 +74,15 @@ namespace GraphExpression.Serialization
                     var argumentsSeparatedList = SeparatedList(new[] { argumentValueName });
                     var argumentsList = ArgumentList(argumentsSeparatedList);
 
-                    return InvocationExpression(IdentifierName(nameof(ContainerDeserializer<T>.GetEntity)), argumentsList);
+                    return InvocationExpression(IdentifierName(nameof(FunctionsDeserializer<T>.GetEntity)), argumentsList);
                 }
             });
 
             var rootEntity = CSharpScript.EvaluateAsync<T>
             (
                 otherRoot.ToString(),
-                ScriptOptions.Default.WithReferences(typeof(ContainerDeserializer<T>).Assembly),
-                globals: container
+                ScriptOptions.Default.WithReferences(typeof(FunctionsDeserializer<T>).Assembly),
+                globals: functions
             ).Result;
 
             return rootEntity;
