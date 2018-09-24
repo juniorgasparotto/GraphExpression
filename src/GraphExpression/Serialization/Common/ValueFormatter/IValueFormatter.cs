@@ -4,6 +4,6 @@ namespace GraphExpression.Serialization
 {
     public interface IValueFormatter
     {
-        string Format(Type type, object value, bool trimQuotesIfValueHasNoSpaces = false);
+        string Format(Type type, object value, bool trimQuotes);
     }
 }

@@ -20,7 +20,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var listItem = new CollectionItemEntity(expression, 0, "value");
             var result = listItem.ToString();
-            Assert.Equal("[0]: \"value\"", result);
+            Assert.Equal("[0]: value", result);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace GraphExpression.Tests.Serialization
             serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
             var listItem = new CollectionItemEntity(expression, 1, "value");
             var result = listItem.ToString();
-            Assert.Equal("[1]: \"value\"", result);
+            Assert.Equal("[1]: value", result);
         }
 
         [Fact]

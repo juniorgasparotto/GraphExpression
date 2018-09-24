@@ -11,11 +11,11 @@ namespace GraphExpression.Serialization
             this.maxLength = maxLenght;
         }
 
-        public override string Format(Type type, object value, bool addQuotesForNonSpacesValues = true)
+        public override string Format(Type type, object value, bool trimQuotes)
         {
             if (value is string str)
-                return base.Format(type, Truncate(str));
-            return base.Format(type, value);
+                return base.Format(type, Truncate(str), trimQuotes);
+            return base.Format(type, value, trimQuotes);
         }
 
         private string Truncate(string value)

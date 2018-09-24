@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -14,7 +15,7 @@ namespace GraphExpression.Utils
                 yield return type;
 
             if (includeInterfaces)
-            { 
+            {
                 foreach (Type i in type.GetInterfaces())
                 {
                     yield return i;
@@ -61,8 +62,8 @@ namespace GraphExpression.Utils
 
                 if (propertyValue != null)
                 {
-                   value = (T)propertyValue;
-                   return true;
+                    value = (T)propertyValue;
+                    return true;
                 }
             }
 
@@ -114,6 +115,123 @@ namespace GraphExpression.Utils
             if (typeName.StartsWith("System") || typeName.StartsWith("Microsoft"))
                 return true;
             return false;
+        }
+
+        public static bool IsValidIdentifier(string name)
+        {
+            return SyntaxFacts.IsValidIdentifier(name);
+        }
+
+        public static bool IsCSharpKeyword(string name)
+        {
+            switch (name)
+            {
+                case "bool":
+                case "byte":
+                case "sbyte":
+                case "short":
+                case "ushort":
+                case "int":
+                case "uint":
+                case "long":
+                case "ulong":
+                case "double":
+                case "float":
+                case "decimal":
+                case "string":
+                case "char":
+                case "object":
+                case "typeof":
+                case "sizeof":
+                case "null":
+                case "true":
+                case "false":
+                case "if":
+                case "else":
+                case "while":
+                case "for":
+                case "foreach":
+                case "do":
+                case "switch":
+                case "case":
+                case "default":
+                case "lock":
+                case "try":
+                case "throw":
+                case "catch":
+                case "finally":
+                case "goto":
+                case "break":
+                case "continue":
+                case "return":
+                case "public":
+                case "private":
+                case "internal":
+                case "protected":
+                case "static":
+                case "readonly":
+                case "sealed":
+                case "const":
+                case "new":
+                case "override":
+                case "abstract":
+                case "virtual":
+                case "partial":
+                case "ref":
+                case "out":
+                case "in":
+                case "where":
+                case "params":
+                case "this":
+                case "base":
+                case "namespace":
+                case "using":
+                case "class":
+                case "struct":
+                case "interface":
+                case "delegate":
+                case "checked":
+                case "get":
+                case "set":
+                case "add":
+                case "remove":
+                case "operator":
+                case "implicit":
+                case "explicit":
+                case "fixed":
+                case "extern":
+                case "event":
+                case "enum":
+                case "unsafe":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static string RemoveQuotes(string value, char quote)
+        {
+            // minimun: '' or ""
+            if (value.Length >= 2 && value.StartsWith(quote.ToString()))
+                return value.Substring(1, value.Length - 2);
+            return value;
+        }
+
+        /// <summary>
+        /// To Verbatim
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string StringToLiteral(string input)
+        {
+            using (var writer = new System.IO.StringWriter())
+            {
+                using (var provider = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("CSharp"))
+                {
+                    provider.GenerateCodeFromExpression(new System.CodeDom.CodePrimitiveExpression(input), writer, null);
+                    return writer.ToString();
+                }
+            }
         }
     }
 }

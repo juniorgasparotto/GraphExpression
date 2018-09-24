@@ -72,7 +72,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("@PropString: \"abc \\\" def \\\"ghi\\\"\"", result);
+            Assert.Equal("@PropString: abc \\\" def \\\"ghi\\\"", result);
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace GraphExpression.Tests.Serialization
             serialization.ValueFormatter = new TruncateFormatter(3);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("@PropString: \"abc\"", result);
+            Assert.Equal("@PropString: abc", result);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace GraphExpression.Tests.Serialization
             serialization.ValueFormatter = new TruncateFormatter(3);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("@PropString: \"abc\"", result);
+            Assert.Equal("@PropString: abc", result);
         }
 
         private System.Reflection.PropertyInfo GetPropertyByName(string name)

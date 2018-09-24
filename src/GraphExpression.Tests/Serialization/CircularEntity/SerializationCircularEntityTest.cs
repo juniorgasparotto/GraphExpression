@@ -137,31 +137,5 @@ namespace GraphExpression.Tests.Serialization
             Assert.Equal(9, expression.Count);
             Assert.Equal("a + (b + (c + (d + b))) + (c + (d + (b + c)))", expression.DefaultSerializer.Serialize());
         }
-
-        [Fact]
-        public void VerifyTrimQuotesIfValueHasNoSpacesDefaultValueAndTwoOrMoreWords_ShouldNotAddQuotes()
-        {
-            var A = new CircularEntity("A");
-            var TW = new CircularEntity("TWO WORD");
-            A = A + TW;
-            var expression = A.AsExpression(f => f.Children);
-            Assert.Equal(2, expression.Count);
-            Assert.Equal("A", expression[0].ToString());
-            Assert.Equal("\"TWO WORD\"", expression[1].ToString());
-        }
-
-        [Fact]
-        public void VerifyTrimQuotesIfValueHasNoSpacesFALSEValueAndTwoOrMoreWords_ShouldAddQuotes()
-        {
-            var A = new CircularEntity("A");
-            var TW = new CircularEntity("TWO WORD");
-            A = A + TW;
-            var expression = A.AsExpression(f => f.Children);
-            var serializer = expression.DefaultSerializer as CircularEntityExpressionSerializer<CircularEntity>;
-            serializer.TrimQuotesIfValueHasNoSpaces = false;
-            Assert.Equal(2, expression.Count);
-            Assert.Equal("\"A\"", expression[0].ToString());
-            Assert.Equal("\"TWO WORD\"", expression[1].ToString());
-        }
     }
 }

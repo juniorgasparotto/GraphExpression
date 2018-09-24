@@ -1,16 +1,17 @@
-﻿using System;
+﻿using GraphExpression.Utils;
+using System;
 using System.Globalization;
 
 namespace GraphExpression.Serialization
 {
     public class DefaultValueFormatter : IValueFormatter
     {
-        public virtual string Format(Type type, object value, bool trimQuotesIfNonSpaces = false)
+        public virtual string Format(Type type, object value, bool trimQuotes)
         {
-            return ToLiteral(value, trimQuotesIfNonSpaces);
+            return ToLiteral(value, trimQuotes);
         }
 
-        private string ToLiteral(object input, bool trimQuotesIfNonSpaces)
+        private string ToLiteral(object input, bool trimQuotes)
         {
             string output = null;
 
@@ -19,7 +20,7 @@ namespace GraphExpression.Serialization
                 var type = input.GetType();
                 if (type == typeof(DateTimeOffset))
                 {
-                    output = ToLiteral(((DateTimeOffset)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotesIfNonSpaces);
+                    output = ToLiteral(((DateTimeOffset)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotes);
                 }
                 else if (type == typeof(IntPtr) || type == typeof(UIntPtr))
                 {
@@ -40,26 +41,26 @@ namespace GraphExpression.Serialization
                             output = input.ToString();
                             break;
                         case TypeCode.DateTime:
-                            output = ToLiteral(((DateTime)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotesIfNonSpaces);
+                            output = ToLiteral(((DateTime)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotes);
                             break;
                         case TypeCode.Boolean:
                             output = ((bool)input) ? "true" : "false";
                             break;
                         case TypeCode.Decimal:
-                            output = ((Decimal)input).ToString(CultureInfo.InvariantCulture);
+                            output = ((decimal)input).ToString(CultureInfo.InvariantCulture);
                             break;
                         case TypeCode.Double:
-                            output = ((Double)input).ToString(CultureInfo.InvariantCulture);
+                            output = ((double)input).ToString(CultureInfo.InvariantCulture);
                             break;
                         case TypeCode.Single:
-                            output = ((Double)((Single)input)).ToString(CultureInfo.InvariantCulture);
+                            output = ((double)(float)input).ToString(CultureInfo.InvariantCulture);
                             break;
                         case TypeCode.Object:                            
                             break;
                         default:
-                            output = StringToLiteral(input.ToString());
-                            if (!output.Contains(" ") && trimQuotesIfNonSpaces)
-                                output = output.Trim('"');
+                            output = ReflectionUtils.StringToLiteral(input.ToString());
+                            if (trimQuotes)
+                                output = ReflectionUtils.RemoveQuotes(output, Constants.DEFAULT_QUOTE);
                             break;
                     }
                 }
@@ -68,21 +69,5 @@ namespace GraphExpression.Serialization
             return output;
         }
 
-        /// <summary>
-        /// To Verbatim
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        private string StringToLiteral(string input)
-        {
-            using (var writer = new System.IO.StringWriter())
-            {
-                using (var provider = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("CSharp"))
-                {
-                    provider.GenerateCodeFromExpression(new System.CodeDom.CodePrimitiveExpression(input), writer, null);
-                    return writer.ToString();
-                }
-            }
-        }
     }
 }

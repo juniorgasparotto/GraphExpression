@@ -28,7 +28,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
             var expression = values.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{values.GetType().Name}.{values.GetHashCode()}}} + {{[0]: \"value1\"}} + {{[1]: \"value2\"}} + {{[2]: \"value3\"}} + {{@Capacity: 4}} + {{@Count: 3}}";
+            var expected = $"\"{values.GetType().Name}.{values.GetHashCode()}\" + \"[0]: value1\" + \"[1]: value2\" + \"[2]: value3\" + \"@Capacity: 4\" + \"@Count: 3\"";
             Assert.Equal(6, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<CollectionItemEntity>(expression[1]);
@@ -49,7 +49,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
             var expression = values.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{values.GetType().Name}.{values.GetHashCode()}}} + {{[0]: \"value1\"}} + {{[1]: \"value2\"}} + {{[2]: \"value3\"}} + {{@MyProp: 0}} + {{@Capacity: 4}} + {{@Count: 3}}";
+            var expected = $"\"{values.GetType().Name}.{values.GetHashCode()}\" + \"[0]: value1\" + \"[1]: value2\" + \"[2]: value3\" + \"@MyProp: 0\" + \"@Capacity: 4\" + \"@Count: 3\"";
             Assert.Equal(7, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<CollectionItemEntity>(expression[1]);
@@ -69,13 +69,12 @@ namespace GraphExpression.Tests.MatrixGenerator
                 MyProp = 100
             };
 
-
             values.Add(new StringBuilder("value1"));
             values.Add(new StringBuilder("value2"));
 
             var expression = values.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{values.GetType().Name}.{values.GetHashCode()}}} + {{[0].{values[0].GetHashCode()}}} + {{[1].{values[1].GetHashCode()}}} + {{@MyProp: 100}} + {{@Capacity: 4}} + {{@Count: 2}}";
+            var expected = $"\"{values.GetType().Name}.{values.GetHashCode()}\" + \"[0].{values[0].GetHashCode()}\" + \"[1].{values[1].GetHashCode()}\" + \"@MyProp: 100\" + \"@Capacity: 4\" + \"@Count: 2\"";
             Assert.Equal(6, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<CollectionItemEntity>(expression[1]);

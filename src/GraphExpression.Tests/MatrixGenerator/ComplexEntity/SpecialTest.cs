@@ -51,7 +51,7 @@ namespace GraphExpression.Tests.MatrixGenerator
             TestEntityItem(expression[7], isRoot: false, isLast: true, isFirstInParent: false, isLastInParent: true, entity: null, index: 7, indexAtLevel: 1, level: 4, levelAtExpression: 3, previous: null, next: null, parent: a.A_PropB.A_NonCircular);
 
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{a.GetType().Name}.{a.GetHashCode()}}} + {{@A_PropString: \"Value\"}} + ({{@A_PropB.{a.A_PropB.GetHashCode()}}} + {{@B_PropString: \"B_Value\"}} + {{@A_Circular.{a.A_PropB.A_Circular.GetHashCode()}}} + ({{@A_NonCircular.{a.A_PropB.A_NonCircular.GetHashCode()}}} + {{@A_PropString: null}} + {{@A_PropB: null}}))";
+            var expected = $"\"{a.GetType().Name}.{a.GetHashCode()}\" + \"@A_PropString: Value\" + (\"@A_PropB.{a.A_PropB.GetHashCode()}\" + \"@B_PropString: B_Value\" + \"@A_Circular.{a.A_PropB.A_Circular.GetHashCode()}\" + (\"@A_NonCircular.{a.A_PropB.A_NonCircular.GetHashCode()}\" + \"@A_PropString: null\" + \"@A_PropB: null\"))";
             Assert.Equal(expected, result);
         }
 
@@ -61,7 +61,7 @@ namespace GraphExpression.Tests.MatrixGenerator
             var empty = new Empty();
             var expression = empty.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{empty.GetType().Name}.{empty.GetHashCode()}}}";
+            var expected = $"\"{empty.GetType().Name}.{empty.GetHashCode()}\"";
             Assert.Single(expression);
             Assert.Equal(expected, result);
         }

@@ -1,15 +1,20 @@
-﻿using System;
+﻿using GraphExpression.Utils;
+using Microsoft.CodeAnalysis.CSharp;
+using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 
 namespace GraphExpression.Serialization
 {
     public abstract class ExpressionSerializerBase<T> : ISerialize<T>
     {
+        private const string DEFAULT_QUOTE = @"""";
+
         private IValueFormatter valueFormatter;
         private readonly Expression<T> expression;
 
         public bool EncloseParenthesisInRoot { get; set; }
-        public bool EncloseItem { get; set; }
+        public bool RemoveQuoteWhenValidIdentified{ get; set; }
 
         public IValueFormatter ValueFormatter
         {
@@ -67,8 +72,16 @@ namespace GraphExpression.Serialization
 
         private string GetEnclosedValue(string value)
         {
-            var encloseStart = EncloseItem ? @"""" : null;
-            var encloseEnd = EncloseItem ? @"""" : null;
+            var encloseStart = DEFAULT_QUOTE;
+            var encloseEnd = DEFAULT_QUOTE;
+
+            if (RemoveQuoteWhenValidIdentified 
+                && ReflectionUtils.IsValidIdentifier(value)
+                && !ReflectionUtils.IsCSharpKeyword(value))
+            {
+                encloseStart = null;
+                encloseEnd = null;
+            }
 
             return $"{encloseStart}{value}{encloseEnd}";
         }

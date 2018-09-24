@@ -67,7 +67,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTime"));
             var result = fieldEntity.ToString();
-            Assert.Equal("@DateTime: \"2000-01-01T01:01:01.000+00:00\"", result);
+            Assert.Equal("@DateTime: 2000-01-01T01:01:01.000+00:00", result);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace GraphExpression.Tests.Serialization
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeNullable"));
             var result = fieldEntity.ToString();
-            Assert.Equal("@Nullable`1.DateTimeNullable: \"2000-01-01T01:01:01.000+00:00\"", result);
+            Assert.Equal("@Nullable`1.DateTimeNullable: 2000-01-01T01:01:01.000+00:00", result);
 
             serialization.ShowType = ShowTypeOptions.None;
             DateTimeNullable = null;
@@ -163,7 +163,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeOffset"));
             var result = fieldEntity.ToString();
-            Assert.Equal("@DateTimeOffset: \"2000-01-01T00:00:00.000+00:00\"", result);
+            Assert.Equal("@DateTimeOffset: 2000-01-01T00:00:00.000+00:00", result);
         }
 
         [Fact]
@@ -175,7 +175,7 @@ namespace GraphExpression.Tests.Serialization
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeOffsetNullable"));
             var result = fieldEntity.ToString();
-            Assert.Equal("@Nullable`1.DateTimeOffsetNullable: \"2000-01-01T00:00:00.000+00:00\"", result);
+            Assert.Equal("@Nullable`1.DateTimeOffsetNullable: 2000-01-01T00:00:00.000+00:00", result);
 
             serialization.ShowType = ShowTypeOptions.None;
             DateTimeOffsetNullable = null;
@@ -547,7 +547,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Char"));
             var result = fieldEntity.ToString();
-            Assert.Equal("@Char: \"Ê\"", result);
+            Assert.Equal("@Char: Ê", result);
         }
 
         [Fact]
@@ -559,7 +559,7 @@ namespace GraphExpression.Tests.Serialization
 
             var fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("CharNullable"));
             var result = fieldEntity.ToString();
-            Assert.Equal("@Nullable`1.CharNullable: \"Ê\"", result);
+            Assert.Equal("@Nullable`1.CharNullable: Ê", result);
 
             serialization.ShowType = ShowTypeOptions.None;
             CharNullable = null;

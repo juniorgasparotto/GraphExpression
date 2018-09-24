@@ -86,7 +86,7 @@ namespace GraphExpression.Tests.Core
             Assert.Equal(", A", expression.Graph.Edges[0].ToString());
             Assert.Equal("A, B", expression.Graph.Edges[1].ToString());
             Assert.Equal("B, C", expression.Graph.Edges[2].ToString());
-            Assert.Equal("A, \"TWO WORD\"", expression.Graph.Edges[3].ToString());
+            Assert.Equal("A, TWO WORD", expression.Graph.Edges[3].ToString());
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace GraphExpression.Tests.Core
             Assert.Equal(3, expression.Graph.Edges.Count);
             Assert.Equal($", {A.GetType().Name}.{A.GetHashCode()}", expression.Graph.Edges[0].ToString());
             Assert.Equal($"{A.GetType().Name}.{A.GetHashCode()}, @Prop1: 10", expression.Graph.Edges[1].ToString());
-            Assert.Equal($"{A.GetType().Name}.{A.GetHashCode()}, @Prop2: \"Test 2\"", expression.Graph.Edges[2].ToString());
+            Assert.Equal($"{A.GetType().Name}.{A.GetHashCode()}, @Prop2: Test 2", expression.Graph.Edges[2].ToString());
         }
 
         [Fact]

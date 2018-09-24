@@ -72,7 +72,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
-            Assert.Equal("!fieldString: \"abc \\\" def \\\"ghi\\\"\"", result);
+            Assert.Equal("!fieldString: abc \\\" def \\\"ghi\\\"", result);
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace GraphExpression.Tests.Serialization
             serialization.ValueFormatter = new TruncateFormatter(3);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
-            Assert.Equal("!fieldString: \"abc\"", result);
+            Assert.Equal("!fieldString: abc", result);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace GraphExpression.Tests.Serialization
             serialization.ValueFormatter = new TruncateFormatter(3);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
-            Assert.Equal("!fieldString: \"abc\"", result);
+            Assert.Equal("!fieldString: abc", result);
         }
 
         private System.Reflection.FieldInfo GetFieldByName(string name)

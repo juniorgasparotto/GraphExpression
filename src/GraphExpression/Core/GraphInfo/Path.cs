@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GraphExpression.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace GraphExpression
                     var items = Items;
                     foreach (var item in items)
                     {
-                        var separator = (string.IsNullOrWhiteSpace(this.identity) ? "" : ".");
+                        var separator = (string.IsNullOrWhiteSpace(this.identity) ? "" : Constants.IDENTIFIER_SEPARATOR);
                         this.identity += $"{separator}[{item.Vertex.Id}]";
                     }
                 }
@@ -96,7 +97,7 @@ namespace GraphExpression
             foreach (var item in Items)
             {
                 var desc = $"[{item.ToString()}]";
-                output += (output == "") ? desc : "." + desc;
+                output += (output == "") ? desc : Constants.IDENTIFIER_SEPARATOR + desc;
             }
             return output;
         }

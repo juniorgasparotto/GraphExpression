@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphExpression.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +13,6 @@ namespace GraphExpression.Serialization
         public ComplexEntityExpressionSerializer(Expression<object> expression)
             : base(expression)
         {   
-            EncloseItem = true;
             ShowType = ShowTypeOptions.TypeNameOnlyInRoot;
             ValueFormatter = new DefaultValueFormatter();
             ItemsSerialize = new List<IEntitySerialize>()
@@ -60,7 +60,7 @@ namespace GraphExpression.Serialization
             if (!string.IsNullOrWhiteSpace(strType) && string.IsNullOrWhiteSpace(strContainer))
                 parts = $"{strType}";
             else if (!string.IsNullOrWhiteSpace(strType) && !string.IsNullOrWhiteSpace(strContainer))
-                parts = $"{strType}.{strContainer}";            
+                parts = $"{strType}{Constants.IDENTIFIER_SEPARATOR}{strContainer}";            
             else if (string.IsNullOrWhiteSpace(strType) && !string.IsNullOrWhiteSpace(strContainer))
                 parts = $"{strContainer}";
 
@@ -68,15 +68,15 @@ namespace GraphExpression.Serialization
             strValue = ValueFormatter.Format(type, item.Entity, true);
 
             // When is not primitive entity use hashcode
-            var separatorValue = ": ";
+            var separatorValue = $"{Constants.KEY_VALUE_SEPARATOR} ";
             if (strValue == null && item.Entity != null)
             {
                 strValue = item.Entity.GetHashCode().ToString();
-                separatorValue = ".";
+                separatorValue = Constants.IDENTIFIER_SEPARATOR;
             }
             else if (strValue == null)
             {
-                strValue = "null";
+                strValue = Constants.NULL_VALUE;
             }
 
             if (string.IsNullOrWhiteSpace(strSymbol)

@@ -37,7 +37,7 @@ namespace GraphExpression.Tests.MatrixGenerator
             Assert.IsType<ComplexEntity>(expression[0]);
 
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{a.GetType().Name}.{a.GetHashCode()}}}";
+            var expected = $"\"{a.GetType().Name}.{a.GetHashCode()}\"";
             Assert.Equal(expected, result);
         }
 
@@ -51,7 +51,7 @@ namespace GraphExpression.Tests.MatrixGenerator
             Assert.IsType<ComplexEntity>(expression[0]);
 
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{a.GetType().Name}.{a.GetHashCode()}}}";
+            var expected = $"\"{a.GetType().Name}.{a.GetHashCode()}\"";
             Assert.Equal(expected, result);
         }
 
@@ -65,7 +65,7 @@ namespace GraphExpression.Tests.MatrixGenerator
             Assert.IsType<ComplexEntity>(expression[0]);
 
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"{{{a.GetType().Name}.{a.GetHashCode()}}}";
+            var expected = $"\"{a.GetType().Name}.{a.GetHashCode()}\"";
             Assert.Equal(expected, result);
         }
     }

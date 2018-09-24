@@ -353,8 +353,9 @@ namespace GraphExpression
 
         public override string ToString()
         {
-            if (expression.DefaultSerializer?.SerializeItem(this) != null)
-                return expression.DefaultSerializer?.SerializeItem(this);
+            var output = expression.DefaultSerializer?.SerializeItem(this);
+            if (output != null)
+                return output;
 
             return this.Entity?.ToString();
         }

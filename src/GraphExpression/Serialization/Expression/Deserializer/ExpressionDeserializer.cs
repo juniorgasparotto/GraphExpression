@@ -79,14 +79,14 @@ namespace GraphExpression.Serialization
             {
                 // if start with "'" is a string params and can be used in functions
                 // GetEntity('create-entity-by-string') + "DirectEntity"
-                if (n1 is LiteralExpressionSyntax && n1.ToString().StartsWith("'"))
+                if (n1 is LiteralExpressionSyntax && n1.ToString().StartsWith(Constants.CHAR_QUOTE.ToString()))
                 {
-                    var strValue = RemoveQuotes(n1.ToString(), '\'');
+                    var strValue = ReflectionUtils.RemoveQuotes(n1.ToString(), Constants.CHAR_QUOTE);
                     return LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(strValue));
                 }
                 else
                 {
-                    var argumentValueName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(RemoveQuotes(n1.ToString(), '"'))));
+                    var argumentValueName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(ReflectionUtils.RemoveQuotes(n1.ToString(), Constants.DEFAULT_QUOTE))));
                     var argumentsSeparatedList = SeparatedList(new[] { argumentValueName });
                     var argumentsList = ArgumentList(argumentsSeparatedList);
 
@@ -110,14 +110,6 @@ namespace GraphExpression.Serialization
             
             var runner = script.CreateDelegate();
             return await runner(functions);
-        }
-
-        private string RemoveQuotes(string value, char quote)
-        {
-            // minimun: '' or ""
-            if (value.Length >= 2 && value.StartsWith(quote.ToString()))
-                return value.Substring(1, value.Length - 2);
-            return value;
         }
     }
 }
