@@ -65,7 +65,7 @@ namespace GraphExpression.Serialization
                 parts = $"{strContainer}";
 
             // Get value
-            strValue = ValueFormatter.Format(type, item.Entity);
+            strValue = ValueFormatter.Format(type, item.Entity, true);
 
             // When is not primitive entity use hashcode
             var separatorValue = ": ";

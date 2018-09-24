@@ -67,8 +67,8 @@ namespace GraphExpression.Serialization
 
         private string GetEnclosedValue(string value)
         {
-            var encloseStart = EncloseItem ? "{" : null;
-            var encloseEnd = EncloseItem ? "}" : null;
+            var encloseStart = EncloseItem ? @"""" : null;
+            var encloseEnd = EncloseItem ? @"""" : null;
 
             return $"{encloseStart}{value}{encloseEnd}";
         }

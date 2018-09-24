@@ -24,7 +24,7 @@ namespace GraphExpression.Serialization
             if (item.Entity == null)
                 value = "null";
             else
-                value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity), TrimQuotesIfValueHasNoSpaces);
+                value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity), true);
             
             return value;
         }

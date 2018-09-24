@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace GraphExpression.Serialization
@@ -15,22 +16,37 @@ namespace GraphExpression.Serialization
     {
         public T Deserialize(string expression, Func<string, T> createEntityCallback)
         {
+            return DeserializeAsync(expression, createEntityCallback).Result;
+        }
+
+        public async Task<T> DeserializeAsync(string expression, Func<string, T> createEntityCallback)
+        {
             Validation.ArgumentNotNull(expression, nameof(expression));
             Validation.ArgumentNotNull(createEntityCallback, nameof(createEntityCallback));
 
             var functions = new FunctionsDeserializer<T>(createEntityCallback, new Dictionary<string, T>());
-            return Deserialize(expression, functions);
+            return await DeserializeAsync(expression, functions);
         }
 
         public T Deserialize(string expression)
         {
+            return DeserializeAsync(expression).Result;
+        }
+
+        public async Task<T> DeserializeAsync(string expression)
+        {
             Validation.ArgumentNotNull(expression, nameof(expression));
             
             var functions = new FunctionsDeserializer<T>(null, new Dictionary<string, T>());
-            return Deserialize(expression, (FunctionsDeserializer<T>)null);
+            return await DeserializeAsync(expression, (FunctionsDeserializer<T>)null);
         }
 
         public T Deserialize(string expression, FunctionsDeserializer<T> functions)
+        {
+            return DeserializeAsync(expression, functions).Result;
+        }
+
+        public async Task<T> DeserializeAsync(string expression, FunctionsDeserializer<T> functions)
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
             Validation.ArgumentNotNull(functions, nameof(functions));
@@ -78,14 +94,22 @@ namespace GraphExpression.Serialization
                 }
             });
 
-            var rootEntity = CSharpScript.EvaluateAsync<T>
+            //var rootEntity = CSharpScript.EvaluateAsync<T>
+            //(
+            //    otherRoot.ToString(),
+            //    ScriptOptions.Default.WithReferences(typeof(FunctionsDeserializer<T>).Assembly),
+            //    globals: functions
+            //).Result;
+
+            var script = CSharpScript.Create<T>
             (
                 otherRoot.ToString(),
                 ScriptOptions.Default.WithReferences(typeof(FunctionsDeserializer<T>).Assembly),
-                globals: functions
-            ).Result;
-
-            return rootEntity;
+                globalsType: typeof(FunctionsDeserializer<T>)
+            );
+            
+            var runner = script.CreateDelegate();
+            return await runner(functions);
         }
 
         private string RemoveQuotes(string value, char quote)
