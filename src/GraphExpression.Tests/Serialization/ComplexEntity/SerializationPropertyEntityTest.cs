@@ -72,7 +72,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("@PropString: abc \\\" def \\\"ghi\\\"", result);
+            Assert.Equal("@PropString: abc \" def \"ghi\"", result);
         }
 
         [Fact]

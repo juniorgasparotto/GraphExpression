@@ -15,6 +15,7 @@ namespace GraphExpression.Serialization
         {   
             ShowType = ShowTypeOptions.TypeNameOnlyInRoot;
             ValueFormatter = new DefaultValueFormatter();
+            ForceQuoteEvenWhenValidIdentified = true;
             ItemsSerialize = new List<IEntitySerialize>()
             {
                 new ObjectSerialize(),
@@ -65,7 +66,7 @@ namespace GraphExpression.Serialization
                 parts = $"{strContainer}";
 
             // Get value
-            strValue = ValueFormatter.Format(type, item.Entity, true);
+            strValue = ValueFormatter.Format(type, item.Entity);
 
             // When is not primitive entity use hashcode
             var separatorValue = $"{Constants.KEY_VALUE_SEPARATOR} ";

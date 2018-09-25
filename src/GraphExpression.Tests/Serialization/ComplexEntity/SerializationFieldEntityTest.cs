@@ -72,7 +72,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var field = new FieldEntity(expression, this, GetFieldByName("fieldString"));
             var result = field.ToString();
-            Assert.Equal("!fieldString: abc \\\" def \\\"ghi\\\"", result);
+            Assert.Equal("!fieldString: abc \" def \"ghi\"", result);
         }
 
         [Fact]

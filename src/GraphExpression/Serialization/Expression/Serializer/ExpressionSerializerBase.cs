@@ -8,13 +8,11 @@ namespace GraphExpression.Serialization
 {
     public abstract class ExpressionSerializerBase<T> : ISerialize<T>
     {
-        private const string DEFAULT_QUOTE = @"""";
-
         private IValueFormatter valueFormatter;
         private readonly Expression<T> expression;
 
         public bool EncloseParenthesisInRoot { get; set; }
-        public bool RemoveQuoteWhenValidIdentified{ get; set; }
+        public bool ForceQuoteEvenWhenValidIdentified{ get; set; }
 
         public IValueFormatter ValueFormatter
         {
@@ -72,18 +70,12 @@ namespace GraphExpression.Serialization
 
         private string GetEnclosedValue(string value)
         {
-            var encloseStart = DEFAULT_QUOTE;
-            var encloseEnd = DEFAULT_QUOTE;
+            if (   ForceQuoteEvenWhenValidIdentified
+                || !ReflectionUtils.IsValidIdentifier(value)
+                || ReflectionUtils.IsCSharpKeyword(value))
+                value = ReflectionUtils.ToVerbatim(value);
 
-            if (RemoveQuoteWhenValidIdentified 
-                && ReflectionUtils.IsValidIdentifier(value)
-                && !ReflectionUtils.IsCSharpKeyword(value))
-            {
-                encloseStart = null;
-                encloseEnd = null;
-            }
-
-            return $"{encloseStart}{value}{encloseEnd}";
+            return value;
         }
     }
 }

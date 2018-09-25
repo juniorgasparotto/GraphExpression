@@ -222,16 +222,18 @@ namespace GraphExpression.Utils
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string StringToLiteral(string input)
+        public static string ToVerbatim(string input)
         {
-            using (var writer = new System.IO.StringWriter())
-            {
-                using (var provider = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("CSharp"))
-                {
-                    provider.GenerateCodeFromExpression(new System.CodeDom.CodePrimitiveExpression(input), writer, null);
-                    return writer.ToString();
-                }
-            }
+            return SyntaxFactory.Literal(input).ToString();
+
+            //using (var writer = new System.IO.StringWriter())
+            //{
+            //    using (var provider = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("CSharp"))
+            //    {
+            //        provider.GenerateCodeFromExpression(new System.CodeDom.CodePrimitiveExpression(input), writer, null);
+            //        return writer.ToString();
+            //    }
+            //}
         }
     }
 }

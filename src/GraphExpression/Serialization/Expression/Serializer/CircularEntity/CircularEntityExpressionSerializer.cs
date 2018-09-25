@@ -14,7 +14,7 @@ namespace GraphExpression.Serialization
         {
             this.expression = expression;
             this.EntityNameCallback = entityNameCallback;
-            this.RemoveQuoteWhenValidIdentified = true;
+            this.ForceQuoteEvenWhenValidIdentified = false;
         }
 
         public override string SerializeItem(EntityItem<T> item)
@@ -24,7 +24,7 @@ namespace GraphExpression.Serialization
             if (item.Entity == null)
                 value = Constants.NULL_VALUE;
             else
-                value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity), true);
+                value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity));
             
             return value;
         }

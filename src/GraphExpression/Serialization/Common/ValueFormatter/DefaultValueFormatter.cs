@@ -6,12 +6,12 @@ namespace GraphExpression.Serialization
 {
     public class DefaultValueFormatter : IValueFormatter
     {
-        public virtual string Format(Type type, object value, bool trimQuotes)
+        public virtual string Format(Type type, object value)
         {
-            return ToLiteral(value, trimQuotes);
+            return ToLiteral(value);
         }
 
-        private string ToLiteral(object input, bool trimQuotes)
+        private string ToLiteral(object input)
         {
             string output = null;
 
@@ -20,7 +20,7 @@ namespace GraphExpression.Serialization
                 var type = input.GetType();
                 if (type == typeof(DateTimeOffset))
                 {
-                    output = ToLiteral(((DateTimeOffset)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotes);
+                    output = ((DateTimeOffset)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture);
                 }
                 else if (type == typeof(IntPtr) || type == typeof(UIntPtr))
                 {
@@ -41,7 +41,7 @@ namespace GraphExpression.Serialization
                             output = input.ToString();
                             break;
                         case TypeCode.DateTime:
-                            output = ToLiteral(((DateTime)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture), trimQuotes);
+                            output = ((DateTime)input).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz", CultureInfo.InvariantCulture);
                             break;
                         case TypeCode.Boolean:
                             output = ((bool)input) ? "true" : "false";
@@ -58,9 +58,7 @@ namespace GraphExpression.Serialization
                         case TypeCode.Object:                            
                             break;
                         default:
-                            output = ReflectionUtils.StringToLiteral(input.ToString());
-                            if (trimQuotes)
-                                output = ReflectionUtils.RemoveQuotes(output, Constants.DEFAULT_QUOTE);
+                            output = input.ToString();
                             break;
                     }
                 }
