@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,13 +95,15 @@ namespace GraphExpression.Serialization
 
             var typeFunctions = functions.GetType();
             var typeEntity = typeof(T);
+            var references = ScriptOptions.Default.WithReferences(typeFunctions.Assembly, typeEntity.Assembly);
+
             var script = CSharpScript.Create<T>
             (
                 otherRoot.ToString(),
-                ScriptOptions.Default.WithReferences(typeFunctions.Assembly).WithReferences(typeEntity.Assembly),
+                references,
                 globalsType: typeFunctions
             );
-            
+
             var runner = script.CreateDelegate();
             return await runner(functions);
         }
