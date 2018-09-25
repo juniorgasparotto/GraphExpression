@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9D2FBBD5-0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphExpression.Tests", "GraphExpression.Tests\GraphExpression.Tests.csproj", "{8621721E-D9AA-4C6C-8C2F-8595DC7952B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionGraph.Tests", "ExpressionGraph.Tests\ExpressionGraph.Tests.csproj", "{69564B40-81CE-4466-8A42-3D81A3DC689E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{8621721E-D9AA-4C6C-8C2F-8595DC7952B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8621721E-D9AA-4C6C-8C2F-8595DC7952B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8621721E-D9AA-4C6C-8C2F-8595DC7952B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69564B40-81CE-4466-8A42-3D81A3DC689E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69564B40-81CE-4466-8A42-3D81A3DC689E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69564B40-81CE-4466-8A42-3D81A3DC689E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69564B40-81CE-4466-8A42-3D81A3DC689E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

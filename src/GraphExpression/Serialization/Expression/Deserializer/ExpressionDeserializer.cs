@@ -38,7 +38,7 @@ namespace GraphExpression.Serialization
             Validation.ArgumentNotNull(expression, nameof(expression));
             
             var functions = new FunctionsDeserializer<T>(null, new Dictionary<string, T>());
-            return await DeserializeAsync(expression, (FunctionsDeserializer<T>)null);
+            return await DeserializeAsync(expression, functions);
         }
 
         public T Deserialize(string expression, FunctionsDeserializer<T> functions)
@@ -50,8 +50,6 @@ namespace GraphExpression.Serialization
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
             Validation.ArgumentNotNull(functions, nameof(functions));
-
-            //var compile = CSharpScript.Create(expression).GetCompilation();
 
             var origTree = CSharpSyntaxTree.ParseText(expression, CSharpParseOptions.Default.WithKind(SourceCodeKind.Script));
             var root = origTree.GetRoot();
@@ -81,7 +79,7 @@ namespace GraphExpression.Serialization
                 // GetEntity('create-entity-by-string') + "DirectEntity"
                 if (n1 is LiteralExpressionSyntax && n1.ToString().StartsWith(Constants.CHAR_QUOTE.ToString()))
                 {
-                    var strValue = ReflectionUtils.RemoveQuotes(n1.ToString(), Constants.CHAR_QUOTE);
+                    var strValue = ReflectionUtils.RemoveQuotes(n1.ToString(), Constants.CHAR_QUOTE).Replace("\\'", "'");
                     return LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(strValue));
                 }
                 else
@@ -94,18 +92,12 @@ namespace GraphExpression.Serialization
                 }
             });
 
-            //var rootEntity = CSharpScript.EvaluateAsync<T>
-            //(
-            //    otherRoot.ToString(),
-            //    ScriptOptions.Default.WithReferences(typeof(FunctionsDeserializer<T>).Assembly),
-            //    globals: functions
-            //).Result;
-
+            var type = functions.GetType();
             var script = CSharpScript.Create<T>
             (
                 otherRoot.ToString(),
-                ScriptOptions.Default.WithReferences(typeof(FunctionsDeserializer<T>).Assembly),
-                globalsType: typeof(FunctionsDeserializer<T>)
+                ScriptOptions.Default.WithReferences(type.Assembly),
+                globalsType: type
             );
             
             var runner = script.CreateDelegate();
