@@ -92,12 +92,13 @@ namespace GraphExpression.Serialization
                 }
             });
 
-            var type = functions.GetType();
+            var typeFunctions = functions.GetType();
+            var typeEntity = typeof(T);
             var script = CSharpScript.Create<T>
             (
                 otherRoot.ToString(),
-                ScriptOptions.Default.WithReferences(type.Assembly),
-                globalsType: type
+                ScriptOptions.Default.WithReferences(typeFunctions.Assembly).WithReferences(typeEntity.Assembly),
+                globalsType: typeFunctions
             );
             
             var runner = script.CreateDelegate();
