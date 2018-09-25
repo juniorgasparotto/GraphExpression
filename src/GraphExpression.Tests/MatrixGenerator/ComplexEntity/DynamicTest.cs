@@ -16,7 +16,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
             var expression = ((object)dyn).AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"\"{dyn.GetType().Name}.{dyn.GetHashCode()}\" + \"@A: 123\" + (\"@B.{dyn.B.GetHashCode()}\" + \"@C: abc\")";
+            var expected = $"\"{dyn.GetType().Name}.{dyn.GetHashCode()}\" + \"A: 123\" + (\"B.{dyn.B.GetHashCode()}\" + \"C: abc\")";
 
             Assert.Equal(4, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);

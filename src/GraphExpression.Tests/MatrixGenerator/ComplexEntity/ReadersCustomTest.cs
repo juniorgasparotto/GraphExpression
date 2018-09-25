@@ -84,7 +84,7 @@ namespace GraphExpression.Tests.MatrixGenerator
             serialization.ItemsSerialize.Add(new MethodSerialize());
 
             var result = serialization.Serialize();
-            var expected = $"\"{test.GetType().Name}.{test.GetHashCode()}\"" + " + \"[0]: value1\" + \"@Capacity: 4\" + \"@Count: 1\" + \"HelloWorld(value1,value2): value1-value2\"";
+            var expected = $"\"{test.GetType().Name}.{test.GetHashCode()}\"" + " + \"[0]: value1\" + \"Capacity: 4\" + \"Count: 1\" + \"HelloWorld(value1,value2): value1-value2\"";
             Assert.Equal(5, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<CollectionItemEntity>(expression[1]);

@@ -29,7 +29,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
             var expression = dic.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"\"{dic.GetType().Name}.{dic.GetHashCode()}\" + (\"[0].{key1}\" + \"@Key: key1\" + \"@Value: value1\") + (\"[1].{key2}\" + \"@Key: key2\" + \"@Value: value2\") + (\"[2].{key3}\" + \"@Key: key3\" + \"@Value: value3\") + \"@Comparer.{dic.Comparer.GetHashCode()}\" + \"@Count: 3\"";
+            var expected = $"\"{dic.GetType().Name}.{dic.GetHashCode()}\" + (\"[0].{key1}\" + \"Key: key1\" + \"Value: value1\") + (\"[1].{key2}\" + \"Key: key2\" + \"Value: value2\") + (\"[2].{key3}\" + \"Key: key3\" + \"Value: value3\") + \"Comparer.{dic.Comparer.GetHashCode()}\" + \"Count: 3\"";
             Assert.Equal(12, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<CollectionItemEntity>(expression[1]);
@@ -64,7 +64,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
             var expression = dic.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"\"{dic.GetType().Name}.{dic.GetHashCode()}\" + (\"[0].{key1}\" + \"@Key.{dic.Keys.ElementAt(0).GetHashCode()}\" + \"@Value.{dic.Values.ElementAt(0).GetHashCode()}\") + (\"[1].{key2}\" + \"@Key.{dic.Keys.ElementAt(1).GetHashCode()}\" + \"@Value.{dic.Values.ElementAt(1).GetHashCode()}\") + (\"[2].{key3}\" + \"@Key.{dic.Keys.ElementAt(2).GetHashCode()}\" + \"@Value.{dic.Values.ElementAt(2).GetHashCode()}\") + \"@Comparer.{dic.Comparer.GetHashCode()}\" + \"@Count: 3\"";
+            var expected = $"\"{dic.GetType().Name}.{dic.GetHashCode()}\" + (\"[0].{key1}\" + \"Key.{dic.Keys.ElementAt(0).GetHashCode()}\" + \"Value.{dic.Values.ElementAt(0).GetHashCode()}\") + (\"[1].{key2}\" + \"Key.{dic.Keys.ElementAt(1).GetHashCode()}\" + \"Value.{dic.Values.ElementAt(1).GetHashCode()}\") + (\"[2].{key3}\" + \"Key.{dic.Keys.ElementAt(2).GetHashCode()}\" + \"Value.{dic.Values.ElementAt(2).GetHashCode()}\") + \"Comparer.{dic.Comparer.GetHashCode()}\" + \"Count: 3\"";
             Assert.Equal(12, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<CollectionItemEntity>(expression[1]);

@@ -76,7 +76,7 @@ namespace GraphExpression.Tests.Serialization
             var expression = A.AsExpression();
             var serializer = expression.GetSerializer<ComplexEntityExpressionSerializer>();
             serializer.ForceQuoteEvenWhenValidIdentified = false;
-            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"@P: A\"", expression.DefaultSerializer.Serialize());
+            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"P: A\"", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace GraphExpression.Tests.Serialization
             serializer.ForceQuoteEvenWhenValidIdentified = true;
 
             // in complex version aways exists quotes, because is aways invalid
-            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"@P: 1\"", expression.DefaultSerializer.Serialize());
+            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"P: 1\"", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace GraphExpression.Tests.Serialization
 
             var expression = A.AsExpression();
             var serializer = expression.GetSerializer<ComplexEntityExpressionSerializer>();
-            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"@P: \\\"\\\"value\\\"\\\"\"", expression.DefaultSerializer.Serialize());
+            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"P: \\\"\\\"value\\\"\\\"\"", expression.DefaultSerializer.Serialize());
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace GraphExpression.Tests.Serialization
             var expression = A.AsExpression();
             var serializer = expression.GetSerializer<ComplexEntityExpressionSerializer>();
             var output = expression[1].ToString();
-            Assert.Equal("@P: \"\"value\"\"", output);
+            Assert.Equal("P: \"\"value\"\"", output);
         }
 
         [Fact]
@@ -151,8 +151,8 @@ namespace GraphExpression.Tests.Serialization
             var serializer = expression.GetSerializer<ComplexEntityExpressionSerializer>();
             var output = serializer.Serialize();
             var outputEntity = expression[1].ToString();
-            Assert.Equal("@P: ", outputEntity);
-            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"@P: \"", output);
+            Assert.Equal("P: ", outputEntity);
+            Assert.Equal($"\"{A.GetType().Name}.{A.GetHashCode()}\" + \"P: \"", output);
         }
     }
 }

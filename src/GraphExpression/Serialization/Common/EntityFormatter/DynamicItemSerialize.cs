@@ -5,8 +5,6 @@ namespace GraphExpression.Serialization
 {
     public class DynamicItemSerialize : IEntitySerialize
     {
-        public string Symbol { get; set; } = "@";
-
         public bool CanSerialize(ComplexEntityExpressionSerializer serializer, EntityItem<object> item)
         {
             return item is DynamicItemEntity;

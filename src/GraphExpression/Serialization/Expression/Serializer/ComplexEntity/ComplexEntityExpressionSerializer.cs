@@ -30,7 +30,6 @@ namespace GraphExpression.Serialization
         public override string SerializeItem(EntityItem<object> item)
         {
             string parts = null;
-            string strSymbol = null;
             string strType = null;
             string strContainer = null;
             string strValue = null;
@@ -44,7 +43,6 @@ namespace GraphExpression.Serialization
             {
                 var info = itemSerialize.GetSerializeInfo(this, item);
                 type = info.Type;
-                strSymbol = itemSerialize.Symbol;
                 strContainer = info.ContainerName;
             }
 
@@ -80,11 +78,10 @@ namespace GraphExpression.Serialization
                 strValue = Constants.NULL_VALUE;
             }
 
-            if (string.IsNullOrWhiteSpace(strSymbol)
-                && string.IsNullOrWhiteSpace(parts))
+            if (string.IsNullOrWhiteSpace(parts))
                 separatorValue = null;
 
-            return $"{strSymbol}{parts}{separatorValue}{strValue}";
+            return $"{parts}{separatorValue}{strValue}";
         }
     }
 }

@@ -35,18 +35,6 @@ namespace GraphExpression.Tests.Serialization
         }
 
         [Fact]
-        public void PropertyAndFieldSymbol_NotImpactInResult()
-        {
-            var expression = Utils.CreateEmptyExpression();
-            var serialization = Utils.GetSerialization(expression);
-            serialization.ItemsSerialize.OfType<PropertySerialize>().First().Symbol = "*";
-            serialization.ItemsSerialize.OfType<FieldSerialize>().First().Symbol = "*";
-            var listItem = new CollectionItemEntity(expression, 1, "value");
-            var result = listItem.ToString();
-            Assert.Equal("[1]: value", result);
-        }
-
-        [Fact]
         public void ShowTypeFull()
         {
             var expression = Utils.CreateEmptyExpression();

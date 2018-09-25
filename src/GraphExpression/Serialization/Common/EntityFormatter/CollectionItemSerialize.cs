@@ -5,8 +5,6 @@ namespace GraphExpression.Serialization
 {
     public class CollectionItemSerialize : IEntitySerialize
     {
-        public string Symbol { get; set; } = null;
-
         public bool CanSerialize(ComplexEntityExpressionSerializer serializer, EntityItem<object> item)
         {
             return item is CollectionItemEntity;

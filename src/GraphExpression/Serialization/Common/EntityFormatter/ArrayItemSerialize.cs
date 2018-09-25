@@ -4,8 +4,6 @@ namespace GraphExpression.Serialization
 {
     public class ArrayItemSerialize : IEntitySerialize
     {
-        public string Symbol { get; set; } = null;
-
         public bool CanSerialize(ComplexEntityExpressionSerializer serializer, EntityItem<object> item)
         {
             return item is ArrayItemEntity;
