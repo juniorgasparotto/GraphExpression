@@ -82,7 +82,7 @@ namespace GraphExpression.Tests.Serialization
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("PropString: null", result);
+            Assert.Equal("PropString", result);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace GraphExpression.Tests.Serialization
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, this, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("PropString: null", result);
+            Assert.Equal("PropString", result);
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace GraphExpression.Tests.Serialization
             this.PropString = null;
             var prop1Complex = new PropertyEntity(expression, null, GetPropertyByName("PropString"));
             var result = prop1Complex.ToString();
-            Assert.Equal("PropString: null", result);
+            Assert.Equal("PropString", result);
         }
 
         [Fact]

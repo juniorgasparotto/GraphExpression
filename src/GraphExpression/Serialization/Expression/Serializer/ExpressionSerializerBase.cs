@@ -75,6 +75,9 @@ namespace GraphExpression.Serialization
                 || ReflectionUtils.IsCSharpKeyword(value))
                 value = ReflectionUtils.ToVerbatim(value);
 
+            if (value == null)
+                value = Constants.NULL_VALUE;
+
             return value;
         }
     }

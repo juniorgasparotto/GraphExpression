@@ -75,7 +75,7 @@ namespace GraphExpression.Serialization
             }
             else if (strValue == null)
             {
-                strValue = Constants.NULL_VALUE;
+                separatorValue = null;
             }
 
             if (string.IsNullOrWhiteSpace(parts))

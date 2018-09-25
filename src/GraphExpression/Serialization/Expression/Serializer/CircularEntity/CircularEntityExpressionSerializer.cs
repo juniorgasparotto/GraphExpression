@@ -19,13 +19,11 @@ namespace GraphExpression.Serialization
 
         public override string SerializeItem(EntityItem<T> item)
         {
-            string value;
+            string value = null;
 
-            if (item.Entity == null)
-                value = Constants.NULL_VALUE;
-            else
+            if (item.Entity != null)
                 value = ValueFormatter.Format(item.Entity.GetType(), EntityNameCallback(item.Entity));
-            
+
             return value;
         }
     }

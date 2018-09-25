@@ -69,7 +69,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var complex = new ComplexEntity(expression, null);
             var result = complex.ToString();
-            Assert.Equal("null", result);
+            Assert.Equal("", result);
         }
 
         private System.Reflection.FieldInfo GetFieldByName(string name)

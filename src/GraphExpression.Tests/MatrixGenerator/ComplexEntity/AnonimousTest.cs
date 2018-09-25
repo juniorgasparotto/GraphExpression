@@ -15,7 +15,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
             var expression = anonimous.AsExpression();
             var result = expression.DefaultSerializer.Serialize();
-            var expected = $"\"{anonimous.GetType().Name}.{anonimous.GetHashCode()}\" + \"Prop1: 124\" + \"Prop2: null\"";
+            var expected = $"\"{anonimous.GetType().Name}.{anonimous.GetHashCode()}\" + \"Prop1: 124\" + \"Prop2\"";
             Assert.Equal(3, expression.Count);
             Assert.IsType<ComplexEntity>(expression[0]);
             Assert.IsType<PropertyEntity>(expression[1]);

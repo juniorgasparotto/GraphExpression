@@ -70,6 +70,9 @@ namespace GraphExpression.Serialization
 
             var descentands = root.DescendantNodes().Where(n =>
             {
+                if (n.ToString() == Constants.NULL_VALUE)
+                    return false;
+
                 if (n is MemberAccessExpressionSyntax || n is IdentifierNameSyntax || n is LiteralExpressionSyntax)
                 {
                     // 1) if is IdentifierNameSyntax but is child of MemberAccessExpressionSyntax
@@ -89,16 +92,17 @@ namespace GraphExpression.Serialization
 
             var otherRoot = root.ReplaceNodes(descentands, (n1, n2) =>
             {
+                var content = n1.ToString();
                 // if start with "'" is a string params and can be used in functions
                 // GetEntity('create-entity-by-string') + "DirectEntity"
-                if (n1 is LiteralExpressionSyntax && n1.ToString().StartsWith(Constants.CHAR_QUOTE.ToString()))
+                if (n1 is LiteralExpressionSyntax && content.StartsWith(Constants.CHAR_QUOTE.ToString()))
                 {
-                    var strValue = ReflectionUtils.RemoveQuotes(n1.ToString(), Constants.CHAR_QUOTE).Replace("\\'", "'");
+                    var strValue = ReflectionUtils.RemoveQuotes(content, Constants.CHAR_QUOTE).Replace("\\'", "'");
                     return LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(strValue));
                 }
                 else
                 {
-                    var argumentValueName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(ReflectionUtils.RemoveQuotes(n1.ToString(), Constants.DEFAULT_QUOTE))));
+                    var argumentValueName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(ReflectionUtils.RemoveQuotes(content, Constants.DEFAULT_QUOTE))));
                     var argumentsSeparatedList = SeparatedList(new[] { argumentValueName });
                     var argumentsList = ArgumentList(argumentsSeparatedList);
 

@@ -85,7 +85,7 @@ namespace GraphExpression.Tests.Serialization
             DateTimeNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("DateTimeNullable: null", result);
+            Assert.Equal("DateTimeNullable", result);
         }
 
         #endregion
@@ -117,7 +117,7 @@ namespace GraphExpression.Tests.Serialization
             IntNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("IntNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("IntNullable: null", result);
+            Assert.Equal("IntNullable", result);
         }
 
         #endregion
@@ -149,7 +149,7 @@ namespace GraphExpression.Tests.Serialization
             LongNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("LongNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("LongNullable: null", result);
+            Assert.Equal("LongNullable", result);
         }
 
         #endregion
@@ -181,7 +181,7 @@ namespace GraphExpression.Tests.Serialization
             DateTimeOffsetNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DateTimeOffsetNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("DateTimeOffsetNullable: null", result);
+            Assert.Equal("DateTimeOffsetNullable", result);
         }
 
         #endregion
@@ -213,7 +213,7 @@ namespace GraphExpression.Tests.Serialization
             IntPtrNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("IntPtrNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("IntPtrNullable: null", result);
+            Assert.Equal("IntPtrNullable", result);
         }
 
         #endregion
@@ -245,7 +245,7 @@ namespace GraphExpression.Tests.Serialization
             UIntPtrNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UIntPtrNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("UIntPtrNullable: null", result);
+            Assert.Equal("UIntPtrNullable", result);
         }
 
         #endregion
@@ -277,7 +277,7 @@ namespace GraphExpression.Tests.Serialization
             ByteNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("ByteNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("ByteNullable: null", result);
+            Assert.Equal("ByteNullable", result);
         }
 
         #endregion
@@ -309,7 +309,7 @@ namespace GraphExpression.Tests.Serialization
             SByteNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("SByteNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("SByteNullable: null", result);
+            Assert.Equal("SByteNullable", result);
         }
 
         #endregion
@@ -341,7 +341,7 @@ namespace GraphExpression.Tests.Serialization
             UInt16Nullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt16Nullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("UInt16Nullable: null", result);
+            Assert.Equal("UInt16Nullable", result);
         }
 
         #endregion
@@ -373,7 +373,7 @@ namespace GraphExpression.Tests.Serialization
             UInt32Nullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt32Nullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("UInt32Nullable: null", result);
+            Assert.Equal("UInt32Nullable", result);
         }
 
         #endregion
@@ -405,7 +405,7 @@ namespace GraphExpression.Tests.Serialization
             UInt64Nullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("UInt64Nullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("UInt64Nullable: null", result);
+            Assert.Equal("UInt64Nullable", result);
         }
 
         #endregion
@@ -437,7 +437,7 @@ namespace GraphExpression.Tests.Serialization
             Int16Nullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("Int16Nullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("Int16Nullable: null", result);
+            Assert.Equal("Int16Nullable", result);
         }
 
         #endregion
@@ -469,7 +469,7 @@ namespace GraphExpression.Tests.Serialization
             BooleanNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("BooleanNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("BooleanNullable: null", result);
+            Assert.Equal("BooleanNullable", result);
         }
 
         #endregion
@@ -501,7 +501,7 @@ namespace GraphExpression.Tests.Serialization
             DecimalNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("DecimalNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("DecimalNullable: null", result);
+            Assert.Equal("DecimalNullable", result);
         }
 
         #endregion
@@ -533,7 +533,7 @@ namespace GraphExpression.Tests.Serialization
             SingleNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("SingleNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("SingleNullable: null", result);
+            Assert.Equal("SingleNullable", result);
         }
 
         #endregion
@@ -565,7 +565,7 @@ namespace GraphExpression.Tests.Serialization
             CharNullable = null;
             fieldEntity = new PropertyEntity(expression, this, GetPropertyByName("CharNullable"));
             result = fieldEntity.ToString();
-            Assert.Equal("CharNullable: null", result);
+            Assert.Equal("CharNullable", result);
         }
 
         #endregion

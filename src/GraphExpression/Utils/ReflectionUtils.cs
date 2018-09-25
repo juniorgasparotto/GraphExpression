@@ -224,6 +224,9 @@ namespace GraphExpression.Utils
         /// <returns></returns>
         public static string ToVerbatim(string input)
         {
+            if (input == null)
+                return null;
+
             return SyntaxFactory.Literal(input).ToString();
 
             //using (var writer = new System.IO.StringWriter())

@@ -183,6 +183,25 @@ namespace GraphExpression.Tests.Serialization
             Assert.Empty(entities);
         }
 
+        [Fact]
+        public void Deserialize_NullValue_GenerateRootWithFunctions()
+        {
+            var strExp = "A + null + C + NULL + \"null\"";
+            var functions = new FunctionsDeserializerExtend();
+            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var root = serializer.Deserialize(strExp, functions);
+            var entities = functions.Entities.Values.ToList();
+
+            Assert.Equal(4, root.Children.Count());
+            Assert.Null(root.Children.ElementAt(0));
+            Assert.Equal("C", root.Children.ElementAt(1).Name);
+            Assert.Equal("NULL", root.Children.ElementAt(2).Name);
+            Assert.Equal("null", root.Children.ElementAt(3).Name);
+
+            // no entity create directly
+            Assert.Equal(4, entities.Count);
+        }
+
         #region BUG KNOWN
 
         [Fact]

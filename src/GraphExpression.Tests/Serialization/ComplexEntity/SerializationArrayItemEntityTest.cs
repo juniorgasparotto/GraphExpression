@@ -84,7 +84,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var listItem = new ArrayItemEntity(expression, 1000, null);
             var result = listItem.ToString();
-            Assert.Equal("[1000]: null", result);
+            Assert.Equal("[1000]", result);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace GraphExpression.Tests.Serialization
 
             var listItem = new ArrayItemEntity(expression, 1000, null);
             var result = listItem.ToString();
-            Assert.Equal("[1000]: null", result);
+            Assert.Equal("[1000]", result);
         }
     }
 }

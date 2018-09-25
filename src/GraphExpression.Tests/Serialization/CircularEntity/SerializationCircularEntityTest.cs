@@ -137,5 +137,18 @@ namespace GraphExpression.Tests.Serialization
             Assert.Equal(9, expression.Count);
             Assert.Equal("a + (b + (c + (d + b))) + (c + (d + (b + c)))", expression.DefaultSerializer.Serialize());
         }
+
+        [Fact]
+        public void CreateCiclicalExpression_NullEntity_SerializeNullFormat()
+        {
+            var A = new CircularEntity("A");
+            var B = new CircularEntity(null);
+
+            var r = A + B;
+
+            var expression = A.AsExpression(f => f.Children);
+            Assert.Equal(2, expression.Count);
+            Assert.Equal("A + null", expression.DefaultSerializer.Serialize());
+        }
     }
 }

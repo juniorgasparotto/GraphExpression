@@ -77,7 +77,7 @@ namespace GraphExpression.Tests.Serialization
             this.field = null;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal("field: null", result);
+            Assert.Equal("field", result);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace GraphExpression.Tests.Serialization
             this.field = null;
             var fieldEntity = new FieldEntity(expression, this, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal("field: null", result);
+            Assert.Equal("field", result);
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace GraphExpression.Tests.Serialization
             this.field = null;
             var fieldEntity = new FieldEntity(expression, null, GetFieldByName("field"));
             var result = fieldEntity.ToString();
-            Assert.Equal("field: null", result);
+            Assert.Equal("field", result);
         }
 
         private System.Reflection.FieldInfo GetFieldByName(string name)

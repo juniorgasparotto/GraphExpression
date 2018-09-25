@@ -68,7 +68,7 @@ namespace GraphExpression.Tests.Serialization
             var serialization = Utils.GetSerialization(expression);
             var dynamicItem = new DynamicItemEntity(expression, "PropString", null);
             var result = dynamicItem.ToString();
-            Assert.Equal("PropString: null", result);
+            Assert.Equal("PropString", result);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace GraphExpression.Tests.Serialization
             var dynamicItem = new DynamicItemEntity(expression, "PropString", null);
 
             var result = dynamicItem.ToString();
-            Assert.Equal("PropString: null", result);
+            Assert.Equal("PropString", result);
         }
     }
 }
