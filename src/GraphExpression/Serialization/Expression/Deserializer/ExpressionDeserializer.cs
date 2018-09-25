@@ -4,10 +4,10 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.CodeAnalysis.Scripting.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -15,6 +15,13 @@ namespace GraphExpression.Serialization
 {
     public class ExpressionDeserializer<T>
     {
+        public List<Assembly> Assemblies { get; set; }
+
+        public ExpressionDeserializer()
+        {
+            Assemblies = new List<Assembly>() { typeof(T).Assembly };
+        }
+
         public T Deserialize(string expression, Func<string, T> createEntityCallback)
         {
             return DeserializeAsync(expression, createEntityCallback).Result;
@@ -51,6 +58,12 @@ namespace GraphExpression.Serialization
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
             Validation.ArgumentNotNull(functions, nameof(functions));
+
+            // add functions assembly if not exists
+            var typeFunctions = functions.GetType();
+            var assemblyFunctions = typeFunctions.Assembly;
+            if (!Assemblies.Contains(assemblyFunctions))
+                Assemblies.Add(assemblyFunctions);
 
             var origTree = CSharpSyntaxTree.ParseText(expression, CSharpParseOptions.Default.WithKind(SourceCodeKind.Script));
             var root = origTree.GetRoot();
@@ -93,14 +106,10 @@ namespace GraphExpression.Serialization
                 }
             });
 
-            var typeFunctions = functions.GetType();
-            var typeEntity = typeof(T);
-            var references = ScriptOptions.Default.WithReferences(typeFunctions.Assembly, typeEntity.Assembly);
-
             var script = CSharpScript.Create<T>
             (
                 otherRoot.ToString(),
-                references,
+                ScriptOptions.Default.WithReferences(Assemblies.ToArray()),
                 globalsType: typeFunctions
             );
 
