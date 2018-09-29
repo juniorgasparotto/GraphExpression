@@ -151,5 +151,16 @@ namespace GraphExpression.Tests.Serialization
             var deserialized = deserializer.Deserialize<DateTime>(expressionStr);
             Assert.Equal(val, deserialized);
         }
+
+        [Fact]
+        public void DeserializeComplex_PrimitiveDateTimeOffset()
+        {
+            var val = new DateTimeOffset(2000, 1, 1, 1, 1, 1, new TimeSpan());
+            var expressionStr = val.AsExpression().DefaultSerializer.Serialize();
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<DateTime>(expressionStr);
+            Assert.Equal(val, deserialized);
+        }
+        
     }
 }
