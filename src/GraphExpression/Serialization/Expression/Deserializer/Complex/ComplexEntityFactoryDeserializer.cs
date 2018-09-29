@@ -8,12 +8,17 @@ namespace GraphExpression.Serialization
     {
         private Dictionary<string, ComplexEntityDeserializer> entities;
         private Dictionary<Type, Type> mapTypes;
+        private List<string> errors;
+
+        internal DeserializationTime DeserializationTime { get; set; }
 
         public Type TypeRoot { get; set; }
         public bool IsTyped { get; private set; }
         public IEnumerable<ComplexEntityDeserializer> Entities { get => entities.Values; }
         public IReadOnlyDictionary<Type, Type> MapTypes { get => mapTypes; }
-        internal DeserializationTime DeserializationTime { get; set; }
+
+        public IReadOnlyList<string> Errors { get => errors; }
+        public bool IgnoreErrors { get; set; }
 
         public ComplexEntityFactoryDeserializer(Type root)
         {
@@ -21,11 +26,17 @@ namespace GraphExpression.Serialization
             this.IsTyped = TypeRoot != null;
             this.entities = new Dictionary<string, ComplexEntityDeserializer>();
             this.mapTypes = new Dictionary<Type, Type>();
+            this.errors = new List<string>();
         }
 
         public void AddMapType<TFrom, TTo>()
         {
             mapTypes.Add(typeof(TFrom), typeof(TTo));
+        }
+
+        internal void AddError(string err)
+        {
+            errors.Add(err);
         }
 
         public ComplexEntityDeserializer GetEntity(string name, string id)

@@ -520,10 +520,33 @@ namespace GraphExpression.Tests.Serialization
             var deserializer = new ComplexEntityExpressionDeserializer();
             var deserialized = deserializer.Deserialize<ClassWithAbstractAndInterface>(expressionStr, factory);
 
-            Assert.Equal(10, obj.A.MyProp);
-            Assert.Equal(20, obj.B.MyProp);
+            Assert.Equal(10, deserialized.A.MyProp);
+            Assert.Equal(20, deserialized.B.MyProp);
         }
-        
+
+        [Fact]
+        public void DeserializeComplex_AbstractAndInterfaceClass_NoFactory()
+        {
+            var obj = new ClassWithAbstractAndInterface
+            {
+                A = new ImplementAbstractAndInterface { MyProp = 10 },
+                B = new ImplementAbstractAndInterface { MyProp = 20 },
+            };
+
+            var factory = new ComplexEntityFactoryDeserializer(obj.GetType());
+            factory.IgnoreErrors = true;
+
+            var expressionStr = obj.AsExpression().DefaultSerializer.Serialize();
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<ClassWithAbstractAndInterface>(expressionStr, factory);
+
+            Assert.Null(deserialized.A);
+            Assert.Null(deserialized.B);
+            Assert.Equal(2, factory.Errors.Count);
+            Assert.Equal($"An instance of type '{typeof(Interface).FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactoryDeserializer)}.{nameof(ComplexEntityFactoryDeserializer.MapTypes)}' configuration.", factory.Errors[0]);
+            Assert.Equal($"An instance of type '{typeof(AbstractClass).FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactoryDeserializer)}.{nameof(ComplexEntityFactoryDeserializer.MapTypes)}' configuration.", factory.Errors[1]);
+        }
+
         //[Fact]
         //public void JsonTests()
         //{

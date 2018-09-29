@@ -277,7 +277,14 @@ namespace GraphExpression.Serialization
         private static void SetChildMemberInfo(ComplexEntityDeserializer a, ComplexEntityDeserializer b)
         {
             if (a.Entity == null && b.Entity != null)
-                throw new Exception($"An instance of type '{a.EntityType.FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactoryDeserializer)}.{nameof(ComplexEntityFactoryDeserializer.MapTypes)}' configuration.");
+            {
+                var error = $"An instance of type '{a.EntityType.FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactoryDeserializer)}.{nameof(ComplexEntityFactoryDeserializer.MapTypes)}' configuration.";
+                if (!a.EntityFactory.IgnoreErrors)
+                    throw new Exception(error);
+                else 
+                    a.EntityFactory.AddError(error);
+                return;
+            }
 
             if (b.MemberInfoSetter is PropertyInfo prop)
                 prop.SetValue(a.Entity, b.Entity);
@@ -390,7 +397,7 @@ namespace GraphExpression.Serialization
                         }
                         else
                         {
-                            if (!EntityType.IsInterface)
+                            if (!EntityType.IsInterface && !EntityType.IsAbstract)
                                 entity = FormatterServices.GetUninitializedObject(EntityType);
                         }
                     }
