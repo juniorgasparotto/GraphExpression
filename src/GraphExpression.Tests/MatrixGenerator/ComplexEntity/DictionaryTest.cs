@@ -11,6 +11,12 @@ namespace GraphExpression.Tests.MatrixGenerator
         {
         }
 
+        public class Class1
+        {
+            public int Prop1 { get; set; }
+            public Class1() { }
+        }
+
         [Fact]
         public void CreateDictionary_ReturnExpressionAsString()
         {
@@ -47,7 +53,7 @@ namespace GraphExpression.Tests.MatrixGenerator
         }
 
         [Fact]
-        public void CreateComplexDictionary_ReturnExpressionAsString()
+        public void CreateComplexDictionaryWithComplexKeyNoMembers_ReturnExpressionAsString()
         {
             var dic = new Dictionary<MyList2, MyList2>();
             dic[new MyList2()] = new MyList2();
@@ -79,6 +85,29 @@ namespace GraphExpression.Tests.MatrixGenerator
             Assert.IsType<PropertyEntity>(expression[10]);
             Assert.IsType<PropertyEntity>(expression[11]);
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void CreateComplexDictionaryWithComplexKeyWithMembers_ReturnExpressionAsString()
+        {
+            var key = new Class1() { Prop1 = 10 };
+            var value = new Class1() { Prop1 = 10 };
+
+            var dic = new Dictionary<Class1, Class1>()
+            {
+                { key, value }
+            };
+
+            var expression = dic.AsExpression();
+            Assert.Equal(8, expression.Count);
+            Assert.IsType<ComplexEntity>(expression[0]);
+            Assert.IsType<CollectionItemEntity>(expression[1]);
+            Assert.IsType<PropertyEntity>(expression[2]);
+            Assert.IsType<PropertyEntity>(expression[3]);
+            Assert.IsType<PropertyEntity>(expression[4]);
+            Assert.IsType<PropertyEntity>(expression[5]);
+            Assert.IsType<PropertyEntity>(expression[6]);
+            Assert.IsType<PropertyEntity>(expression[7]);
         }
     }
 }

@@ -32,8 +32,8 @@ namespace GraphExpression.Serialization
             Validation.ArgumentNotNull(expression, nameof(expression));
             Validation.ArgumentNotNull(createEntityCallback, nameof(createEntityCallback));
 
-            var functions = new FunctionsDeserializer<T>(createEntityCallback, new Dictionary<string, T>());
-            return await DeserializeAsync(expression, functions);
+            var factory = new EntityFactoryDeserializer<T>(createEntityCallback, new Dictionary<string, T>());
+            return await DeserializeAsync(expression, factory);
         }
 
         public T Deserialize(string expression)
@@ -45,25 +45,25 @@ namespace GraphExpression.Serialization
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
             
-            var functions = new FunctionsDeserializer<T>(null, new Dictionary<string, T>());
-            return await DeserializeAsync(expression, functions);
+            var factory = new EntityFactoryDeserializer<T>(null, new Dictionary<string, T>());
+            return await DeserializeAsync(expression, factory);
         }
 
-        public T Deserialize(string expression, FunctionsDeserializer<T> functions)
+        public T Deserialize(string expression, EntityFactoryDeserializer<T> factory)
         {
-            return DeserializeAsync(expression, functions).Result;
+            return DeserializeAsync(expression, factory).Result;
         }
 
-        public async Task<T> DeserializeAsync(string expression, FunctionsDeserializer<T> functions)
+        public async Task<T> DeserializeAsync(string expression, EntityFactoryDeserializer<T> factory)
+        {
+            var runner = GetDelegate(expression, factory.GetType());
+            return await runner(factory);
+        }
+
+        public ScriptRunner<T> GetDelegate(string expression, Type typeFactory)
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
-            Validation.ArgumentNotNull(functions, nameof(functions));
-
-            // add functions assembly if not exists
-            var typeFunctions = functions.GetType();
-            var assemblyFunctions = typeFunctions.Assembly;
-            if (!Assemblies.Contains(assemblyFunctions))
-                Assemblies.Add(assemblyFunctions);
+            Validation.ArgumentNotNull(typeFactory, nameof(typeFactory));
 
             var origTree = CSharpSyntaxTree.ParseText(expression, CSharpParseOptions.Default.WithKind(SourceCodeKind.Script));
             var root = origTree.GetRoot();
@@ -93,7 +93,7 @@ namespace GraphExpression.Serialization
             var otherRoot = root.ReplaceNodes(descentands, (n1, n2) =>
             {
                 var content = n1.ToString();
-                // if start with "'" is a string params and can be used in functions
+                // if start with "'" is a string params and can be used in factory
                 // GetEntity('create-entity-by-string') + "DirectEntity"
                 if (n1 is LiteralExpressionSyntax && content.StartsWith(Constants.CHAR_QUOTE.ToString()))
                 {
@@ -103,22 +103,30 @@ namespace GraphExpression.Serialization
                 else
                 {
                     var argumentValueName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(ReflectionUtils.RemoveQuotes(content, Constants.DEFAULT_QUOTE))));
-                    var argumentsSeparatedList = SeparatedList(new[] { argumentValueName });
+                    var argumentIdName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(Guid.NewGuid().ToString())));
+                    var argumentsSeparatedList = SeparatedList(new[] { argumentValueName, argumentIdName });
                     var argumentsList = ArgumentList(argumentsSeparatedList);
 
-                    return InvocationExpression(IdentifierName(nameof(FunctionsDeserializer<T>.GetEntity)), argumentsList);
+                    return InvocationExpression(IdentifierName(nameof(EntityFactoryDeserializer<T>.GetEntity)), argumentsList);
                 }
             });
+
+            // add factory assembly if not exists
+            var assemblies = Assemblies;
+            if (!Assemblies.Contains(typeFactory.Assembly))
+            {
+                assemblies = assemblies.ToList();
+                assemblies.Add(typeFactory.Assembly);
+            }
 
             var script = CSharpScript.Create<T>
             (
                 otherRoot.ToString(),
-                ScriptOptions.Default.WithReferences(Assemblies.ToArray()),
-                globalsType: typeFunctions
+                ScriptOptions.Default.WithReferences(assemblies.ToArray()),
+                globalsType: typeFactory
             );
 
-            var runner = script.CreateDelegate();
-            return await runner(functions);
+            return script.CreateDelegate();
         }
     }
 }

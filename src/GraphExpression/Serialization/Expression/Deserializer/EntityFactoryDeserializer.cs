@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace GraphExpression.Serialization
 {
-    public class FunctionsDeserializer<T>
+    public class EntityFactoryDeserializer<T>
     {
-        private readonly Func<string, T> createEntityCallback;
         public IDictionary<string, T> Entities { get; set; }
+        protected Func<string, T> createEntityCallback;
 
-        public FunctionsDeserializer(Func<string, T> createEntityCallback = null, Dictionary<string, T> entities = null)
+        public EntityFactoryDeserializer(Func<string, T> createEntityCallback = null, Dictionary<string, T> entities = null)
         {
             this.createEntityCallback = createEntityCallback;
             this.Entities = entities ?? new Dictionary<string, T>();
         }
 
-        public virtual T GetEntity(string name)
+        public virtual T GetEntity(string name, string id)
         {
             if (!Entities.TryGetValue(name, out T val))
             {

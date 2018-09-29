@@ -1,4 +1,6 @@
 using GraphExpression.Serialization;
+using System.Collections.Generic;
+using System.Dynamic;
 using Xunit;
 
 namespace GraphExpression.Tests.Serialization

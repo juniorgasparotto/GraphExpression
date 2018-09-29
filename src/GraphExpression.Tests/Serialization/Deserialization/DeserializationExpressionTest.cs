@@ -38,10 +38,10 @@ namespace GraphExpression.Tests.Serialization
         public void Deserialize_WithCreateEntityCallBack_GenerateRootAndPopulateEntities()
         {
             var strExp = "(A + B + C + D)";
-            var functions = new FunctionsDeserializer<CircularEntity>(name => new CircularEntity(name));
+            var factory = new EntityFactoryDeserializer<CircularEntity>(name => new CircularEntity(name));
             var serializer = new ExpressionDeserializer<CircularEntity>();
-            var root = serializer.Deserialize(strExp, functions);
-            var entities = functions.Entities.Values.ToList();
+            var root = serializer.Deserialize(strExp, factory);
+            var entities = factory.Entities.Values.ToList();
 
             Assert.Equal(4, entities.Count);
             Assert.Equal(3, entities[0].Children.Count());
@@ -96,18 +96,18 @@ namespace GraphExpression.Tests.Serialization
             var B = new CircularEntity("B");
 
             var deserializer = new ExpressionDeserializer<CircularEntity>();
-            var functions = new FunctionsDeserializer<CircularEntity>();
-            functions.Entities.Add("AA", A);
-            functions.Entities.Add("BB", B);
+            var factory = new EntityFactoryDeserializer<CircularEntity>();
+            factory.Entities.Add("AA", A);
+            factory.Entities.Add("BB", B);
 
             var strExp = "AA + BB";
-            var root = deserializer.Deserialize(strExp, functions);
+            var root = deserializer.Deserialize(strExp, factory);
             Assert.Single(root.Children);
             Assert.Equal("A", root.Name);
             Assert.Equal("B", root.Children.ElementAt(0).Name);
 
             strExp = "AA - BB + C + D";
-            var root2 = deserializer.Deserialize(strExp, functions);
+            var root2 = deserializer.Deserialize(strExp, factory);
 
             Assert.Same(root2, root);
             Assert.Equal(2, root2.Children.Count());
@@ -143,13 +143,13 @@ namespace GraphExpression.Tests.Serialization
         }
 
         [Fact]
-        public void Deserialize_UsingFunctionsInstancesAndStaticWithStringParams_GenerateRootWithFunctions()
+        public void Deserialize_UsingfactoryInstancesAndStaticWithStringParams_GenerateRootWithfactory()
         {
-            var strExp = "NewEntity('my entity name1') + (NewEntityStatic('my entity name 2') + B - GraphExpression.Tests.Serialization.DeserializationExpressionTest.FunctionsDeserializerExtend.NewEntityStatic('B'))";
-            var functions = new FunctionsDeserializerExtend();
+            var strExp = "NewEntity('my entity name1') + (NewEntityStatic('my entity name 2') + B - GraphExpression.Tests.Serialization.DeserializationExpressionTest.EntityFactoryDeserializerExtend.NewEntityStatic('B'))";
+            var factory = new EntityFactoryDeserializerExtend();
             var serializer = new ExpressionDeserializer<CircularEntity>();
-            var root = serializer.Deserialize(strExp, functions);
-            var entities = functions.Entities.Values.ToList();
+            var root = serializer.Deserialize(strExp, factory);
+            var entities = factory.Entities.Values.ToList();
 
             Assert.Single(root.Children);
             Assert.Equal("my entity name1", root.Name);
@@ -164,13 +164,13 @@ namespace GraphExpression.Tests.Serialization
         }
 
         [Fact]
-        public void Deserialize_UsingFunctionsWithStringParamsInVerbatin_GenerateRootWithFunctions()
+        public void Deserialize_UsingfactoryWithStringParamsInVerbatin_GenerateRootWithfactory()
         {
             var strExp = "NewEntity('\"quote\"') + NewEntity('\\'quote\\'')";
-            var functions = new FunctionsDeserializerExtend();
+            var factory = new EntityFactoryDeserializerExtend();
             var serializer = new ExpressionDeserializer<CircularEntity>();
-            var root = serializer.Deserialize(strExp, functions);
-            var entities = functions.Entities.Values.ToList();
+            var root = serializer.Deserialize(strExp, factory);
+            var entities = factory.Entities.Values.ToList();
 
             Assert.Single(root.Children);
             Assert.Equal("\"quote\"", root.Name);
@@ -184,13 +184,13 @@ namespace GraphExpression.Tests.Serialization
         }
 
         [Fact]
-        public void Deserialize_NullValue_GenerateRootWithFunctions()
+        public void Deserialize_NullValue_GenerateRootWithfactory()
         {
             var strExp = "A + null + C + NULL + \"null\"";
-            var functions = new FunctionsDeserializerExtend();
+            var factory = new EntityFactoryDeserializerExtend();
             var serializer = new ExpressionDeserializer<CircularEntity>();
-            var root = serializer.Deserialize(strExp, functions);
-            var entities = functions.Entities.Values.ToList();
+            var root = serializer.Deserialize(strExp, factory);
+            var entities = factory.Entities.Values.ToList();
 
             Assert.Equal(4, root.Children.Count());
             Assert.Null(root.Children.ElementAt(0));
@@ -205,13 +205,13 @@ namespace GraphExpression.Tests.Serialization
         #region BUG KNOWN
 
         [Fact]
-        public void Deserialize_UsingFunctionsWithStringParamsInVerbatin_BUG_KNOWN()
+        public void Deserialize_UsingfactoryWithStringParamsInVerbatin_BUG_KNOWN()
         {
             var strExp = "NewEntity('\\' \\\'')";
-            var functions = new FunctionsDeserializerExtend();
+            var factory = new EntityFactoryDeserializerExtend();
             var serializer = new ExpressionDeserializer<CircularEntity>();
-            var root = serializer.Deserialize(strExp, functions);
-            var entities = functions.Entities.Values.ToList();
+            var root = serializer.Deserialize(strExp, factory);
+            var entities = factory.Entities.Values.ToList();
 
             // DEVERIA SER: ' \'
             Assert.Equal("' '", root.Name);
@@ -220,7 +220,7 @@ namespace GraphExpression.Tests.Serialization
             try
             {
                 strExp = "NewEntity('\\\\'')";
-                root = serializer.Deserialize(strExp, functions);
+                root = serializer.Deserialize(strExp, factory);
                 Assert.Equal("' ' '", root.Name);
             }
             catch
@@ -241,7 +241,7 @@ namespace GraphExpression.Tests.Serialization
             Assert.Equal(expectedOut, exOut);
         }
 
-        public class FunctionsDeserializerExtend : FunctionsDeserializer<CircularEntity>
+        public class EntityFactoryDeserializerExtend : EntityFactoryDeserializer<CircularEntity>
         {
             public CircularEntity NewEntity(string name)
             {

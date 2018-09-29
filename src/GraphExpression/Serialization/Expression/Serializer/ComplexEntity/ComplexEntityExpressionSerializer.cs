@@ -9,6 +9,7 @@ namespace GraphExpression.Serialization
     {
         public ShowTypeOptions ShowType { get; set; }
         public List<IEntitySerialize> ItemsSerialize { get; private set; }
+        public Func<EntityItem<object>, long> GetEntityIdCallback { get; set; }
 
         public ComplexEntityExpressionSerializer(Expression<object> expression)
             : base(expression)
@@ -70,7 +71,8 @@ namespace GraphExpression.Serialization
             var separatorValue = $"{Constants.KEY_VALUE_SEPARATOR} ";
             if (strValue == null && item.Entity != null)
             {
-                strValue = item.Entity.GetHashCode().ToString();
+                // get entityId
+                strValue = GetEntityIdCallback?.Invoke(item).ToString() ?? item.Entity.GetHashCode().ToString();
                 separatorValue = Constants.IDENTIFIER_SEPARATOR;
             }
             else if (strValue == null)
