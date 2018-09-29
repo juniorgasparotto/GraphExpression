@@ -14,7 +14,7 @@ namespace GraphExpression
          * is the default, although it is more complex, is more flexibility and 
          * perhaps greater performance.
          */
-        public static bool EnableNonRecursiveAlgorithm = false;
+        public static bool EnableNonRecursiveAlgorithm = true;
 
         /*
          * This functionality is designed to always exist, however, it is not essential 

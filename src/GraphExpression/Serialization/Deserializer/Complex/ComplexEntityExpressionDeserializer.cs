@@ -38,7 +38,7 @@ namespace GraphExpression.Serialization
 
         public async Task<object> DeserializeAsync(string expression, ComplexEntityFactoryDeserializer factory)
         {
-            var deserializer = new ExpressionDeserializer<ComplexEntityDeserializer>();
+            var deserializer = new ExpressionDeserializer<ItemDeserializer>();
 
             var runner = deserializer.GetDelegate(expression, factory.GetType());
             factory.DeserializationTime = DeserializationTime.Creation;

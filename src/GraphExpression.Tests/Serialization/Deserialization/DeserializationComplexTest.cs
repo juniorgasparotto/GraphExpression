@@ -547,6 +547,70 @@ namespace GraphExpression.Tests.Serialization
             Assert.Equal($"An instance of type '{typeof(AbstractClass).FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactoryDeserializer)}.{nameof(ComplexEntityFactoryDeserializer.MapTypes)}' configuration.", factory.Errors[1]);
         }
 
+        [Fact]
+        public void DeserializeComplex_TypedObject_ShowFullTypeName()
+        {
+            var obj = new RecursiveClass
+            {
+                MyProp = 10,
+                RecursiveProperty = new RecursiveClass() { MyProp = 20 },
+                ZProp = "value"
+            };
+
+            var serializer = obj.AsExpression().GetSerializer<ComplexEntityExpressionSerializer>();
+            serializer.ShowType = ShowTypeOptions.FullTypeName;
+            var expressionStr = serializer.Serialize();
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<RecursiveClass>(expressionStr);
+
+            Assert.Equal(10, deserialized.MyProp);
+            Assert.Equal("value", deserialized.ZProp);
+            Assert.Equal(20, deserialized.RecursiveProperty.MyProp);
+        }
+
+
+        [Fact]
+        public void DeserializeComplex_TypedObject_ShowTypeName()
+        {
+            var obj = new RecursiveClass
+            {
+                MyProp = 10,
+                RecursiveProperty = new RecursiveClass() { MyProp = 20 },
+                ZProp = "value"
+            };
+
+            var serializer = obj.AsExpression().GetSerializer<ComplexEntityExpressionSerializer>();
+            serializer.ShowType = ShowTypeOptions.TypeName;
+            var expressionStr = serializer.Serialize();
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<RecursiveClass>(expressionStr);
+
+            Assert.Equal(10, deserialized.MyProp);
+            Assert.Equal("value", deserialized.ZProp);
+            Assert.Equal(20, deserialized.RecursiveProperty.MyProp);
+        }
+
+        [Fact]
+        public void DeserializeComplex_TypedObject_ShowType_None()
+        {
+            var obj = new RecursiveClass
+            {
+                MyProp = 10,
+                RecursiveProperty = new RecursiveClass() { MyProp = 20 },
+                ZProp = "value"
+            };
+
+            var serializer = obj.AsExpression().GetSerializer<ComplexEntityExpressionSerializer>();
+            serializer.ShowType = ShowTypeOptions.None;
+            var expressionStr = serializer.Serialize();
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<RecursiveClass>(expressionStr);
+
+            Assert.Equal(10, deserialized.MyProp);
+            Assert.Equal("value", deserialized.ZProp);
+            Assert.Equal(20, deserialized.RecursiveProperty.MyProp);
+        }
+
         //[Fact]
         //public void JsonTests()
         //{

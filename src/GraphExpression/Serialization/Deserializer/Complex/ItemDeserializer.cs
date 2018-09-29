@@ -14,7 +14,7 @@ using System.ComponentModel;
 namespace GraphExpression.Serialization
 {
     [DebuggerDisplay("{Raw}")]
-    public class ComplexEntityDeserializer
+    public class ItemDeserializer
     {
         #region fields
         private readonly Dictionary<string, bool> propertyRead = new Dictionary<string, bool>();
@@ -31,8 +31,8 @@ namespace GraphExpression.Serialization
         #endregion
 
         #region manage properties
-        public List<ComplexEntityDeserializer> Children { get; set; }
-        public ComplexEntityDeserializer Parent { get; set; }
+        public List<ItemDeserializer> Children { get; set; }
+        public ItemDeserializer Parent { get; set; }
         public ComplexEntityFactoryDeserializer EntityFactory { get; set; }
         #endregion
 
@@ -205,13 +205,13 @@ namespace GraphExpression.Serialization
             }
         }
                 
-        public ComplexEntityDeserializer(string raw)
+        public ItemDeserializer(string raw)
         {
             this.Raw = raw;
-            this.Children = new List<ComplexEntityDeserializer>();
+            this.Children = new List<ItemDeserializer>();
         }
 
-        public static ComplexEntityDeserializer operator +(ComplexEntityDeserializer a, ComplexEntityDeserializer b)
+        public static ItemDeserializer operator +(ItemDeserializer a, ItemDeserializer b)
         {
             //Debug.WriteLine(a.Raw);
             //Debug.WriteLine(b.Raw);
@@ -274,7 +274,7 @@ namespace GraphExpression.Serialization
             return indexes;
         }
 
-        private static void SetChildMemberInfo(ComplexEntityDeserializer a, ComplexEntityDeserializer b)
+        private static void SetChildMemberInfo(ItemDeserializer a, ItemDeserializer b)
         {
             if (a.Entity == null && b.Entity != null)
             {
@@ -315,7 +315,14 @@ namespace GraphExpression.Serialization
                 {
                     // IS COMPLEX: "Prop.12345"
                     hashCode = parts.LastOrDefault();
-                    member = parts[parts.Length - 2];
+
+                    // ShowType = None
+                    if (parts.Length == 1)
+                        member = parts[0];
+                    // ShowType = [OTHERS]
+                    else
+                        member = parts[parts.Length - 2];
+
                     isPrimitive = false;
                 }
                 else
@@ -332,6 +339,11 @@ namespace GraphExpression.Serialization
                 value = Raw.Substring(index + 2); // consider space after colon ": "
                 isPrimitive = true;
             }
+
+            // ShowType = FullTypeName || TypeName
+            var partsWithType = member.Split('.');
+            if (partsWithType.Length > 0)
+                member = partsWithType.LastOrDefault();
 
             this.membeName = member;
             this.valueRaw = value;

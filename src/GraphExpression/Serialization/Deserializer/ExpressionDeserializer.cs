@@ -70,6 +70,8 @@ namespace GraphExpression.Serialization
 
             var descentands = root.DescendantNodes().Where(n =>
             {
+                // A + null     => Is C# Null
+                // A + \"null\" => Is a string with "null" value
                 if (n.ToString() == Constants.NULL_VALUE)
                     return false;
 
