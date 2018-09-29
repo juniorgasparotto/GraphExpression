@@ -99,12 +99,12 @@ namespace GraphExpression.Serialization
                 // GetEntity('create-entity-by-string') + "DirectEntity"
                 if (n1 is LiteralExpressionSyntax && content.StartsWith(Constants.CHAR_QUOTE.ToString()))
                 {
-                    var strValue = ReflectionUtils.RemoveQuotes(content, Constants.CHAR_QUOTE).Replace("\\'", "'");
+                    var strValue = StringUtils.RemoveQuotes(content, Constants.CHAR_QUOTE).Replace("\\'", "'");
                     return LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(strValue));
                 }
                 else
                 {
-                    var argumentValueName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(ReflectionUtils.RemoveQuotes(content, Constants.DEFAULT_QUOTE))));
+                    var argumentValueName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(StringUtils.RemoveQuotes(content, Constants.DEFAULT_QUOTE))));
                     var argumentIdName = Argument(LiteralExpression(SyntaxKind.StringLiteralExpression, Literal(Guid.NewGuid().ToString())));
                     var argumentsSeparatedList = SeparatedList(new[] { argumentValueName, argumentIdName });
                     var argumentsList = ArgumentList(argumentsSeparatedList);

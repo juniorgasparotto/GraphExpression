@@ -82,7 +82,7 @@ namespace GraphExpression.Serialization
                         }
                         else if (MemberInfoSetter != null)
                         {
-                            entityType = GetMemberType(MemberInfoSetter);
+                            entityType = ReflectionUtils.GetMemberType(MemberInfoSetter);
                         }
                     }
                     else
@@ -311,7 +311,7 @@ namespace GraphExpression.Serialization
                 value = null;
 
                 var parts = Raw.Split('.');
-                if (IsNumber(parts.LastOrDefault()))
+                if (StringUtils.IsNumber(parts.LastOrDefault()))
                 {
                     // IS COMPLEX: "Prop.12345"
                     hashCode = parts.LastOrDefault();
@@ -353,7 +353,7 @@ namespace GraphExpression.Serialization
 
         public void SetEntity()
         {
-            if (IsAnonymousType(EntityType))
+            if (ReflectionUtils.IsAnonymousType(EntityType))
             {
                 // anonymous type with type associated
                 entity = new ExpandoObject();
@@ -414,57 +414,6 @@ namespace GraphExpression.Serialization
                         }
                     }
                 }
-            }
-        }
-
-        private bool IsNumber(string value)
-        {
-            if (value != null)
-            {
-                var count = 0;
-                foreach (var c in value)
-                {
-                    // negative hashcode start with "-"
-                    if (count == 0 && c == '-')
-                        count++;
-                    else if (char.IsDigit(c))
-                        count++;
-                }
-                return count == value.Length;
-            }
-
-            return false;
-        }
-
-        private bool IsAnonymousType(Type type)
-        {
-            if (type == null)
-                throw new ArgumentNullException("type");
-
-            // HACK: The only way to detect anonymous types right now.
-            return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-                && type.IsGenericType && type.Name.Contains("AnonymousType")
-                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
-                && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
-        }
-
-        public Type GetMemberType(MemberInfo member)
-        {
-            switch (member.MemberType)
-            {
-                case MemberTypes.Event:
-                    return ((EventInfo)member).EventHandlerType;
-                case MemberTypes.Field:
-                    return ((FieldInfo)member).FieldType;
-                case MemberTypes.Method:
-                    return ((MethodInfo)member).ReturnType;
-                case MemberTypes.Property:
-                    return ((PropertyInfo)member).PropertyType;
-                default:
-                    throw new ArgumentException
-                    (
-                     "Input MemberInfo must be if type EventInfo, FieldInfo, MethodInfo, or PropertyInfo"
-                    );
             }
         }
     }

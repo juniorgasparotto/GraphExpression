@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GraphExpression.Utils
@@ -209,14 +210,6 @@ namespace GraphExpression.Utils
             }
         }
 
-        public static string RemoveQuotes(string value, char quote)
-        {
-            // minimun: '' or ""
-            if (value.Length >= 2 && value.StartsWith(quote.ToString()))
-                return value.Substring(1, value.Length - 2);
-            return value;
-        }
-
         /// <summary>
         /// To Verbatim
         /// </summary>
@@ -237,6 +230,38 @@ namespace GraphExpression.Utils
             //        return writer.ToString();
             //    }
             //}
+        }
+
+        public static bool IsAnonymousType(Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
+            // HACK: The only way to detect anonymous types right now.
+            return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+                && type.IsGenericType && type.Name.Contains("AnonymousType")
+                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
+                && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+        }
+
+        public static Type GetMemberType(MemberInfo member)
+        {
+            switch (member.MemberType)
+            {
+                case MemberTypes.Event:
+                    return ((EventInfo)member).EventHandlerType;
+                case MemberTypes.Field:
+                    return ((FieldInfo)member).FieldType;
+                case MemberTypes.Method:
+                    return ((MethodInfo)member).ReturnType;
+                case MemberTypes.Property:
+                    return ((PropertyInfo)member).PropertyType;
+                default:
+                    throw new ArgumentException
+                    (
+                     "Input MemberInfo must be if type EventInfo, FieldInfo, MethodInfo, or PropertyInfo"
+                    );
+            }
         }
     }
 }
