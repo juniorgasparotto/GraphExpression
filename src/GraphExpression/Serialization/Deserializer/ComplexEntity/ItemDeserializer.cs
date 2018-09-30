@@ -3,13 +3,8 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Collections;
-using Mono.Reflection;
 using GraphExpression.Utils;
-using System.ComponentModel;
 
 namespace GraphExpression.Serialization
 {
