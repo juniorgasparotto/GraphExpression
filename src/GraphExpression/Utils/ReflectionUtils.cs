@@ -37,6 +37,16 @@ namespace GraphExpression.Utils
             }
         }
 
+        public static long[] GetArrayIndexesByString(string strIndexes)
+        {
+            var indexesSplit = strIndexes.Substring(1, strIndexes.Length - 2);
+            var indexes = indexesSplit
+                            .Split(',')
+                            .Select(f => Convert.ToInt64(f))
+                            .ToArray();
+            return indexes;
+        }
+
         public static bool TryGetPropertyValue<T>(object source, string property, out T value)
         {
             if (source == null)

@@ -19,14 +19,40 @@ namespace GraphExpression.Serialization
 
         public IReadOnlyList<string> Errors { get => errors; }
         public bool IgnoreErrors { get; set; }
+        public List<IEntityDeserialize> ItemsDeserialize { get; set; }
 
         public ComplexEntityFactoryDeserializer(Type root)
         {
-            this.TypeRoot = root;
-            this.IsTyped = TypeRoot != null;
             this.entities = new Dictionary<string, ItemDeserializer>();
             this.mapTypes = new Dictionary<Type, Type>();
             this.errors = new List<string>();
+
+            this.TypeRoot = root;
+            this.IsTyped = TypeRoot != null;
+            this.ItemsDeserialize = new List<IEntityDeserialize>
+            {
+                // Get Entity (order is important - eg. ComplexEntityGetEntity < ArrayGetEntity)
+                new PrimitivesGetEntity(),
+                new ComplexEntityGetEntity(),
+                new ArrayGetEntity(),
+                new ExpandoObjectGetEntity(),
+
+                // Member info
+                new DefaultGetMemberInfo(),
+
+                // Set child (order is important)
+                new MemberInfoSetChild(),
+                new DictionarySetChild(),
+                new ExpandoObjectSetChild(),
+                new ArraySetChild(),
+                new ListSetChild(),
+
+                // Get Entity type (order is important)
+                new DictionaryItemGetEntityType(),
+                new MemberInfoGetEntityType(),
+                new ListItemGetEntityType(),
+                new ArrayItemGetEntityType()
+            };
         }
 
         public void AddMapType<TFrom, TTo>()
