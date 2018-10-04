@@ -10,7 +10,7 @@ namespace GraphExpression.Serialization
     {
         public bool CanGetMemberInfo(ItemDeserializer item)
         {
-            return item.EntityFactory.IsTyped
+            return item.Factory.IsTyped
                   && item.MemberName != null
                   && !item.MemberName.StartsWith(Constants.INDEXER_START) // ignore [0] members
                   && item.Parent.EntityType != null;

@@ -1,39 +1,52 @@
 ﻿using GraphExpression.Utils;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
 namespace GraphExpression
 {
-    [DebuggerDisplay("{Key}")]
+    [DebuggerDisplay("{Name}")]
+    public class Token<T> : Token
+    {
+        public Token(string name, T value) : base(name, value, typeof(T))
+        {
+
+        }
+    }
+
+    [DebuggerDisplay("{Name}")]
     public class Token
     {
         private readonly Dictionary<string, Token> children;
         protected Context context;
 
-        public TokenRoot Root => context.Root;
-
+        public TokenComplex Root => context.Root;
         public Token Parent { get; private set; }
-        public string Raw { get; private set; }
-        public int Count => children.Count;
+        public IEnumerable<Token> Children { get => children.Values; }
         public Token this[int index] => children.Values.ElementAt(index);
         public Token this[string key] => children[key];
+        public int Count => children.Count;
 
-        public string Value { get; private set; }
-        public string Key { get; private set; }
+        public string Raw { get; private set; }
+        public string Name { get; private set; }
+        public virtual object Value { get; private set; }
+        public string ValueRaw { get; private set; }
+        public virtual Type Type { get; protected set; }
         public bool IsPrimitive { get; private set; }
-        public string ComplexEntityId { get; private set; }
-
+        public string EntityId { get; private set; }
         public object Data { get; set; }
 
-        public Token(string keyColonValue)
+        public Token(string name, object value, Type type = null)
         {
             this.children = new Dictionary<string, Token>();
-            this.Raw = keyColonValue;
-            this.ParseRaw();
+            this.Type = value?.GetType() ?? type;
+            this.Name = name;
+            this.Value = value;
+            //this.Raw = nameColonValue;
+            //this.ParseRaw();
         }
-
-        public IEnumerable<Token> Children { get => children.Values; }
 
         public static Token operator +(Token a, Token b)
         {
@@ -54,10 +67,16 @@ namespace GraphExpression
             b.context = a.context;
             a.context.Edges.Add(new Edge(a, b));
 
-            a.children.Add(b.Key, b);
+            if (!a.children.ContainsKey(b.Name))
+                a.children.Add(b.Name, b);
+
             b.Parent = a;
             return a;
         }
+
+        public virtual void AutoAddOnParent() { }
+
+        #region Auxs
 
         private void ParseRaw()
         {
@@ -107,16 +126,25 @@ namespace GraphExpression
             if (partsWithType.Length > 0)
                 member = partsWithType.LastOrDefault();
 
-            this.Key = member;
-            this.Value = value;
+            this.Name = member;
             this.IsPrimitive = isPrimitive;
-            this.ComplexEntityId = hashCode;
+            this.EntityId = hashCode;
+            this.ValueRaw = value;
+
+            if (this.Type == null)
+                this.Value = value;
+            else
+                this.Value = TypeDescriptor.GetConverter(Type).ConvertFromInvariantString(value);
         }
+        
+        #endregion
+
+        #region nested classes
 
         protected class Context
         {
             public List<Edge> Edges { get; }
-            public TokenRoot Root { get; set; }
+            public TokenComplex Root { get; set; }
 
             public Context()
             {
@@ -138,8 +166,10 @@ namespace GraphExpression
 
             public override string ToString()
             {
-                return $"{Source?.Key}, {Target?.Key}";
+                return $"{Source?.Name}, {Target?.Name}";
             }
         }
+
+        #endregion
     }
 }

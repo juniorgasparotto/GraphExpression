@@ -67,19 +67,20 @@ namespace GraphExpression.Serialization
 
         public ItemDeserializer GetEntity(string name, string id)
         {
-            if (DeserializationTime == DeserializationTime.Creation)
-            {
-                var entity = new ItemDeserializer(name);
-                entities.Add(id, entity);
+            return new ItemDeserializer(name);
+            //if (DeserializationTime == DeserializationTime.Creation)
+            //{
+            //    var entity = new ItemDeserializer(name);
+            //    entities.Add(id, entity);
 
-                if (entity.EntityFactory == null)
-                    entity.EntityFactory = this;
-                return entity;
-            }
-            else
-            {
-                return entities[id];
-            }
+            //    if (entity.EntityFactory == null)
+            //        entity.EntityFactory = this;
+            //    return entity;
+            //}
+            //else
+            //{
+            //    return entities[id];
+            //}
         }
     }
 }

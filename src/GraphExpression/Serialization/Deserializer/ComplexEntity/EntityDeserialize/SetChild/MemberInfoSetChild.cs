@@ -12,7 +12,7 @@ namespace GraphExpression.Serialization
 
         public void SetChild(ItemDeserializer item, ItemDeserializer child)
         {
-            var factory = item.EntityFactory;
+            var factory = item.Factory;
             var entity = item.Entity;
             var entityType = item.EntityType;
             var value = child.Entity;

@@ -8,21 +8,86 @@ using GraphExpression.Utils;
 
 namespace GraphExpression.Serialization
 {
+    //[DebuggerDisplay("{Raw}")]
+    public class ItemDeserializerRoot<T> : ItemDeserializerRoot
+    {
+        public new T Entity => (T)base.Entity;
+
+        public ItemDeserializerRoot() : this(0)
+        {
+        }
+
+        public ItemDeserializerRoot(int id) : base(typeof(T), id)
+        {
+        }
+
+        public static ItemDeserializerRoot<T> operator +(ItemDeserializerRoot<T> a, ItemDeserializer b)
+        {
+            a = (ItemDeserializerRoot<T>)((ItemDeserializer)a + b);
+            a.Factory = new ComplexEntityFactoryDeserializer(a.Type);
+
+            var factory = a.Factory;
+
+            // Root + (A + B) + C
+            // ---
+            // A + B
+            // Root + A -> Execute all
+            // Root + C -> Execute all again, need separate already executed
+            // ---
+
+            a.Additions.RemoveAll(f => f.Executed);
+
+            foreach (var e in a.Additions)
+            {
+                var itemDeserialize = factory
+                            .ItemsDeserialize
+                            .OfType<ISetChild>()
+                            .LastOrDefault(f => f.CanSetChild(e.Source, e.Target));
+                itemDeserialize.SetChild(e.Source, e.Target);
+                e.Executed = true;
+            }
+
+            return a;
+        }
+    }
+
+    public class ItemDeserializerRoot : ItemDeserializer
+    {
+        public new ComplexEntityFactoryDeserializer Factory { get; set; }
+        public Type Type { get; }
+
+        public ItemDeserializerRoot(Type type) : this(type, 0)
+        {
+            this.Type = type;
+        }
+
+        public ItemDeserializerRoot(Type type, int id) : base(id.ToString())
+        {
+            this.Type = type;
+        }
+    }
+
     [DebuggerDisplay("{Raw}")]
     public class ItemDeserializer
     {
         #region fields
         private readonly Dictionary<string, bool> propertyRead = new Dictionary<string, bool>();
 
-        private Type entityType;
+        protected List<AddOperation> Additions;
+
+        private Type entityType;        
         private MemberInfo memberInfo;
         private object entity;
+        private ItemDeserializer root;
+        private ComplexEntityFactoryDeserializer factory;
+        private readonly Dictionary<string, ItemDeserializer> children;
         #endregion
 
         #region manage properties
-        public List<ItemDeserializer> Children { get; set; }
+        public IReadOnlyCollection<ItemDeserializer> Children => children.Values;
         public ItemDeserializer Parent { get; set; }
-        public ComplexEntityFactoryDeserializer EntityFactory { get; set; }
+        private ItemDeserializerRoot Root => GetRoot();
+        public ComplexEntityFactoryDeserializer Factory => GetFactory();
         #endregion
 
         public string Raw { get; }
@@ -33,37 +98,65 @@ namespace GraphExpression.Serialization
         public string MemberName { get; private set; }
         public bool IsPrimitive { get; private set; }
         public string ComplexEntityId { get; private set; }
-                
+        
         public ItemDeserializer(string raw)
         {
+            this.children = new Dictionary<string, ItemDeserializer>();
             this.Raw = raw;
-            this.Children = new List<ItemDeserializer>();
             this.ParseRaw();
         }
 
         public static ItemDeserializer operator +(ItemDeserializer a, ItemDeserializer b)
-        {   
-            var factory = a.EntityFactory;
-            if (factory.DeserializationTime == DeserializationTime.Creation)
+        {
+            // Scenario 1
+            // A + B + C + ( D + (E + F))
+            // ----
+            // A + B -> (1) - Create both context (A and B context)
+            // A + C -> (3) - Set A in C
+            // E + F -> (1) - Create both context (E and F context - news contexts)
+            // D + E -> (2) - Set E -> D
+            // A + D -> (4) - Set edges of D context in A to mantain execution order
+            // ----
+
+            // 1) Create both
+            if (a.Additions == null && b.Additions == null)
+                a.Additions = b.Additions = new List<AddOperation>();
+
+            // 2) Set B in A
+            else if (a.Additions == null)
+                a.Additions = b.Additions;
+
+            // 3) Set A in B
+            else if (b.Additions == null)
+                b.Additions = a.Additions;
+
+            // 4) Set edges of B context in A to mantain execution order
+            else if (a.Additions != b.Additions)
             {
-                a.Children.Add(b);
-                b.Parent = a;
-            }
-            else if (factory.DeserializationTime == DeserializationTime.AssignChildInParent)
-            {
-                var itemDeserialize = factory
-                                .ItemsDeserialize
-                                .OfType<ISetChild>()
-                                .LastOrDefault(f => f.CanSetChild(a, b));
+                var childEdges = b.Additions;
+                a.Additions.AddRange(childEdges);
 
-                if (itemDeserialize != null)
-                    itemDeserialize.SetChild(a, b);
+                // Instance "edge" is not more necessary
+                b.RemoveUselessEdges();
+
+                b.Additions = a.Additions;
             }
 
-            //Debug.WriteLine(a.Raw);
-            //Debug.WriteLine(b.Raw);
+            a.Additions.Add(new AddOperation(a, b));
 
+            if (!a.children.ContainsKey(b.MemberName))
+                a.children.Add(b.MemberName, b);
+            else
+                a.children[b.MemberName] = b;
+
+            b.Parent = a;
             return a;
+        }
+
+        private void RemoveUselessEdges()
+        {
+            Additions.Clear();
+            Additions = null;
         }
 
         private void ParseRaw()
@@ -126,16 +219,16 @@ namespace GraphExpression.Serialization
             {
                 propertyRead[nameof(GetEntityType)] = true;
 
-                if (EntityFactory.IsTyped)
+                if (Factory.IsTyped)
                 {
                     // with type associated
                     if (Parent == null)
                     {
-                        entityType = EntityFactory.TypeRoot;
+                        entityType = Factory.TypeRoot;
                     }
                     else
                     {
-                        var itemDeserialize = EntityFactory
+                        var itemDeserialize = Factory
                             .ItemsDeserialize
                             .OfType<IGetEntityType>()
                             .LastOrDefault(f => f.CanGetEntityType(this));
@@ -155,8 +248,8 @@ namespace GraphExpression.Serialization
                         entityType = typeof(ExpandoObject);
                 }
 
-                if (EntityFactory.MapTypes.ContainsKey(entityType))
-                    entityType = EntityFactory.MapTypes[entityType];
+                if (Factory.MapTypes.ContainsKey(entityType))
+                    entityType = Factory.MapTypes[entityType];
             }
 
             return entityType;
@@ -168,7 +261,7 @@ namespace GraphExpression.Serialization
             {
                 propertyRead[nameof(GetEntity)] = true;
 
-                var factory = EntityFactory;
+                var factory = Factory;
                 var entityType = EntityType;
                 var complexEntityId = ComplexEntityId;
 
@@ -182,7 +275,7 @@ namespace GraphExpression.Serialization
                         return find.First().entity;
                 }
 
-                var itemDeserialize = EntityFactory
+                var itemDeserialize = Factory
                     .ItemsDeserialize
                     .OfType<IGetEntity>()
                     .LastOrDefault(f => f.CanGetEntity(this));
@@ -199,7 +292,7 @@ namespace GraphExpression.Serialization
             {
                 propertyRead[nameof(GetMemberInfo)] = true;
 
-                var itemDeserialize = EntityFactory
+                var itemDeserialize = Factory
                     .ItemsDeserialize
                     .OfType<IGetMemberInfo>()
                     .LastOrDefault(f => f.CanGetMemberInfo(this));
@@ -209,5 +302,59 @@ namespace GraphExpression.Serialization
 
             return memberInfo;
         }
+
+        private ItemDeserializerRoot GetRoot()
+        {
+            if (root == null)
+            {
+                var p = Parent;
+
+                if (p == null)
+                {
+                    root = this;
+                }
+                else
+                {
+                    while (p != null)
+                    {
+                        if (p.Parent == null)
+                            break;
+                        p = p.Parent;
+                    }
+                    root = p;
+                }
+            }
+            return (ItemDeserializerRoot)root;
+        }
+
+        private ComplexEntityFactoryDeserializer GetFactory()
+        {
+            if (factory == null)
+                factory = Root.Factory;
+            return factory;
+        }
+
+        #region nested classes
+
+        [DebuggerDisplay("{ToString()}")]
+        public class AddOperation
+        {
+            public ItemDeserializer Source { get; }
+            public ItemDeserializer Target { get; }
+            public bool Executed { get; set;  }
+
+            public AddOperation(ItemDeserializer source, ItemDeserializer target)
+            {
+                this.Source = source;
+                this.Target = target;
+            }
+
+            public override string ToString()
+            {
+                return $"{Source?.MemberName}, {Target?.MemberName}";
+            }
+        }
+
+        #endregion
     }
 }
