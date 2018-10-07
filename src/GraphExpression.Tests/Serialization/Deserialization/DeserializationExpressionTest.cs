@@ -29,7 +29,7 @@ namespace GraphExpression.Tests.Serialization
         public void Deserialize_IntegerOutput_Sum10()
         {
             var strExp = "1 * 2 * 5";
-            var serializer = new ExpressionDeserializer<int>();
+            var serializer = new CircularEntityExpressionDeserializer<int>();
             var result = serializer.Deserialize(strExp, param => Convert.ToInt32(param));
             Assert.Equal(10, result);
         }
@@ -38,8 +38,8 @@ namespace GraphExpression.Tests.Serialization
         public void Deserialize_WithCreateEntityCallBack_GenerateRootAndPopulateEntities()
         {
             var strExp = "(A + B + C + D)";
-            var factory = new EntityFactoryDeserializer<CircularEntity>(name => new CircularEntity(name));
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var factory = new CircularEntityFactory<CircularEntity>(name => new CircularEntity(name));
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(strExp, factory);
             var entities = factory.Entities.Values.ToList();
 
@@ -65,7 +65,7 @@ namespace GraphExpression.Tests.Serialization
         public void Deserialize_WithDefaultConstructor_GenerateRoot()
         {
             var strExp = "A + B + C + D";
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(strExp);
 
             Assert.Equal(3, root.Children.Count());
@@ -79,7 +79,7 @@ namespace GraphExpression.Tests.Serialization
         public void Deserialize_WithCreateOverride_GenerateRootWithOtherNames()
         {
             var strExp = "A + B + C + D";
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(strExp, f=> new CircularEntity(f.ToLower()));
 
             Assert.Equal(3, root.Children.Count());            
@@ -95,8 +95,8 @@ namespace GraphExpression.Tests.Serialization
             var A = new CircularEntity("A");
             var B = new CircularEntity("B");
 
-            var deserializer = new ExpressionDeserializer<CircularEntity>();
-            var factory = new EntityFactoryDeserializer<CircularEntity>();
+            var deserializer = new CircularEntityExpressionDeserializer<CircularEntity>();
+            var factory = new CircularEntityFactory<CircularEntity>();
             factory.Entities.Add("AA", A);
             factory.Entities.Add("BB", B);
 
@@ -119,7 +119,7 @@ namespace GraphExpression.Tests.Serialization
         [Fact]
         public void Deserialize_CreateSolutionByExpression_UseQuotesEntityAndNoQuotesAndNamespaceAndMultilevels_GenerateRoot()
         {
-            var deserializer = new ExpressionDeserializer<CircularEntity>();
+            var deserializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var solutionMaps = "\"Example Presentation\" + (Example.Layers.Business + (Example.Layers.DAL + Example.Layers.DAL.Interaces)) + (\"Example.Layers.DAL\")";
             var root = deserializer.Deserialize(solutionMaps);
             
@@ -147,7 +147,7 @@ namespace GraphExpression.Tests.Serialization
         {
             var strExp = "NewEntity('my entity name1') + (NewEntityStatic('my entity name 2') + B - GraphExpression.Tests.Serialization.DeserializationExpressionTest.EntityFactoryDeserializerExtend.NewEntityStatic('B'))";
             var factory = new EntityFactoryDeserializerExtend();
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(strExp, factory);
             var entities = factory.Entities.Values.ToList();
 
@@ -168,7 +168,7 @@ namespace GraphExpression.Tests.Serialization
         {
             var strExp = "NewEntity('\"quote\"') + NewEntity('\\'quote\\'')";
             var factory = new EntityFactoryDeserializerExtend();
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(strExp, factory);
             var entities = factory.Entities.Values.ToList();
 
@@ -188,7 +188,7 @@ namespace GraphExpression.Tests.Serialization
         {
             var strExp = "A + null + C + NULL + \"null\"";
             var factory = new EntityFactoryDeserializerExtend();
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(strExp, factory);
             var entities = factory.Entities.Values.ToList();
 
@@ -209,7 +209,7 @@ namespace GraphExpression.Tests.Serialization
         {
             var strExp = "NewEntity('\\' \\\'')";
             var factory = new EntityFactoryDeserializerExtend();
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(strExp, factory);
             var entities = factory.Entities.Values.ToList();
 
@@ -235,13 +235,13 @@ namespace GraphExpression.Tests.Serialization
 
         private void TestDeserialize(string exIn, string exOut, bool deep = false)
         {
-            var serializer = new ExpressionDeserializer<CircularEntity>();
+            var serializer = new CircularEntityExpressionDeserializer<CircularEntity>();
             var root = serializer.Deserialize(exIn);
             var expectedOut = root.AsExpression(f => f.Children, deep).DefaultSerializer.Serialize();
             Assert.Equal(expectedOut, exOut);
         }
 
-        public class EntityFactoryDeserializerExtend : EntityFactoryDeserializer<CircularEntity>
+        public class EntityFactoryDeserializerExtend : CircularEntityFactory<CircularEntity>
         {
             public CircularEntity NewEntity(string name)
             {

@@ -12,7 +12,7 @@ namespace GraphExpression.Serialization
 
         public async Task<T> DeserializeAsync<T>(string expression)
         {
-            return await DeserializeAsync<T>(expression, new ComplexEntityFactoryDeserializer(typeof(T)));
+            return await DeserializeAsync<T>(expression, new ComplexEntityFactory(typeof(T)));
         }
 
         public object Deserialize(string expression, Type type = null)
@@ -22,31 +22,28 @@ namespace GraphExpression.Serialization
 
         public async Task<object> DeserializeAsync(string expression, Type type = null)
         {
-            return await DeserializeAsync(expression, new ComplexEntityFactoryDeserializer(type));
+            return await DeserializeAsync(expression, new ComplexEntityFactory(type));
         }
 
-        public T Deserialize<T>(string expression, ComplexEntityFactoryDeserializer factory)
+        public T Deserialize<T>(string expression, ComplexEntityFactory factory)
         {
             return DeserializeAsync<T>(expression, factory).Result;
         }
 
-        public async Task<T> DeserializeAsync<T>(string expression, ComplexEntityFactoryDeserializer factory)
+        public async Task<T> DeserializeAsync<T>(string expression, ComplexEntityFactory factory)
         {
             var root = await DeserializeAsync(expression, factory);
             return (T)root;
         }
 
-        public async Task<object> DeserializeAsync(string expression, ComplexEntityFactoryDeserializer factory)
+        public async Task<object> DeserializeAsync(string expression, ComplexEntityFactory factory)
         {
-            var deserializer = new ExpressionDeserializer<ItemDeserializer>();
-
-            var runner = deserializer.GetDelegate(expression, factory.GetType());
-            factory.DeserializationTime = DeserializationTime.Creation;
-            await runner(factory);
-
-            factory.DeserializationTime = DeserializationTime.AssignChildInParent;
+            var roslyn = new RoslynExpressionDeserializer<Entity>();
+            var runner = roslyn.GetDelegate(expression, factory.GetType());
             var root = await runner(factory);
-            return root?.Entity;
+
+            factory.Root = root;
+            return factory.Build().Value;
         }
     }
 }

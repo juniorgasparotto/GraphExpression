@@ -25,8 +25,7 @@ namespace GraphExpression.Tests.Serialization
         [Fact]
         public void DeserializeComplex_PrimitiveBoolean()
         {
-            var val = true;
-            var expressionStr = val.AsExpression().DefaultSerializer.Serialize();
+            var expressionStr = "\"Boolean: true\"";
             var deserializer = new ComplexEntityExpressionDeserializer();
             var deserialized = deserializer.Deserialize<bool>(expressionStr);
             Assert.True(deserialized);

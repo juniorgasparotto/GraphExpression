@@ -513,7 +513,7 @@ namespace GraphExpression.Tests.Serialization
 
             var expressionStr = obj.AsExpression().DefaultSerializer.Serialize();
 
-            var factory = new ComplexEntityFactoryDeserializer(obj.GetType());
+            var factory = new ComplexEntityFactory(obj.GetType());
             factory.AddMapType<Interface, ImplementAbstractAndInterface>();
             factory.AddMapType<AbstractClass, ImplementAbstractAndInterface>();
 
@@ -533,7 +533,7 @@ namespace GraphExpression.Tests.Serialization
                 B = new ImplementAbstractAndInterface { MyProp = 20 },
             };
 
-            var factory = new ComplexEntityFactoryDeserializer(obj.GetType());
+            var factory = new ComplexEntityFactory(obj.GetType());
             factory.IgnoreErrors = true;
 
             var expressionStr = obj.AsExpression().DefaultSerializer.Serialize();
@@ -543,8 +543,8 @@ namespace GraphExpression.Tests.Serialization
             Assert.Null(deserialized.A);
             Assert.Null(deserialized.B);
             Assert.Equal(2, factory.Errors.Count);
-            Assert.Equal($"An instance of type '{typeof(Interface).FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactoryDeserializer)}.{nameof(ComplexEntityFactoryDeserializer.MapTypes)}' configuration.", factory.Errors[0]);
-            Assert.Equal($"An instance of type '{typeof(AbstractClass).FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactoryDeserializer)}.{nameof(ComplexEntityFactoryDeserializer.MapTypes)}' configuration.", factory.Errors[1]);
+            Assert.Equal($"An instance of type '{typeof(Interface).FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactory)}.{nameof(ComplexEntityFactory.MapTypes)}' configuration.", factory.Errors[0]);
+            Assert.Equal($"An instance of type '{typeof(AbstractClass).FullName}' contains value, but not created. Make sure it is an interface or an abstract class, if so, set up a corresponding concrete class in the '{nameof(ComplexEntityFactory)}.{nameof(ComplexEntityFactory.MapTypes)}' configuration.", factory.Errors[1]);
         }
 
         [Fact]
