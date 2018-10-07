@@ -42,7 +42,7 @@ namespace GraphExpression.Serialization
         public async Task<T> DeserializeAsync(string expression, CircularEntityFactory<T> factory)
         {
             var roslyn = new RoslynExpressionDeserializer<T>();
-            var runner = roslyn.GetDelegate(expression, factory.GetType());
+            var runner = roslyn.GetDelegateExpression(expression, factory.GetType());
             return await runner(factory);
         }
     }

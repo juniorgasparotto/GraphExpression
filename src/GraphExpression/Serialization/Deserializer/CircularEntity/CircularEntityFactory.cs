@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GraphExpression
+namespace GraphExpression.Serialization
 {
     public class CircularEntityFactory<T> : IDeserializeFactory<T>
     {
@@ -14,7 +14,7 @@ namespace GraphExpression
             this.Entities = entities ?? new Dictionary<string, T>();
         }
 
-        #region IDeserializeFactory
+        #region IDeserializeFactory - used only in deserialize flow
 
         public T GetEntity(string name, int index)
         {

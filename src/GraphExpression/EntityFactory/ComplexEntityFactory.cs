@@ -18,7 +18,7 @@ namespace GraphExpression
         }
     }
 
-    public class ComplexEntityFactory : IDeserializeFactory<Entity>
+    public class ComplexEntityFactory : IDeserializeFactory<Entity>, IEntityFactory
     {
         private Dictionary<Type, Type> mapTypes;
         private List<string> errors;
@@ -31,7 +31,7 @@ namespace GraphExpression
         public List<object> ItemsDeserialize { get; set; }
 
         public Entity Root { get; set; }
-        public Type Type { get; }
+        public Type RootType { get; }
         public object Value => Root?.Value;
 
         public ComplexEntityFactory(Type type, Entity root = null)
@@ -40,9 +40,9 @@ namespace GraphExpression
             this.mapTypes = new Dictionary<Type, Type>();
             this.errors = new List<string>();
 
-            this.Type = type;
+            this.RootType = type;
             this.Root = root;
-            this.IsTyped = Type != null;
+            this.IsTyped = RootType != null;
             this.ItemsDeserialize = new List<object>
             {
                 // Get Entity (order is important - eg. ComplexEntityGetEntity < ArrayGetEntity)
@@ -74,7 +74,7 @@ namespace GraphExpression
             mapTypes.Add(typeof(TFrom), typeof(TTo));
         }
 
-        internal void AddError(string err)
+        public void AddError(string err)
         {
             errors.Add(err);
         }
@@ -129,7 +129,7 @@ namespace GraphExpression
             return this;
         }
 
-        #region IDeserializeFactory
+        #region IDeserializeFactory - used only in deserialize flow
 
         private Dictionary<int, Entity> entities;
         public IEnumerable<Entity> Entities { get => entities.Values; }

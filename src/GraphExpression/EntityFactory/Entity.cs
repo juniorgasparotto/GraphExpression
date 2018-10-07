@@ -21,7 +21,7 @@ namespace GraphExpression
         #endregion
 
         #region manage properties
-        public ComplexEntityFactory Factory { get; set; }
+        public IEntityFactory Factory { get; set; }
         public Entity Parent { get; set; }
         public IReadOnlyCollection<Entity> Children => children.Values;
         public Entity this[int index] => children.Values.ElementAt(index);
@@ -164,7 +164,7 @@ namespace GraphExpression
                     // with type associated
                     if (Parent == null)
                     {
-                        type = Factory.Type;
+                        type = Factory.RootType;
                     }
                     else
                     {

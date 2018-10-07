@@ -21,7 +21,7 @@ namespace GraphExpression.Serialization
             Assemblies = new List<Assembly>() { typeof(T).Assembly };
         }
 
-        public ScriptRunner<T> GetDelegate(string expression, Type typeFactory)
+        public ScriptRunner<T> GetDelegateExpression(string expression, Type typeFactory)
         {
             Validation.ArgumentNotNull(expression, nameof(expression));
             Validation.ArgumentNotNull(typeFactory, nameof(typeFactory));
