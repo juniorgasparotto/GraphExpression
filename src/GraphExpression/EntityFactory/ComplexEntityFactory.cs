@@ -36,6 +36,7 @@ namespace GraphExpression
 
         public ComplexEntityFactory(Type type, Entity root = null)
         {
+            this.entities = new Dictionary<int, Entity>();
             this.mapTypes = new Dictionary<Type, Type>();
             this.errors = new List<string>();
 
@@ -135,9 +136,6 @@ namespace GraphExpression
 
         public Entity GetEntity(string name, int index)
         {
-            if (this.entities == null)
-                this.entities = new Dictionary<int, Entity>();
-
             var item = new Entity(name);
             entities.Add(index, item);
             return item;
