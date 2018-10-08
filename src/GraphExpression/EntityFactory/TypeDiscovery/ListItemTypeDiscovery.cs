@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace GraphExpression
 {
-    public class ListItemGetType : IGetType
+    public class ListItemTypeDiscovery : ITypeDiscovery
     {
         public bool CanGetEntityType(Entity item)
         {

@@ -3,7 +3,7 @@ using GraphExpression.Utils;
 
 namespace GraphExpression
 {
-    public class MemberInfoGetType : IGetType
+    public class MemberInfoTypeDiscovery : ITypeDiscovery
     {
         public bool CanGetEntityType(Entity item)
         {

@@ -3,7 +3,7 @@ using System;
 
 namespace GraphExpression
 {
-    public class ArrayItemGetType : IGetType
+    public class ArrayItemTypeDiscovery : ITypeDiscovery
     {
         public bool CanGetEntityType(Entity item)
         {

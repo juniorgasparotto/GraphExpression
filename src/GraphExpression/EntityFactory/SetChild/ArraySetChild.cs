@@ -5,7 +5,7 @@ namespace GraphExpression
 {
     public class ArraySetChild : ISetChild
     {
-        public bool CanSetChild(Entity item, Entity child)
+        public bool CanSet(Entity item, Entity child)
         {
             return item.Type.IsArray && child.Name.StartsWith(Constants.INDEXER_START);
         }

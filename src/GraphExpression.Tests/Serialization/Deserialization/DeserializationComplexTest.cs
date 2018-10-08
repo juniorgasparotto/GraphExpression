@@ -266,6 +266,39 @@ namespace GraphExpression.Tests.Serialization
         }
 
         [Fact]
+        public void DeserializeComplex_AnonymousListObject_NoTypedToEntities()
+        {
+            var obj = new
+            {
+                A = 10,
+                B = "value",
+                C = new
+                {
+                    D = 10
+                }
+            };
+
+            var expressionStr = obj.AsExpression().DefaultSerializer.Serialize();
+            var deserializer = new CircularEntityExpressionDeserializer<Entity>();
+            var deserialized = deserializer.Deserialize(expressionStr);
+
+            Assert.StartsWith("<>f", deserialized.Name);
+            Assert.Null(deserialized.Value);
+
+            Assert.Equal("A", deserialized["A"].Name);
+            Assert.Equal("10", deserialized["A"].Value);
+
+            Assert.Equal("B", deserialized["B"].Name);
+            Assert.Equal("value", deserialized["B"].Value);
+
+            Assert.Equal("C", deserialized["C"].Name);
+            Assert.Null(deserialized["C"].Value);
+
+            Assert.Equal("D", deserialized["C"]["D"].Name);
+            Assert.Equal("10", deserialized["C"]["D"].Value);
+        }
+
+        [Fact]
         public void DeserializeComplex_AnonymousListObject_Typed()
         {
             var listAnonymous = new

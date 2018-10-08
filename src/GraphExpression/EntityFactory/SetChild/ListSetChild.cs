@@ -5,7 +5,7 @@ namespace GraphExpression
 {
     public class ListSetChild : ISetChild
     {
-        public bool CanSetChild(Entity item, Entity child)
+        public bool CanSet(Entity item, Entity child)
         {
             return !item.Type.IsArray 
                 && item.Value is IList

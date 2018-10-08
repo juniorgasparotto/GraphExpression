@@ -7,7 +7,7 @@ namespace GraphExpression
 {
     public interface IEntityReader
     {
-        bool CanRead(ComplexExpressionBuilder builder, object entity);
-        IEnumerable<ComplexEntity> GetChildren(ComplexExpressionBuilder builder, Expression<object> expression, object entity);
+        bool CanRead(ComplexExpressionFactory builder, object entity);
+        IEnumerable<ComplexEntity> GetChildren(ComplexExpressionFactory builder, Expression<object> expression, object entity);
     }
 }

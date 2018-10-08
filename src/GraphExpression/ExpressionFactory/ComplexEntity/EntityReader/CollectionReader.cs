@@ -5,12 +5,12 @@ namespace GraphExpression
 {
     public class CollectionReader : IEntityReader
     {
-        public bool CanRead(ComplexExpressionBuilder builder, object entity)
+        public bool CanRead(ComplexExpressionFactory builder, object entity)
         {
             return entity is System.Collections.ICollection;
         }
 
-        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionFactory builder, Expression<object> expression, object entity)
         {
             var list = (System.Collections.ICollection)entity;
             var enumerator = list.GetEnumerator();

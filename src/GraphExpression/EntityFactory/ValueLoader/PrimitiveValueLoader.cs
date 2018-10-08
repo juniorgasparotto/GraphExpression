@@ -2,9 +2,9 @@
 
 namespace GraphExpression
 {
-    public class PrimitivesGetValue : IGetValue
+    public class PrimitiveValueLoader : IValueLoader
     {
-        public bool CanGetValue(Entity item)
+        public bool CanLoad(Entity item)
         {
             return item.IsPrimitive;
         }

@@ -1,8 +1,8 @@
 ﻿namespace GraphExpression
 {
-    public interface IGetValue
+    public interface IValueLoader
     {
-        bool CanGetValue(Entity item);
+        bool CanLoad(Entity item);
         object GetValue(Entity item);
     }
 }

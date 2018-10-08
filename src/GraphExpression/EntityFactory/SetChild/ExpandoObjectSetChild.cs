@@ -6,7 +6,7 @@ namespace GraphExpression
 {
     public class ExpandoObjectSetChild : ISetChild
     {
-        public bool CanSetChild(Entity item, Entity child)
+        public bool CanSet(Entity item, Entity child)
         {
             return ReflectionUtils.IsAnonymousType(item.Type) || item.Type == typeof(ExpandoObject);
         }

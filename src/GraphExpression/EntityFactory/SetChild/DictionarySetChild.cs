@@ -5,7 +5,7 @@ namespace GraphExpression
 {
     public class DictionarySetChild : ISetChild
     {
-        public bool CanSetChild(Entity item, Entity child)
+        public bool CanSet(Entity item, Entity child)
         {
             return item.Value is IDictionary && (child.Name.StartsWith(Constants.INDEXER_START) || IsIgnoredProperty(child));
         }

@@ -6,9 +6,9 @@ using System.Runtime.Serialization;
 
 namespace GraphExpression
 {
-    public class ComplexEntityGetValue : IGetValue
+    public class ComplexEntityValueLoader : IValueLoader
     {
-        public bool CanGetValue(Entity item)
+        public bool CanLoad(Entity item)
         {
             return item.ComplexEntityId != null;
         }

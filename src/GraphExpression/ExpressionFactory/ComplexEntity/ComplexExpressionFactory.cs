@@ -6,14 +6,14 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class ComplexExpressionBuilder
+    public class ComplexExpressionFactory
     {
         public List<IEntityReader> Readers { get; private set; }
         public List<IMemberReader> MemberReaders { get; private set; }
         public Func<object, IEnumerable<PropertyInfo>> GetProperties { get; set; }
         public Func<object, IEnumerable<FieldInfo>> GetFields { get; set; }
 
-        public ComplexExpressionBuilder(bool addDefaultConfig = true)
+        public ComplexExpressionFactory(bool addDefaultConfig = true)
         {
             if (addDefaultConfig)
             {

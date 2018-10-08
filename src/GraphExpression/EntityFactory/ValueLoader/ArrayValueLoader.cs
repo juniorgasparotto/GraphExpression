@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace GraphExpression
 {
-    public class ArrayGetValue : IGetValue
+    public class ArrayValueLoader : IValueLoader
     {
-        public bool CanGetValue(Entity item)
+        public bool CanLoad(Entity item)
         {
             return item.Type.IsArray;
         }

@@ -5,7 +5,7 @@ namespace GraphExpression
 {
     public class MemberInfoSetChild : ISetChild
     {
-        public bool CanSetChild(Entity item, Entity child)
+        public bool CanSet(Entity item, Entity child)
         {
             return child.MemberInfo != null;
         }

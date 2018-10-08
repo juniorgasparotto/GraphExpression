@@ -8,7 +8,7 @@ namespace GraphExpression
 {
     public class PropertyReader : IMemberReader
     {
-        public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionFactory builder, Expression<object> expression, object entity)
         {
             // get all propertis: 
             // 1) ignore indexed (this[...]) with GetIndexParameters > 0

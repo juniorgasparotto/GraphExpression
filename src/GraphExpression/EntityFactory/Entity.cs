@@ -169,12 +169,11 @@ namespace GraphExpression
                     else
                     {
                         var itemDeserialize = Factory
-                            .ItemsDeserialize
-                            .OfType<IGetType>()
+                            .TypeDiscovery
                             .LastOrDefault(f => f.CanGetEntityType(this));
 
                         if (itemDeserialize == null)
-                            throw new Exception($"No class of type {nameof(IGetType)} was found to {nameof(GetValueType)}.");
+                            throw new Exception($"No class of type {nameof(ITypeDiscovery)} was found to {nameof(GetValueType)}.");
 
                         type = itemDeserialize.GetEntityType(this);
                     }
@@ -220,9 +219,8 @@ namespace GraphExpression
                 }
 
                 var itemDeserialize = Factory
-                    .ItemsDeserialize
-                    .OfType<IGetValue>()
-                    .LastOrDefault(f => f.CanGetValue(this));
+                    .ValueLoader
+                    .LastOrDefault(f => f.CanLoad(this));
 
                 this.value = itemDeserialize?.GetValue(this);
             }
@@ -238,9 +236,8 @@ namespace GraphExpression
                 propertyRead[nameof(GetMemberInfo)] = true;
 
                 var itemDeserialize = Factory
-                    .ItemsDeserialize
-                    .OfType<IGetMemberInfo>()
-                    .LastOrDefault(f => f.CanGetMemberInfo(this));
+                    .MemberInfoDiscovery
+                    .LastOrDefault(f => f.CanDiscovery(this));
 
                 this.memberInfo = itemDeserialize?.GetMemberInfo(this);
             }

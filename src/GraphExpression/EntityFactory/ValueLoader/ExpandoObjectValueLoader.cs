@@ -3,9 +3,9 @@ using System.Dynamic;
 
 namespace GraphExpression
 {
-    public class ExpandoObjectGetValue : IGetValue
+    public class ExpandoObjectValueLoader : IValueLoader
     {
-        public bool CanGetValue(Entity item)
+        public bool CanLoad(Entity item)
         {
             return ReflectionUtils.IsAnonymousType(item.Type) || item.Type == typeof(ExpandoObject);
         }

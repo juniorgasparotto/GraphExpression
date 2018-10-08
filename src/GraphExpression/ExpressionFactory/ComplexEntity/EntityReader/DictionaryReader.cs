@@ -9,12 +9,12 @@ namespace GraphExpression
 {
     public class DictionaryReader : IEntityReader
     {
-        public bool CanRead(ComplexExpressionBuilder builder, object entity)
+        public bool CanRead(ComplexExpressionFactory builder, object entity)
         {
             return entity is IDictionary || entity is DictionaryEntry;
         }
 
-        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionFactory builder, Expression<object> expression, object entity)
         {
             if (entity is IDictionary dic)
             {

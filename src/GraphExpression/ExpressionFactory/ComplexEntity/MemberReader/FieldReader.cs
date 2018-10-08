@@ -8,7 +8,7 @@ namespace GraphExpression
 {
     public class FieldReader : IMemberReader
     {
-        public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionFactory builder, Expression<object> expression, object entity)
         {
             var fields = builder.GetFields(entity);
             foreach (var f in fields)

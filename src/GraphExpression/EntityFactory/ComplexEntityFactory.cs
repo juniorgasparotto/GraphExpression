@@ -20,15 +20,21 @@ namespace GraphExpression
 
     public class ComplexEntityFactory : IDeserializeFactory<Entity>, IEntityFactory
     {
-        private Dictionary<Type, Type> mapTypes;
-        private List<string> errors;
+        private readonly Dictionary<Type, Type> mapTypes;
+        private readonly List<string> errors;
+        private readonly List<Entity> entities;
 
-        public bool IsTyped { get; private set; }        
+        public IReadOnlyList<Entity> Entities { get => entities; }
+        public bool IsTyped { get; }
         public IReadOnlyDictionary<Type, Type> MapTypes { get => mapTypes; }
 
         public IReadOnlyList<string> Errors { get => errors; }
         public bool IgnoreErrors { get; set; }
-        public List<object> ItemsDeserialize { get; set; }
+
+        public List<ITypeDiscovery> TypeDiscovery { get; }
+        public List<IValueLoader> ValueLoader { get; }
+        public List<IMemberInfoDiscovery> MemberInfoDiscovery { get; }
+        public List<ISetChild> SetChildAction { get; }
 
         public Entity Root { get; set; }
         public Type RootType { get; }
@@ -36,36 +42,45 @@ namespace GraphExpression
 
         public ComplexEntityFactory(Type type, Entity root = null)
         {
-            this.entities = new Dictionary<int, Entity>();
+            this.entities = new List<Entity>();
             this.mapTypes = new Dictionary<Type, Type>();
             this.errors = new List<string>();
 
             this.RootType = type;
             this.Root = root;
             this.IsTyped = RootType != null;
-            this.ItemsDeserialize = new List<object>
+            this.ValueLoader = new List<IValueLoader>
             {
                 // Get Entity (order is important - eg. ComplexEntityGetEntity < ArrayGetEntity)
-                new PrimitivesGetValue(),
-                new ComplexEntityGetValue(),
-                new ArrayGetValue(),
-                new ExpandoObjectGetValue(),
+                new PrimitiveValueLoader(),
+                new ComplexEntityValueLoader(),
+                new ArrayValueLoader(),
+                new ExpandoObjectValueLoader()
+            };
 
+            this.MemberInfoDiscovery = new List<IMemberInfoDiscovery>
+            { 
                 // Member info
-                new DefaultGetMemberInfo(),
+                new MemberInfoDiscovery(),
+            };
 
+            this.SetChildAction = new List<ISetChild>()
+            { 
                 // Set child (order is important)
                 new MemberInfoSetChild(),
                 new DictionarySetChild(),
                 new ExpandoObjectSetChild(),
                 new ArraySetChild(),
                 new ListSetChild(),
+            };
 
+            this.TypeDiscovery = new List<ITypeDiscovery>
+            {
                 // Get Entity type (order is important)
-                new DictionaryItemGetType(),
-                new MemberInfoGetType(),
-                new ListItemGetType(),
-                new ArrayItemGetType()
+                new DictionaryItemTypeDiscovery(),
+                new MemberInfoTypeDiscovery(),
+                new ListItemTypeDiscovery(),
+                new ArrayItemTypeDiscovery()
             };
         }
 
@@ -110,15 +125,20 @@ namespace GraphExpression
                         f.Source.Factory = this;
                         f.Target.Factory = this;
 
+                        // Add in list all entities occurences
+                        // its is necessary to discovery repeat entities with
+                        // same ID
+                        this.entities.Add(f.Source);
+                        this.entities.Add(f.Target);
+
                         return false;
                     });
 
                     foreach (var e in Root.Operations)
                     {
                         var itemDeserialize = this
-                                    .ItemsDeserialize
-                                    .OfType<ISetChild>()
-                                    .LastOrDefault(f => f.CanSetChild(e.Source, e.Target));
+                                    .SetChildAction
+                                    .LastOrDefault(f => f.CanSet(e.Source, e.Target));
 
                         itemDeserialize?.SetChild(e.Source, e.Target);
                         e.Executed = true;
@@ -130,15 +150,10 @@ namespace GraphExpression
         }
 
         #region IDeserializeFactory - used only in deserialize flow
-
-        private Dictionary<int, Entity> entities;
-        public IEnumerable<Entity> Entities { get => entities.Values; }
-
+              
         public Entity GetEntity(string name, int index)
         {
-            var item = new Entity(name);
-            entities.Add(index, item);
-            return item;
+            return new Entity(name);
         }
 
         #endregion

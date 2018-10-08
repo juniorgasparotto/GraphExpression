@@ -9,12 +9,12 @@ namespace GraphExpression
 {
     public class DefaultReader : IEntityReader
     {
-        public bool CanRead(ComplexExpressionBuilder builder, object entity)
+        public bool CanRead(ComplexExpressionFactory builder, object entity)
         {
             return !ReflectionUtils.IsSystemType(entity.GetType());
         }
 
-        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionFactory builder, Expression<object> expression, object entity)
         {
             // read members
             foreach (var memberReader in builder.MemberReaders)

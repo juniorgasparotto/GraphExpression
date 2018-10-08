@@ -25,7 +25,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
         public class MethodReader : IMemberReader
         {
-            public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionBuilder builder, GraphExpression.Expression<object> expression, object entity)
+            public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionFactory builder, GraphExpression.Expression<object> expression, object entity)
             {
                 if (entity is Test)
                 {
@@ -71,7 +71,7 @@ namespace GraphExpression.Tests.MatrixGenerator
         [Fact]
         public void CreateCustomSerialize_ReturnExpressionAsString()
         {
-            var builder = new ComplexExpressionBuilder();
+            var builder = new ComplexExpressionFactory();
             builder.MemberReaders.Add(new MethodReader());
 
             var test = new Test()

@@ -7,9 +7,9 @@ namespace GraphExpression
 {
     public static class ComplexExpressionExtensions
     {
-        public static Expression<object> AsExpression(this object entityRoot, ComplexExpressionBuilder builder = null, bool deep = false)
+        public static Expression<object> AsExpression(this object entityRoot, ComplexExpressionFactory builder = null, bool deep = false)
         {
-            builder = builder ?? new ComplexExpressionBuilder();
+            builder = builder ?? new ComplexExpressionFactory();
             return builder.Build(entityRoot, deep);
         }
     }

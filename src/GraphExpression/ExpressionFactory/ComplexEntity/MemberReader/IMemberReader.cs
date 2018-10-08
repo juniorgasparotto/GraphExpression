@@ -7,6 +7,6 @@ namespace GraphExpression
 {
     public interface IMemberReader
     {
-        IEnumerable<ComplexEntity> GetMembers(ComplexExpressionBuilder builder, Expression<object> expression, object entity);
+        IEnumerable<ComplexEntity> GetMembers(ComplexExpressionFactory builder, Expression<object> expression, object entity);
     }
 }

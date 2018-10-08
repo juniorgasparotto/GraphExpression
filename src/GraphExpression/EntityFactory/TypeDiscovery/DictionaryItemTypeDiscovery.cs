@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GraphExpression
 {
-    public class DictionaryItemGetType : IGetType
+    public class DictionaryItemTypeDiscovery : ITypeDiscovery
     {
         public bool CanGetEntityType(Entity item)
         {

@@ -2,9 +2,9 @@
 
 namespace GraphExpression
 {
-    public interface IGetMemberInfo
+    public interface IMemberInfoDiscovery
     {
-        bool CanGetMemberInfo(Entity item);
+        bool CanDiscovery(Entity item);
         MemberInfo GetMemberInfo(Entity item);
     }
 }

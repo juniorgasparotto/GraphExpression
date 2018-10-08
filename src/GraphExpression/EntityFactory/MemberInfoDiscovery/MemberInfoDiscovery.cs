@@ -6,9 +6,9 @@ using System.Reflection;
 
 namespace GraphExpression
 {
-    public class DefaultGetMemberInfo : IGetMemberInfo
+    public class MemberInfoDiscovery : IMemberInfoDiscovery
     {
-        public bool CanGetMemberInfo(Entity item)
+        public bool CanDiscovery(Entity item)
         {
             return item.Factory.IsTyped
                   && item.Name != null

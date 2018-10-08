@@ -2,7 +2,7 @@
 
 namespace GraphExpression
 {
-    public interface IGetType
+    public interface ITypeDiscovery
     {
         bool CanGetEntityType(Entity item);
         Type GetEntityType(Entity item);

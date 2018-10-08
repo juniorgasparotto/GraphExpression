@@ -89,18 +89,20 @@ namespace GraphExpression.Tests.EntityFactory
         [Fact]
         public void FactoryTyped_CreateArray()
         {
-            var root = GetEntity("Class1[].55467396") 
+            var root = GetEntity("Class1[].55467396")
                             + (GetEntity("[0].56235422")
-                                + GetEntity("Prop1: 1")) 
-                            + (GetEntity("[1].31423778") 
-                                + GetEntity("Prop1: 2")) 
-                            + (GetEntity("[2].29279655") 
-                                + GetEntity("Prop1: 3"));
+                                + GetEntity("Prop1: 1"))
+                            + (GetEntity("[1].31423778")
+                                + GetEntity("Prop1: 2"))
+                            + (GetEntity("[2].29279655")
+                                + GetEntity("Prop1: 3"))
+                            + GetEntity("[3].56235422"); // Repeat 56235422
 
             var value = new ComplexEntityFactory<Class1[]>(root).Build().Value;            
             Assert.Equal(1, value[0].Prop1);
             Assert.Equal(2, value[1].Prop1);
             Assert.Equal(3, value[2].Prop1);
+            Assert.Same(value[0], value[3]);
         }
 
         [Fact]

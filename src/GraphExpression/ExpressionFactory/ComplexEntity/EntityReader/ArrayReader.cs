@@ -8,12 +8,12 @@ namespace GraphExpression
 {
     public class ArrayReader : IEntityReader
     {
-        public bool CanRead(ComplexExpressionBuilder builder, object entity)
+        public bool CanRead(ComplexExpressionFactory builder, object entity)
         {
             return entity is Array;
         }
 
-        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionBuilder builder, Expression<object> expression, object entity)
+        public IEnumerable<ComplexEntity> GetChildren(ComplexExpressionFactory builder, Expression<object> expression, object entity)
         {
             var arrayList = (Array)entity;
             var list = new List<ArrayItemEntity>();
