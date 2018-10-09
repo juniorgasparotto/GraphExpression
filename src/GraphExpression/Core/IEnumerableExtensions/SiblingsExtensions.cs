@@ -7,28 +7,28 @@ namespace GraphExpression
 {
     public static class SiblingsExtensions
     {
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int? positionStart = null, int? positionEnd = null)
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
         {
             foreach (var reference in references)
                 foreach (var item in reference.Siblings(filter, stop, direction, positionStart, positionEnd))
                     yield return item;
         }
 
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Both, int? positionStart = null, int? positionEnd = null)
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
         {
             foreach (var reference in references)
                 foreach (var item in reference.Siblings(filter, stop, direction, positionStart, positionEnd))
                     yield return item;
         }
 
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Both)
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
         {
             foreach (var reference in references)
                 foreach (var item in reference.Siblings(positionStart, positionEnd, direction))
                     yield return item;
         }
 
-        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, int positionEnd, SiblingDirection direction = SiblingDirection.Both)
+        public static IEnumerable<EntityItem<T>> Siblings<T>(this IEnumerable<EntityItem<T>> references, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
         {
             foreach (var reference in references)
                 foreach (var item in reference.Siblings(positionEnd, direction))
@@ -37,14 +37,14 @@ namespace GraphExpression
 
         #region SiblingsUntil
 
-        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Both)
+        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
         {
             foreach (var reference in references)
                 foreach (var item in reference.SiblingsUntil(stop, filter, direction))
                     yield return item;
         }
 
-        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Both)
+        public static IEnumerable<EntityItem<T>> SiblingsUntil<T>(this IEnumerable<EntityItem<T>> references, EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
         {
             foreach (var reference in references)
                 foreach (var item in reference.SiblingsUntil(stop, filter, direction))

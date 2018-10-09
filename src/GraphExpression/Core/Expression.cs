@@ -5,34 +5,58 @@ using System.Linq;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Represents an expression of graphs
+    /// </summary>
+    /// <typeparam name="T">Type of real entity</typeparam>
     public partial class Expression<T> : List<EntityItem<T>>
     {
-        /*
-         * This control of which algorithm is used for study purposes only. 
-         * The Recursive Build feature helps in understanding the code and 
-         * introduces new contributors. However, the idea is that "buildNonRecursive" 
-         * is the default, although it is more complex, is more flexibility and 
-         * perhaps greater performance.
-         */
-        public static bool EnableNonRecursiveAlgorithm = true;
-
-        /*
-         * This functionality is designed to always exist, however, it is not essential 
-         * to the concept of graph expression and can be disabled in general if you 
-         * need to improve performance.
-         */
-        public static bool EnableGraphInfo = true;
-
         private readonly Func<Expression<T>, EntityItem<T>, IEnumerable<EntityItem<T>>> getChildrenCallback;
 
-        public bool Deep { get; }
-        public ISerialize<T> DefaultSerializer { get; set; }
-        public Graph<T> Graph { get; private set; }        
+        /// <summary>
+        /// This control of which algorithm is used for study purposes only.
+        /// The Recursive Build feature helps in understanding the code and 
+        /// introduces new contributors.However, the idea is that "buildNonRecursive" 
+        /// is the default, although it is more complex, is more flexibility and
+        /// perhaps greater performance.
+        /// </summary>
+        public static bool EnableNonRecursiveAlgorithm = true;
 
+        /// <summary>
+        /// This functionality is designed to always exist, however, it is not essential
+        /// to the concept of graph expression and can be disabled in general if you
+        /// need to improve performance.
+        /// </summary>
+        public static bool EnableGraphInfo = true;
+
+        /// <summary>
+        /// Determines whether the search will be deep (TRUE)
+        /// </summary>
+        public bool Deep { get; }
+
+        /// <summary>
+        /// Represents the default serializer
+        /// </summary>
+        public ISerialize<T> DefaultSerializer { get; set; }
+
+        /// <summary>
+        /// Represents an instance with some information about the graph
+        /// </summary>
+        public Graph<T> Graph { get; private set; }
+
+        /// <summary>
+        /// Creates an instance that represents an expression of graphs that will be mounted manually.
+        /// </summary>
         public Expression()
         {
         }
 
+        /// <summary>
+        /// Creates an instance that represents an expression of graphs that will be mounted automatically
+        /// </summary>
+        /// <param name="getRootCallback">Function to retriave the EntityItem for Root entity</param>
+        /// <param name="childrenCallback">Function to retriave the children of the current entity</param>
+        /// <param name="deep">Determines whether the search will be deep (TRUE)</param>
         public Expression(Func<Expression<T>, EntityItem<T>> getRootCallback, Func<Expression<T>, EntityItem<T>, IEnumerable<EntityItem<T>>> childrenCallback, bool deep = false)
         {
             this.Deep = deep;
@@ -48,6 +72,12 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Creates an instance that represents an expression of graphs that will be mounted automatically
+        /// </summary>
+        /// <param name="root">Represents the root entity that will start every expression.</param>
+        /// <param name="childrenCallback">Function to retriave the children of the current entity</param>
+        /// <param name="deep">Determines whether the search will be deep (TRUE)</param>
         public Expression(T root, Func<T, IEnumerable<T>> childrenCallback, bool deep = false)
         {
             this.Deep = deep;
@@ -66,6 +96,11 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// A method for assisting navigation within an expression of graphs. This method will trigger the correct events for each start and end iteration of each entity.
+        /// </summary>
+        /// <param name="beginGroupExpressionCallback">Triggers when you start the iteration in an entity</param>
+        /// <param name="endGroupExpressionCallback">Triggers when the iteration ends in an entity</param>
         public void IterationAll(Action<EntityItem<T>> beginGroupExpressionCallback, Action<EntityItem<T>> endGroupExpressionCallback)
         {
             var typeOfItem = typeof(EntityItem<T>);
@@ -133,6 +168,11 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Returns the serializer converted to "S"
+        /// </summary>
+        /// <typeparam name="S">Serializer Type to cast</typeparam>
+        /// <returns>Converted serializer Type</returns>
         public S GetSerializer<S>()
         {
             return (S)DefaultSerializer;
