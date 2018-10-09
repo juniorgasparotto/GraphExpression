@@ -653,6 +653,7 @@ namespace GraphExpression.Tests.Serialization
         //    var json = Newtonsoft.Json.JsonConvert.SerializeObject(a);
         //    json = "{\"Name\":\"A\",\"Count\":3,\"Children\":[{\"Name\":\"B\",\"Count\":3,\"Children\":[{\"Name\":\"C\",\"Count\":0,\"Children\":[]},{\"Name\":\"J\",\"Count\":2,\"Children\":[{\"Name\":\"I\",\"Count\":4,\"Children\":[{\"Name\":\"H\",\"Count\":0,\"Children\":[]},{\"Name\":\"S\",\"Count\":0,\"Children\":[]},{\"Name\":\"W\",\"Count\":0,\"Children\":[]},{\"Name\":\"Y\",\"Count\":0,\"Children\":[]}]},{\"Name\":\"L\",\"Count\":0,\"Children\":[]}]},{\"Name\":\"S\",\"Count\":0,\"Children\":[]}]},{\"Name\":\"K\",\"Count\":0,\"Children\":[]},{\"Name\":\"D\",\"Count\":6,\"Children\":[{\"Name\":\"E\",\"Count\":0,\"Children\":[]},{\"Name\":\"P\",\"Count\":2,\"Children\":[{\"Name\":\"U\",\"Count\":1,\"Children\":[{\"Name\":\"Y\",\"Count\":0,\"Children\":[]}]},{\"Name\":\"R\",\"Count\":0,\"Children\":[]}]},{\"Name\":\"O\",\"Count\":0,\"Children\":[]},{\"Name\":\"Q\",\"Count\":0,\"Children\":[]},{\"Name\":\"S\",\"Count\":0,\"Children\":[]},{\"Name\":\"V\",\"Count\":0,\"Children\":[]}]}]}";
         //    //json = "{\"Prop1\":20000,\"Prop2\":200,\"Prop4\":10000,\"PropNoBackingField\":2}";
+        //    var tokens = JsonConvert.DeserializeObject(json);
 
         //    List<string> errors = new List<string>();
         //    var jsonObj = JsonConvert.DeserializeObject<CircularEntity>(json,

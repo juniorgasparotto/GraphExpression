@@ -37,12 +37,22 @@ namespace GraphExpression
         public string ValueRaw { get; private set; }
         public bool IsPrimitive { get; private set; }
         public string ComplexEntityId { get; private set; }
-        
+
         public Entity(string raw)
         {
             this.children = new Dictionary<string, Entity>();
             this.Raw = raw;
             this.ParseRaw();
+        }
+
+        public Entity(string name, string value)
+            : this($"{name}: {value}")
+        {
+        }
+
+        public Entity(int complexEntityId) 
+            : this(complexEntityId.ToString())
+        {
         }
 
         public static Entity operator +(Entity a, Entity b)

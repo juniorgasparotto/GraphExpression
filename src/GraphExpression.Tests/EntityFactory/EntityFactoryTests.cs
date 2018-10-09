@@ -10,9 +10,9 @@ namespace GraphExpression.Tests.EntityFactory
         [Fact]
         public void FactoryNonTyped_CreateTree()
         {
-            var A = GetEntity("A.123") + (GetEntity("B: valueB") + GetEntity("C: valueC"));
+            var A = GetEntity(123) + (GetEntity("B: valueB") + GetEntity("C", "valueC"));
 
-            TestEntity(A, "A", null, "123", false, "A.123");
+            TestEntity(A, "123", null, "123", false, "123");
             TestEntity(A["B"], "B", "valueB", null, true, "B: valueB");
             TestEntity(A["B"]["C"], "C", "valueC", null, true, "C: valueC");
             Assert.Same(A["B"], A[0]);
@@ -138,6 +138,16 @@ namespace GraphExpression.Tests.EntityFactory
         private Entity GetEntity(string name)
         {
             return new Entity(name);
+        }
+
+        private Entity GetEntity(int complexEntityId)
+        {
+            return new Entity(complexEntityId);
+        }
+
+        private Entity GetEntity(string name, string value)
+        {
+            return new Entity(name, value);
         }
 
         #region auxs 
