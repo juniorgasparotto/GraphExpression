@@ -6,13 +6,23 @@ using System.Linq;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Represents a path within the graph
+    /// </summary>
+    /// <typeparam name="T">Type of real entity</typeparam>
     public class Path<T>
     {
         private readonly EntityItem<T> entityItem;
         private string identity;
 
+        /// <summary>
+        /// All items from this path
+        /// </summary>
         public IEnumerable<EntityItem<T>> Items { get; }
 
+        /// <summary>
+        /// Path ID. The ID is generated using the entity ID of the first entity from the path to the last one in the format: [1].[2].[3]
+        /// </summary>
         public string Identity
         {
             get
@@ -30,6 +40,9 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Type of path
+        /// </summary>
         public PathType PathType
         {
             get
@@ -57,6 +70,10 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Creates a path for a given entity
+        /// </summary>
+        /// <param name="entityItem">Entity that will be part of the path</param>
         public Path(EntityItem<T> entityItem)
         {            
             this.entityItem = entityItem;
@@ -75,6 +92,11 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Checks whether a path exists within this path.
+        /// </summary>
+        /// <param name="pathTest">Path to verify</param>
+        /// <returns>Return TRUE if exists</returns>
         public bool ContainsPath(Path<T> pathTest)
         {
             if (this.Identity.Contains(pathTest.Identity))
@@ -82,6 +104,11 @@ namespace GraphExpression
             return false;
         }
 
+        /// <summary>
+        /// Checks if two paths are equal
+        /// </summary>
+        /// <param name="obj">Path to verify</param>
+        /// <returns>Return TRUE if are equals</returns>
         public bool AreEquals(Path<T> obj)
         {
             if (ReferenceEquals(obj, null))
@@ -91,6 +118,10 @@ namespace GraphExpression
 
         #region Overrides
 
+        /// <summary>
+        /// Path to string
+        /// </summary>
+        /// <returns>Path to string</returns>
         public override string ToString()
         {
             var output = "";

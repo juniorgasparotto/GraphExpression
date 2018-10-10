@@ -2,15 +2,33 @@
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// It represents a vertex in the concept of graphs.
+    /// </summary>
+    /// <typeparam name="T">Type of real entity</typeparam>
     public class Vertex<T>
     {
         private List<EntityItem<T>> parents;
         private List<EntityItem<T>> children;
 
+        /// <summary>
+        /// Vertex ID
+        /// </summary>
         public long Id { get; private set; }
+
+        /// <summary>
+        /// Real entity
+        /// </summary>
         public T Entity { get; private set; }
+
+        /// <summary>
+        /// Determines the number of occurrences of an entity within the graph
+        /// </summary>
         public int CountVisited { get; set; }
 
+        /// <summary>
+        /// Contains all the parents of an entity within the graph
+        /// </summary>
         public IReadOnlyList<EntityItem<T>> Parents
         { 
             get 
@@ -19,6 +37,9 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Contains all the child of an entity within the graph
+        /// </summary>
         public IReadOnlyList<EntityItem<T>> Children
         {
             get
@@ -27,7 +48,9 @@ namespace GraphExpression
             }
         }
 
-        // Indegrees (number of parents) - (Grau de entrada/numero de pais)
+        /// <summary>
+        /// Indegrees (number of parents) - (Grau de entrada/numero de pais)
+        /// </summary>
         public int Indegrees
         {
             get
@@ -36,7 +59,9 @@ namespace GraphExpression
             }
         }
 
-        // Outdegrees (number of children) - (Grau de saída/numero de filhos)
+        /// <summary>
+        /// Outdegrees (number of children) - (Grau de saída/numero de filhos) 
+        /// </summary>
         public int Outdegrees
         {
             get
@@ -45,7 +70,9 @@ namespace GraphExpression
             }
         }
 
-        // Degrees (Grau em português)
+        /// <summary>
+        /// Degrees (Grau em português) 
+        /// </summary>
         public int Degrees
         {
             get
@@ -54,7 +81,9 @@ namespace GraphExpression
             }
         }
 
-        // Leaf (Folha em português), Sorvedouro (no children)
+        /// <summary>
+        /// Leaf (Folha em português), Sorvedouro (no children) 
+        /// </summary>
         public bool IsSink
         {
             get
@@ -65,7 +94,9 @@ namespace GraphExpression
             }
         }
 
-        // Source (no parents/root)
+        /// <summary>
+        /// Source (no parents/root)  
+        /// </summary>
         public bool IsSource
         {
             get
@@ -76,7 +107,9 @@ namespace GraphExpression
             }
         }
 
-        // Isolated (no parents and no children)
+        /// <summary>
+        /// Isolated (no parents and no children)  
+        /// </summary>
         public bool IsIsolated
         {
             get
@@ -87,6 +120,11 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Creates a new vertex for an entity
+        /// </summary>
+        /// <param name="entity">Real entity</param>
+        /// <param name="id">Entity ID</param>
         public Vertex(T entity, long id)
         {
             this.Id = id;
@@ -95,6 +133,11 @@ namespace GraphExpression
             this.children = new List<EntityItem<T>>();
         }
 
+        /// <summary>
+        /// Verify if two vertex are equals
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public bool AreEquals(Vertex<T> obj)
         {
             if (ReferenceEquals(obj, null))
@@ -103,6 +146,10 @@ namespace GraphExpression
             return this.Entity?.Equals(obj.Entity) == true;
         }
 
+        /// <summary>
+        /// Add a new parent in this vertex
+        /// </summary>
+        /// <param name="parent">Parent to add</param>
         public void AddParent(EntityItem<T> parent)
         {
             // if is Root parent is null
@@ -110,6 +157,10 @@ namespace GraphExpression
                 this.parents.Add(parent);
         }
 
+        /// <summary>
+        /// Add a new child in this vertex
+        /// </summary>
+        /// <param name="child">Child to add</param>
         public void AddChild(EntityItem<T> child)
         {
             if (child != null)
@@ -118,6 +169,10 @@ namespace GraphExpression
 
         #region Overrides
 
+        /// <summary>
+        ///  Vertex to string
+        /// </summary>
+        /// <returns>Vertex to string</returns>
         public override string ToString()
         {
             return Entity?.ToString();

@@ -8,6 +8,9 @@ using GraphExpression.Utils;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Class that represents a entity in an expression: new Entity("A") + new Entity("B")
+    /// </summary>
     [DebuggerDisplay(@"\{{Raw}\}")]
     public class Entity
     {
@@ -21,23 +24,87 @@ namespace GraphExpression
         #endregion
 
         #region manage properties
+
+        /// <summary>
+        /// Determines the complex factory
+        /// </summary>
         public IEntityFactory Factory { get; set; }
+
+        /// <summary>
+        /// Parent entity
+        /// </summary>
         public Entity Parent { get; set; }
+
+        /// <summary>
+        /// All children
+        /// </summary>
         public IReadOnlyCollection<Entity> Children => children.Values;
+
+        /// <summary>
+        /// Indexer to find a child by index
+        /// </summary>
+        /// <param name="index">Child Position</param>
+        /// <returns>Return a child</returns>
         public Entity this[int index] => children.Values.ElementAt(index);
+
+        /// <summary>
+        /// Indexer to find a child by member name
+        /// </summary>
+        /// <param name="key">MemberName</param>
+        /// <returns>Return a child</returns>
         public Entity this[string key] => children[key];
+
+        /// <summary>
+        /// Accumulates the operations that were done in the expression, keeping the same order of execution
+        /// </summary>
         public List<Operation> Operations { get; private set; }
+
         #endregion
 
+        /// <summary>
+        /// Content that must contain entity information in the format: Name: Value
+        /// </summary>
         public string Raw { get; }
+
+        /// <summary>
+        /// Return the type based in your name ou parent type
+        /// </summary>
         public Type Type => GetValueType();
+
+        /// <summary>
+        /// Return the member info if the name is a exists memberInfo
+        /// </summary>
         public MemberInfo MemberInfo => GetMemberInfo();
+
+        /// <summary>
+        /// Return the entity name, can be a MemberName, array position "[0]" or anything
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Return the value from this entity
+        /// </summary>
         public object Value => GetValue();
+
+        /// <summary>
+        /// Return the value as string
+        /// </summary>
         public string ValueRaw { get; private set; }
+
+        /// <summary>
+        /// Check if value is primitive. Is primitive when exists colon after name: Name: ValuePrimitive
+        /// </summary>
         public bool IsPrimitive { get; private set; }
+
+        /// <summary>
+        /// Check if value is complex type. Is complex when not exists a colon and exists a numeric ID that represents the instance (Name.ID OR only "ID"): MemberName.1
+        /// </summary>
         public string ComplexEntityId { get; private set; }
 
+        /// <summary>
+        /// Create a new entity by raw
+        /// </summary>
+        /// <param name="raw">Raw value</param>
         public Entity(string raw)
         {
             this.children = new Dictionary<string, Entity>();
@@ -45,16 +112,41 @@ namespace GraphExpression
             this.ParseRaw();
         }
 
+        /// <summary>
+        /// Create a new entity by name and value, is composed auto to: Name: Value
+        /// </summary>
+        /// <param name="name">Name of entity</param>
+        /// <param name="value">Value of entity</param>
         public Entity(string name, string value)
             : this($"{name}: {value}")
         {
         }
 
+        /// <summary>
+        /// Create a new complex entity by name and value, is composed auto to: Name.1
+        /// </summary>
+        /// <param name="name">Name of entity</param>
+        /// <param name="complexEntityId">ID of entity</param>
+        public Entity(string name, int complexEntityId)
+            : this($"{name}.{complexEntityId}")
+        {
+        }
+
+        /// <summary>
+        /// Create a new complex entity without name: "1"
+        /// </summary>
+        /// <param name="complexEntityId">ID of entity</param>
         public Entity(int complexEntityId) 
             : this(complexEntityId.ToString())
         {
         }
 
+        /// <summary>
+        /// Operator that create a TREE information about the expression
+        /// </summary>
+        /// <param name="a">Left of Expression</param>
+        /// <param name="b">Right of Expression</param>
+        /// <returns></returns>
         public static Entity operator +(Entity a, Entity b)
         {
             // Scenario 1
@@ -180,7 +272,7 @@ namespace GraphExpression
                     {
                         var itemDeserialize = Factory
                             .TypeDiscovery
-                            .LastOrDefault(f => f.CanGetEntityType(this));
+                            .LastOrDefault(f => f.CanDiscovery(this));
 
                         if (itemDeserialize == null)
                             throw new Exception($"No class of type {nameof(ITypeDiscovery)} was found to {nameof(GetValueType)}.");
@@ -257,19 +349,42 @@ namespace GraphExpression
 
         #region nested classes
 
+        /// <summary>
+        /// Represent a operation in math expression: A + B
+        /// </summary>
         [DebuggerDisplay("{ToString()}")]
         public class Operation
         {
+            /// <summary>
+            /// Left side
+            /// </summary>
             public Entity Source { get; }
+
+            /// <summary>
+            /// Right side
+            /// </summary>
             public Entity Target { get; }
+
+            /// <summary>
+            /// IF TRUE, the operation has executed in any build moment
+            /// </summary>
             public bool Executed { get; set;  }
 
+            /// <summary>
+            /// Create a operation instance
+            /// </summary>
+            /// <param name="source">Left side</param>
+            /// <param name="target">Right side</param>
             public Operation(Entity source, Entity target)
             {
                 this.Source = source;
                 this.Target = target;
             }
 
+            /// <summary>
+            /// Operation to string
+            /// </summary>
+            /// <returns>Return operation to string</returns>
             public override string ToString()
             {
                 return $"{Source?.Name}, {Target?.Name}";

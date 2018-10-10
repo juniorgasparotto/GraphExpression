@@ -3,6 +3,9 @@ using System.Diagnostics;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [DebuggerDisplay("{Name}")]
     public class CircularEntity
     {

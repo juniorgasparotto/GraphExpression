@@ -1,12 +1,23 @@
 ﻿namespace GraphExpression
 {
+    /// <summary>
+    /// Path type
+    /// </summary>
     public enum PathType
     {
-        // Not repeat and not circular
+        /// <summary>
+        /// Not repeat and not circular 
+        /// </summary>
         Simple,
-        // Repeat first and last (circular)
+
+        /// <summary>
+        /// Repeat first and last (circular) 
+        /// </summary>
         Circuit,
-        // Repeat in middle (A,B,B)
-        Circle,
+
+        /// <summary>
+        /// Repeat in middle (A,B,B) 
+        /// </summary>
+        Circle
     }
 }

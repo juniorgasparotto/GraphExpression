@@ -3,13 +3,27 @@ using System.Reflection;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Class default to set value in MemberInfo
+    /// </summary>
     public class MemberInfoSetChild : ISetChild
     {
+        /// <summary>
+        /// Verify if can set child in parent
+        /// </summary>
+        /// <param name="item">Parent item</param>
+        /// <param name="child">Child item</param>
+        /// <returns>Return TRUE if can set</returns>
         public bool CanSet(Entity item, Entity child)
         {
             return child.MemberInfo != null;
         }
 
+        /// <summary>
+        /// Set a child in parent
+        /// </summary>
+        /// <param name="item">Parent item</param>
+        /// <param name="child">Child item</param>
         public void SetChild(Entity item, Entity child)
         {
             var factory = item.Factory;

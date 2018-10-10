@@ -5,8 +5,17 @@ using System.Linq;
 
 namespace GraphExpression
 {
+    /// <summary>
+    ///  Debug extensions - only for developers
+    /// </summary>
     public static class DebugExtensions
     {
+        /// <summary>
+        /// Debug a expression
+        /// </summary>
+        /// <typeparam name="T">Type of real entity</typeparam>
+        /// <param name="expression">Expression to debug</param>
+        /// <returns>String for debug</returns>
         public static string ToDebug<T>(this IEnumerable<EntityItem<T>> expression)
         {
             var str = "";

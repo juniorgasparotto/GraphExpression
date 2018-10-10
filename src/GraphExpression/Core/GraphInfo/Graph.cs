@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Class used to store some graph information inside an expression
+    /// </summary>
+    /// <typeparam name="T">Type of real entity</typeparam>
     public class Graph<T>
     {
         #region Fields
@@ -16,7 +20,10 @@ namespace GraphExpression
         #endregion
 
         #region Public properties
-
+       
+        /// <summary>
+        /// List of edges
+        /// </summary>
         public IReadOnlyList<Edge<T>> Edges
         {
             get
@@ -25,6 +32,9 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// List of vertexes
+        /// </summary>
         public IReadOnlyList<Vertex<T>> Vertexes
         {
             get
@@ -46,6 +56,9 @@ namespace GraphExpression
 
         #endregion
 
+        /// <summary>
+        /// Create a instance of graph info
+        /// </summary>
         public Graph()
         {
             this.paths = new List<Path<T>>();
@@ -53,6 +66,10 @@ namespace GraphExpression
             this.edges = new List<Edge<T>>();
         }
 
+        /// <summary>
+        /// Method used to create new graph information. Must be used during expression creation.
+        /// </summary>
+        /// <param name="entityItem">EntityItem to generate a new graph info</param>
         public void SetGraphInfo(EntityItem<T> entityItem)
         {
             Vertex<T> vertex = FindVertexFirstOccurrence(entityItem.Entity);
@@ -97,11 +114,20 @@ namespace GraphExpression
             //this.AddInCurrentPath(entityItem);;            
         }
 
+        /// <summary>
+        /// A path must be created in the "SetGraphInfo" method and closed with this method when an entity reaches its limit within the graph. Must be used during expression creation
+        /// </summary>
+        /// <param name="lastPath">Path to end</param>
         public void EndPath(Path<T> lastPath)
         {
             this.paths.Add(lastPath);
         }
 
+        /// <summary>
+        /// Check if the parameter graph existis in current graph
+        /// </summary>
+        /// <param name="graph">Graph to verify</param>
+        /// <returns>Return TRUE if contain</returns>
         public bool ContainsGraph(Graph<T> graph)
         {
             var countExist = 0;

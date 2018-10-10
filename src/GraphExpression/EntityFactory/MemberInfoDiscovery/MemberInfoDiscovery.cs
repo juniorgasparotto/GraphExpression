@@ -6,8 +6,16 @@ using System.Reflection;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Class default to search for type members
+    /// </summary>
     public class MemberInfoDiscovery : IMemberInfoDiscovery
     {
+        /// <summary>
+        /// Verify if can discovery member
+        /// </summary>
+        /// <param name="item">The item that contains the "MemberName" to do the search</param>
+        /// <returns>Return TRUE if can discovery</returns>
         public bool CanDiscovery(Entity item)
         {
             return item.Factory.IsTyped
@@ -16,6 +24,11 @@ namespace GraphExpression
                   && item.Parent.Type != null;
         }
 
+        /// <summary>
+        /// Return the member info from the "item.MemberInfo"
+        /// </summary>
+        /// <param name="item">The item that contains the "MemberName" to do the search</param>
+        /// <returns>Return the MemberInfo or null if not exists</returns>
         public MemberInfo GetMemberInfo(Entity item)
         {
             var memberInfo = item.Parent.Type
