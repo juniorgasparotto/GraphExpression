@@ -1,19 +1,29 @@
 ﻿using GraphExpression.Utils;
-using Microsoft.CodeAnalysis.CSharp;
-using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 
 namespace GraphExpression.Serialization
 {
+    /// <summary>
+    /// Standard class for creating expression serializers
+    /// </summary>
+    /// <typeparam name="T">Type of real entity</typeparam>
     public abstract class ExpressionSerializerBase<T> : ISerialize<T>
     {
         private IValueFormatter valueFormatter;
         private readonly Expression<T> expression;
 
+        /// <summary>
+        /// Determines whether there will be parentheses involving the root entity
+        /// </summary>
         public bool EncloseParenthesisInRoot { get; set; }
+
+        /// <summary>
+        /// Determines whether entities with valid names will always be enclosed in quote. Otherwise, entities with valid names will not be enclosed in quote.
+        /// </summary>
         public bool ForceQuoteEvenWhenValidIdentified{ get; set; }
 
+        /// <summary>
+        /// Default formatter
+        /// </summary>
         public IValueFormatter ValueFormatter
         {
             get
@@ -28,11 +38,19 @@ namespace GraphExpression.Serialization
             }
         }
 
+        /// <summary>
+        /// Constructor obrigatory for child classes 
+        /// </summary>
+        /// <param name="expression">Expression to serialize</param>
         public ExpressionSerializerBase(Expression<T> expression)
         {
             this.expression = expression;
         }
 
+        /// <summary>
+        /// Serialize a expression to string
+        /// </summary>
+        /// <returns>Expression as string</returns>
         public virtual string Serialize()
         {
             var output = "";
@@ -66,6 +84,11 @@ namespace GraphExpression.Serialization
             return output;
         }
 
+        /// <summary>
+        /// Serialize a unique EntityItem
+        /// </summary>
+        /// <param name="item">EntityItem to serialize</param>
+        /// <returns>Entity item as string</returns>
         public abstract string SerializeItem(EntityItem<T> item);
 
         private string GetEnclosedValue(string value)

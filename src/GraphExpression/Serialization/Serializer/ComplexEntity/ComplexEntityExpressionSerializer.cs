@@ -5,12 +5,30 @@ using System.Linq;
 
 namespace GraphExpression.Serialization
 {
+    /// <summary>
+    /// Create a complex expression serializer
+    /// </summary>
     public partial class ComplexEntityExpressionSerializer : ExpressionSerializerBase<object>
     {
+        /// <summary>
+        /// Determines how the types of entities will be displayed in serialization
+        /// </summary>
         public ShowTypeOptions ShowType { get; set; }
+
+        /// <summary>
+        /// List of serializers. You can modify this list to support new serializers.
+        /// </summary>
         public List<IEntitySerialize> ItemsSerialize { get; private set; }
+
+        /// <summary>
+        /// Enables the customization of the entity IDs that will be part of the serialized expression for each complex item.
+        /// </summary>
         public Func<EntityItem<object>, long> GetEntityIdCallback { get; set; }
 
+        /// <summary>
+        /// Create a complex entity expression serializer
+        /// </summary>
+        /// <param name="expression">Expression to serialize</param>
         public ComplexEntityExpressionSerializer(Expression<object> expression)
             : base(expression)
         {   
@@ -28,6 +46,11 @@ namespace GraphExpression.Serialization
             };
         }
 
+        /// <summary>
+        /// Serialize a unique EntityItem
+        /// </summary>
+        /// <param name="item">EntityItem to serialize</param>
+        /// <returns>Entity item as string</returns>
         public override string SerializeItem(EntityItem<object> item)
         {
             string parts = null;

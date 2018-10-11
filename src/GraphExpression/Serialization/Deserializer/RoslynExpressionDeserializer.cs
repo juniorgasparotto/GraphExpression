@@ -12,15 +12,31 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace GraphExpression.Serialization
 {
+    /// <summary>
+    /// Class responsible for string compilation using Roslyn
+    /// </summary>
+    /// <typeparam name="T">Type of expression output</typeparam>
     public class RoslynExpressionDeserializer<T>
     {
+        /// <summary>
+        /// Set custom assemblies if necessary
+        /// </summary>
         public List<Assembly> Assemblies { get; set; }
 
+        /// <summary>
+        /// Create a roslyn expression deserializer (compiler)
+        /// </summary>
         public RoslynExpressionDeserializer()
         {
             Assemblies = new List<Assembly>() { typeof(T).Assembly };
         }
 
+        /// <summary>
+        /// Convert a expression string as c# delegate
+        /// </summary>
+        /// <param name="expression">Expression as string</param>
+        /// <param name="typeFactory">Type of expression output</param>
+        /// <returns>A delegate to be runned by user</returns>
         public ScriptRunner<T> GetDelegateExpression(string expression, Type typeFactory)
         {
             Validation.ArgumentNotNull(expression, nameof(expression));

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace GraphExpression.Utils
 {
-    public static class Validation
+    internal static class Validation
     {
         /// <summary>
         /// Ensures that the specified argument is not null.

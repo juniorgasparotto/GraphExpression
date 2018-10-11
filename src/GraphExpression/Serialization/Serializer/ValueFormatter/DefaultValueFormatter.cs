@@ -4,8 +4,17 @@ using System.Globalization;
 
 namespace GraphExpression.Serialization
 {
+    /// <summary>
+    /// Default class that converts an object to string when possible
+    /// </summary>
     public class DefaultValueFormatter : IValueFormatter
     {
+        /// <summary>
+        /// Format an object for string
+        /// </summary>
+        /// <param name="type">Object type</param>
+        /// <param name="value">Object value</param>
+        /// <returns>Object as string</returns>
         public virtual string Format(Type type, object value)
         {
             return ToLiteral(value);
