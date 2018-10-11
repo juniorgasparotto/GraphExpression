@@ -4,21 +4,39 @@ using System.Reflection;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Class model representing an array
+    /// </summary>
     public class ArrayItemEntity : ComplexEntity
     {
-        public int[] Key { get; private set; }
+        /// <summary>
+        /// Indexes of array
+        /// </summary>
+        public int[] Indexes { get; private set; }
 
-        public ArrayItemEntity(Expression<object> expression, int key, object value)
+        /// <summary>
+        /// Create a array model
+        /// </summary>
+        /// <param name="expression">Expression container</param>
+        /// <param name="index">Index of array item</param>
+        /// <param name="value">Item value</param>
+        public ArrayItemEntity(Expression<object> expression, int index, object value)
             : base(expression)
         {
-            this.Key = new int[] { key };
+            this.Indexes = new int[] { index };
             this.Entity = value;
         }
 
-        public ArrayItemEntity(Expression<object> expression, int[] key, object value)
+        /// <summary>
+        /// Create a array model
+        /// </summary>
+        /// <param name="expression">Expression container</param>
+        /// <param name="indexes">Item index</param>
+        /// <param name="value">Item value</param>
+        public ArrayItemEntity(Expression<object> expression, int[] indexes, object value)
             : base(expression)
         {
-            this.Key = key;
+            this.Indexes = indexes;
             this.Entity = value;
         }
     }

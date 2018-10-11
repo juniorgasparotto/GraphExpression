@@ -25,7 +25,7 @@ namespace GraphExpression.Tests.MatrixGenerator
 
         public class MethodReader : IMemberReader
         {
-            public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionFactory builder, GraphExpression.Expression<object> expression, object entity)
+            public IEnumerable<ComplexEntity> GetMembers(ComplexExpressionFactory factory, GraphExpression.Expression<object> expression, object entity)
             {
                 if (entity is Test)
                 {
@@ -71,15 +71,15 @@ namespace GraphExpression.Tests.MatrixGenerator
         [Fact]
         public void CreateCustomSerialize_ReturnExpressionAsString()
         {
-            var builder = new ComplexExpressionFactory();
-            builder.MemberReaders.Add(new MethodReader());
+            var factory = new ComplexExpressionFactory();
+            factory.MemberReaders.Add(new MethodReader());
 
             var test = new Test()
             {
                 "value1",
             };
 
-            var expression = test.AsExpression(builder);
+            var expression = test.AsExpression(factory);
             var serialization = Utils.GetSerialization(expression);
             serialization.ItemsSerialize.Add(new MethodSerialize());
 

@@ -6,13 +6,35 @@ using System.Reflection;
 
 namespace GraphExpression
 {
+    /// <summary>
+    /// Class to configure a complex expression build
+    /// </summary>
     public class ComplexExpressionFactory
     {
+        /// <summary>
+        /// Entity Readers, with this feature you can create a custom read for a particular entity.
+        /// </summary>
         public List<IEntityReader> Readers { get; private set; }
+
+        /// <summary>
+        /// Readers of members of entities, with this feature it is possible to create a customized reading of the members of a certain entity.
+        /// </summary>
         public List<IMemberReader> MemberReaders { get; private set; }
+
+        /// <summary>
+        /// It delegates to the user which properties he would like to load for a particular type or all.
+        /// </summary>
         public Func<object, IEnumerable<PropertyInfo>> GetProperties { get; set; }
+
+        /// <summary>
+        /// It delegates to the user which fields he would like to load for a particular type or all.
+        /// </summary>
         public Func<object, IEnumerable<FieldInfo>> GetFields { get; set; }
 
+        /// <summary>
+        /// Create a complex expression factory to customize entity readers
+        /// </summary>
+        /// <param name="addDefaultConfig">If TRUE, the default Readers/MemberReaders/GetProperties/GetFields are setted</param>
         public ComplexExpressionFactory(bool addDefaultConfig = true)
         {
             if (addDefaultConfig)
@@ -43,6 +65,12 @@ namespace GraphExpression
             }
         }
 
+        /// <summary>
+        /// Method to build and create a complex expression using the current configurations
+        /// </summary>
+        /// <param name="entityRoot">Root entity of expression. All entity paths will be traversed via reflection and each entity in that path will be an item in the expression.</param>
+        /// <param name="deep">Determines whether the expression constructed will be a deep one, that is, if it will navigate objects that have already been navigated, except for cyclic references.</param>
+        /// <returns>Return a complex expression</returns>
         public Expression<object> Build(object entityRoot, bool deep = false)
         {
             var expression = new Expression<object>(expr => new ComplexEntity(expr, entityRoot), (expr, e) => GetChildren(expr, e), deep);

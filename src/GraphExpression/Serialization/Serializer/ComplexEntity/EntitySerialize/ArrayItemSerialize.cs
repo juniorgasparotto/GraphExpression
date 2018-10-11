@@ -14,7 +14,7 @@ namespace GraphExpression.Serialization
             var cast = (ArrayItemEntity)item;
             return (
                 item.Entity?.GetType(),
-                $"[{string.Join(",", cast.Key)}]"
+                $"[{string.Join(",", cast.Indexes)}]"
             );
         }
     }

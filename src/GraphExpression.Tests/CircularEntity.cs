@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace GraphExpression
+namespace GraphExpression.Tests
 {
-    /// <summary>
-    /// 
-    /// </summary>
     [DebuggerDisplay("{Name}")]
     public class CircularEntity
     {
