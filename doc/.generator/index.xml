@@ -15,6 +15,7 @@
 
       # Expressão de grafos
 
+      <include href="doc/.generator/pages/impl/presentation.md" />
       <include href="doc/.generator/pages/impl/install.md" />
       <include href="doc/.generator/pages/impl/donate.md" />
       <include href="doc/.generator/pages/impl/license.md" />

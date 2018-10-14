@@ -1,7 +1,7 @@
 # Instalação <header-set anchor-name="install" />
 
-Via [NuGet](https://www.nuget.org/packages/ExpressionGraph/):
+Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
 
 ```
-Install-Package ExpressionGraph
+Install-Package GraphExpression
 ```

@@ -10,4 +10,4 @@ De qualquer forma, agradecemos você por ter chego até aqui ;)
 
 _19DmxWBNcaUGjm2PQAuMBD4Y8ZbrGyMLzK_
 
-![bitcoinkey](https://github.com/juniorgasparotto/GraphExpression/blob/master/documentation/img/bitcoinkey.png)
+![bitcoinkey](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/bitcoinkey.png)
