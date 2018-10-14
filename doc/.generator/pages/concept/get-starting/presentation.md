@@ -4,7 +4,7 @@ O conceito de **expressão de grafos** foi criado em 2015 por _Glauber Donizeti 
 
 A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte ou a partir de um grafo, fazer a engenharia reversa para obter sua representação em forma de expressão.
 
-A representação em forma de expressão é focada em grafos simples, modelos de negócios com pequenas quantidades de objetos e também para fins didáticos. Não espere ver um novo jeito de serializar ou deserealizar grafos complexos, embora isso seja possível, já existem soluções melhores e bem sólidas.
+A representação em forma de expressão é focada em grafos simples, modelos de negócios com pequenas quantidades de objetos e também para fins didáticos. Não espere ver um novo jeito de serializar ou deserializar grafos complexos, embora isso seja possível, já existem soluções melhores e bem sólidas.
 
 Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as informações extraídas das expressões podemos criar uma matriz vertical que possibilita a criação de pesquisas em grafos simples ou complexos.
 

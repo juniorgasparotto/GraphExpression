@@ -1,9 +1,9 @@
 [
-![Inglês](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/en-us.png)
-](https://github.com/juniorgasparotto/ExpressionGraph)
+![Inglês](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/en-us.png)
+](https://github.com/juniorgasparotto/GraphExpression)
 [
-![Português](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png)
-](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md)
+![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
+](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
 # <a name="concept" />Expressão de grafos
 
@@ -11,7 +11,7 @@ O conceito de **expressão de grafos** foi criado em 2015 por _Glauber Donizeti 
 
 A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte ou a partir de um grafo, fazer a engenharia reversa para obter sua representação em forma de expressão.
 
-A representação em forma de expressão é focada em grafos simples, modelos de negócios com pequenas quantidades de objetos e também para fins didáticos. Não espere ver um novo jeito de serializar ou deserealizar grafos complexos, embora isso seja possível, já existem soluções melhores e bem sólidas.
+A representação em forma de expressão é focada em grafos simples, modelos de negócios com pequenas quantidades de objetos e também para fins didáticos. Não espere ver um novo jeito de serializar ou deserializar grafos complexos, embora isso seja possível, já existem soluções melhores e bem sólidas.
 
 Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as informações extraídas das expressões podemos criar uma matriz vertical que possibilita a criação de pesquisas em grafos simples ou complexos.
 
@@ -19,52 +19,52 @@ Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as inform
 
 # <a name="index" />Índice
 
-* [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#intro)
-  * [Resolução da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-execution-order)
-  * [Entidade e suas ocorrências](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-and-occurrence)
-  * [Operador de soma](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#intro-plus)
-  * [Operador de subtração](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#intro-subtract)
-  * [Grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-group)
-    * [Grupo de expressão raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-group-root)
-    * [Sub-grupos de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-sub-group)
-    * [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-declaration)
-    * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-group-repeat)
-    * [Entidade pai](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-parent)
-  * [Entidade raiz](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-root)
-  * [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-final)
-  * [Caminhos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#paths)
-    * [Caminhos cíclicos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#paths-cyclic)
-* [Informações de uma ocorrência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-info)
-  * [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#levels)
-  * [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#indexes)
-  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-next)
-  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-previous)
-* [Normalizando expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-formatters)
-  * [Normalização - tipo 1](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#normalization-1)
-  * [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#normalization-2)
-  * [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#normalization-3)
-* [Desnormalizando expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#desnormalization)
-* [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search)
-    * [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-matrix-of-information)
-  * [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-deep)
-  * [Pesquisa superficial](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-surface)
-  * [Pesquisas sem referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-without-references)
-    * [Encontrando a entidade raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-root)
-    * [Encontrando as "entidades pais" de uma expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-parents)
-  * [Pesquisas com referência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-with-references)
-    * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression)
-    * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-check-is-last-at-group-expression)
-    * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-previous)
-    * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-next)
-    * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-occurrences)
-    * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-descendants)
-    * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-children)
-    * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-ascending)
-    * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-parent)
-* [Implementações](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#implementation)
-  * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#implementation-to-graph)
-  * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#implementation-to-expression)
-  * [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#implementation-to-matrix)
+* [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#intro)
+  * [Resolução da expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-execution-order)
+  * [Entidade e suas ocorrências](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-and-occurrence)
+  * [Operador de soma](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#intro-plus)
+  * [Operador de subtração](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#intro-subtract)
+  * [Grupo de expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group)
+    * [Grupo de expressão raiz](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group-root)
+    * [Sub-grupos de expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-sub-group)
+    * [Declarações de entidades](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-declaration)
+    * [Repetições de grupo de expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group-repeat)
+    * [Entidade pai](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-parent)
+  * [Entidade raiz](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-root)
+  * [Entidade final](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-final)
+  * [Caminhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#paths)
+    * [Caminhos cíclicos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#paths-cyclic)
+* [Informações de uma ocorrência](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-info)
+  * [Níveis](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#levels)
+  * [Índices](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#indexes)
+  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-next)
+  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-previous)
+* [Normalizando expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-formatters)
+  * [Normalização - tipo 1](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-1)
+  * [Normalização - tipo 2](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-2)
+  * [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3)
+* [Desnormalizando expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#desnormalization)
+* [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search)
+    * [Matriz de informação](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-matrix-of-information)
+  * [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep)
+  * [Pesquisa superficial](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-surface)
+  * [Pesquisas sem referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-without-references)
+    * [Encontrando a entidade raiz da expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-root)
+    * [Encontrando as "entidades pais" de uma expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parents)
+  * [Pesquisas com referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-with-references)
+    * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression)
+    * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-last-at-group-expression)
+    * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-previous)
+    * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-next)
+    * [Encontrando todas as ocorrências de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-occurrences)
+    * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-descendants)
+    * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-children)
+    * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-ascending)
+    * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parent)
+* [Implementações](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation)
+  * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-graph)
+  * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-expression)
+  * [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-matrix)
 
 # <a name="intro" />Compreendendo uma expressão de grafos
 
@@ -142,7 +142,7 @@ Em um grafo, as entidades são únicas, porém elas podem estar em vários lugar
 (A + (B + C + A) + C)
 ```
 
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição. Veremos isso no tópico [Informações de uma ocorrência](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-info).
+Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição. Veremos isso no tópico [Informações de uma ocorrência](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-info).
 
 ## <a name="intro-plus" />Operador de soma
 
@@ -400,13 +400,13 @@ A + A + B + (C + A)
 
 Uma entidade pode aparecer diversas vezes dentro de uma expressão e para cada uma dessas ocorrências temos um conjunto de informações que serão vistas neste tópico.
 
-Essas informações são de extrema importância e veremos exemplos disso no tópico [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search).
+Essas informações são de extrema importância e veremos exemplos disso no tópico [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search).
 
-* [Níveis](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#levels)
-* [Índices](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#indexes)
+* [Níveis](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#levels)
+* [Índices](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#indexes)
 * Entidades vizinhas:
-  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-previous)
-  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-next)
+  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-previous)
+  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-next)
 
 ## <a name="levels" />Níveis
 
@@ -549,7 +549,7 @@ A + (B + Y + Y) + (D + B)
 
 ## <a name="normalization-2" />Normalização - tipo 2
 
-A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as [entidades finais](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-final) no começo do seu grupo de expressão para ajudar na visualização da expressão.
+A **normalização de tipo 2** tem o objetivo de organizar, quando possível, as [entidades finais](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-final) no começo do seu grupo de expressão para ajudar na visualização da expressão.
 
 ```
 A + (B + (C + D) + E) + F + G
@@ -568,7 +568,7 @@ A + F + G + (B + E + (C + D))
 
 ## <a name="normalization-3" />Normalização - tipo 3
 
-A **normalização de tipo 3** tem o objetivo de declarar o mais rápido possível todos os [grupos de expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-group). Essa tema também foi abordado no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-declaration).
+A **normalização de tipo 3** tem o objetivo de declarar o mais rápido possível todos os [grupos de expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group). Essa tema também foi abordado no tópico [Declarações de entidades](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-declaration).
 
 Exemplo:
 
@@ -585,13 +585,13 @@ A + (B + F) + (C + (G + F) + B) + G
 ```
 
 * Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
-* A entidade `B`, dentro do grupo `C`, e a entidade `G` que está solitária no final da expressão, se transformaram em [Entidade final](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-final) e devido a isso, podemos aplicar a [Normalização - tipo 2](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#normalization-2) para melhorar a visualização, veja:
+* A entidade `B`, dentro do grupo `C`, e a entidade `G` que está solitária no final da expressão, se transformaram em [Entidade final](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-final) e devido a isso, podemos aplicar a [Normalização - tipo 2](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-2) para melhorar a visualização, veja:
 
 ```
 A + G + (B + F) + (C + B + (G + F))
 ```
 
-* Note que agora a entidade `G` que estava no final da expressão foi movido para o inicio. Sendo assim, devemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#normalization-3):
+* Note que agora a entidade `G` que estava no final da expressão foi movido para o inicio. Sendo assim, devemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3):
 
 ```
 A + (G + F) + (B + F) + (C + B + G)
@@ -601,7 +601,7 @@ Com isso concluímos a normalização e temos acima uma expressão muito mais le
 
 # <a name="desnormalization" />Desnormalizando expressões
 
-O objetivo da **desnormalização** é gerar uma nova expressão onde os [grupos de expressões](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-group) sejam redeclarados toda vez que a sua entidade pai for utilizada.
+O objetivo da **desnormalização** é gerar uma nova expressão onde os [grupos de expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group) sejam redeclarados toda vez que a sua entidade pai for utilizada.
 
 Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
 
@@ -649,7 +649,7 @@ Final Graph:
                                 ------B
 ```
 
-Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico [Repetições de grupo de expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#expression-group-repeat).
+Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico [Repetições de grupo de expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group-repeat).
 
 # <a name="search" />Pesquisas em expressões de grafos
 
@@ -722,7 +722,7 @@ A **pesquisa profunda** tem o objetivo de retornar a maior quantidade possíveis
 
 Para poder criar uma _pesquisa profunda_, precisamos utilizar uma **expressão desnormalizada**. Isso é necessário, porque apenas a expressão desnormalizada contém todos os caminhos que uma entidade possui no grafo uma vez que a versão original da expressão não repete os grupos de expressão (e nem deve).
 
-Vejamos a seguir o mesmo exemplo utilizado no tópico [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-matrix-of-information), porém agora, a expressão foi desnormalizada:
+Vejamos a seguir o mesmo exemplo utilizado no tópico [Matriz de informação](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-matrix-of-information), porém agora, a expressão foi desnormalizada:
 
 **Expressão:**
 
@@ -849,7 +849,7 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 
 **Pesquisa profunda**
 
-Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-deep).
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
 1. Primeiro, encontramos todas as linhas com o índice do nível igual a zero:
   * `#00 (A)`
@@ -897,7 +897,7 @@ No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á 
 
 **Observação:**
 
-Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-descendants).
+Não confunda essa técnica como sendo a solução para verificar se uma entidade contém filhos. Veremos isso no tópico [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-descendants).
 
 ### <a name="search-check-is-last-at-group-expression" />Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)
 
@@ -922,7 +922,7 @@ Para retornar a entidade anterior de uma determinada entidade, devemos subtrair 
 
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
-Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-deep).
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
 1. Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
 
@@ -940,7 +940,7 @@ Para retornar a próxima entidade de uma determinada entidade, devemos somar o s
 
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
-Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-deep).
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
 1. Para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
 
@@ -962,7 +962,7 @@ Sendo assim, é recomendado o uso da **pesquisa profunda** caso a sua necessidad
 
 **Pesquisa profunda**
 
-Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-deep).
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
 1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
   * `#03 (Y)`
@@ -973,7 +973,7 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
 
 A lógica será a mesma da **pesquisa profunda**, contudo não teremos as ocorrências decorrentes das redeclarações dos grupos de expressão.
 
-Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#sample-matrix) do tópico sobre [Matriz de informação](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-matrix-of-information).
+Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix) do tópico sobre [Matriz de informação](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-matrix-of-information).
 
 1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
   * `#03 (Y)`
@@ -982,7 +982,7 @@ Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/E
 
 ### <a name="search-find-descendants" />Encontrando todos os descendentes de uma entidade
 
-Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression).
+Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression).
 
 Devemos continuar navegando para frente até quando a próxima entidade tiver o **nível geral** igual ou menor ao **nível geral** da entidade corrente ou se a expressão não tiver mais entidades.
 
@@ -1068,7 +1068,7 @@ Utilizar a mesma lógica que foi explicada para **entidades com caminhos cíclic
 
 A segunda opção pode apresentar uma melhor performance se a expressão nascer de forma normalizada, se isso estiver garantido, não precisamos executar o primeiro passo.
 
-* Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
+* Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
 
 ```
         A + B + (C + Y) + (D + A + C) + Z
@@ -1089,15 +1089,15 @@ Index:  0   1    2   3     4   5   6    7
 
 Por fim, é possível dizer que não precisamos atribuir um tratamento especial para **entidades com caminhos cíclicos** se estivemos usando uma _pesquisa superficial_. Vimos que a solução é a mesma nas duas situações.
 
-Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#entity-declaration).
+Esse tema também foi abordado, de forma superficial, no tópico [Declarações de entidades](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-declaration).
 
 ### <a name="search-find-children" />Encontrando os filhos de uma entidade
 
-Para iniciar esse tópico é preciso entender por completo o tópico [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-descendants).
+Para iniciar esse tópico é preciso entender por completo o tópico [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-descendants).
 
 A lógica é exatamente a mesma da pesquisa de descendentes, a única diferença é que o **nível geral** será limitado á: _[nível geral da entidade corrente] + 1_
 
-Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-deep).
+Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
 Com base nessa matriz, se quisermos encontrar todas as filhas da entidade `D` da linha `#04`:
 
@@ -1167,7 +1167,7 @@ Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, 
 
 ### <a name="search-find-parent" />Encontrando os pais de uma entidade
 
-Seguindo a lógica do tópico [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-ascending), para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o **nível geral** dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o **nível geral** menor que a entidade desejada.
+Seguindo a lógica do tópico [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-ascending), para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o **nível geral** dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o **nível geral** menor que a entidade desejada.
 
 **Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
 
@@ -1196,9 +1196,9 @@ Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocor
 
 Esse tópico vai demostrar na prática alguns exemplos de implementações de alguns dos conceitos que estudamos.
 
-* [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#implementation-to-graph)
-* [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#implementation-to-expression)
-* [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#implementation-to-matrix)
+* [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-graph)
+* [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-expression)
+* [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-matrix)
 
 Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
@@ -1333,9 +1333,9 @@ public class EntityItem
 
 * Essa classe será nossa representação de cada linha da matriz de informação, ou seja, cada ocorrência de uma entidade dentro da expressão. Nela teremos todas as propriedades que uma ocorrência de uma entidade pode ter.
 * Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as técnicas:
-  * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-previous)
-  * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-next)
-  * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-parent)
+  * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-previous)
+  * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-next)
+  * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parent)
 
 ```csharp
 public class Expression : List<EntityItem>
@@ -1428,11 +1428,11 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
 * Para cada iteração:
   * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
-    * [Encontrando a entidade raiz da expressão](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-find-root)
+    * [Encontrando a entidade raiz da expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-root)
   * Se a entidade for a primeira do grupo de expressão, adiciona o caractere `(`
-    * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression)
+    * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression)
   * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
-    * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-check-is-last-at-group-expression)
+    * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-last-at-group-expression)
 
 Com esses trechos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**
 
@@ -1587,7 +1587,7 @@ Index    | Entity  | Level    | Level Index     | LevelAtExpression
 ```
 
 * A classe recebe em seu construtor a **entidade raiz**. A partir dessa instância, vamos navegar em seu grafo por completo.
-* O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico [Pesquisa profunda](https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md#search-deep)
+* O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep)
 * O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas, uma vez que por ser a entidade raiz, serão os valores inicias.
 * Na segunda parte da função, iniciamos a leitura dos filhos da entidade `parent`.
 * Será incrementado `+1` no **nível geral** conforme se aprofunda na entidade. Esse valor é passado por parâmetro, pois ele transcende todo o grafo.

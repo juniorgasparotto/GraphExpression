@@ -1,10 +1,18 @@
 ﻿<documentation>
  <page>
     <languages>
-      <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" />
-      <!-- <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/ExpressionGraph" /> -->
+      <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md" />
+      <!-- <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/GraphExpression" /> -->
     </languages>
     <content>
+      <a href="https://github.com/juniorgasparotto/GraphExpression" rel="Inglês">
+        <img alt="Inglês" src="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/en-us.png" />
+      </a>
+
+      <a href="https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md" rel="Português">
+        <img alt="Português" src="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png" />
+      </a>
+
       # Expression Graph
 
       <custom-translation>
@@ -24,16 +32,16 @@
 
   <page>
     <languages>
-      <language name="pt-br" output="doc/concept-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept-pt-br.md" />
-      <!-- <language name="en-us" output="concept.md" url-base="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/concept.md" /> -->
+      <language name="pt-br" output="doc/concept-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md" />
+      <!-- <language name="en-us" output="concept.md" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md" /> -->
     </languages>
     <content>
-      <a href="https://github.com/juniorgasparotto/ExpressionGraph" rel="Inglês">
-        <img alt="Inglês" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/en-us.png" />
+      <a href="https://github.com/juniorgasparotto/GraphExpression" rel="Inglês">
+        <img alt="Inglês" src="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/en-us.png" />
       </a>
 
-      <a href="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/readme-pt-br.md" rel="Português">
-        <img alt="Português" src="https://github.com/juniorgasparotto/ExpressionGraph/blob/master/doc/img/pt-br.png" />
+      <a href="https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md" rel="Português">
+        <img alt="Português" src="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png" />
       </a>
 
       <include href="doc/.generator/pages/concept/get-starting/presentation.md" />
