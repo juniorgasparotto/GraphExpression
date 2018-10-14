@@ -13,7 +13,11 @@
         <img alt="Português" src="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png" />
       </a>
 
-      # Expression Graph
+      # Expressão de grafos
+
+      <include href="doc/.generator/pages/impl/install.md" />
+      <include href="doc/.generator/pages/impl/donate.md" />
+      <include href="doc/.generator/pages/impl/license.md" />
 
       <custom-translation>
         <default>
