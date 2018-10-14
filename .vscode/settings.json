@@ -1,8 +1,36 @@
 {
-    "cSpell.language": "pt-BR",
     "cSpell.words": [
         "Desnormalizando"
     ],
     "dotnet-test-explorer.testProjectPath": "src\\GraphExpression.Tests",
+    "cSpell.enabledLanguageIds": [
+        "asciidoc",
+        "c",
+        "cpp",
+        "csharp",
+        "css",
+        "go",
+        "handlebars",
+        "html",
+        "jade",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "latex",
+        "less",
+        "markdown",
+        "php",
+        "plaintext",
+        "pub",
+        "python",
+        "restructuredtext",
+        "rust",
+        "scss",
+        "text",
+        "typescript",
+        "typescriptreact",
+        "yml"
+    ],
+    "cSpell.language": "en,pt-BR",
     // "coverage-gutters.lcovname": "D:\\Junior\\Projetos\\GITHUB.COM\\juniorgasparotto\\ExpressionGraph\\coverage\\lcov.info"
 }
