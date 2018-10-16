@@ -7,23 +7,21 @@
 
 # Expressão de grafos
 
-O conceito de **expressão de grafos** foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão.
+# <a name="concept" />Expressão de grafos
 
-A ideia de uma representação em forma de expressão é resumir um grafo em um texto que seja humanamente legível e de fácil transporte ou a partir de um grafo, fazer a engenharia reversa para obter sua representação em forma de expressão.
+Esse framework tem como objetivo implementar o conceito de expressão de grafos na linguagem .NET.
 
-A representação em forma de expressão é focada em grafos simples, modelos de negócios com pequenas quantidades de objetos e também para fins didáticos. Não espere ver um novo jeito de serializar ou deserializar grafos complexos, embora isso seja possível, já existem soluções melhores e bem sólidas.
+Resumidamente, o conceito de **expressão de grafos** tem como objetivo explorar os benefícios de uma expressão matemática trocando os números por entidades. Com isso, podemos criar uma nova maneira de transportar dados e principalmente criar um novo meio de pesquisa transversal em grafos circulares ou complexos.
 
-Outro conceito que trazemos é a **pesquisa em grafos**. Usando apenas as informações extraídas das expressões podemos criar uma matriz vertical que possibilita a criação de pesquisas em grafos simples ou complexos.
+Com relação a pesquisa em grafos, esse projeto se inspirou na implementação do `JQuery` para pesquisas de elementos HTML (DOM), unindo assim o conceito de expressão de grafos com a facilidade de uso do `JQuery` para pesquisas transversais.
 
-É importante destacar que o conceito como um todo não tem o objetivo de ser performático ou ser melhor ou pior que outros já existentes. O objetivo é ser apenas uma nova forma de enxergar um grafo e suas informações.
+[Clique aqui para saber mais sobre o conceito de expressão de grafos
 
-# <a name="index" />Índice
+# <anchor-set name="index">Índice</anchor-set>
 
-* [Instalação](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#install)
-* [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
-* [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
+<table-of-contents></table-of-contents>
 
-# <a name="install" />Instalação
+# Instalação 
 
 Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
 
@@ -31,7 +29,7 @@ Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
 Install-Package GraphExpression
 ```
 
-# <a name="donate" />Doações
+# Doações 
 
 GraphExpression é um projeto de código aberto. Iniciado em 2017, muitas horas foram investidos na criação e evolução deste projeto.
 
@@ -45,7 +43,7 @@ _19DmxWBNcaUGjm2PQAuMBD4Y8ZbrGyMLzK_
 
 ![bitcoinkey](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/bitcoinkey.png)
 
-# <a name="license" />Licença
+# Licença 
 
 The MIT License (MIT)
 
@@ -56,3 +54,5 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#concept)
