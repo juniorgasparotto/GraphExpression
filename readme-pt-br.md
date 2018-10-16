@@ -21,6 +21,69 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
 * [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
 
+# Grafos circular
+
+Um grafo circular é a maneira mais simples de implementar e entender como as coisas funcionam. Basicamente, é uma classe que faz referencia para ela mesma. A cardinalidade pouco importa aqui, pois isso quem vai determinar é quem implementa os operadores da expressão.
+
+No exemplo a seguir, mostraremos uma forma de implementar o conceito de expressão de grafos sem nenhum framework, usando apenas `C#` e a matemática.
+
+A ideia desse exemplo é criar um grafo circular da classe `Entity` onde o operador de soma vai incrementar a entidade da direita na entidade da esquerda da expressão.
+
+[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#intro) para saber mais...
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        var A = new Entity("A");
+        var B = new Entity("B");
+        var C = new Entity("C");
+        var D = new Entity("D");
+
+        A = A + B + (C + D);  // ACTION: ADD
+
+        /*
+        **** PRINT *****
+        * A 
+        * ---B
+        * ---C 
+        * ----- D
+        ****************
+        */
+
+        C = C - D; // ACTION: REMOVE
+
+        /*
+        **** PRINT *****
+        * A 
+        * ---B
+        * ---C
+        ****************
+        */
+    }
+
+    [DebuggerDisplay("{Name}")]
+    public class Entity : List<Entity>
+    {
+        public string Name { get; private set; }
+        public Entity(string identity) => this.Name = identity;
+
+        public static Entity operator +(Entity a, Entity b)
+        {
+            a.Add(b);
+            return a;
+        }
+
+        public static Entity operator -(Entity a, Entity b)
+        {
+            a.Remove(b);
+            return a;
+        }
+    }
+}
+```
+
 # <a name="install" />Instalação
 
 Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
