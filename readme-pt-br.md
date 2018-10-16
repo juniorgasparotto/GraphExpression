@@ -5,8 +5,6 @@
 ![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
-# Expressão de grafos
-
 # <a name="implementation" />Expressão de grafos
 
 Esse framework tem como objetivo implementar o conceito de expressão de grafos na linguagem .NET.
@@ -15,7 +13,7 @@ Resumidamente, o conceito de **expressão de grafos** tem como objetivo explorar
 
 Com relação a pesquisa em grafos, esse projeto se inspirou na implementação do `JQuery` para pesquisas de elementos HTML (DOM), unindo assim o conceito de expressão de grafos com a facilidade de uso do `JQuery` para pesquisas transversais.
 
-[Clique aqui para saber mais sobre o conceito de expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept)
+[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept) se você quiser conhecer mais sobre o conceito de expressão de grafos.
 
 # <a name="index" />Índice
 
