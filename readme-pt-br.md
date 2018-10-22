@@ -1,4 +1,4 @@
-[
+﻿[2
 ![Inglês](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/en-us.png)
 ](https://github.com/juniorgasparotto/GraphExpression)
 [
