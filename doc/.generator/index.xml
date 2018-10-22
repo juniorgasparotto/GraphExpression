@@ -1,7 +1,7 @@
 ﻿<documentation>
  <page>
     <languages>
-      <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md" />
+      <language name="pt-br" output="readme-pt-br2.md" default="true" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md" />
       <!-- <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/GraphExpression" /> -->
     </languages>
     <content>
