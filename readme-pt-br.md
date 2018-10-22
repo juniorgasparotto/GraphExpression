@@ -733,10 +733,6 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, Entit
 
 ## <a name="impl-deserialization-circular" />Circular
 
-<!-- # <anchor-set name="index">Índice</anchor-set>
-
-<table-of-contents /> -->
-
 # <a name="install" />Instalação
 
 Via [NuGet](https://www.nuget.org/packages/GraphExpression/):

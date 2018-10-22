@@ -727,8 +727,3 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, Entit
 
 ## Complexa <header-set anchor-name="impl-deserialization-complex" />
 ## Circular <header-set anchor-name="impl-deserialization-circular" />
-
-
-<!-- # <anchor-set name="index">Índice</anchor-set>
-
-<table-of-contents /> -->
