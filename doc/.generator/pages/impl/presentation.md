@@ -225,10 +225,6 @@ A + B + C
 
 <anchor-get name="serialization-circular">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos circulares.
 
-# <anchor-set name="index">Índice</anchor-set>
-
-<table-of-contents />
-
 # Pesquisas <header-set anchor-name="impl-search" />
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
@@ -731,3 +727,8 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, Entit
 
 ## Complexa <header-set anchor-name="impl-deserialization-complex" />
 ## Circular <header-set anchor-name="impl-deserialization-circular" />
+
+
+# <anchor-set name="index">Índice</anchor-set>
+
+<table-of-contents />
