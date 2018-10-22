@@ -729,6 +729,6 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, Entit
 ## Circular <header-set anchor-name="impl-deserialization-circular" />
 
 
-# <anchor-set name="index">Índice</anchor-set>
+<!-- # <anchor-set name="index">Índice</anchor-set>
 
-<table-of-contents />
+<table-of-contents /> -->
