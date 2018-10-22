@@ -229,7 +229,7 @@ A + B + C
 
 <table-of-contents />
 
-# Pesquisas
+# Pesquisas <header-set anchor-name="impl-search" />
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
 
@@ -237,7 +237,7 @@ Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa 
 
 <anchor-get name="search">Clique aqui</anchor-get> para saber mais.
 
-## Pesquisa sem referencia
+## Pesquisa sem referencia <header-set anchor-name="impl-search-without-ref" />
 
 A pesquisa sem referencia será feita em uma coleção de entidades, ou seja, cada item da coleção será testado e retornado em caso de sucesso. Por repetir a mesma pesquisa em todos os itens da lista, esse tipo de pesquisa pode trazer duplicidades.
 
@@ -285,7 +285,7 @@ Caso você queira eliminar as repetições nesse tipo de pesquisa (com coleçõe
 Distinct();
 ```
 
-## Pesquisa com referência
+## Pesquisa com referência <header-set anchor-name="impl-search-with-ref" />
 
 A pesquisa com referencia será feita usando um item especifico, ou seja, primeiro você precisa localizar o item desejado e a partir dele será feito a pesquisa desejada.
 
@@ -327,7 +327,7 @@ Property.Class2_Prop2
 * De preferência para esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
 * A entidade raiz é a melhor opção para isso.
 
-## Tipos de pesquisas
+## Tipos de pesquisas <header-set anchor-name="impl-search-kind" />
 
 Por padrão, esse projeto trás os seguintes tipos de pesquisas:
 
@@ -358,7 +358,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
 ```
 
-### Delegates das pesquisa:
+### Delegates das pesquisa: <header-set anchor-name="impl-search-delegates" />
 
 Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
 
@@ -370,7 +370,7 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 * `EntityItem<T> item`: Esse parâmetro significa o item corrente durante a pesquisa.
 * `int depth`: Determina a profundidade do item corrente com relação a sua posição.
 
-## Antepassados
+## Antepassados <header-set anchor-name="impl-search-ancertors" />
 
 A pesquisa de antepassados é útil para encontrar o pai ou os pais de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -472,7 +472,7 @@ IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, Ent
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## Descendentes
+## Descendentes <header-set anchor-name="impl-search-descentands" />
 
 A pesquisa de descendentes é útil para encontrar os filhos ou todos os descendentes de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -557,7 +557,7 @@ IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, E
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## Filhos
+## Filhos <header-set anchor-name="impl-search-children" />
 
 Para retornar os filhos de um item basta usar o método:
 
@@ -600,7 +600,7 @@ Property.Class1_Prop2
 * Esse método não tem parâmetros, basta utilizar as funções do `Linq` caso necessite de alguma filtragem.
 * Esse método é um alias do método `Descendants(int depthStart, int depthEnd)`, no qual será passado os valores fixos `Descendants(1, 1)`.
 
-## Irmãos
+## Irmãos <header-set anchor-name="impl-search-siblings" />
 
 Essa pesquisa encontra os irmãos de um determinado item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -716,18 +716,18 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, Enti
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-# Informações do grafo de uma entidade
+# Informações do grafo de uma entidade <header-set anchor-name="impl-graph-info" />
 
-# Estendendo a criação de um grafo complexo para expressão de grafos
+# Estendendo a criação de um grafo complexo para expressão de grafos <header-set anchor-name="impl-expression-factory" />
 
-# Criando objetos complexos usando apenas expressão de grafos e a matemática
+# Criando objetos complexos usando apenas expressão de grafos e a matemática <header-set anchor-name="impl-entity-complex-factory" />
 
-# Serialização
+# Serialização <header-set anchor-name="impl-serialization" />
 
-## Complexa
-## Circular
+## Complexa <header-set anchor-name="impl-serialization-complex" />
+## Circular <header-set anchor-name="impl-serialization-circular" />
 
-# Desserialização
+# Desserialização <header-set anchor-name="impl-deserialization" />
 
-## Complexa
-## Circular
+## Complexa <header-set anchor-name="impl-deserialization-complex" />
+## Circular <header-set anchor-name="impl-deserialization-circular" />

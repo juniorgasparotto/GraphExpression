@@ -231,11 +231,29 @@ A + B + C
 
 # <a name="index" />Índice
 
+* [Pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
+  * [Pesquisa sem referencia](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-without-ref)
+  * [Pesquisa com referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-with-ref)
+  * [Tipos de pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-kind)
+    * [Delegates das pesquisa:](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-delegates)
+  * [Antepassados](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-ancertors)
+  * [Descendentes](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-descentands)
+  * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
+  * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
+* [Informações do grafo de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-info)
+* [Estendendo a criação de um grafo complexo para expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-expression-factory)
+* [Criando objetos complexos usando apenas expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-entity-complex-factory)
+* [Serialização](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization)
+  * [Complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-complex)
+  * [Circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular)
+* [Desserialização](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization)
+  * [Complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization-complex)
+  * [Circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization-circular)
 * [Instalação](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#install)
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
 * [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
 
-# Pesquisas
+# <a name="impl-search" />Pesquisas
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
 
@@ -243,7 +261,7 @@ Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa 
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para saber mais.
 
-## Pesquisa sem referencia
+## <a name="impl-search-without-ref" />Pesquisa sem referencia
 
 A pesquisa sem referencia será feita em uma coleção de entidades, ou seja, cada item da coleção será testado e retornado em caso de sucesso. Por repetir a mesma pesquisa em todos os itens da lista, esse tipo de pesquisa pode trazer duplicidades.
 
@@ -291,7 +309,7 @@ Caso você queira eliminar as repetições nesse tipo de pesquisa (com coleçõe
 Distinct();
 ```
 
-## Pesquisa com referência
+## <a name="impl-search-with-ref" />Pesquisa com referência
 
 A pesquisa com referencia será feita usando um item especifico, ou seja, primeiro você precisa localizar o item desejado e a partir dele será feito a pesquisa desejada.
 
@@ -333,7 +351,7 @@ Property.Class2_Prop2
 * De preferência para esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
 * A entidade raiz é a melhor opção para isso.
 
-## Tipos de pesquisas
+## <a name="impl-search-kind" />Tipos de pesquisas
 
 Por padrão, esse projeto trás os seguintes tipos de pesquisas:
 
@@ -364,7 +382,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
 ```
 
-### Delegates das pesquisa:
+### <a name="impl-search-delegates" />Delegates das pesquisa:
 
 Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
 
@@ -376,7 +394,7 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 * `EntityItem<T> item`: Esse parâmetro significa o item corrente durante a pesquisa.
 * `int depth`: Determina a profundidade do item corrente com relação a sua posição.
 
-## Antepassados
+## <a name="impl-search-ancertors" />Antepassados
 
 A pesquisa de antepassados é útil para encontrar o pai ou os pais de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -478,7 +496,7 @@ IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, Ent
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## Descendentes
+## <a name="impl-search-descentands" />Descendentes
 
 A pesquisa de descendentes é útil para encontrar os filhos ou todos os descendentes de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -563,7 +581,7 @@ IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, E
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## Filhos
+## <a name="impl-search-children" />Filhos
 
 Para retornar os filhos de um item basta usar o método:
 
@@ -606,7 +624,7 @@ Property.Class1_Prop2
 * Esse método não tem parâmetros, basta utilizar as funções do `Linq` caso necessite de alguma filtragem.
 * Esse método é um alias do método `Descendants(int depthStart, int depthEnd)`, no qual será passado os valores fixos `Descendants(1, 1)`.
 
-## Irmãos
+## <a name="impl-search-siblings" />Irmãos
 
 Essa pesquisa encontra os irmãos de um determinado item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -721,23 +739,23 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, Enti
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-# Informações do grafo de uma entidade
+# <a name="impl-graph-info" />Informações do grafo de uma entidade
 
-# Estendendo a criação de um grafo complexo para expressão de grafos
+# <a name="impl-expression-factory" />Estendendo a criação de um grafo complexo para expressão de grafos
 
-# Criando objetos complexos usando apenas expressão de grafos e a matemática
+# <a name="impl-entity-complex-factory" />Criando objetos complexos usando apenas expressão de grafos e a matemática
 
-# Serialização
+# <a name="impl-serialization" />Serialização
 
-## Complexa
+## <a name="impl-serialization-complex" />Complexa
 
-## Circular
+## <a name="impl-serialization-circular" />Circular
 
-# Desserialização
+# <a name="impl-deserialization" />Desserialização
 
-## Complexa
+## <a name="impl-deserialization-complex" />Complexa
 
-## Circular
+## <a name="impl-deserialization-circular" />Circular
 
 # <a name="install" />Instalação
 
