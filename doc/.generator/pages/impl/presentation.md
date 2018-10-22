@@ -225,6 +225,10 @@ A + B + C
 
 <anchor-get name="serialization-circular">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos circulares.
 
+# <anchor-set name="index">Índice</anchor-set>
+
+<table-of-contents />
+
 # Pesquisas
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
@@ -323,7 +327,7 @@ Property.Class2_Prop2
 * De preferência para esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
 * A entidade raiz é a melhor opção para isso.
 
-# Tipos de pesquisas
+## Tipos de pesquisas
 
 Por padrão, esse projeto trás os seguintes tipos de pesquisas:
 
@@ -354,7 +358,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
 ```
 
-## Delegates das pesquisa:
+### Delegates das pesquisa:
 
 Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
 
@@ -712,44 +716,18 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, Enti
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-# Representação em forma de expressão
+# Informações do grafo de uma entidade
 
-A segunda saída desse exemplo mostra como fica o objeto `model` em forma de expressão:
+# Estendendo a criação de um grafo complexo para expressão de grafos
 
-```
-"Class1.32854180" + "Class1_Prop1: Value1" + ("Class1_Prop2.27252167" + "Class2_Prop2: ValueChild" + "Class2_Prop1: 2147483647")
-```
+# Criando objetos complexos usando apenas expressão de grafos e a matemática
 
-Com essa representação podemos usar o conceito e abstrair as informações de cada item do grafo e com isso fazer o que quisermos
+# Serialização
 
-<anchor-get name="intro">Clique aqui</anchor-get> para saber mais sobre essas informações.
+## Complexa
+## Circular
 
-# Estrutura transversal
+# Desserialização
 
-Esse tipo de estrutura é a base do conceito de expressão de grafos, ou seja, remover as dificuldades das estruturas hierarquicas empilhando todas as entidades do grafo uma em baixo da outra. É claro que é possível identificar a posição da entidade no grafo hirarquico, o conceito de expressão de grafos trás um conjunto de informações que possibilita essa descoberta.
-
-
-<anchor-get name="entity-info">Clique aqui</anchor-get> para saber mais sobre essas informações.
-
-## Serializando para expressão de grafos
-
-```csharp
-public void Example1()
-{
-    System.Console.WriteLine(expression.DefaultSerializer.Serialize());
-}
-```
-
-A segunda saída mostra o objeto serializado para expressão de grafos. Notem que os parenteses correspondem a criação de um novo nível seguindo o conceito de expressão de grafos para objetos complexos.
-
-```
-"Class1.32854180" + "Class1_Prop1: Value1" + ("Class1_Prop2.27252167" + "Class2_Prop2: ValueChild" + "Class2_Prop1: 2147483647")
-```
-
-Essa classe contém uma lista da classe `EntityItem<object>` na qual contém todas as informações da ocorrência da entidade na expressão.
-
-* 
-
-# <anchor-set name="index">Índice</anchor-set>
-
-<table-of-contents />
+## Complexa
+## Circular
