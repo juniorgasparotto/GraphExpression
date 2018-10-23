@@ -1,4 +1,4 @@
-## Grafos complexos <header-set anchor-name="impl-graph-complex" />
+# Grafos complexos <header-set anchor-name="impl-graph-complex" />
 
 Chamamos de grafos complexos aqueles que não contém tipo definido, ou seja, todos os itens são definidos como `object`. Esse tipo de grafo é presentado pela classe:
 
@@ -88,7 +88,7 @@ public class Class2
 
 <anchor-get name="serialization-complex">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos complexos.
 
-### Elementos padrão de uma expressão de grafos para tipos complexos
+## Elementos padrão de uma expressão de grafos para tipos complexos
 
 Os elementos de uma expressão complexa (`Expression<object>`) podem variar entre os seguintes tipos:
 

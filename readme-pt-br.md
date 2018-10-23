@@ -19,8 +19,8 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
 
 # <a name="index" />Índice
 
-  * [Grafos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-complex)
-  * [Grafos circulares](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-circular)
+* [Grafos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-complex)
+* [Grafos circulares](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-circular)
 * [Pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
   * [Pesquisa sem referencia](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-without-ref)
   * [Pesquisa com referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-with-ref)
@@ -35,7 +35,7 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
 * [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
 
-## <a name="impl-graph-complex" />Grafos complexos
+# <a name="impl-graph-complex" />Grafos complexos
 
 Chamamos de grafos complexos aqueles que não contém tipo definido, ou seja, todos os itens são definidos como `object`. Esse tipo de grafo é presentado pela classe:
 
@@ -124,7 +124,7 @@ public class Class2
 
 <error>The anchor 'serialization-complex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> para entender como funciona a serialiação de objetos complexos.
 
-### Elementos padrão de uma expressão de grafos para tipos complexos
+## Elementos padrão de uma expressão de grafos para tipos complexos
 
 Os elementos de uma expressão complexa (`Expression<object>`) podem variar entre os seguintes tipos:
 
@@ -139,7 +139,7 @@ Todos esses tipos herdam de `EntityItem<object>`, portanto, além de suas propri
 
 Ainda é possível extender a criação de uma expressões complexas, para sabe mais veja o tópico <error>The anchor 'entity-complex-factory' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
 
-## <a name="impl-graph-circular" />Grafos circulares
+# <a name="impl-graph-circular" />Grafos circulares
 
 Chamamos de grafos circulares aqueles que contém tipo definido, ou seja, todos os itens são definidos com o mesmo tipo `T`. Esse tipo de grafo é presentado pela classe:
 

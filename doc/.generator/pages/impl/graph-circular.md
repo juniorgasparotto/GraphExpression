@@ -1,4 +1,4 @@
-## Grafos circulares <header-set anchor-name="impl-graph-circular" />
+# Grafos circulares <header-set anchor-name="impl-graph-circular" />
 
 Chamamos de grafos circulares aqueles que contém tipo definido, ou seja, todos os itens são definidos com o mesmo tipo `T`. Esse tipo de grafo é presentado pela classe:
 
