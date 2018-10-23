@@ -1,4 +1,4 @@
-## Descendentes <header-set anchor-name="impl-search-descentands" />
+### Descendentes <header-set anchor-name="impl-search-descentands" />
 
 A pesquisa de descendentes é útil para encontrar os filhos ou todos os descendentes de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 

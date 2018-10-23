@@ -1,4 +1,4 @@
-# Pesquisas <header-set anchor-name="impl-search" />
+# Pesquisando <header-set anchor-name="impl-search" />
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
 

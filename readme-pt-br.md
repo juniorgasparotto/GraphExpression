@@ -13,7 +13,7 @@ Resumidamente, o conceito de **expressão de grafos** tem como objetivo explorar
 
 Com relação a pesquisa em grafos, esse projeto se inspirou na implementação do `JQuery` para pesquisas de elementos HTML (DOM), unindo assim o conceito de expressão de grafos com a facilidade de uso do `JQuery` para pesquisas transversais.
 
-**Atenção:** Esse documento não vai explicar o conceito de expressão de grafos, ele terá como foco apenas o framework `GraphExpression`.
+**Atenção:** Esse documento não vai explicar o conceito de expressão de grafos, ele terá como foco apenas no framework `GraphExpression`.
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept) se você quiser conhecer mais sobre o conceito de expressão de grafos.
 
@@ -21,15 +21,14 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
 
 * [Grafos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-complex)
 * [Grafos circulares](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-circular)
-* [Pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
+* [Pesquisando](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
   * [Pesquisa sem referencia](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-without-ref)
   * [Pesquisa com referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-with-ref)
   * [Tipos de pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-kind)
-    * [Delegates das pesquisa:](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-delegates)
-  * [Antepassados](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-ancertors)
-  * [Descendentes](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-descentands)
-  * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
-  * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
+    * [Antepassados](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-ancertors)
+    * [Descendentes](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-descentands)
+    * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
+    * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
 * [Informações do grafo de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-info)
 * [Instalação](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#install)
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
@@ -247,7 +246,7 @@ A + B + C
 
 <error>The anchor 'serialization-circular' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> para entender como funciona a serialiação de objetos circulares.
 
-# <a name="impl-search" />Pesquisas
+# <a name="impl-search" />Pesquisando
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
 
@@ -376,7 +375,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
 ```
 
-### <a name="impl-search-delegates" />Delegates das pesquisa:
+### Delegates das pesquisa
 
 Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
 
@@ -388,7 +387,7 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 * `EntityItem<T> item`: Esse parâmetro significa o item corrente durante a pesquisa.
 * `int depth`: Determina a profundidade do item corrente com relação a sua posição.
 
-## <a name="impl-search-ancertors" />Antepassados
+### <a name="impl-search-ancertors" />Antepassados
 
 A pesquisa de antepassados é útil para encontrar o pai ou os pais de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -490,7 +489,7 @@ IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, Ent
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## <a name="impl-search-descentands" />Descendentes
+### <a name="impl-search-descentands" />Descendentes
 
 A pesquisa de descendentes é útil para encontrar os filhos ou todos os descendentes de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -575,7 +574,7 @@ IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, E
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## <a name="impl-search-children" />Filhos
+### <a name="impl-search-children" />Filhos
 
 Para retornar os filhos de um item basta usar o método:
 
@@ -618,7 +617,7 @@ Property.Class1_Prop2
 * Esse método não tem parâmetros, basta utilizar as funções do `Linq` caso necessite de alguma filtragem.
 * Esse método é um alias do método `Descendants(int depthStart, int depthEnd)`, no qual será passado os valores fixos `Descendants(1, 1)`.
 
-## <a name="impl-search-siblings" />Irmãos
+### <a name="impl-search-siblings" />Irmãos
 
 Essa pesquisa encontra os irmãos de um determinado item. Temos algumas sobrecargas que serão explicadas a seguir:
 

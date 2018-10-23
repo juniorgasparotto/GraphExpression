@@ -1,4 +1,4 @@
-## Filhos <header-set anchor-name="impl-search-children" />
+### Filhos <header-set anchor-name="impl-search-children" />
 
 Para retornar os filhos de um item basta usar o método:
 

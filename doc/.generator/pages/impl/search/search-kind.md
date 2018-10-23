@@ -29,7 +29,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
 ```
 
-### Delegates das pesquisa: <header-set anchor-name="impl-search-delegates" />
+### Delegates das pesquisa
 
 Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
 
