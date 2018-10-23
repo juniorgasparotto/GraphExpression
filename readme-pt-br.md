@@ -39,6 +39,12 @@ Install-Package GraphExpression
     * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
 * [Estendendo a criação de um grafo complexo para expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-expression-factory)
 * [Criando objetos complexos usando apenas expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-entity-complex-factory)
+* [Serialização](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization)
+  * [Complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-complex)
+  * [Circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular)
+* [Desserialização](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization)
+  * [Complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization-complex)
+  * [Circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization-circular)
 * [Informações do grafo de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-info)
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
 * [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
@@ -744,6 +750,18 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, Entit
 # <a name="impl-expression-factory" />Estendendo a criação de um grafo complexo para expressão de grafos
 
 # <a name="impl-entity-complex-factory" />Criando objetos complexos usando apenas expressão de grafos e a matemática
+
+# <a name="impl-serialization" />Serialização
+
+## <a name="impl-serialization-complex" />Complexa
+
+## <a name="impl-serialization-circular" />Circular
+
+# <a name="impl-deserialization" />Desserialização
+
+## <a name="impl-deserialization-complex" />Complexa
+
+## <a name="impl-deserialization-circular" />Circular
 
 # <a name="impl-graph-info" />Informações do grafo de uma entidade
 
