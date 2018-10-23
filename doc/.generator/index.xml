@@ -14,6 +14,8 @@
       </a>
 
       <include href="doc/.generator/pages/impl/presentation.md" />
+      <include href="doc/.generator/pages/impl/install.md" />
+      <include href="doc/.generator/pages/impl/table-of-contents.md" />
       <include href="doc/.generator/pages/impl/graph-complex.md" />
       <include href="doc/.generator/pages/impl/graph-circular.md" />
       <include href="doc/.generator/pages/impl/search/search.md" />
@@ -25,7 +27,6 @@
       <include href="doc/.generator/pages/impl/search/search-children.md" />
       <include href="doc/.generator/pages/impl/search/search-siblings.md" />
       <include href="doc/.generator/pages/impl/graph-info.md" />
-      <include href="doc/.generator/pages/impl/install.md" />
       <include href="doc/.generator/pages/impl/donate.md" />
       <include href="doc/.generator/pages/impl/license.md" />
 

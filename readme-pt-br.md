@@ -17,8 +17,17 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept) se você quiser conhecer mais sobre o conceito de expressão de grafos.
 
+# <a name="install" />Instalação
+
+Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
+
+```
+Install-Package GraphExpression
+```
+
 # <a name="index" />Índice
 
+* [Instalação](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#install)
 * [Grafos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-complex)
 * [Grafos circulares](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-circular)
 * [Pesquisando](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
@@ -30,7 +39,6 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
     * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
     * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
 * [Informações do grafo de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-info)
-* [Instalação](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#install)
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
 * [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
 
@@ -917,14 +925,6 @@ Planejo no futuro remover essa propriedade estática e troca-la por uma instânc
 A propriedade `GraphExpression.Expression<T>.EnableGraphInfo` determina se a coleta das informações de grafos estão ou não ligadas. Por padrão, ela está ligada, mas em caso de problemas de performance é possível desativa-la de forma global.
 
 Lembrando que ao fazer isso, todas as informações dos grafos estarão nulas.
-
-# <a name="install" />Instalação
-
-Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
-
-```
-Install-Package GraphExpression
-```
 
 # <a name="donate" />Doações
 
