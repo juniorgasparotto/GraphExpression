@@ -1,11 +1,4 @@
-[
-![Inglês](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/en-us.png)
-](https://github.com/juniorgasparotto/GraphExpression)
-[
-![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
-](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
-
-# <a name="implementation" />Expressão de grafos
+# <anchor-set name="implementation">Expressão de grafos</anchor-set>
 
 Esse framework tem como objetivo implementar o conceito de expressão de grafos na linguagem .NET.
 
@@ -15,23 +8,11 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
 
 **Atenção:** Esse documento não vai explicar o conceito de expressão de grafos, ele terá como foco apenas o framework `GraphExpression`.
 
-[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept) se você quiser conhecer mais sobre o conceito de expressão de grafos.
+<anchor-get name="concept">Clique aqui</anchor-get> se você quiser conhecer mais sobre o conceito de expressão de grafos.
 
-# <a name="index" />Índice
+# <anchor-set name="index">Índice</anchor-set>
 
-* [Pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
-  * [Pesquisa sem referencia](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-without-ref)
-  * [Pesquisa com referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-with-ref)
-  * [Tipos de pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-kind)
-    * [Delegates das pesquisa:](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-delegates)
-  * [Antepassados](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-ancertors)
-  * [Descendentes](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-descentands)
-  * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
-  * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
-* [Informações do grafo de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-info)
-* [Instalação](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#install)
-* [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
-* [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
+<table-of-contents />
 
 ## Grafos complexos
 
@@ -114,13 +95,14 @@ public class Class2
 * O método de extensão `AsExpression` está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
 * A propriedade `Level` é a responsável por informar em qual nível do grafo está cada item da iteração, possibilitando criar uma saída identada que representa a hierarquia do objeto `model`.
 * O método `GetEntity` é apenas um ajudante que imprime o tipo do item e o nome do membro que pode ser uma propriedade ou um campo. Poderíamos também retornar o valor do membro, mas para deixar mais limpo a saída, eliminamos essa informação.
-1. Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
+
+2. Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
 
 ```
 "Class1.32854180" + "Class1_Prop1: Value1" + ("Class1_Prop2.36849274" + "Class2_Prop2: Value2" + "Class2_Field1: 1000")
 ```
 
-<error>The anchor 'serialization-complex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> para entender como funciona a serialiação de objetos complexos.
+<anchor-get name="serialization-complex">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos complexos.
 
 ### Elementos padrão de uma expressão de grafos para tipos complexos
 
@@ -135,7 +117,7 @@ Os elementos de uma expressão complexa (`Expression<object>`) podem variar entr
 
 Todos esses tipos herdam de `EntityItem<object>`, portanto, além de suas propriedades especificas ainda terão as informações do item na expressão.
 
-Ainda é possível extender a criação de uma expressões complexas, para sabe mais veja o tópico <error>The anchor 'entity-complex-factory' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+Ainda é possível extender a criação de uma expressões complexas, para sabe mais veja o tópico <anchor-get name="entity-complex-factory" />
 
 ## Grafos circulares
 
@@ -174,6 +156,7 @@ public void GraphCircular()
     }
 
     System.Console.WriteLine(expression.DefaultSerializer.Serialize());
+
 
     // ACTION: REMOVE
     C = C - D;
@@ -221,7 +204,7 @@ public class CircularEntity
     [3] => Item: D, Parent: C, Previous: C, Next: , Level: 3
 ```
 
-1. A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
+2. A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
 
 ```
 A + B + (C + D)
@@ -229,7 +212,8 @@ A + B + (C + D)
 
 * O parâmetro `entityNameCallback` é o responsável por determinar qual será o nome a ser exibido na expressão, nesse exemplo usamos a propriedade `Name`, assim a expressão abaixo exibirá o nome de cada entidade em cada posição da expressão.
 * Caso esse parâmetro não seja passado, será usado o método `ToString` que existe em qualquer objeto .NET.
-1. A terceira saída mostra como ficou a estrutura da expressão após a remoção do objeto filho `D` no objeto pai `C`:
+
+3. A terceira saída mostra como ficou a estrutura da expressão após a remoção do objeto filho `D` no objeto pai `C`:
 
 ```
 [0] => Item: A, Parent: , Previous: , Next: B, Level: 1
@@ -243,21 +227,21 @@ A quarta saída mostra como ficou a expressão após a remoção do objeto filho
 A + B + C
 ```
 
-<error>The anchor 'serialization-circular' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> para entender como funciona a serialiação de objetos circulares.
+<anchor-get name="serialization-circular">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos circulares.
 
-# <a name="impl-search" />Pesquisas
+# Pesquisas <header-set anchor-name="impl-search" />
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
 
 **Atenção:** Nesse tópico, usaremos o modelo de grafos complexos devido a sua maior complexidade.
 
-[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para saber mais.
+<anchor-get name="search">Clique aqui</anchor-get> para saber mais.
 
-## <a name="impl-search-without-ref" />Pesquisa sem referencia
+## Pesquisa sem referencia <header-set anchor-name="impl-search-without-ref" />
 
 A pesquisa sem referencia será feita em uma coleção de entidades, ou seja, cada item da coleção será testado e retornado em caso de sucesso. Por repetir a mesma pesquisa em todos os itens da lista, esse tipo de pesquisa pode trazer duplicidades.
 
-[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-without-references) para saber mais sobre esse tipo de pesquisa.
+<anchor-get name="search-without-references">Clique aqui</anchor-get> para saber mais sobre esse tipo de pesquisa.
 
 Considerando os mesmos modelos do exemplo `GraphComplex`, vamos criar uma pesquisa para retornar todos os descendentes de todas as entidades que sejam uma propriedade e filhos da class `Class2`.
 
@@ -301,11 +285,11 @@ Caso você queira eliminar as repetições nesse tipo de pesquisa (com coleçõe
 Distinct();
 ```
 
-## <a name="impl-search-with-ref" />Pesquisa com referência
+## Pesquisa com referência <header-set anchor-name="impl-search-with-ref" />
 
 A pesquisa com referencia será feita usando um item especifico, ou seja, primeiro você precisa localizar o item desejado e a partir dele será feito a pesquisa desejada.
 
-[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-with-references) para saber mais sobre esse tipo de pesquisa.
+<anchor-get name="search-with-references">Clique aqui</anchor-get> para saber mais sobre esse tipo de pesquisa.
 
 Considerando os mesmos modelos do exemplo `GraphComplex`, vamos criar uma pesquisa para retornar todos os descendentes do item raiz que sejam uma propriedade e filhos da class `Class2`.
 
@@ -343,7 +327,7 @@ Property.Class2_Prop2
 * De preferência para esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
 * A entidade raiz é a melhor opção para isso.
 
-## <a name="impl-search-kind" />Tipos de pesquisas
+## Tipos de pesquisas <header-set anchor-name="impl-search-kind" />
 
 Por padrão, esse projeto trás os seguintes tipos de pesquisas:
 
@@ -374,7 +358,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
 ```
 
-### <a name="impl-search-delegates" />Delegates das pesquisa:
+### Delegates das pesquisa: <header-set anchor-name="impl-search-delegates" />
 
 Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
 
@@ -386,7 +370,7 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 * `EntityItem<T> item`: Esse parâmetro significa o item corrente durante a pesquisa.
 * `int depth`: Determina a profundidade do item corrente com relação a sua posição.
 
-## <a name="impl-search-ancertors" />Antepassados
+## Antepassados <header-set anchor-name="impl-search-ancertors" />
 
 A pesquisa de antepassados é útil para encontrar o pai ou os pais de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -458,37 +442,37 @@ Class1
 Property.Class1_Prop2
 ```
 
-1. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+2. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-1. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+3. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
 ```
 
-1. A quarta sobrecarga filtra profundidade de fim.
+4. A quarta sobrecarga filtra profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthEnd)
 ```
 
-1. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os antepassados até que algum antepassado retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até a raiz. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+5. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os antepassados até que algum antepassado retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até a raiz. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
 ```
 
-1. A segunda sobrecarga do método `AncestorsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+6. A segunda sobrecarga do método `AncestorsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## <a name="impl-search-descentands" />Descendentes
+## Descendentes <header-set anchor-name="impl-search-descentands" />
 
 A pesquisa de descendentes é útil para encontrar os filhos ou todos os descendentes de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -543,37 +527,37 @@ Property.Class2_Prop2
 Field.Class2_Field1
 ```
 
-1. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+2. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-1. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+3. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthStart, int depthEnd)
 ```
 
-1. A quarta sobrecarga filtra profundidade de fim.
+4. A quarta sobrecarga filtra profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthEnd)
 ```
 
-1. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os descendentes até que algum descendente retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até chegar no último item. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+5. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os descendentes até que algum descendente retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até chegar no último item. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
 ```
 
-1. A segunda sobrecarga do método `DescendantsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+6. A segunda sobrecarga do método `DescendantsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-## <a name="impl-search-children" />Filhos
+## Filhos <header-set anchor-name="impl-search-children" />
 
 Para retornar os filhos de um item basta usar o método:
 
@@ -616,7 +600,7 @@ Property.Class1_Prop2
 * Esse método não tem parâmetros, basta utilizar as funções do `Linq` caso necessite de alguma filtragem.
 * Esse método é um alias do método `Descendants(int depthStart, int depthEnd)`, no qual será passado os valores fixos `Descendants(1, 1)`.
 
-## <a name="impl-search-siblings" />Irmãos
+## Irmãos <header-set anchor-name="impl-search-siblings" />
 
 Essa pesquisa encontra os irmãos de um determinado item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -629,14 +613,15 @@ IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no último irmão ou no primeiro (depende do parâmetro `direction`). A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até chegar no último irmão ou no primeiro (depende do parâmetro `direction`).
 * `direction`: Esse parâmetro determina em qual direção a navegação deverá ir:
-  * `Start`: Determina que a navegação deve iniciar no primeiro irmão á esquerda do item referencia e ir até o último irmão á direita.
-  * `Next`: Determina que a navegação deve iniciar no próximo item e seguir até o último irmão á direita.
-  * `Previous`: Determina que a navegação deve iniciar no item anterior e seguir até o primeiro irmão á esquerda.
-* `positionStart`: Determina a posição de inicio que a pesquisa deve começar.
-  * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão á esquerda do item referencia.
-  * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão á direita do item referencia.
-  * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão á esquerda do item referencia.
+    * `Start`: Determina que a navegação deve iniciar no primeiro irmão á esquerda do item referencia e ir até o último irmão á direita.
+    * `Next`: Determina que a navegação deve iniciar no próximo item e seguir até o último irmão á direita.
+    * `Previous`: Determina que a navegação deve iniciar no item anterior e seguir até o primeiro irmão á esquerda.
+* `positionStart`: Determina a posição de inicio que a pesquisa deve começar. 
+    * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão á esquerda do item referencia.
+    * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão á direita do item referencia.
+    * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão á esquerda do item referencia.
 * `positionEnd`: Determina a posição de fim que a pesquisa deve parar.
+
 
 Nesse exemplo vamos retornar os irmãos do item cujo o valor é igual a `C` em todas variando as direções.
 
@@ -701,79 +686,79 @@ B: B
 A: A
 ```
 
-1. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+2. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
 ```
 
-1. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim na direção especificada.
+3. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-1. A quarta sobrecarga filtra profundidade de fim na direção especificada.
+4. A quarta sobrecarga filtra profundidade de fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-1. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os irmãos até que algum irmão retorne negativo no parâmetro `stop`. Do contrário será retornado todos os irmãos até chegar no último ou no primeiro (depende do parâmetro `direction`). Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+5. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os irmãos até que algum irmão retorne negativo no parâmetro `stop`. Do contrário será retornado todos os irmãos até chegar no último ou no primeiro (depende do parâmetro `direction`). Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-1. A segunda sobrecarga do método `SiblingsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+6. A segunda sobrecarga do método `SiblingsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-# <a name="impl-graph-info" />Informações do grafo de uma entidade
+# Informações do grafo de uma entidade <header-set anchor-name="impl-graph-info" />
 
 As classes `Expression<T>` e `EntityItem<T>` trazem algumas informações da teoria de grafos que ajudam a compreender um pouco a relação entre as entidades.
 
 A classe `Expression<T>` trás a propriedade `Graph` que isola as informações gerais do grafo, ela contém as seguintes propriedades e definições:
 
 * `IReadOnlyList<Edge<T>> Edges`: Essa propriedade contém todas as arestas do grafo.
-  * `class Edge<T>`: Essa classe representa uma conexão entre duas entidades (A e B), nela temos alguns propriedades e um método que ajudam a extrair algumas informações da ligação.
-    * `decimal Weight`: Determina o peso da ligação, caso necessário, faça o preenchimento dela após a criação da expressão.
-    * `EntityItem<T> Source`: Determina o item pai da ligação
-    * `EntityItem<T> Target`: Determina o item filho da ligação
-    * `IsLoop`: Determina se o `Source` é igual ao `Target`, se sim, essa ligação está em looping.
-    * `bool IsAntiparallel(Edge<T> compare)`: Determina se duas arestas são antiparalelas, ou seja, se uma aresta comparada com a outra tem as mesmas entidades, porém, em ordem invertida:
-      * `A -> B`
-      * `B -> A`
+    * `class Edge<T>`: Essa classe representa uma conexão entre duas entidades (A e B), nela temos alguns propriedades e um método que ajudam a extrair algumas informações da ligação.
+        * `decimal Weight`: Determina o peso da ligação, caso necessário, faça o preenchimento dela após a criação da expressão.
+        * `EntityItem<T> Source`: Determina o item pai da ligação
+        * `EntityItem<T> Target`: Determina o item filho da ligação
+        * `IsLoop`: Determina se o `Source` é igual ao `Target`, se sim, essa ligação está em looping.
+        * `bool IsAntiparallel(Edge<T> compare)`: Determina se duas arestas são antiparalelas, ou seja, se uma aresta comparada com a outra tem as mesmas entidades, porém, em ordem invertida:
+            * `A -> B`
+            * `B -> A`
 * `IReadOnlyList<Vertex<T>> Vertexes`: Contém a lista de todas as entidades do grafo
-  * `class Vertex<T>`: Representa um vértice, ou seja, uma entidade
-    * `long Id`: Essa identificação é gerada automaticamente usando a classe estática `VertexContainer`.
-    * `T Entity`: Representa a entidade do vértice.
-    * `int CountVisited`: Determina quantas vezes o vértice foi utilizado no grafo.
-    * `IReadOnlyList<EntityItem<T>> Parents`: Lista todos os pais de um vértice no grafo.
-    * `IReadOnlyList<EntityItem<T>> Children`: Lista todos os filhos da entidade.
-    * `int Indegrees`: Determina o grau de entrada (numero de pais)
-    * `int Outdegrees`: Determina o grau de saída (numero de filhos)
-    * `int Degrees`: Determina o grau do vértice (somatória de grau de entrada com grau de saída)
-    * `bool IsSink`: Verifica se o vértice é uma folha, ou seja, não contém filhos.
-    * `bool IsSource`: Verifica se o vértice é a raiz do grafo.
-    * `bool IsIsolated`: Verifica se o vértice não contém pai e nem filhos, ou seja, é um item raiz sem filhos.
+    * `class Vertex<T>`: Representa um vértice, ou seja, uma entidade
+        * `long Id`: Essa identificação é gerada automaticamente usando a classe estática `VertexContainer`.
+        * `T Entity`: Representa a entidade do vértice.
+        * `int CountVisited`: Determina quantas vezes o vértice foi utilizado no grafo.
+        * `IReadOnlyList<EntityItem<T>> Parents`: Lista todos os pais de um vértice no grafo.
+        * `IReadOnlyList<EntityItem<T>> Children`: Lista todos os filhos da entidade.
+        * `int Indegrees`: Determina o grau de entrada (numero de pais)
+        * `int Outdegrees`: Determina o grau de saída (numero de filhos)
+        * `int Degrees`: Determina o grau do vértice (somatória de grau de entrada com grau de saída)
+        * `bool IsSink`: Verifica se o vértice é uma folha, ou seja, não contém filhos.
+        * `bool IsSource`: Verifica se o vértice é a raiz do grafo.
+        * `bool IsIsolated`: Verifica se o vértice não contém pai e nem filhos, ou seja, é um item raiz sem filhos.
 * `IReadOnlyList<Path<T>> Paths`: Contém a lista de todos os caminhos finais do grafo
-  * `class Path<T>`: Representa um caminho que parte da raiz até chegar no vértice
-    * `IEnumerable<EntityItem<T>> Items`: Lista todos os itens do caminho partindo do item raiz até o item da instância.
-    * `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e útiliza-se do seguinte padrão:
-      * Formato: [id-root].[id-parent].[id-instance]
-      * Exemplo: [0].[1].[2]
-    * `PathType PathType`: Determina o tipo do caminho
-      * `Circuit`: Ocorre quando o vértice raiz é igual vértice da instância
-      * `Circle`: Ocorre quando o vértice pai é igual ao vértice da instância
-      * `Simple`: É tipo padrão, ou seja, quando não é circuito e nem circular
-    * `bool ContainsPath(Path<T> pathTest)`: Verifica se um caminho existe dentro do caminho da instância. Basicamente, esse método faz uma comparação entre strings usado a propriedade `Identity`, ou seja, se um caminho conter a identificação de outro caminho é porque esse caminho está contido no outro.
-      * Caminho 1: [0].[1].[2].[3]
-      * Caminho 2: [2].[3]
-      * O caminho 2 está contido no caminho 1 usando apenas uma verificação de strings:
-        * `"[0].[1].[2].[3]".Constains("[2].[3]") = true`
+    * `class Path<T>`: Representa um caminho que parte da raiz até chegar no vértice
+        * `IEnumerable<EntityItem<T>> Items`: Lista todos os itens do caminho partindo do item raiz até o item da instância.
+        *  `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e útiliza-se do seguinte padrão: 
+            * Formato: [id-root].[id-parent].[id-instance]
+            * Exemplo: [0].[1].[2]
+        * `PathType PathType`: Determina o tipo do caminho
+            * `Circuit`: Ocorre quando o vértice raiz é igual vértice da instância
+            * `Circle`: Ocorre quando o vértice pai é igual ao vértice da instância
+            * `Simple`: É tipo padrão, ou seja, quando não é circuito e nem circular
+        * `bool ContainsPath(Path<T> pathTest)`: Verifica se um caminho existe dentro do caminho da instância. Basicamente, esse método faz uma comparação entre strings usado a propriedade `Identity`, ou seja, se um caminho conter a identificação de outro caminho é porque esse caminho está contido no outro.
+            * Caminho 1: [0].[1].[2].[3]
+            * Caminho 2: [2].[3]
+            * O caminho 2 está contido no caminho 1 usando apenas uma verificação de strings: 
+                * `"[0].[1].[2].[3]".Constains("[2].[3]") = true`
 
 A classe `EntityItem<T>` trás as seguintes propriedades:
 
@@ -886,7 +871,7 @@ A segunda saída mostra como ficou os caminhos do grafo `B`:
 
 ```
 
-A terceira saída mostra quais grafos sobraram após a remoção da coexistência. Como o grafo `A` continha o grafo `C`, então apenas ele sobrou:
+A terceira saída mostra quais grafos sobraram após a remoção da coexistência. Como o grafo `A` continha o grafo `C`, então apenas ele sobrou: 
 
 ```
 -> HashCode not duplicates: 32854180
@@ -913,40 +898,20 @@ Planejo no futuro remover essa propriedade estática e troca-la por uma instânc
 
 ## Desativando as informações de grafos
 
-A propriedade `GraphExpression.Expression<T>.EnableGraphInfo` determina se a coleta das informações de grafos estão ou não ligadas. Por padrão, ela está ligada, mas em caso de problemas de performance é possível desativa-la de forma global.
+A propriedade `GraphExpression.Expression<T>.EnableGraphInfo` determina se a coleta das informações de grafos estão ou não ligadas. Por padrão, ela está ligada, mas em caso de problemas de performance é possível desativa-la de forma global. 
 
 Lembrando que ao fazer isso, todas as informações dos grafos estarão nulas.
 
-# <a name="install" />Instalação
+# Estendendo a criação de um grafo complexo para expressão de grafos <header-set anchor-name="impl-expression-factory" />
 
-Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
+# Criando objetos complexos usando apenas expressão de grafos e a matemática <header-set anchor-name="impl-entity-complex-factory" />
 
-```
-Install-Package GraphExpression
-```
+# Serialização <header-set anchor-name="impl-serialization" />
 
-# <a name="donate" />Doações
+## Complexa <header-set anchor-name="impl-serialization-complex" />
+## Circular <header-set anchor-name="impl-serialization-circular" />
 
-GraphExpression é um projeto de código aberto. Iniciado em 2017, muitas horas foram investidos na criação e evolução deste projeto.
+# Desserialização <header-set anchor-name="impl-deserialization" />
 
-Se o GraphExpression foi útil pra você, ou se você deseja ve-lo evoluir cada vez mais, considere fazer uma pequena doação (qualquer valor). Ajude-nos também com sugestões e possíveis problemas.
-
-De qualquer forma, agradecemos você por ter chego até aqui ;)
-
-**BitCoin:**
-
-_19DmxWBNcaUGjm2PQAuMBD4Y8ZbrGyMLzK_
-
-![bitcoinkey](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/bitcoinkey.png)
-
-# <a name="license" />Licença
-
-The MIT License (MIT)
-
-Copyright (c) 2018 Glauber Donizeti Gasparotto Junior
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## Complexa <header-set anchor-name="impl-deserialization-complex" />
+## Circular <header-set anchor-name="impl-deserialization-circular" />
