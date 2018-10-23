@@ -8,4 +8,4 @@ Com relação a pesquisa em grafos, esse projeto se inspirou na implementação 
 
 **Atenção:** Esse documento não vai explicar o conceito de expressão de grafos, ele terá como foco apenas no framework `GraphExpression`.
 
-<anchor-get name="concept">Clique aqui</anchor-get> se você quiser conhecer mais sobre o conceito de expressão de grafos.
+**<anchor-get name="concept">Clique aqui</anchor-get> se você quiser conhecer mais sobre o conceito de expressão de grafos.**
