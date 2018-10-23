@@ -46,7 +46,7 @@ public void Descendants1()
 }
 ```
 
-A saída será:
+_A saída será:_
 
 ```
 Property.Class2_Prop2

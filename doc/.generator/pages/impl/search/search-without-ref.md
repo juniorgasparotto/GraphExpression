@@ -28,7 +28,7 @@ public void Search1()
 }
 ```
 
-Como esperado, o resultado retornou duas linhas:
+_Como esperado, o resultado retornou duas linhas:_
 
 ```
 Property.Class2_Prop2

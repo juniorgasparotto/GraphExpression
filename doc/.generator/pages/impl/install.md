@@ -1,4 +1,4 @@
-# Instalação <header-set anchor-name="install" />
+# Instalação
 
 Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
 

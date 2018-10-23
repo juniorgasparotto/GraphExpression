@@ -31,7 +31,7 @@ public void Children()
 }
 ```
 
-A saída exibirá as duas propriedades que são filhas do item raiz:
+_A saída exibirá as duas propriedades que são filhas do item raiz:_
 
 ```
 Property.Class1_Prop1

@@ -58,7 +58,7 @@ public void Siblings1()
 }
 ```
 
-1.1. A primeira saída será retorna todos os irmãos da entidade `C` iniciando do primeiro irmão á esquerda até o último irmão á direita. É importante destacar que o próprio item não é retornado, afinal ele não é irmão dele mesmo.
+_A primeira saída será retorna todos os irmãos da entidade `C` iniciando do primeiro irmão á esquerda até o último irmão á direita. É importante destacar que o próprio item não é retornado, afinal ele não é irmão dele mesmo._
 
 ```
 -> Start direction
@@ -68,7 +68,7 @@ D: D
 E: E
 ```
 
-1.1. A segunda saída retorna todos os irmãos da entidade `C` iniciando do próximo irmão á direita até o último irmão á direita.
+_A segunda saída retorna todos os irmãos da entidade `C` iniciando do próximo irmão á direita até o último irmão á direita._
 
 ```
 -> Next direction
@@ -76,7 +76,7 @@ D: D
 E: E
 ```
 
-1.2. A terceira saída retorna todos os irmãos da entidade `C` iniciando do irmão anterior até o primeiro irmão á esquerda.
+_A terceira saída retorna todos os irmãos da entidade `C` iniciando do irmão anterior até o primeiro irmão á esquerda._
 
 ```
 -> Previous direction

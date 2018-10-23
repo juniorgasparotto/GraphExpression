@@ -55,7 +55,7 @@ public void Ancertor1()
 }
 ```
 
-1.1. A primeira saída exibe todos os pais do item referencia.
+_A primeira saída exibe todos os pais do item referencia._
 
 ```
 Property.Class1_Prop2
@@ -64,7 +64,7 @@ Class1
 
 * A ordem de retorno será sempre do antepassado mais próximo, ou seja, o primeiro item da lista de retorno será sempre o pai do item referência.
 
-1.2. A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referencia:
+_A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referencia:_
 
 ```
 Property.Class1_Prop2

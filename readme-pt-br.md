@@ -17,7 +17,7 @@ _Atenção: Esse documento não vai explicar o conceito de expressão de grafos,
 
 **[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept) se você quiser conhecer mais sobre o conceito de expressão de grafos.**
 
-# <a name="install" />Instalação
+# Instalação
 
 Via [NuGet](https://www.nuget.org/packages/GraphExpression/):
 
@@ -27,7 +27,6 @@ Install-Package GraphExpression
 
 # <a name="index" />Índice
 
-* [Instalação](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#install)
 * [Grafos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-complex)
 * [Grafos circulares](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-circular)
 * [Pesquisando](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
@@ -38,6 +37,8 @@ Install-Package GraphExpression
     * [Descendentes](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-descentands)
     * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
     * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
+* [Estendendo a criação de um grafo complexo para expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-expression-factory)
+* [Criando objetos complexos usando apenas expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-entity-complex-factory)
 * [Informações do grafo de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-info)
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
 * [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
@@ -258,9 +259,9 @@ A + B + C
 
 Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
 
-**Atenção:** Nesse tópico, usaremos o modelo de grafos complexos devido a sua maior complexidade.
+_Atenção: Nesse tópico, usaremos o modelo de grafos complexos devido a sua maior complexidade._
 
-[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para saber mais.
+**[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para saber mais.**
 
 ## <a name="impl-search-without-ref" />Pesquisa sem referencia
 
@@ -292,7 +293,7 @@ public void Search1()
 }
 ```
 
-Como esperado, o resultado retornou duas linhas:
+_Como esperado, o resultado retornou duas linhas:_
 
 ```
 Property.Class2_Prop2
@@ -452,7 +453,7 @@ public void Ancertor1()
 }
 ```
 
-1.1. A primeira saída exibe todos os pais do item referencia.
+_A primeira saída exibe todos os pais do item referencia._
 
 ```
 Property.Class1_Prop2
@@ -461,7 +462,7 @@ Class1
 
 * A ordem de retorno será sempre do antepassado mais próximo, ou seja, o primeiro item da lista de retorno será sempre o pai do item referência.
 
-1.2. A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referencia:
+_A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referencia:_
 
 ```
 Property.Class1_Prop2
@@ -545,7 +546,7 @@ public void Descendants1()
 }
 ```
 
-A saída será:
+_A saída será:_
 
 ```
 Property.Class2_Prop2
@@ -615,7 +616,7 @@ public void Children()
 }
 ```
 
-A saída exibirá as duas propriedades que são filhas do item raiz:
+_A saída exibirá as duas propriedades que são filhas do item raiz:_
 
 ```
 Property.Class1_Prop1
@@ -684,7 +685,7 @@ public void Siblings1()
 }
 ```
 
-1.1. A primeira saída será retorna todos os irmãos da entidade `C` iniciando do primeiro irmão á esquerda até o último irmão á direita. É importante destacar que o próprio item não é retornado, afinal ele não é irmão dele mesmo.
+_A primeira saída será retorna todos os irmãos da entidade `C` iniciando do primeiro irmão á esquerda até o último irmão á direita. É importante destacar que o próprio item não é retornado, afinal ele não é irmão dele mesmo._
 
 ```
 -> Start direction
@@ -694,7 +695,7 @@ D: D
 E: E
 ```
 
-1.1. A segunda saída retorna todos os irmãos da entidade `C` iniciando do próximo irmão á direita até o último irmão á direita.
+_A segunda saída retorna todos os irmãos da entidade `C` iniciando do próximo irmão á direita até o último irmão á direita._
 
 ```
 -> Next direction
@@ -702,7 +703,7 @@ D: D
 E: E
 ```
 
-1.2. A terceira saída retorna todos os irmãos da entidade `C` iniciando do irmão anterior até o primeiro irmão á esquerda.
+_A terceira saída retorna todos os irmãos da entidade `C` iniciando do irmão anterior até o primeiro irmão á esquerda._
 
 ```
 -> Previous direction
@@ -739,6 +740,10 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, Enti
 ```csharp
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
+
+# <a name="impl-expression-factory" />Estendendo a criação de um grafo complexo para expressão de grafos
+
+# <a name="impl-entity-complex-factory" />Criando objetos complexos usando apenas expressão de grafos e a matemática
 
 # <a name="impl-graph-info" />Informações do grafo de uma entidade
 
