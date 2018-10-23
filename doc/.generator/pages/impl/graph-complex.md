@@ -1,4 +1,4 @@
-## Grafos complexos
+## Grafos complexos <header-set anchor-name="impl-graph-complex" />
 
 Chamamos de grafos complexos aqueles que não contém tipo definido, ou seja, todos os itens são definidos como `object`. Esse tipo de grafo é presentado pela classe:
 
