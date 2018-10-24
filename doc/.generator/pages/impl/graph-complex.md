@@ -99,6 +99,6 @@ Os elementos de uma expressão complexa (`Expression<object>`) podem variar entr
 * `CollectionItemEntity`: Determina que o item é um item de uma coleção, ou seja, a classe pai será do tipo `ICollection`.
 * `DynamicItemEntity`: Determina que o item é uma propriedade dinâmica, ou seja, a classe pai será do tipo `dynamic`.
 
-Todos esses tipos herdam de `EntityItem<object>`, portanto, além de suas propriedades especificas ainda terão as informações do item na expressão.
+Todos esses tipos herdam de `ComplexEntity` que por sua vez herda de `EntityItem<object>`, portanto, além de suas propriedades especificas ainda terão as informações do item na expressão.
 
 Ainda é possível extender a criação de uma expressões complexas, para sabe mais veja o tópico <anchor-get name="entity-complex-factory" />
