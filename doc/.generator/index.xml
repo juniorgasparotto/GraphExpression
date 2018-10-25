@@ -26,8 +26,9 @@
       <include href="doc/.generator/pages/impl/search/search-descentands.md" />
       <include href="doc/.generator/pages/impl/search/search-children.md" />
       <include href="doc/.generator/pages/impl/search/search-siblings.md" />
-      <include href="doc/.generator/pages/impl/expression-factory.md" />
-      <include href="doc/.generator/pages/impl/entity-complex-factory.md" />
+      <include href="doc/.generator/pages/impl/factory-expression-complex.md" />
+      <include href="doc/.generator/pages/impl/factory-entity-circular.md" />
+      <include href="doc/.generator/pages/impl/factory-entity-complex.md" />
       <include href="doc/.generator/pages/impl/serialization/serialization.md" />
       <include href="doc/.generator/pages/impl/serialization/serialization-complex.md" />
       <include href="doc/.generator/pages/impl/serialization/serialization-circular.md" />

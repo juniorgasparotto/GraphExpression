@@ -37,8 +37,9 @@ Install-Package GraphExpression
     * [Descendentes](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-descentands)
     * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
     * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
-* [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-expression-factory)
-* [Criando objetos complexos usando apenas expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-entity-complex-factory)
+* [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-expression-complex)
+* [Criando entidades circulares com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-circular)
+* [Criando entidades complexas com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex)
 * [Serialização](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization)
   * [Complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-complex)
   * [Circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular)
@@ -51,7 +52,9 @@ Install-Package GraphExpression
 
 # <a name="impl-graph-complex" />Grafos complexos
 
-Chamamos de grafos complexos aqueles que não contém tipo definido, ou seja, todos os itens são definidos como `object`. Esse tipo de grafo é presentado pela classe:
+Chamamos de grafos complexos aqueles que não contém tipo definido, ou seja, todos os itens são definidos como `object`.
+
+Esse tipo de grafo é presentado pela classe:
 
 ```csharp
 GraphExpression.Expression<object> : List<EntityItem<object>>
@@ -126,17 +129,28 @@ public class Class2
       [4] => Item: Field.Class2_Field1, Parent: Property.Class1_Prop2, Previous: Property.Class2_Prop2, Next: , Level: 3
 ```
 
-* O método de extensão `AsExpression` é o responsável pela criação da expressão. Esse método vai navegar por todos os nós do objeto partindo da raiz até o último descendente e produzirá um resultado semelhante a isso:
-* O método de extensão `AsExpression` está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
 * A propriedade `Level` é a responsável por informar em qual nível do grafo está cada item da iteração, possibilitando criar uma saída identada que representa a hierarquia do objeto `model`.
 * O método `GetEntity` é apenas um ajudante que imprime o tipo do item e o nome do membro que pode ser uma propriedade ou um campo. Poderíamos também retornar o valor do membro, mas para deixar mais limpo a saída, eliminamos essa informação.
 1. Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
+
+<error>The anchor 'serialization-complex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> para entender como funciona a serialiação de objetos complexos.
 
 ```
 "Class1.32854180" + "Class1_Prop1: Value1" + ("Class1_Prop2.36849274" + "Class2_Prop2: Value2" + "Class2_Field1: 1000")
 ```
 
-<error>The anchor 'serialization-complex' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> para entender como funciona a serialiação de objetos complexos.
+O método de extensão `AsExpression` é o responsável pela criação da expressão complexa. Esse método vai navegar por todos os nós partindo da raiz até o último descendente. Esse método contem os seguintes parâmetros:
+
+* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafos complexa. O tópico [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-expression-complex) trás todas as informações de como estender o comportamento padrão.
+* `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
+
+Esse método está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
+
+**Conclusão:**
+
+Nesse tópico vimos como é simples navegar em objetos complexos abrindo caminhos para outras funcionalidades como pesquisas e serializações.
+
+Vejam também o tópico <error>The anchor 'impl-entity-complex-factory' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>, isso mostrará uma outra forma de criar objetos complexos.
 
 ## Elementos padrão de uma expressão de grafos para tipos complexos
 
@@ -151,11 +165,13 @@ Os elementos de uma expressão complexa (`Expression<object>`) podem variar entr
 
 Todos esses tipos herdam de `ComplexEntity` que por sua vez herda de `EntityItem<object>`, portanto, além de suas propriedades especificas ainda terão as informações do item na expressão.
 
-Ainda é possível extender a criação de uma expressões complexas, para sabe mais veja o tópico <error>The anchor 'entity-complex-factory' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error>
+Ainda é possível estender a criação de uma expressões complexas, para sabe mais veja o tópico [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-expression-complex)
 
 # <a name="impl-graph-circular" />Grafos circulares
 
-Chamamos de grafos circulares aqueles que contém tipo definido, ou seja, todos os itens são definidos com o mesmo tipo `T`. Esse tipo de grafo é presentado pela classe:
+Chamamos de grafos circulares aqueles que contém tipo definido, ou seja, todos os itens são definidos com o mesmo tipo `T`.
+
+Esse tipo de grafo é presentado pela classe:
 
 ```csharp
 GraphExpression.Expression<T> : List<EntityItem<T>>
@@ -163,11 +179,7 @@ GraphExpression.Expression<T> : List<EntityItem<T>>
 
 Essa classe herda de `List<EntityItem<T>>`, ou seja, ela também é uma coleção da classe `EntityItem<T>`.
 
-Um grafo circular é a maneira mais simples de entender como as coisas funcionam. Basicamente, é uma classe que faz referencia para ela mesma. No exemplo a seguir, mostraremos uma forma de implementar o conceito de expressão de grafos sem nenhum framework, usando apenas `C#` e a matemática.
-
-A ideia desse exemplo é criar um grafo circular da classe `CircularEntity` onde o operador de soma vai incrementar a entidade da direita na entidade da esquerda como sendo seu filho. Após a criação, vamos converter o objeto para o tipo `Expression<CircularEntity>` e mostrar como ficou a estrutura convertida:
-
-Note que a entidade `A`, que será a raiz da expressão, será criada de uma forma rápida e simples. E tudo isso usando apenas `C#`.
+No exemplo a seguir vamos converter o objeto para o tipo `Expression<CircularEntity>` e mostrar como ficou a estrutura convertida:
 
 ```csharp
 public void GraphCircular()
@@ -177,11 +189,17 @@ public void GraphCircular()
     var C = new CircularEntity("C");
     var D = new CircularEntity("D");
 
-    // ACTION: ADD
-    A = A + B + (C + D);
+    // populate A
+    A.Children.Add(B);
+    A.Children.Add(C);
 
-    // PRINT 'A'
+    // populate C
+    C.Children.Add(D);
+
+    // Create circular expression
     Expression<CircularEntity> expression = A.AsExpression(e => e.Children, entityNameCallback: o => o.Name);
+
+    // print 'A'
     foreach (EntityItem<CircularEntity> item in expression)
     {
         var ident = new string(' ', item.Level * 2);
@@ -189,46 +207,18 @@ public void GraphCircular()
         System.Console.WriteLine(output);
     }
 
-    System.Console.WriteLine(expression.DefaultSerializer.Serialize());
-
-    // ACTION: REMOVE
-    C = C - D;
-
-    // PRINT 'A' AGAIN
-    expression = A.AsExpression(e => e.Children, entityNameCallback: o => o.Name);
-    foreach (EntityItem<CircularEntity> item in expression)
-    {
-        var ident = new string(' ', item.Level * 2);
-        var output = $"{ident}[{item.Index}] => Item: {item.Entity.Name}, Parent: {item.Parent?.Entity.Name}, Previous: {item.Previous?.Entity.Name}, Next: {item.Next?.Entity.Name}, Level: {item.Level}";
-        System.Console.WriteLine(output);
-    }
-
-    // PRINT EXPRESSION
+    // Serialize to graph expression
     System.Console.WriteLine(expression.DefaultSerializer.Serialize());
 }
 
 public class CircularEntity
 {
     public string Name { get; private set; }
-    public List<CircularEntity> Children { get; } = new List<CircularEntity>();
-
     public CircularEntity(string identity) => this.Name = identity;
-
-    public static CircularEntity operator +(CircularEntity a, CircularEntity b)
-    {
-        a.Children.Add(b);
-        return a;
-    }
-
-    public static CircularEntity operator -(CircularEntity a, CircularEntity b)
-    {
-        a.Children.Remove(b);
-        return a;
-    }
 }
 ```
 
-1. A primeira saída exibe os itens do objeto `expression` que representam como está a hierarquia do objeto `A` após a sua criação:
+1. A primeira saída exibe os itens do objeto `expression` que representam como ficou a hierarquia do objeto `A` após a sua criação:
 
 ```
 [0] => Item: A, Parent: , Previous: , Next: B, Level: 1
@@ -239,27 +229,25 @@ public class CircularEntity
 
 1. A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
 
+[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular) para entender como funciona a serialiação de objetos circulares.
+
 ```
 A + B + (C + D)
 ```
 
-* O parâmetro `entityNameCallback` é o responsável por determinar qual será o nome a ser exibido na expressão, nesse exemplo usamos a propriedade `Name`, assim a expressão abaixo exibirá o nome de cada entidade em cada posição da expressão.
-* Caso esse parâmetro não seja passado, será usado o método `ToString` que existe em qualquer objeto .NET.
-1. A terceira saída mostra como ficou a estrutura da expressão após a remoção do objeto filho `D` no objeto pai `C`:
+O método de extensão `AsExpression<T>` é o responsável pela criação da expressão circular. Esse método vai navegar por todos os nós partindo da raiz até o último descendente. Esse método contem os seguintes parâmetros:
 
-```
-[0] => Item: A, Parent: , Previous: , Next: B, Level: 1
-  [1] => Item: B, Parent: A, Previous: A, Next: C, Level: 2
-  [2] => Item: C, Parent: A, Previous: B, Next: , Level: 2
-```
+* `Func<T, IEnumerable<T>> childrenCallback`: Esse parâmetro determina quais serão os filhos das entidades. É esse parâmetro que vai determinar a continuidade da execução. Todas as entidades do grafo chamarão esse método até que todos sejam navegados. A execução só será interrompida em caso de relações cíclicas.
+* `Func<T, object> entityNameCallback`: Esse parâmetro é o responsável por determinar qual será o nome da entidade na serialização ou no modo de depuração. Em nosso exemplo, usamos a propriedade `Name`. Caso esse parâmetro não seja passado, será usado o método `ToString()`.
+* `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
 
-A quarta saída mostra como ficou a expressão após a remoção do objeto filho `D` no objeto pai `C`:
+Esse método está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
 
-```
-A + B + C
-```
+**Conclusão:**
 
-<error>The anchor 'serialization-circular' doesn't exist for language version pt-br: HtmlAgilityPack.HtmlNode</error> para entender como funciona a serialiação de objetos circulares.
+Nesse tópico vimos como é simples navegar em objetos circulares abrindo caminhos para outras funcionalidades como pesquisas e serializações.
+
+Vejam também o tópico [Criando entidades circulares com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-circular), isso mostrará uma outra forma de criar objetos circulares sem a utilização do método `Add()`.
 
 # <a name="impl-search" />Pesquisando
 
@@ -747,7 +735,7 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, Enti
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-# <a name="impl-expression-factory" />Customizando expressões complexas
+# <a name="impl-factory-expression-complex" />Customizando expressões complexas
 
 O método `object.AsExpression` é o meio mais rápido para criar uma expressão de grafos. Quando chamado sem nenhum parâmetro, ele criará uma instância do objeto `Expression<object>` que representa uma expressão de grafos complexa.
 
@@ -918,7 +906,90 @@ public class CollectionReader : IEntityReader
 }
 ```
 
-# <a name="impl-entity-complex-factory" />Criando objetos complexos usando apenas expressão de grafos e a matemática
+# <a name="impl-factory-entity-circular" />Criando entidades circulares com expressão de grafos e a matemática
+
+Uma das vantagens da linguagem `C#` é que ela permite sobrescrever os operadores da matemática deixando a ação da operação para o programador. Com essa ação delegada ao programador é possível utilizar o conceito de expressão de grafos para inserir ou remover uma entidade da outra.
+
+Se você já leu a documentação sobre o conceito de expressão de grafos então você já sabe que a entidade da esquerda da operação é a entidade pai e a entidade da direita da operação é a entidade filha.
+
+Com isso em mente, vamos demostrar uma forma de criar **grafos circulares** usando apenas CSharp e a matemática.
+
+No código de exemplo, vamos sobrescrever os operadores `+` e `-` e delegar a eles as seguintes ações:
+
+* `+`: Adicionar a entidade da direita como sendo filha da entidade da esquerda.
+* `-`: Remover a entidade da direita da lista filhos da entidade da esquerda.
+
+A entidade da esquerda da operação é representada pelo parâmetro `a` e a entidade da direita da operação é representada pelo parâmetro `b`.
+
+```csharp
+public class CircularEntity
+{
+    public static CircularEntity operator +(CircularEntity a, CircularEntity b)
+    {
+        a.Children.Add(b);
+        return a;
+    }
+
+    public static CircularEntity operator -(CircularEntity a, CircularEntity b)
+    {
+        a.Children.Remove(b);
+        return a;
+    }
+
+    public string Name { get; private set; }
+    public List<CircularEntity> Children { get; } = new List<CircularEntity>();
+    public CircularEntity(string identity) => this.Name = identity;
+}
+```
+
+Note que a classe `CircularEntity` agora pode ser usada em qualquer expressão matemática:
+
+```csharp
+public void GraphCircular()
+{
+    var A = new CircularEntity("A");
+    var B = new CircularEntity("B");
+    var C = new CircularEntity("C");
+    var D = new CircularEntity("D");
+
+    // ACTION: ADD
+    A = A + B + (C + D);
+}
+```
+
+_Esse código vai criar o grafo da entidade `A` gerando a seguinte estrutura:_
+
+```
+[0] => A
+    [1] => B
+    [2] => C
+         [3] => D
+```
+
+_Vamos agora remover a entidade `D` da entidade `C`:_
+
+```csharp
+public void GraphCircular()
+{
+    C = C - D;
+}
+```
+
+_A estrutura final da entidade `A` será:_
+
+```
+[0] => A
+    [1] => B
+    [2] => C
+```
+
+_A expressão de grafos final, após a remoção, ficaria assim:_
+
+```
+A + B + C
+```
+
+# <a name="impl-factory-entity-complex" />Criando entidades complexas com expressão de grafos e a matemática
 
 # <a name="impl-serialization" />Serialização
 
