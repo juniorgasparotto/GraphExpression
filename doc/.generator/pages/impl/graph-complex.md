@@ -82,7 +82,7 @@ public class Class2
 
 2. Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
 
-<anchor-get name="serialization-complex">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos complexos.
+<anchor-get name="impl-serialization-complex">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos complexos.
 
 ```
 "Class1.32854180" + "Class1_Prop1: Value1" + ("Class1_Prop2.36849274" + "Class2_Prop2: Value2" + "Class2_Field1: 1000")
@@ -99,7 +99,7 @@ Esse método está disponível em todos os objetos .NET, basta referenciar o nam
 
 Nesse tópico vimos como é simples navegar em objetos complexos abrindo caminhos para outras funcionalidades como pesquisas e serializações. 
 
-Vejam também o tópico <anchor-get name="impl-entity-complex-factory" />, isso mostrará uma outra forma de criar objetos complexos.
+Vejam também o tópico <anchor-get name="impl-factory-entity-complex" />, isso mostrará uma outra forma de criar objetos complexos.
 
 ## Elementos padrão de uma expressão de grafos para tipos complexos
 
