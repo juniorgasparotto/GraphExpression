@@ -170,5 +170,37 @@ namespace GraphExpression.Tests.Serialization
             var deserialized = deserializer.Deserialize<char>(expressionStr);
             Assert.Equal(val, deserialized);
         }
+
+        [Fact]
+        public void DeserializeComplex_PrimitiveStringNull()
+        {
+            var expressionStr = "\"Model.0\" + \"A\"";
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<Model>(expressionStr);
+            Assert.Null(deserialized.A);
+        }
+
+        [Fact]
+        public void DeserializeComplex_PrimitiveStringEmpty()
+        {
+            var expressionStr = "\"Model.0\" + \"A: \"";
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<Model>(expressionStr);
+            Assert.Equal("", deserialized.A);
+        }
+
+        [Fact]
+        public void DeserializeComplex_PrimitiveStringWithSpace()
+        {
+            var expressionStr = "\"Model.0\" + \"A:  \"";
+            var deserializer = new ComplexEntityExpressionDeserializer();
+            var deserialized = deserializer.Deserialize<Model>(expressionStr);
+            Assert.Equal(" ", deserialized.A);
+        }
+
+        private class Model
+        {
+            public string A { get; set; }
+        }
     }
 }
