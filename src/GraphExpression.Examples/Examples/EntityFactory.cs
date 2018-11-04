@@ -63,7 +63,7 @@ namespace GraphExpression.Examples
         }
 
         [Action(Help = "")]
-        public void EntityFactory5()
+        public void EntityFactory6()
         {
             var root = new Entity(0) 
                 + (new Entity("A", 1) + new Entity("MyProp", "10"))
@@ -73,15 +73,24 @@ namespace GraphExpression.Examples
             factory.AddMapType<Interface, ImplementAbstractAndInterface>();
             factory.AddMapType<AbstractClass, ImplementAbstractAndInterface>();
 
-            // Build entity
-            factory.Build();
-
             // Build entity and get typed value
             var entity = factory.Build().Value;
             System.Console.WriteLine(entity.A.MyProp);
             System.Console.WriteLine(entity.A.GetType().Name);
             System.Console.WriteLine(entity.B.MyProp);
             System.Console.WriteLine(entity.B.GetType().Name);
+        }
+
+        [Action(Help = "")]
+        public void EntityFactory5()
+        {
+            var root = new Entity(0) + new Entity("[0]", "10") + new Entity("[1]: 11");
+            var factory = new ComplexEntityFactory<int[]>(root);
+
+            // Build entity and get typed value
+            var entity = factory.Build().Value;
+            System.Console.WriteLine(entity[0]);
+            System.Console.WriteLine(entity[1]);
         }
 
         private class MyClass

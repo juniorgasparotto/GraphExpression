@@ -135,6 +135,23 @@ Essa saída vai produzir o valor abaixo e foi necessário obter o valor via refl
 
 Esse formato é dividido em dois: **Tipos primitivos** e **Tipos complexos** e veremos isso nos próximos tópicos.
 
+**Propriedades da classe:**
+
+* `IEntityFactory Factory`: Propriedade que contém a instância da fábrica de entidades. 
+* `Entity Parent`: Propriedade que determina a entidade pai na expressão.
+* `IReadOnlyCollection<Entity> Children`: Propriedade que contém todos os filhos.
+* `Entity this[int index]`: Propriedade que retorna um filho pelo índice.
+* `Entity this[string key]`: Propriedade que retorna um filho pelo nome do membro.
+* `List<Operation> Operations`: Propriedade que contém todas as operações para que ocorra a re-execução nas fábricas de entidades. Essa propriedade é limpa em todas as outras entidades, exceto a entidade raiz.
+* `string Raw`: Propriedade que determina a entidade em forma de texto.
+* `Type Type`: Propriedade que determina o tipo da entidade.
+* `MemberInfo MemberInfo`: Propriedade que determina o membro. 
+* `string Name`: Propriedade que determina o nome do membro.
+* `object Value`: Propriedade que determina o valor, ou seja, a própria entidade.
+* `string ValueRaw`: Propriedade que determina o valor em forma de texto.
+* `bool IsPrimitive`: Propriedade que indica se o valor é primitivo ou não.
+* `string ComplexEntityId`: Propriedade que indica a identificação da entidade complexa.
+
 ## Entidades complexas em forma de texto - Tipos primitivos
 
 Para tipos primitivos temos o seguinte formato:
@@ -213,6 +230,32 @@ _Exibe o tipo e o membro quando o valor for nulo. Não exibe nenhuma identifica�
 Namespace.MyClass.MyProperty
 ```
 
+## Entidades complexas em forma de texto - Coleções e arrays
+
+Para criar itens em uma coleção ou array é necessário que o nome do membro indique a posição do item dentro de colchetes: `[{position}]: Value`
+
+No exemplo abaixo veremos como criar um array de inteiro usando expressão de grafos. Note que no lugar do nome do membro, usamos os colchetes como indicativo de um item de coleção.
+
+```csharp
+public void EntityFactory5()
+{
+    var root = new Entity(0) + new Entity("[0]", "10") + new Entity("[1]: 11");
+    var factory = new ComplexEntityFactory<int[]>(root);
+
+    // Build entity and get typed value
+    var entity = factory.Build().Value;
+    System.Console.WriteLine(entity[0]);
+    System.Console.WriteLine(entity[1]);
+}
+```
+
+A saída será:
+
+```
+10
+11
+```
+
 ## Entendendo a classe `ComplexEntityFactory`
 
 Essa classe é a responsável por criar o grafo da entidade complexa com base na expressão. Internamente ela re-executa a expressão e gera cada entidade do grafo.
@@ -256,7 +299,7 @@ ComplexEntityFactory<T>()
 No próximo exemplo, veremos a criação de uma entidade que não contém propriedades com tipos concretos, sendo necessário a criação de um mapa de tipos:
 
 ```csharp
-public void EntityFactory5()
+public void EntityFactory6()
 {
     var root = new Entity(0) 
         + (new Entity("A", 1) + new Entity("MyProp", "10"))
