@@ -88,7 +88,7 @@ A saída abaixo mostra como ficou nossa customização, note que o valor da prop
 
 Destacamos que quando uma expressão é criada usando o método `AsExpression()`, teremos na propriedade `DefaultSerialize` uma instância da classe `ComplexEntityExpressionSerializer<T>` pré-configurada.
 
-## Customizando a serialização dos itens <header-set anchor-name="impl-serialization-complex-itens-serialize" />
+### Customizando a serialização dos itens <header-set anchor-name="impl-serialization-complex-itens-serialize" />
 
 Os itens de serialização são os responsáveis pela serialização do nome do membro e obtenção do tipo do item na expressão. O tipo retornado será usado pela classe `ValueFormatter` quando for primitivo. Para tipos complexos será mantida a exibição da identificação como vimos no tópico <anchor-get name="impl-factory-entity-complex-complex" />.
 
