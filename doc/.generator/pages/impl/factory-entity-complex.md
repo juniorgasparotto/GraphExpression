@@ -34,13 +34,13 @@ Na linguagem `C#` temos dois tipos de membros: **Propriedades** e **Campos** e a
 
 Essa classe representa uma entidade do grafo e o local onde ela pode estar. Cada local é representado por um construtor especifico e veremos isso a seguir:
 
-1. Esse construtor representa um tipo complexo localizado na raiz da expressão, o parâmetro `complexEntityId` é obrigatório e é usado para atribuir uma identificação para a entidade. Essa identificação é importante pois você pode querer utilizar essa instância em outro local do grafo.
+**1)** Esse construtor representa um tipo complexo localizado na raiz da expressão, o parâmetro `complexEntityId` é obrigatório e é usado para atribuir uma identificação para a entidade. Essa identificação é importante pois você pode querer utilizar essa instância em outro local do grafo.
 
 ```csharp
 Entity(int complexEntityId)
 ```
 
-2. O segundo construtor cria uma entidade no qual o seu local será um membro, ou seja, pode ser uma propriedade ou um campo. O parâmetro `Name` vai definir o nome do membro. O parâmetro `complexEntityId` vai atribuir a esse membro a entidade que corresponde a esse ID. 
+**2)** O segundo construtor cria uma entidade no qual o seu local será um membro, ou seja, pode ser uma propriedade ou um campo. O parâmetro `Name` vai definir o nome do membro. O parâmetro `complexEntityId` vai atribuir a esse membro a entidade que corresponde a esse ID. 
 
 ```csharp
 Entity(string name, int complexEntityId)
@@ -75,7 +75,7 @@ A saída mostra que as entidades são exatamente as mesmas:
 True
 ```
 
-3. O terceiro construtor deve ser usado quando você precisa atribuir um valor que não seja uma referência, ou seja, qualquer tipo primitivo. Esses valores devem ser passados em forma de texto para serem atribuídos corretamente.
+**3)** O terceiro construtor deve ser usado quando você precisa atribuir um valor que não seja uma referência, ou seja, qualquer tipo primitivo. Esses valores devem ser passados em forma de texto para serem atribuídos corretamente.
 
 ```csharp
 Entity(string name, string value)
@@ -105,7 +105,7 @@ Essa saída vai produzir o valor abaixo e foi necessário obter o valor via refl
 1000
 ```
 
-4. O último construtor contém apenas o parâmetro `string raw`. O valor desse parâmetro deve estar no formato de **entidades complexas em forma de texto**.
+**4)** O último construtor contém apenas o parâmetro `string raw`. O valor desse parâmetro deve estar no formato de **entidades complexas em forma de texto**.
 
 ```csharp
 Entity(string raw)
