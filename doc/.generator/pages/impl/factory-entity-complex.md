@@ -30,7 +30,7 @@ A ordem da expressão é a mesma das entidades circulares, ou seja, o item da es
 
 Na linguagem `C#` temos dois tipos de membros: **Propriedades** e **Campos** e ambas podem ser utilizadas na expressão independente da sua visibilidade.
 
-## Entendendo a classe `Entity`
+## Entendendo a classe `Entity` <header-set anchor-name="impl-factory-entity-complex-class-entity" />
 
 Essa classe representa uma entidade do grafo e o local onde ela pode estar. Cada local é representado por um construtor especifico e veremos isso a seguir:
 
@@ -152,7 +152,7 @@ Esse formato é dividido em dois: **Tipos primitivos** e **Tipos complexos** e v
 * `bool IsPrimitive`: Propriedade que indica se o valor é primitivo ou não.
 * `string ComplexEntityId`: Propriedade que indica a identificação da entidade complexa.
 
-## Entidades complexas em forma de texto - Tipos primitivos
+## Entidades complexas em forma de texto - Tipos primitivos <header-set anchor-name="impl-factory-entity-complex-primitive" />
 
 Para tipos primitivos temos o seguinte formato:
 
@@ -194,7 +194,7 @@ _Exibe o tipo e o membro quando o valor for nulo. Não exibe o separador, esse �
 System.String.StrValue
 ```
 
-## Entidades complexas em forma de texto - Tipos complexos
+## Entidades complexas em forma de texto - Tipos complexos <header-set anchor-name="impl-factory-entity-complex-complex" />
 
 Para tipos complexos temos o seguinte formato:
 
@@ -230,7 +230,7 @@ _Exibe o tipo e o membro quando o valor for nulo. Não exibe nenhuma identifica�
 Namespace.MyClass.MyProperty
 ```
 
-## Entidades complexas em forma de texto - Coleções e arrays
+## Entidades complexas em forma de texto - Coleções e arrays <header-set anchor-name="impl-factory-entity-complex-collections" />
 
 Para criar itens em uma coleção ou array é necessário que o nome do membro indique a posição do item dentro de colchetes: `[{position}]: Value`
 
@@ -256,7 +256,7 @@ A saída será:
 11
 ```
 
-## Entendendo a classe `ComplexEntityFactory`
+## Entendendo a classe `ComplexEntityFactory` <header-set anchor-name="impl-factory-entity-complex-class-complex-factory" />
 
 Essa classe é a responsável por criar o grafo da entidade complexa com base na expressão. Internamente ela re-executa a expressão e gera cada entidade do grafo.
 
@@ -327,7 +327,7 @@ ImplementAbstractAndInterface
 ImplementAbstractAndInterface
 ```
 
-## Descobridores de tipos
+## Descobridores de tipos <header-set anchor-name="impl-factory-entity-complex-discovery-types" />
 
 Os descobridores de tipos tem como principal objetivo descobrir o tipo da entidade. A propriedade `TypeDiscovery` será usada para encontrar o melhor descobridor para cada entidade.
 
@@ -350,7 +350,7 @@ Por padrão, temos alguns descobridores de tipos definidos e todos eles já est�
 3. `ListItemTypeDiscovery`: Essa classe é responsável por descobrir o tipo de um item em uma lista. O método `CanDiscovery` verifica se o tipo pai é um `IList`, se for, então o método `GetEntityType` será chamado para obter o tipo da lista.
 4. `ArrayItemTypeDiscovery`: Essa classe é responsável por descobrir o tipo de um item no array. O método `CanDiscovery` verifica se o tipo pai é um array, se for, então o método `GetEntityType` será chamado para obter o tipo do array.
 
-## Descobridores de membros
+## Descobridores de membros <header-set anchor-name="impl-factory-entity-complex-discovery-members" />
 
 Os descobridores de membros tem o objetivo de descobrir o membro da entidade. A propriedade `MemberInfoDiscovery` será usada para encontrar o melhor descobridor de membros de cada entidade.
 
@@ -391,7 +391,7 @@ Esse código garante que:
 3. `!item.Name.StartsWith(Constants.INDEXER_START)`: O nome do membro não pode ser uma representação de posição de coleções, ou seja, não pode iniciar com `[`.
 3. `item.Parent.Type != null`: Exista um tipo para a entidade pai, é com esse tipo mais o nome do membro que obtemos o tipo do membro.
 
-## Carregadores de valores
+## Carregadores de valores <header-set anchor-name="impl-factory-entity-complex-value-loaders" />
 
 Os carregadores de valores tem o objetivo de criar as entidades primitivas e complexas. A propriedade `ValueLoader` será usada para encontrar o melhor carregador de valor para cada entidade. Entenda o termo "valor" como sendo a entidade que será criada.
 
@@ -418,7 +418,7 @@ Por padrão, temos alguns carregadores de valores definidos e todos eles já est
 
 O tipo `ExpandoObject` será usado em todos os níveis quando a classe `ComplexEntityFactory` não tiver um tipo definido.
 
-## Atribuidores de filhos
+## Atribuidores de filhos <header-set anchor-name="impl-factory-entity-complex-child-assign" />
 
 Os atribuidores de filhos tem o objetivo de adicionar uma entidade filha em sua entidade pai, ou seja, atribuir um valor em um membro da instância pai, ou um item em uma lista por exemplo. A propriedade `SetChildAction` será usada para encontrar o melhor atribuidor para cada entidade.
 

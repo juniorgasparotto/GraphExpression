@@ -19,7 +19,7 @@ namespace GraphExpression.Serialization
         /// <summary>
         /// Determines whether entities with valid names will always be enclosed in quote. Otherwise, entities with valid names will not be enclosed in quote.
         /// </summary>
-        public bool ForceQuoteEvenWhenValidIdentified{ get; set; }
+        public bool ForceQuoteEvenWhenValidIdentified { get; set; }
 
         /// <summary>
         /// Default formatter

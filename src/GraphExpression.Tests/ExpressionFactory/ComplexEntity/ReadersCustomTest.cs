@@ -43,8 +43,6 @@ namespace GraphExpression.Tests.MatrixGenerator
 
         public class MethodSerialize : IEntitySerialize
         {
-            public string Symbol { get; set; } = null;
-
             public bool CanSerialize(ComplexEntityExpressionSerializer serializer, EntityItem<object> item)
             {
                 return item is MethodEntity;
