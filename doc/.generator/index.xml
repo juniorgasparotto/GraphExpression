@@ -57,7 +57,7 @@
   <page>
     <languages>
       <language name="pt-br" output="doc/concept-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md" />
-      <language name="en-us" output="concept.md" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md" />
+      <language name="en-us" output="doc/concept.md" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md" />
     </languages>
     <content>
       <a href="https://github.com/juniorgasparotto/GraphExpression" rel="Inglês">
