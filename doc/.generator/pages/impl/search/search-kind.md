@@ -31,7 +31,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references
 
 ### Delegates das pesquisa
 
-Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
+Todos os métodos de pesquisa utilizam os seguintes delegates:
 
 ```csharp
 public delegate bool EntityItemFilterDelegate<T>(EntityItem<T> item);
@@ -40,3 +40,5 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 
 * `EntityItem<T> item`: Esse parâmetro significa o item corrente durante a pesquisa.
 * `int depth`: Determina a profundidade do item corrente com relação a sua posição.
+
+ Você pode usar as classes `Func<EntityItem<T>>` e `Func<EntityItem<T>, int>` para simplificar o uso desses delegates.

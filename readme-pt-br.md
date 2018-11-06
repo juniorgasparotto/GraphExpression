@@ -70,7 +70,7 @@ Esse tipo de grafo é presentado pela classe:
 GraphExpression.Expression<object> : List<EntityItem<object>>
 ```
 
-Essa classe herda de `List<EntityItem<object>>`, ou seja, ela também é uma coleção da classe `EntityItem<object>`. A class `EntityItem<object>` representa um item dentro da lista, é nela que existem todas as informações da entidade no grafo.
+Essa classe herda de `List<EntityItem<object>>`, ou seja, ela também é uma coleção da classe `EntityItem<object>`. A classe `EntityItem<object>` representa um item dentro da lista, é nela que existem todas as informações da entidade no grafo.
 
 No exemplo a seguir vamos converter um objeto do tipo `Class1` para o objeto `Expression<object>` e exibir todos os `EntityItem<object>` da estrutura do tipo `Class1`. Na última saída, vamos exibir como ficaria esse objeto no formato de expressão de grafos:
 
@@ -129,7 +129,7 @@ public class Class2
 }
 ```
 
-1. Na primeira saída podemos visualizar todas as informações da estrutura do tipo `Class1` e também as informações: `Index`, `Parent`, `Next`, `Previous` e `Level` que compõem uma expressão de grafos:
+**1)** Na primeira saída podemos visualizar todas as informações da estrutura do tipo `Class1` e também as informações: `Index`, `Parent`, `Next`, `Previous` e `Level` que compõem uma expressão de grafos:
 
 ```
   [0] => Item: Class1, Parent: , Previous: , Next: Property.Class1_Prop1, Level: 1
@@ -141,7 +141,8 @@ public class Class2
 
 * A propriedade `Level` é a responsável por informar em qual nível do grafo está cada item da iteração, possibilitando criar uma saída identada que representa a hierarquia do objeto `model`.
 * O método `GetEntity` é apenas um ajudante que imprime o tipo do item e o nome do membro que pode ser uma propriedade ou um campo. Poderíamos também retornar o valor do membro, mas para deixar mais limpo a saída, eliminamos essa informação.
-1. Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
+
+**2)** Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-complex) para entender como funciona a serialiação de objetos complexos.
 
@@ -152,7 +153,7 @@ public class Class2
 O método de extensão `AsExpression` é o responsável pela criação da expressão complexa. Esse método vai navegar por todos os nós partindo da raiz até o último descendente. Esse método contem os seguintes parâmetros:
 
 * `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafos complexa. O tópico [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-expression-complex) trás todas as informações de como estender o comportamento padrão.
-* `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
+* `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas. Veja o tópico [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep) para entender o propósito dessa funcionalidade.
 
 Esse método está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
 
@@ -224,11 +225,12 @@ public void GraphCircular()
 public class CircularEntity
 {
     public string Name { get; private set; }
+    public List<CircularEntity> Children { get; } = new List<CircularEntity>();
     public CircularEntity(string identity) => this.Name = identity;
 }
 ```
 
-1. A primeira saída exibe os itens do objeto `expression` que representam como ficou a hierarquia do objeto `A` após a sua criação:
+**1)** A primeira saída exibe os itens do objeto `expression` que representam como ficou a hierarquia do objeto `A` após a sua criação:
 
 ```
 [0] => Item: A, Parent: , Previous: , Next: B, Level: 1
@@ -237,7 +239,7 @@ public class CircularEntity
     [3] => Item: D, Parent: C, Previous: C, Next: , Level: 3
 ```
 
-1. A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
+**2)** A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular) para entender como funciona a serialiação de objetos circulares.
 
@@ -261,11 +263,11 @@ Vejam também o tópico [Criando entidades circulares com expressão de grafos e
 
 # <a name="impl-search" />Pesquisando
 
-Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia** e que serão abordadas nesse tópico.
+Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia**.
 
 _Atenção: Nesse tópico, usaremos o modelo de grafos complexos devido a sua maior complexidade._
 
-**[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para saber mais.**
+**[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para entender melhor como funciona a pesquisa em expressão de grafos**
 
 ## <a name="impl-search-without-ref" />Pesquisa sem referencia
 
@@ -321,7 +323,7 @@ A pesquisa com referencia será feita usando um item especifico, ou seja, primei
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-with-references) para saber mais sobre esse tipo de pesquisa.
 
-Considerando os mesmos modelos do exemplo `GraphComplex`, vamos criar uma pesquisa para retornar todos os descendentes do item raiz que sejam uma propriedade e filhos da class `Class2`.
+Considerando os mesmos modelos do exemplo `GraphComplex`, vamos criar uma pesquisa para retornar todos os descendentes do item raiz que sejam uma propriedade e filhos da classe `Class2`.
 
 ```csharp
 public void Search2()
@@ -353,7 +355,7 @@ Property.Class2_Prop2
 ```
 
 * Note que a única mudança foi utilizar o item raiz como referência (`First()`) e isso fez eliminar as duplicidades sem a necessidade do uso do método `Distinct`.
-* Isso ocorreu porque apenas um item foi analisado (o item raiz), na pesquisa sem referencias, todos os itens foram analisados fazendo com que o item `Property.Class1_Prop2` também retornasse o mesmo resultado do item raiz.
+* Isso ocorreu porque apenas um item foi analisado (o item raiz). Na pesquisa sem referencias, todos os itens foram analisados fazendo com que o item `Property.Class1_Prop2` também retornasse o mesmo resultado do item raiz.
 * De preferência para esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
 * A entidade raiz é a melhor opção para isso.
 
@@ -390,7 +392,7 @@ public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references
 
 ### Delegates das pesquisa
 
-Todos os métodos de pesquisa utilizam os delegates abaixo e que podem ser utilizados usando a classe `Func`
+Todos os métodos de pesquisa utilizam os seguintes delegates:
 
 ```csharp
 public delegate bool EntityItemFilterDelegate<T>(EntityItem<T> item);
@@ -400,11 +402,13 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 * `EntityItem<T> item`: Esse parâmetro significa o item corrente durante a pesquisa.
 * `int depth`: Determina a profundidade do item corrente com relação a sua posição.
 
+Você pode usar as classes `Func<EntityItem<T>>` e `Func<EntityItem<T>, int>` para simplificar o uso desses delegates.
+
 ### <a name="impl-search-ancertors" />Antepassados
 
 A pesquisa de antepassados é útil para encontrar o pai ou os pais de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
-1. Essa é a sobrecarga padrão, caso nenhuma parâmetro seja passado então nenhum filtro será aplicado e todos os antepassados serão retornados.
+**1)** Essa é a sobrecarga padrão, caso nenhuma parâmetro seja passado então nenhum filtro será aplicado e todos os antepassados serão retornados.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? depthStart = null, int? depthEnd = null)
@@ -472,31 +476,31 @@ _A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`,
 Property.Class1_Prop2
 ```
 
-1. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+**2)** A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-1. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
 ```
 
-1. A quarta sobrecarga filtra profundidade de fim.
+**4)** A quarta sobrecarga filtra profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthEnd)
 ```
 
-1. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os antepassados até que algum antepassado retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até a raiz. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os antepassados até que algum antepassado retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até a raiz. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
 ```
 
-1. A segunda sobrecarga do método `AncestorsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+**6)** A segunda sobrecarga do método `AncestorsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
@@ -506,7 +510,7 @@ IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, Enti
 
 A pesquisa de descendentes é útil para encontrar os filhos ou todos os descendentes de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
-1. Essa é a sobrecarga padrão, caso nenhum parâmetro seja passado então nenhum filtro será aplicado e todos os descendentes serão retornados.
+**1)** Essa é a sobrecarga padrão, caso nenhum parâmetro seja passado então nenhum filtro será aplicado e todos os descendentes serão retornados.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, int? depthStart = null, int? depthEnd = null)
@@ -557,31 +561,31 @@ Property.Class2_Prop2
 Field.Class2_Field1
 ```
 
-1. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+**2)** A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-1. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthStart, int depthEnd)
 ```
 
-1. A quarta sobrecarga filtra profundidade de fim.
+**4)** A quarta sobrecarga filtra profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthEnd)
 ```
 
-1. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os descendentes até que algum descendente retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até chegar no último item. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os descendentes até que algum descendente retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até chegar no último item. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
 ```
 
-1. A segunda sobrecarga do método `DescendantsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+**6)** A segunda sobrecarga do método `DescendantsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
@@ -634,7 +638,7 @@ Property.Class1_Prop2
 
 Essa pesquisa encontra os irmãos de um determinado item. Temos algumas sobrecargas que serão explicadas a seguir:
 
-1. Essa é a sobrecarga padrão, caso nenhum parâmetro seja passado então nenhum filtro será aplicado e todos os descendentes serão retornados.
+**1)** Essa é a sobrecarga padrão, caso nenhum parâmetro seja passado então nenhum filtro será aplicado e todos os descendentes serão retornados.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, EntityItemFilterDelegate2<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
@@ -643,16 +647,16 @@ IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no último irmão ou no primeiro (depende do parâmetro `direction`). A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até chegar no último irmão ou no primeiro (depende do parâmetro `direction`).
 * `direction`: Esse parâmetro determina em qual direção a navegação deverá ir:
-  * `Start`: Determina que a navegação deve iniciar no primeiro irmão á esquerda do item referencia e ir até o último irmão á direita.
-  * `Next`: Determina que a navegação deve iniciar no próximo item e seguir até o último irmão á direita.
-  * `Previous`: Determina que a navegação deve iniciar no item anterior e seguir até o primeiro irmão á esquerda.
+  * `Start`: Determina que a navegação deve iniciar no primeiro irmão à esquerda do item referencia e ir até o último irmão à direita.
+  * `Next`: Determina que a navegação deve iniciar no próximo item e seguir até o último irmão à direita.
+  * `Previous`: Determina que a navegação deve iniciar no item anterior e seguir até o primeiro irmão à esquerda.
 * `positionStart`: Determina a posição de inicio que a pesquisa deve começar.
-  * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão á esquerda do item referencia.
-  * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão á direita do item referencia.
-  * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão á esquerda do item referencia.
+  * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão à esquerda do item referencia.
+  * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão à direita do item referencia.
+  * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão à esquerda do item referencia.
 * `positionEnd`: Determina a posição de fim que a pesquisa deve parar.
 
-Nesse exemplo vamos retornar os irmãos do item cujo o valor é igual a `C` em todas variando as direções.
+Nesse exemplo vamos retornar os irmãos do item cujo o valor é igual a `C` em todas as direções.
 
 ```csharp
 public void Siblings1()
@@ -689,7 +693,7 @@ public void Siblings1()
 }
 ```
 
-_A primeira saída será retorna todos os irmãos da entidade `C` iniciando do primeiro irmão á esquerda até o último irmão á direita. É importante destacar que o próprio item não é retornado, afinal ele não é irmão dele mesmo._
+_A primeira saída retorna todos os irmãos da entidade `C` iniciando do primeiro irmão à esquerda até o último irmão à direita. É importante destacar que o próprio item não é retornado, afinal ele não é irmão de si mesmo._
 
 ```
 -> Start direction
@@ -699,7 +703,7 @@ D: D
 E: E
 ```
 
-_A segunda saída retorna todos os irmãos da entidade `C` iniciando do próximo irmão á direita até o último irmão á direita._
+_A segunda saída retorna todos os irmãos da entidade `C` iniciando do próximo irmão à direita até o último irmão à direita._
 
 ```
 -> Next direction
@@ -707,7 +711,7 @@ D: D
 E: E
 ```
 
-_A terceira saída retorna todos os irmãos da entidade `C` iniciando do irmão anterior até o primeiro irmão á esquerda._
+_A terceira saída retorna todos os irmãos da entidade `C` iniciando do irmão anterior até o primeiro irmão à esquerda._
 
 ```
 -> Previous direction
@@ -715,31 +719,31 @@ B: B
 A: A
 ```
 
-1. A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+**2)** A segunda sobrecarga tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
 ```
 
-1. A terceira sobrecarga filtra apenas pela profundidade de inicio e fim na direção especificada.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-1. A quarta sobrecarga filtra profundidade de fim na direção especificada.
+**4)** A quarta sobrecarga filtra profundidade de fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-1. Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os irmãos até que algum irmão retorne negativo no parâmetro `stop`. Do contrário será retornado todos os irmãos até chegar no último ou no primeiro (depende do parâmetro `direction`). Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os irmãos até que algum irmão retorne negativo no parâmetro `stop`. Do contrário será retornado todos os irmãos até chegar no último ou no primeiro (depende do parâmetro `direction`). Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-1. A segunda sobrecarga do método `SiblingsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
+**6)** A segunda sobrecarga do método `SiblingsUntil` tem os mesmos filtros, contudo, utiliza o delegate `EntityItemFilterDelegate` que tem apenas o parâmetro `item` deixando mais rápido a escrita.
 
 ```csharp
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null, SiblingDirection direction = SiblingDirection.Start)

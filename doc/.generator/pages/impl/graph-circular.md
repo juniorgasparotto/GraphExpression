@@ -45,11 +45,12 @@ public void GraphCircular()
 public class CircularEntity
 {
     public string Name { get; private set; }
+    public List<CircularEntity> Children { get; } = new List<CircularEntity>();
     public CircularEntity(string identity) => this.Name = identity;
 }
 ```
 
-1. A primeira saída exibe os itens do objeto `expression` que representam como ficou a hierarquia do objeto `A` após a sua criação:
+**1)** A primeira saída exibe os itens do objeto `expression` que representam como ficou a hierarquia do objeto `A` após a sua criação:
 
 ```
 [0] => Item: A, Parent: , Previous: , Next: B, Level: 1
@@ -58,7 +59,7 @@ public class CircularEntity
     [3] => Item: D, Parent: C, Previous: C, Next: , Level: 3
 ```
 
-2. A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
+**2)** A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
 
 <anchor-get name="impl-serialization-circular">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos circulares.
 
