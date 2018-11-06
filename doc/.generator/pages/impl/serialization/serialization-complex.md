@@ -6,7 +6,7 @@ Essa classe herda da classe abstrata `ExpressionSerializerBase<object>` que tem 
 
 A classe `ComplexEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
 
-O construtor obriga que seja passado a expressão a ser serializada.
+O construtor obriga que seja passado uma instância de uma expressão.
 
 ```csharp
 ComplexEntityExpressionSerializer(Expression<object> expression)
@@ -55,7 +55,7 @@ Algumas propriedades de customizações podem ser utilizadas antes da serializa�
     * `TypeName`: Exibe o nome do tipo (na forma curta) para todos os itens da expressão.
     * `FullTypeName`: Exibe o nome completo do tipo para todos os itens da expressão.
 
-No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar a exibir o tipo em todos os itens da expressão e também trucar valores que passem de 3 caracteres:
+No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar a exibir o tipo em todos os itens da expressão e também truncar valores que passem de 3 caracteres:
 
 ```csharp
 public void SerializationComplex2()
@@ -92,7 +92,7 @@ Destacamos que quando uma expressão é criada usando o método `AsExpression()`
 
 Os itens de serialização são os responsáveis pela serialização do nome do membro e obtenção do tipo do item na expressão. O tipo retornado será usado pela classe `ValueFormatter` quando for primitivo. Para tipos complexos será mantida a exibição da identificação como vimos no tópico <anchor-get name="impl-factory-entity-complex-complex" />.
 
-A propriedade `ItemsSerialize` será usada para encontrar o melhor serializador para item da expressão.
+A propriedade `ItemsSerialize` será usada para encontrar o melhor serializador para cada item da expressão.
 
 Os itens de serialização devem herdar da interface `IEntitySerialize` e o método `CanSerialize` é o responsável por determinar se o item da expressão pode ou não ser serializado. Quando o método `CanSerialize` retornar `true` então o método `GetSerializeInfo` será chamado para obter as informações da serialização do item.
 
@@ -112,11 +112,11 @@ Por padrão, temos alguns serializadores de itens definidos e todos eles já est
 1. `ObjectSerialize`: É a classe de serialização padrão, caso nenhum outro seja encontrado, este será usado. Ele retorna o tipo da entidade e o valor `null` para a propriedade `ContainerName`.
 1. `PropertySerialize`: Esse classe é usada para itens que derivam de propriedades. Será usado o tipo da propriedade e o seu nome como retorno.
 1. `FieldSerialize`: Esse classe é usada para itens que derivam de campos. Será usado o tipo do campo e o seu nome como retorno.
-1. `ArrayItemSerialize`: Esse item classe é usada para itens que derivam de arrays. Ela retorna na propriedade `ContainerName` a posição do item no array no formato: `[{position1},{position2}]`
-1. `DynamicItemSerialize`: Esse classe é usada para itens que derivam de classes dinâmicas.
-1. `CollectionItemSerialize`: Esse item classe é usada para itens que derivam de coleções. Ela retorna na propriedade `ContainerName` a posição do item na coleção no formato: `[{position1},{position2}]`
+1. `ArrayItemSerialize`: Esse classe é usada para itens que derivam de arrays. Ela retorna na propriedade `ContainerName` a posição do item no array no formato: `[{position1},{position2}]`
+1. `DynamicItemSerialize`: Essa classe é usada para itens que derivam de classes dinâmicas.
+1. `CollectionItemSerialize`: Essa classe é usada para itens que derivam de coleções. Ela retorna na propriedade `ContainerName` a posição do item na coleção no formato: `[{position1},{position2}]`
 
-No exemplo a seguir veremos a criação de um novo leitor de membro chamado `MethodReader` que será responsável por ler o método `HelloWorld` e criar um novo tipo de entidade na expressão chamado `MethodEntity`. Com base nesse novo tipo de entidade, vamos criar um serializador chamado `MethodSerialize` que terá a função de serializar os itens dos tipos `MethodEntity` para o formato: `MethodName(parameters)`:
+No exemplo a seguir veremos a criação de um novo leitor de membro chamado `MethodReader` que será responsável por ler o método `HelloWorld` e criar um novo tipo de entidade na expressão chamado `MethodEntity`. Com base nesse novo tipo de entidade vamos criar um serializador chamado `MethodSerialize` que terá a função de serializar os itens dos tipos `MethodEntity` para o formato: `MethodName(parameters)`:
 
 ```csharp
 public void SerializationComplex3()

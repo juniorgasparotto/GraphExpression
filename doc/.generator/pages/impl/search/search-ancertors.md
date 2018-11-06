@@ -82,7 +82,7 @@ IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityI
 IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
 ```
 
-**4)** A quarta sobrecarga filtra profundidade de fim.
+**4)** A quarta sobrecarga filtra apenas pela profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthEnd)

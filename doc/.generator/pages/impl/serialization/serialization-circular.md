@@ -35,7 +35,7 @@ public void SerializationCircular1()
 }
 ```
 
-A saída será uma expressão circular cujo o nome de cada item foi a propriedade `Name` da classe `CircularEntity`:
+A saída será uma expressão circular cujo o nome de cada item será a propriedade `Name` da classe `CircularEntity`:
 
 ```
 A + B + (C + D)
@@ -54,7 +54,7 @@ Algumas propriedades de customizações podem ser utilizadas antes da serializa�
         * Os demais tipos serão convertidos em texto usando a cultura: `CultureInfo.InvariantCulture`.
     * `TruncateFormatter`: Esse formatador pode ser usado quando o nome da entidade é muito grande e seja necessário trunca-lo. Isso significa que nomes muitos grandes serão reduzidos de acordo com o tamanho especificado. Esse formatador só será aplicado para tipos de textos (`string`).
 
-No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar o uso de aspas para nomes válidos e também trucar nomes que passem de 3 caracteres:
+No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar o uso de aspas para nomes válidos e também truncar nomes que passem de 3 caracteres:
 
 ```csharp
 public void SerializationCircular2()

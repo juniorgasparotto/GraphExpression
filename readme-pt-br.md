@@ -50,12 +50,12 @@ Install-Package GraphExpression
   * [Carregadores de valores](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-value-loaders)
   * [Atribuidores de filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-child-assign)
 * [Serialização](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization)
+  * [Serialização circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular)
   * [Serialização Complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-complex)
     * [Customizando a serialização dos itens](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-complex-itens-serialize)
-  * [Serialização circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular)
 * [Desserialização](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization)
-  * [Desserialização complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization-complex)
   * [Desserialização circular](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization-circular)
+  * [Desserialização complexa](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-deserialization-complex)
 * [Informações do grafo de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-info)
 * [Doações](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#donate)
 * [Licença](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#license)
@@ -488,7 +488,7 @@ IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityI
 IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
 ```
 
-**4)** A quarta sobrecarga filtra profundidade de fim.
+**4)** A quarta sobrecarga filtra apenas pela profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthEnd)
@@ -573,7 +573,7 @@ IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate<T> filter, Entit
 IEnumerable<EntityItem<T>> Descendants(int depthStart, int depthEnd)
 ```
 
-**4)** A quarta sobrecarga filtra profundidade de fim.
+**4)** A quarta sobrecarga filtra apenas pela profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthEnd)
@@ -731,7 +731,7 @@ IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityIt
 IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-**4)** A quarta sobrecarga filtra profundidade de fim na direção especificada.
+**4)** A quarta sobrecarga filtra apenas pela profundidade de fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionEnd, SiblingDirection direction = SiblingDirection.Start)
@@ -1147,7 +1147,7 @@ Esse formato é dividido em dois: **Tipos primitivos** e **Tipos complexos** e v
 * `IReadOnlyCollection<Entity> Children`: Propriedade que contém todos os filhos.
 * `Entity this[int index]`: Propriedade que retorna um filho pelo índice.
 * `Entity this[string key]`: Propriedade que retorna um filho pelo nome do membro.
-* `List<Operation> Operations`: Propriedade que contém todas as operações para que ocorra a re-execução nas fábricas de entidades. Essa propriedade é limpa em todas as outras entidades, exceto a entidade raiz.
+* `List<Operation> Operations`: Propriedade que contém todas as operações para que ocorra a re-execução nas fábricas de entidades. Essa propriedade é limpa em todas as outras entidades, exceto na entidade raiz.
 * `string Raw`: Propriedade que determina a entidade em forma de texto.
 * `Type Type`: Propriedade que determina o tipo da entidade.
 * `MemberInfo MemberInfo`: Propriedade que determina o membro.
@@ -1284,7 +1284,7 @@ Temos algumas propriedades que ajudarão na criação e customização das entid
 * `List<ITypeDiscovery> TypeDiscovery`: Propriedade que contém uma lista de classes de descoberta de tipos.
 * `List<IValueLoader> ValueLoader`: Propriedade que contém uma lista de classes para carregar valores.
 * `List<IMemberInfoDiscovery> MemberInfoDiscovery`: Propriedade que contém uma lista de classes para descoberta de membros.
-* `List<ISetChild> SetChildAction`: Propriedade que contém uma lista de classes que fazem as atribuições entidades filhas nas entidades pais.
+* `List<ISetChild> SetChildAction`: Propriedade que contém uma lista de classes que fazem as atribuições das entidades filhas nas entidades pais.
 * `Entity Root`: Propriedade que indica a entidade raiz.
 * `Type RootType`: Propriedade que indica o tipo da entidade raiz.
 * `object Value`: Valor da entidade raiz.
@@ -1427,7 +1427,7 @@ O tipo `ExpandoObject` será usado em todos os níveis quando a classe `ComplexE
 
 Os atribuidores de filhos tem o objetivo de adicionar uma entidade filha em sua entidade pai, ou seja, atribuir um valor em um membro da instância pai, ou um item em uma lista por exemplo. A propriedade `SetChildAction` será usada para encontrar o melhor atribuidor para cada entidade.
 
-Os atribuidores de filhos devem herdar da interface `ISetChild` e o método `CanSet` é o responsável por determinar se o item filho por ou não ser atribuído ao item pai. Quando o método `CanSet` retornar `true` então o método `SetChild` será chamado para fazer a atribuição.
+Os atribuidores de filhos devem herdar da interface `ISetChild` e o método `CanSet` é o responsável por determinar se o item filho pode ou não ser atribuído ao item pai. Quando o método `CanSet` retornar `true` então o método `SetChild` será chamado para fazer a atribuição.
 
 ```csharp
 public interface ISetChild 
@@ -1449,7 +1449,103 @@ Por padrão, temos alguns atribuidores definidos e todos eles já estão ordenad
 
 # <a name="impl-serialization" />Serialização
 
-A serialização é o processo de transformação de um grafo para expressão de grafos em forma de texto. Dividimos a serialização em dois tipos: **serialização de entidades circulares** e **serialização de entidades complexas**. Isso é interessante, pois entidades circulares são mais simples e precisam apenas de um nome para representa-las, ao contrário de entidades complexas que podem conter diversas propriedades para diversos fins.
+A serialização é o processo de transformação de uma entidade para expressão de grafos em forma de texto. Dividimos a serialização em dois tipos: **serialização de entidades circulares** e **serialização de entidades complexas**.
+
+Isso é interessante, pois entidades circulares são mais simples e precisam apenas de um nome para representa-las, ao contrário de entidades complexas que podem conter diversas propriedades.
+
+## <a name="impl-serialization-circular" />Serialização circular
+
+A serialização de entidades circulares é feita pela classe `CircularEntityExpressionSerializer`.
+
+Essa classe herda da classe abstrata `ExpressionSerializerBase<T>` que tem como responsabilidade compor a base matemática de uma expressão de grafos seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
+
+A classe `CircularEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
+
+O construtor obriga que sejam passados 2 parâmetros:
+
+```csharp
+CircularEntityExpressionSerializer(Expression<T> expression, Func<T, object> entityNameCallback)
+```
+
+1. `expression`: Indica qual será a expressão circular que deve ser serializada.
+2. `entityNameCallback`: Indica qual será o texto usado em cada item da expressão. Se for passado `null` então o método `ToString()` de cada `EntityItem` será utilizado.
+
+No exemplo abaixo veremos uma forma de serializar uma expressão circular
+
+```csharp
+public void SerializationCircular1()
+{
+    // create a simple object
+    var A = new CircularEntity("A");
+    var B = new CircularEntity("B");
+    var C = new CircularEntity("C");
+    var D = new CircularEntity("D");
+
+    A = A + B + (C + D);
+
+    var expression = A.AsExpression(c => c.Children);
+    var serialization = new CircularEntityExpressionSerializer<CircularEntity>(expression, f => f.Name);
+    var expressionAsString = serialization.Serialize();
+    System.Console.WriteLine(expressionAsString);
+}
+```
+
+A saída será uma expressão circular cujo o nome de cada item será a propriedade `Name` da classe `CircularEntity`:
+
+```
+A + B + (C + D)
+```
+
+Algumas propriedades de customizações podem ser utilizadas antes da serialização. Todas essas propriedades estão na classe base, ou seja, elas valem para expressões complexas também.
+
+* `bool EncloseParenthesisInRoot`: Essa propriedade determina se existirá parenteses englobando a entidade raiz, o padrão é não existir.
+* `bool ForceQuoteEvenWhenValidIdentified`: Essa propriedade força o uso de aspas mesmo quando o nome da entidade for um nome válido. Consideramos um nome válido aquele que não contém espaços e nem caracteres especiais que a linguagem `C#` não suporta em nomes de variáveis. Nomes que fazem referência a termos reservados do `C#` também são considerados inválidos, por exemplo: `bool`, `while` e etc. Caso um nome seja inválido então o uso das aspas será usado, caso um nome seja válido então o uso das aspas dependerá do valor dessa propriedade.
+  * `true`: Força o uso de aspas até para nomes válidos
+  * `false`: Exibe as aspas apenas para nomes inválidos. Esse é o valor padrão dessa propriedade.
+* `IValueFormatter ValueFormatter`: Essa propriedade indica qual será o formatador de valor para cada item da expressão, por padrão temos apenas dois, mas é possível a criação de um formatador customizado usando a interface `IValueFormatter`.
+  * `DefaultValueFormatter`: Esse formatador é usado como padrão para qualquer tipo primitivo.
+    * Para tipos de data o padrão usado será `yyyy-MM-ddTHH:mm:ss.fffzzz`
+    * Para tipos booleanos o padrão será `true|false`
+    * Os demais tipos serão convertidos em texto usando a cultura: `CultureInfo.InvariantCulture`.
+  * `TruncateFormatter`: Esse formatador pode ser usado quando o nome da entidade é muito grande e seja necessário trunca-lo. Isso significa que nomes muitos grandes serão reduzidos de acordo com o tamanho especificado. Esse formatador só será aplicado para tipos de textos (`string`).
+
+No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar o uso de aspas para nomes válidos e também truncar nomes que passem de 3 caracteres:
+
+```csharp
+public void SerializationCircular2()
+{
+    // create a simple object
+    var A = new CircularEntity("A");
+    var B = new CircularEntity("B");
+    var C = new CircularEntity("C");
+    var D = new CircularEntity("BigName");
+
+    A = A + B + (C + D);
+
+    var expression = A.AsExpression(c => c.Children);
+    var serialization = new CircularEntityExpressionSerializer<CircularEntity>(expression, f => f.Name);
+    serialization.EncloseParenthesisInRoot = true;
+    serialization.ForceQuoteEvenWhenValidIdentified = true;
+    serialization.ValueFormatter = new TruncateFormatter(3);
+
+    var expressionAsString = serialization.Serialize();
+    System.Console.WriteLine(expressionAsString);
+}
+```
+
+A saída abaixo mostra como ficou nossa customização, note que o nome `BigName` foi truncado, todos os itens agora tem aspas e existe um parenteses englobando o item raiz.
+
+```
+("A" + "B" + ("C" + "Big"))
+```
+
+Por fim, destacamos que quando uma expressão é criada usando o método `AsExpression(c => c.Children)`, teremos na propriedade `DefaultSerialize` uma instância da classe `CircularEntityExpressionSerializer<T>` pré-configurada.
+
+Contudo, essa propriedade retornará o tipo da interface `ISerialize<T>` sendo necessário fazer a conversão para o serializador circular ou utilizar o método abaixo que fará a conversão por você:
+
+```csharp
+expression.GetSerializer<CircularEntityExpressionSerializer<CircularEntity>>();
+```
 
 ## <a name="impl-serialization-complex" />Serialização Complexa
 
@@ -1459,7 +1555,7 @@ Essa classe herda da classe abstrata `ExpressionSerializerBase<object>` que tem 
 
 A classe `ComplexEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
 
-O construtor obriga que seja passado a expressão a ser serializada.
+O construtor obriga que seja passado uma instância de uma expressão.
 
 ```csharp
 ComplexEntityExpressionSerializer(Expression<object> expression)
@@ -1508,7 +1604,7 @@ Algumas propriedades de customizações podem ser utilizadas antes da serializa�
   * `TypeName`: Exibe o nome do tipo (na forma curta) para todos os itens da expressão.
   * `FullTypeName`: Exibe o nome completo do tipo para todos os itens da expressão.
 
-No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar a exibir o tipo em todos os itens da expressão e também trucar valores que passem de 3 caracteres:
+No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar a exibir o tipo em todos os itens da expressão e também truncar valores que passem de 3 caracteres:
 
 ```csharp
 public void SerializationComplex2()
@@ -1545,7 +1641,7 @@ Destacamos que quando uma expressão é criada usando o método `AsExpression()`
 
 Os itens de serialização são os responsáveis pela serialização do nome do membro e obtenção do tipo do item na expressão. O tipo retornado será usado pela classe `ValueFormatter` quando for primitivo. Para tipos complexos será mantida a exibição da identificação como vimos no tópico [Entidades complexas em forma de texto - Tipos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-complex).
 
-A propriedade `ItemsSerialize` será usada para encontrar o melhor serializador para item da expressão.
+A propriedade `ItemsSerialize` será usada para encontrar o melhor serializador para cada item da expressão.
 
 Os itens de serialização devem herdar da interface `IEntitySerialize` e o método `CanSerialize` é o responsável por determinar se o item da expressão pode ou não ser serializado. Quando o método `CanSerialize` retornar `true` então o método `GetSerializeInfo` será chamado para obter as informações da serialização do item.
 
@@ -1564,11 +1660,11 @@ Por padrão, temos alguns serializadores de itens definidos e todos eles já est
 1. `ObjectSerialize`: É a classe de serialização padrão, caso nenhum outro seja encontrado, este será usado. Ele retorna o tipo da entidade e o valor `null` para a propriedade `ContainerName`.
 2. `PropertySerialize`: Esse classe é usada para itens que derivam de propriedades. Será usado o tipo da propriedade e o seu nome como retorno.
 3. `FieldSerialize`: Esse classe é usada para itens que derivam de campos. Será usado o tipo do campo e o seu nome como retorno.
-4. `ArrayItemSerialize`: Esse item classe é usada para itens que derivam de arrays. Ela retorna na propriedade `ContainerName` a posição do item no array no formato: `[{position1},{position2}]`
-5. `DynamicItemSerialize`: Esse classe é usada para itens que derivam de classes dinâmicas.
-6. `CollectionItemSerialize`: Esse item classe é usada para itens que derivam de coleções. Ela retorna na propriedade `ContainerName` a posição do item na coleção no formato: `[{position1},{position2}]`
+4. `ArrayItemSerialize`: Esse classe é usada para itens que derivam de arrays. Ela retorna na propriedade `ContainerName` a posição do item no array no formato: `[{position1},{position2}]`
+5. `DynamicItemSerialize`: Essa classe é usada para itens que derivam de classes dinâmicas.
+6. `CollectionItemSerialize`: Essa classe é usada para itens que derivam de coleções. Ela retorna na propriedade `ContainerName` a posição do item na coleção no formato: `[{position1},{position2}]`
 
-No exemplo a seguir veremos a criação de um novo leitor de membro chamado `MethodReader` que será responsável por ler o método `HelloWorld` e criar um novo tipo de entidade na expressão chamado `MethodEntity`. Com base nesse novo tipo de entidade, vamos criar um serializador chamado `MethodSerialize` que terá a função de serializar os itens dos tipos `MethodEntity` para o formato: `MethodName(parameters)`:
+No exemplo a seguir veremos a criação de um novo leitor de membro chamado `MethodReader` que será responsável por ler o método `HelloWorld` e criar um novo tipo de entidade na expressão chamado `MethodEntity`. Com base nesse novo tipo de entidade vamos criar um serializador chamado `MethodSerialize` que terá a função de serializar os itens dos tipos `MethodEntity` para o formato: `MethodName(parameters)`:
 
 ```csharp
 public void SerializationComplex3()
@@ -1647,100 +1743,6 @@ A saída mostra que o novo serializador de métodos exibiu o nome do método no 
 "Model.43942917" + "HelloWorld(value1,value2): value1-value2"
 ```
 
-## <a name="impl-serialization-circular" />Serialização circular
-
-A serialização de entidades circulares é feita pela classe `CircularEntityExpressionSerializer`.
-
-Essa classe herda da classe abstrata `ExpressionSerializerBase<T>` que tem como responsabilidade compor a base matemática de uma expressão de grafos seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
-
-A classe `CircularEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
-
-O construtor obriga que sejam passados 2 parâmetros:
-
-```csharp
-CircularEntityExpressionSerializer(Expression<T> expression, Func<T, object> entityNameCallback)
-```
-
-1. `expression`: Indica qual será a expressão circular que deve ser serializada.
-2. `entityNameCallback`: Indica qual será o texto usado em cada item da expressão. Se for passado `null` então o método `ToString()` de cada `EntityItem` será utilizado.
-
-No exemplo abaixo veremos uma forma de serializar uma expressão circular
-
-```csharp
-public void SerializationCircular1()
-{
-    // create a simple object
-    var A = new CircularEntity("A");
-    var B = new CircularEntity("B");
-    var C = new CircularEntity("C");
-    var D = new CircularEntity("D");
-
-    A = A + B + (C + D);
-
-    var expression = A.AsExpression(c => c.Children);
-    var serialization = new CircularEntityExpressionSerializer<CircularEntity>(expression, f => f.Name);
-    var expressionAsString = serialization.Serialize();
-    System.Console.WriteLine(expressionAsString);
-}
-```
-
-A saída será uma expressão circular cujo o nome de cada item foi a propriedade `Name` da classe `CircularEntity`:
-
-```
-A + B + (C + D)
-```
-
-Algumas propriedades de customizações podem ser utilizadas antes da serialização. Todas essas propriedades estão na classe base, ou seja, elas valem para expressões complexas também.
-
-* `bool EncloseParenthesisInRoot`: Essa propriedade determina se existirá parenteses englobando a entidade raiz, o padrão é não existir.
-* `bool ForceQuoteEvenWhenValidIdentified`: Essa propriedade força o uso de aspas mesmo quando o nome da entidade for um nome válido. Consideramos um nome válido aquele que não contém espaços e nem caracteres especiais que a linguagem `C#` não suporta em nomes de variáveis. Nomes que fazem referência a termos reservados do `C#` também são considerados inválidos, por exemplo: `bool`, `while` e etc. Caso um nome seja inválido então o uso das aspas será usado, caso um nome seja válido então o uso das aspas dependerá do valor dessa propriedade.
-  * `true`: Força o uso de aspas até para nomes válidos
-  * `false`: Exibe as aspas apenas para nomes inválidos. Esse é o valor padrão dessa propriedade.
-* `IValueFormatter ValueFormatter`: Essa propriedade indica qual será o formatador de valor para cada item da expressão, por padrão temos apenas dois, mas é possível a criação de um formatador customizado usando a interface `IValueFormatter`.
-  * `DefaultValueFormatter`: Esse formatador é usado como padrão para qualquer tipo primitivo.
-    * Para tipos de data o padrão usado será `yyyy-MM-ddTHH:mm:ss.fffzzz`
-    * Para tipos booleanos o padrão será `true|false`
-    * Os demais tipos serão convertidos em texto usando a cultura: `CultureInfo.InvariantCulture`.
-  * `TruncateFormatter`: Esse formatador pode ser usado quando o nome da entidade é muito grande e seja necessário trunca-lo. Isso significa que nomes muitos grandes serão reduzidos de acordo com o tamanho especificado. Esse formatador só será aplicado para tipos de textos (`string`).
-
-No exemplo a seguir vamos forçar o uso de parenteses no item raiz, forçar o uso de aspas para nomes válidos e também trucar nomes que passem de 3 caracteres:
-
-```csharp
-public void SerializationCircular2()
-{
-    // create a simple object
-    var A = new CircularEntity("A");
-    var B = new CircularEntity("B");
-    var C = new CircularEntity("C");
-    var D = new CircularEntity("BigName");
-
-    A = A + B + (C + D);
-
-    var expression = A.AsExpression(c => c.Children);
-    var serialization = new CircularEntityExpressionSerializer<CircularEntity>(expression, f => f.Name);
-    serialization.EncloseParenthesisInRoot = true;
-    serialization.ForceQuoteEvenWhenValidIdentified = true;
-    serialization.ValueFormatter = new TruncateFormatter(3);
-
-    var expressionAsString = serialization.Serialize();
-    System.Console.WriteLine(expressionAsString);
-}
-```
-
-A saída abaixo mostra como ficou nossa customização, note que o nome `BigName` foi truncado, todos os itens agora tem aspas e existe um parenteses englobando o item raiz.
-
-```
-("A" + "B" + ("C" + "Big"))
-```
-
-Por fim, destacamos que quando uma expressão é criada usando o método `AsExpression(c => c.Children)`, teremos na propriedade `DefaultSerialize` uma instância da classe `CircularEntityExpressionSerializer<T>` pré-configurada.
-
-Contudo, essa propriedade retornará o tipo da interface `ISerialize<T>` sendo necessário fazer a conversão para o serializador circular ou utilizar o método abaixo que fará a conversão por você:
-
-```csharp
-expression.GetSerializer<CircularEntityExpressionSerializer<CircularEntity>>();
-```
-
 # <a name="impl-deserialization" />Desserialização
 
 A desserialização é o processo de transformação de expressão de grafos em forma de texto para uma entidade especificada. Dividimos a desserialização em dois tipos: **desserialização de entidades circulares** e **desserialização de entidades complexas**.
@@ -1754,52 +1756,6 @@ A classe `RoslynExpressionDeserializer<T>` é a responsável por fazer a convers
 O tipo inferido `T` deve obrigatoriamente conter uma sobrecarga do operador `+`.
 
 A parte ruim dessa abordagem é que existe uma lentidão nesse processo em sua primeira execução. Por hora, não temos solução para esse problema, mas estamos acompanhando a evolução do compilador Roslyn.
-
-## <a name="impl-deserialization-complex" />Desserialização complexa
-
-A desserialização de entidades complexas é feita pela classe `ComplexEntityExpressionDeserializer`. O método `Deserialize` é o responsável pela desserialização. Existem algumas variações desse método e cada uma tem sua utilidade:
-
-**1)** O primeiro método necessita apenas da expressão em forma de texto. Com base nessa expressão e no tipo inferido no método `Deserialize` é possível fazer a desserialização. Existem duas variantes desse método, uma síncrona e outra assíncrona.
-
-```csharp
-public T Deserialize<T>(string expression);
-public async Task<T> DeserializeAsync<T>(string expression);
-```
-
-No exemplo abaixo vamos deserializar uma expressão para um array de inteiros. Note que o tipo `int[]` está sendo inferido no método `Deserialize<int[]>`.
-
-```csharp
-public void DeserializationComplex1()
-{
-    var expressionAsString = "\"Int32[].1\" + \"[0]: 1\" + \"[1]: 2\" + \"[2]: 3\"";
-    var deserializer = new ComplexEntityExpressionDeserializer();
-    var array = deserializer.Deserialize<int[]>(expressionAsString);
-    System.Console.WriteLine(array[0]);
-    System.Console.WriteLine(array[1]);
-    System.Console.WriteLine(array[2]);
-}
-```
-
-**2)** O segundo método tem o mesmo objetivo do primeiro, a única diferença é que o tipo não será inferido no método e sim no parâmetro `type`:
-
-```csharp
-public object Deserialize(string expression, Type type = null);
-public async Task<object> DeserializeAsync(string expression, Type type = null);
-```
-
-**3)** O terceiro método recebe o parâmetro `factory`, esse parâmetro deve ser usado se for necessário alguma customização na criação das entidades complexas. Em resumo, esse processo é exatamente igual ao tópico [Criando entidades complexas com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex). Internamente, o compilador transformará cada item da expressão na classe `Entity` e depois seguirá os mesmos passos que já vimos nesse tópico:
-
-```csharp
-public T Deserialize<T>(string expression, ComplexEntityFactory factory);
-public async Task<T> DeserializeAsync<T>(string expression, ComplexEntityFactory factory);
-```
-
-**4)** Essa última sobrecarga tem a mesma função da sobrecarga acima, a única diferença é que não temos um tipo inferido, ou seja, o tipo estará definido na classe `ComplexEntityFactory` ou se não tiver, o resultado será uma classe do tipo `ExpandObject`:
-
-```csharp
-public object Deserialize(string expression, ComplexEntityFactory factory);
-public async Task<object> DeserializeAsync(string expression, ComplexEntityFactory factory);
-```
 
 ## <a name="impl-deserialization-circular" />Desserialização circular
 
@@ -1905,6 +1861,52 @@ my entity name1
 my entity name2
 ```
 
+## <a name="impl-deserialization-complex" />Desserialização complexa
+
+A desserialização de entidades complexas é feita pela classe `ComplexEntityExpressionDeserializer`. O método `Deserialize` é o responsável pela desserialização. Existem algumas variações desse método e cada uma tem sua utilidade:
+
+**1)** O primeiro método necessita apenas da expressão em forma de texto. Com base nessa expressão e no tipo inferido no método `Deserialize` é possível fazer a desserialização. Existem duas variantes desse método, uma síncrona e outra assíncrona.
+
+```csharp
+public T Deserialize<T>(string expression);
+public async Task<T> DeserializeAsync<T>(string expression);
+```
+
+No exemplo abaixo vamos deserializar uma expressão para um array de inteiros. Note que o tipo `int[]` está sendo inferido no método `Deserialize<int[]>`.
+
+```csharp
+public void DeserializationComplex1()
+{
+    var expressionAsString = "\"Int32[].1\" + \"[0]: 1\" + \"[1]: 2\" + \"[2]: 3\"";
+    var deserializer = new ComplexEntityExpressionDeserializer();
+    var array = deserializer.Deserialize<int[]>(expressionAsString);
+    System.Console.WriteLine(array[0]);
+    System.Console.WriteLine(array[1]);
+    System.Console.WriteLine(array[2]);
+}
+```
+
+**2)** O segundo método tem o mesmo objetivo do primeiro, a única diferença é que o tipo não será inferido no método e sim no parâmetro `type`:
+
+```csharp
+public object Deserialize(string expression, Type type = null);
+public async Task<object> DeserializeAsync(string expression, Type type = null);
+```
+
+**3)** O terceiro método recebe o parâmetro `factory`, esse parâmetro deve ser usado se for necessário alguma customização na criação das entidades complexas. Em resumo, esse processo é exatamente igual ao tópico [Criando entidades complexas com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex). Internamente, o compilador transformará cada item da expressão na classe `Entity` e depois seguirá os mesmos passos que já vimos nesse tópico:
+
+```csharp
+public T Deserialize<T>(string expression, ComplexEntityFactory factory);
+public async Task<T> DeserializeAsync<T>(string expression, ComplexEntityFactory factory);
+```
+
+**4)** Essa última sobrecarga tem a mesma função da sobrecarga acima, a única diferença é que não temos um tipo inferido, ou seja, o tipo estará definido na classe `ComplexEntityFactory` ou se não tiver, o resultado será uma classe do tipo `ExpandObject`:
+
+```csharp
+public object Deserialize(string expression, ComplexEntityFactory factory);
+public async Task<object> DeserializeAsync(string expression, ComplexEntityFactory factory);
+```
+
 # <a name="impl-graph-info" />Informações do grafo de uma entidade
 
 As classes `Expression<T>` e `EntityItem<T>` trazem algumas informações da teoria de grafos que ajudam a compreender um pouco a relação entre as entidades.
@@ -1912,7 +1914,7 @@ As classes `Expression<T>` e `EntityItem<T>` trazem algumas informações da teo
 A classe `Expression<T>` trás a propriedade `Graph` que isola as informações gerais do grafo, ela contém as seguintes propriedades e definições:
 
 * `IReadOnlyList<Edge<T>> Edges`: Essa propriedade contém todas as arestas do grafo.
-  * `class Edge<T>`: Essa classe representa uma conexão entre duas entidades (A e B), nela temos alguns propriedades e um método que ajudam a extrair algumas informações da ligação.
+  * `class Edge<T>`: Essa classe representa uma conexão entre duas entidades (A e B), nela temos algumas propriedades e um método que ajudam a extrair algumas informações da ligação.
     * `decimal Weight`: Determina o peso da ligação, caso necessário, faça o preenchimento dela após a criação da expressão.
     * `EntityItem<T> Source`: Determina o item pai da ligação
     * `EntityItem<T> Target`: Determina o item filho da ligação

@@ -65,7 +65,7 @@ IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate<T> filter, Entit
 IEnumerable<EntityItem<T>> Descendants(int depthStart, int depthEnd)
 ```
 
-**4)** A quarta sobrecarga filtra profundidade de fim.
+**4)** A quarta sobrecarga filtra apenas pela profundidade de fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthEnd)

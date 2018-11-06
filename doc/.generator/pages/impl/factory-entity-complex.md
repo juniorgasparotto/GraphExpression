@@ -142,7 +142,7 @@ Esse formato é dividido em dois: **Tipos primitivos** e **Tipos complexos** e v
 * `IReadOnlyCollection<Entity> Children`: Propriedade que contém todos os filhos.
 * `Entity this[int index]`: Propriedade que retorna um filho pelo índice.
 * `Entity this[string key]`: Propriedade que retorna um filho pelo nome do membro.
-* `List<Operation> Operations`: Propriedade que contém todas as operações para que ocorra a re-execução nas fábricas de entidades. Essa propriedade é limpa em todas as outras entidades, exceto a entidade raiz.
+* `List<Operation> Operations`: Propriedade que contém todas as operações para que ocorra a re-execução nas fábricas de entidades. Essa propriedade é limpa em todas as outras entidades, exceto na entidade raiz.
 * `string Raw`: Propriedade que determina a entidade em forma de texto.
 * `Type Type`: Propriedade que determina o tipo da entidade.
 * `MemberInfo MemberInfo`: Propriedade que determina o membro. 
@@ -279,7 +279,7 @@ Temos algumas propriedades que ajudarão na criação e customização das entid
 * `List<ITypeDiscovery> TypeDiscovery`: Propriedade que contém uma lista de classes de descoberta de tipos.
 * `List<IValueLoader> ValueLoader`: Propriedade que contém uma lista de classes para carregar valores.
 * `List<IMemberInfoDiscovery> MemberInfoDiscovery`: Propriedade que contém uma lista de classes para descoberta de membros.
-* `List<ISetChild> SetChildAction`: Propriedade que contém uma lista de classes que fazem as atribuições entidades filhas nas entidades pais.
+* `List<ISetChild> SetChildAction`: Propriedade que contém uma lista de classes que fazem as atribuições das entidades filhas nas entidades pais.
 * `Entity Root`: Propriedade que indica a entidade raiz.
 * `Type RootType`: Propriedade que indica o tipo da entidade raiz.
 * `object Value`: Valor da entidade raiz.
@@ -422,7 +422,7 @@ O tipo `ExpandoObject` será usado em todos os níveis quando a classe `ComplexE
 
 Os atribuidores de filhos tem o objetivo de adicionar uma entidade filha em sua entidade pai, ou seja, atribuir um valor em um membro da instância pai, ou um item em uma lista por exemplo. A propriedade `SetChildAction` será usada para encontrar o melhor atribuidor para cada entidade.
 
-Os atribuidores de filhos devem herdar da interface `ISetChild` e o método `CanSet` é o responsável por determinar se o item filho por ou não ser atribuído ao item pai. Quando o método `CanSet` retornar `true` então o método `SetChild` será chamado para fazer a atribuição.
+Os atribuidores de filhos devem herdar da interface `ISetChild` e o método `CanSet` é o responsável por determinar se o item filho pode ou não ser atribuído ao item pai. Quando o método `CanSet` retornar `true` então o método `SetChild` será chamado para fazer a atribuição.
 
 ```csharp
 public interface ISetChild 

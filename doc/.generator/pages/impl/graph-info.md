@@ -5,7 +5,7 @@ As classes `Expression<T>` e `EntityItem<T>` trazem algumas informações da teo
 A classe `Expression<T>` trás a propriedade `Graph` que isola as informações gerais do grafo, ela contém as seguintes propriedades e definições:
 
 * `IReadOnlyList<Edge<T>> Edges`: Essa propriedade contém todas as arestas do grafo.
-    * `class Edge<T>`: Essa classe representa uma conexão entre duas entidades (A e B), nela temos alguns propriedades e um método que ajudam a extrair algumas informações da ligação.
+    * `class Edge<T>`: Essa classe representa uma conexão entre duas entidades (A e B), nela temos algumas propriedades e um método que ajudam a extrair algumas informações da ligação.
         * `decimal Weight`: Determina o peso da ligação, caso necessário, faça o preenchimento dela após a criação da expressão.
         * `EntityItem<T> Source`: Determina o item pai da ligação
         * `EntityItem<T> Target`: Determina o item filho da ligação

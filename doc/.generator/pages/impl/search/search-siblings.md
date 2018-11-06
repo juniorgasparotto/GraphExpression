@@ -95,7 +95,7 @@ IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityIt
 IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-**4)** A quarta sobrecarga filtra profundidade de fim na direção especificada.
+**4)** A quarta sobrecarga filtra apenas pela profundidade de fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionEnd, SiblingDirection direction = SiblingDirection.Start)
