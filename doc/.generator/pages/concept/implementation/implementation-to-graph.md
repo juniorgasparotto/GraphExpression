@@ -12,7 +12,7 @@ Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarre
 
 Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafos da forma mais simples e objetiva possível.
 
-Será usado uma **entidade hierárquicas**, ou seja, uma entidade que se relaciona com ela mesma. 
+Será usado uma **entidade circular**, ou seja, uma entidade que se relaciona com ela mesma. 
 
 ```csharp
 [DebuggerDisplay("{Name}")]
@@ -91,6 +91,6 @@ A
     ----H
 ```
 
-Note que a expressão é exatamente igual a todas as expressões que vimos durante esse estudo. Isso mostra que para entidades hierárquicas é possível usufruir desse conceito sem o uso de grandes blocos de código.
+Note que a expressão é exatamente igual a todas as expressões que vimos durante esse estudo. Isso mostra que para entidades circulares é possível usufruir desse conceito sem o uso de grandes blocos de código.
 
 Para entidades de maior complexidade, não seria possível o uso dos operadores de forma tão simples, haveria a necessidade de criar mecanismos de reflexão e o uso de `strings` para a criação e processamento da expressão. Além do mais, não recomendamos esse esforço, não é o objetivo desse conceito criar mecanismo de serialização e deserialização de entidades, para isso existe meios melhores como: `XML` e `JSON`.
