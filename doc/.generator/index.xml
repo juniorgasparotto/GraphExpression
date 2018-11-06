@@ -2,7 +2,7 @@
  <page>
     <languages>
       <language name="pt-br" output="readme-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md" />
-      <!-- <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/GraphExpression" /> -->
+      <language name="en-us" output="readme.md" url-base="https://github.com/juniorgasparotto/GraphExpression" />
     </languages>
     <content>
       <a href="https://github.com/juniorgasparotto/GraphExpression" rel="Inglês">
@@ -57,7 +57,7 @@
   <page>
     <languages>
       <language name="pt-br" output="doc/concept-pt-br.md" default="true" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md" />
-      <!-- <language name="en-us" output="concept.md" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md" /> -->
+      <language name="en-us" output="concept.md" url-base="https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md" />
     </languages>
     <content>
       <a href="https://github.com/juniorgasparotto/GraphExpression" rel="Inglês">
