@@ -12,18 +12,18 @@ Por padrão, esse projeto trás os seguintes tipos de pesquisas:
 
 Todos esses tipos de pesquisas estão disponíveis para qualquer objeto dos tipos:
 
-* `GraphExpression.EntityItem<T>`: Pesquisa com referencia
-* `IEnumerable<GraphExpression.EntityItem<T>>`: Pesquisa sem referencia
+* `GraphExpression.EntityItem<T>`: Pesquisa com referência
+* `IEnumerable<GraphExpression.EntityItem<T>>`: Pesquisa sem referência
 
 Também é possível criar pesquisas customizadas usando os métodos de extensões do C#.
 
-**Sem referencias:**
+**Sem referências:**
 
 ```csharp
 public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T>> references)
 ```
 
-**Com referencias:**
+**Com referências:**
 
 ```csharp
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
@@ -41,4 +41,4 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 * `EntityItem<T> item`: Esse parâmetro significa o item corrente durante a pesquisa.
 * `int depth`: Determina a profundidade do item corrente com relação a sua posição.
 
- Você pode usar as classes `Func<EntityItem<T>>` e `Func<EntityItem<T>, int>` para simplificar o uso desses delegates.
+ Você pode usar as classes `Func<EntityItem<T>>` e `Func<EntityItem<T>, int>` para simplificar o uso.

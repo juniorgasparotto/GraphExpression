@@ -1,6 +1,6 @@
-## Pesquisa sem referencia <header-set anchor-name="impl-search-without-ref" />
+## Pesquisa sem referência <header-set anchor-name="impl-search-without-ref" />
 
-A pesquisa sem referencia será feita em uma coleção de entidades, ou seja, cada item da coleção será testado e retornado em caso de sucesso. Por repetir a mesma pesquisa em todos os itens da lista, esse tipo de pesquisa pode trazer duplicidades.
+A "pesquisa sem referência" será feita em uma coleção de entidades, ou seja, cada item da coleção será testado. Por repetir a mesma pesquisa em todos os itens da lista, esse tipo de pesquisa pode trazer duplicidades.
 
 <anchor-get name="search-without-references">Clique aqui</anchor-get> para saber mais sobre esse tipo de pesquisa.
 
@@ -35,10 +35,10 @@ Property.Class2_Prop2
 Property.Class2_Prop2
 ```
 
-* Isso ocorreu por que a primeira entidade (raiz) teve todos os seus descendentes testados pelo `filter` e obteve o item: `Property.Class2_Prop2`.
-* Depois a segunda entidade `Property.Class1_Prop1` foi testada também, mas ela não tem descendentes.
-* A terceira entidade `Property.Class1_Prop2` teve todos os seus descendentes testados e também obteve o item: `Property.Class2_Prop2`.
-* Da quarta entidade em diante nenhuma outra retornou positivo.
+* A primeira entidade (raiz) teve todos os seus descendentes testados pelo filtro e o seguinte descendente teve o retorno positivo: `Property.Class2_Prop2`.
+* A segunda entidade `Property.Class1_Prop1` foi testada também, mas ela não tem descendentes.
+* A terceira entidade `Property.Class1_Prop2` teve todos os seus descendentes testados e também retornou o item: `Property.Class2_Prop2`.
+* Da quarta entidade em diante, nenhuma retornou positivo.
 
 Caso você queira eliminar as repetições nesse tipo de pesquisa (com coleções), utilize a função do `Linq`:
 

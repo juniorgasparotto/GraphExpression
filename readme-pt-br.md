@@ -5,17 +5,17 @@
 ![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
-# <a name="implementation" />Expressão de grafos
+# <a name="implementation" />expressão de grafo
 
-Esse framework tem como objetivo implementar o conceito de expressão de grafos na linguagem .NET.
+Esse framework tem como objetivo implementar o conceito de expressão de grafo na linguagem .NET.
 
-Resumidamente, o conceito de **expressão de grafos** tem como objetivo explorar os benefícios de uma expressão matemática trocando os números por entidades. Com isso, podemos criar uma nova maneira de transportar dados e principalmente criar um novo meio de pesquisa transversal em grafos complexos ou circulares.
+Resumidamente, o conceito de **expressão de grafo** tem como objetivo explorar os benefícios de uma expressão matemática trocando os números por entidades. Com isso, podemos criar uma nova maneira de transportar dados e principalmente criar um novo meio de pesquisa transversal em grafos complexos ou circulares.
 
-Com relação a pesquisa em grafos, esse projeto se inspirou na implementação do `JQuery` para pesquisas de elementos HTML (DOM), unindo assim o conceito de expressão de grafos com a facilidade de uso do `JQuery` para pesquisas transversais.
+Com relação a pesquisa em grafos, esse projeto se inspirou na implementação do `JQuery` para pesquisas de elementos HTML (DOM), unindo assim o conceito de expressão de grafo com a facilidade de uso do `JQuery` para pesquisas transversais.
 
-_Atenção: Esse documento não vai explicar o conceito de expressão de grafos, ele terá como foco apenas no framework `GraphExpression`._
+_Atenção: Esse documento não vai explicar o conceito de expressão de grafo, ele terá como foco apenas no framework `GraphExpression`._
 
-**[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept) se você quiser conhecer mais sobre o conceito de expressão de grafos.**
+**[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#concept) se você quiser conhecer mais sobre o conceito de expressão de grafo.**
 
 # Instalação
 
@@ -30,7 +30,7 @@ Install-Package GraphExpression
 * [Grafos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-complex)
 * [Grafos circulares](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-graph-circular)
 * [Pesquisando](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search)
-  * [Pesquisa sem referencia](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-without-ref)
+  * [Pesquisa sem referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-without-ref)
   * [Pesquisa com referência](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-with-ref)
   * [Tipos de pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-kind)
     * [Antepassados](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-ancertors)
@@ -38,8 +38,8 @@ Install-Package GraphExpression
     * [Filhos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-children)
     * [Irmãos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-search-siblings)
 * [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-expression-complex)
-* [Criando entidades circulares com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-circular)
-* [Criando entidades complexas com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex)
+* [Criando entidades circulares com expressão de grafo e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-circular)
+* [Criando entidades complexas com expressão de grafo e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex)
   * [Entendendo a classe `Entity`](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-class-entity)
   * [Entidades complexas em forma de texto - Tipos primitivos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-primitive)
   * [Entidades complexas em forma de texto - Tipos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-complex)
@@ -72,7 +72,7 @@ GraphExpression.Expression<object> : List<EntityItem<object>>
 
 Essa classe herda de `List<EntityItem<object>>`, ou seja, ela também é uma coleção da classe `EntityItem<object>`. A classe `EntityItem<object>` representa um item dentro da lista, é nela que existem todas as informações da entidade no grafo.
 
-No exemplo a seguir vamos converter um objeto do tipo `Class1` para o objeto `Expression<object>` e exibir todos os `EntityItem<object>` da estrutura do tipo `Class1`. Na última saída, vamos exibir como ficaria esse objeto no formato de expressão de grafos:
+No exemplo a seguir vamos converter um objeto do tipo `Class1` para o objeto `Expression<object>` e exibir todos os `EntityItem<object>` da estrutura do tipo `Class1`. Na última saída, vamos exibir como ficaria esse objeto no formato de expressão de grafo:
 
 ```csharp
 public void GraphComplex()
@@ -129,7 +129,7 @@ public class Class2
 }
 ```
 
-**1)** Na primeira saída podemos visualizar todas as informações da estrutura do tipo `Class1` e também as informações: `Index`, `Parent`, `Next`, `Previous` e `Level` que compõem uma expressão de grafos:
+**1)** Na primeira saída podemos visualizar todas as informações da estrutura do tipo `Class1` e também as informações: `Index`, `Parent`, `Next`, `Previous` e `Level` que compõem uma expressão de grafo:
 
 ```
   [0] => Item: Class1, Parent: , Previous: , Next: Property.Class1_Prop1, Level: 1
@@ -142,7 +142,7 @@ public class Class2
 * A propriedade `Level` é a responsável por informar em qual nível do grafo está cada item da iteração, possibilitando criar uma saída identada que representa a hierarquia do objeto `model`.
 * O método `GetEntity` é apenas um ajudante que imprime o tipo do item e o nome do membro que pode ser uma propriedade ou um campo. Poderíamos também retornar o valor do membro, mas para deixar mais limpo a saída, eliminamos essa informação.
 
-**2)** Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
+**2)** Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafo:
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-complex) para entender como funciona a serialiação de objetos complexos.
 
@@ -152,7 +152,7 @@ public class Class2
 
 O método de extensão `AsExpression` é o responsável pela criação da expressão complexa. Esse método vai navegar por todos os nós partindo da raiz até o último descendente. Esse método contem os seguintes parâmetros:
 
-* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafos complexa. O tópico [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-expression-complex) trás todas as informações de como estender o comportamento padrão.
+* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafo complexa. O tópico [Customizando expressões complexas](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-expression-complex) trás todas as informações de como estender o comportamento padrão.
 * `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas. Veja o tópico [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep) para entender o propósito dessa funcionalidade.
 
 Esse método está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
@@ -161,9 +161,9 @@ Esse método está disponível em todos os objetos .NET, basta referenciar o nam
 
 Nesse tópico vimos como é simples navegar em objetos complexos abrindo caminhos para outras funcionalidades como pesquisas e serializações.
 
-Vejam também o tópico [Criando entidades complexas com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex), isso mostrará uma outra forma de criar objetos complexos.
+Vejam também o tópico [Criando entidades complexas com expressão de grafo e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex), isso mostrará uma outra forma de criar objetos complexos.
 
-## Elementos padrão de uma expressão de grafos para tipos complexos
+## Elementos padrão de uma expressão de grafo para tipos complexos
 
 Os elementos de uma expressão complexa (`Expression<object>`) podem variar entre os seguintes tipos:
 
@@ -239,7 +239,7 @@ public class CircularEntity
     [3] => Item: D, Parent: C, Previous: C, Next: , Level: 3
 ```
 
-**2)** A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
+**2)** A segunda saída mostra como ficou a expressão de grafo do objeto `A`:
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-serialization-circular) para entender como funciona a serialiação de objetos circulares.
 
@@ -259,19 +259,19 @@ Esse método está disponível em todos os objetos .NET, basta referenciar o nam
 
 Nesse tópico vimos como é simples navegar em objetos circulares abrindo caminhos para outras funcionalidades como pesquisas e serializações.
 
-Vejam também o tópico [Criando entidades circulares com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-circular), isso mostrará uma outra forma de criar objetos circulares sem a utilização do método `Add()`.
+Vejam também o tópico [Criando entidades circulares com expressão de grafo e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-circular), isso mostrará uma outra forma de criar objetos circulares sem a utilização do método `Add()`.
 
 # <a name="impl-search" />Pesquisando
 
-Existem dois tipos de pesquisas no conceito de expressão de grafos: **Pesquisa sem referencia** e **pesquisa com referencia**.
+Existem dois tipos de pesquisas no conceito de expressão de grafo: **Pesquisa sem referência** e **pesquisa com referência**.
 
 _Atenção: Nesse tópico, usaremos o modelo de grafos complexos devido a sua maior complexidade._
 
-**[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para entender melhor como funciona a pesquisa em expressão de grafos**
+**[Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search) para entender melhor como funciona a pesquisa em expressão de grafo**
 
-## <a name="impl-search-without-ref" />Pesquisa sem referencia
+## <a name="impl-search-without-ref" />Pesquisa sem referência
 
-A pesquisa sem referencia será feita em uma coleção de entidades, ou seja, cada item da coleção será testado e retornado em caso de sucesso. Por repetir a mesma pesquisa em todos os itens da lista, esse tipo de pesquisa pode trazer duplicidades.
+A pesquisa sem referência será feita em uma coleção de entidades, ou seja, cada item da coleção será testado e retornado em caso de sucesso. Por repetir a mesma pesquisa em todos os itens da lista, esse tipo de pesquisa pode trazer duplicidades.
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-without-references) para saber mais sobre esse tipo de pesquisa.
 
@@ -319,7 +319,7 @@ Distinct();
 
 ## <a name="impl-search-with-ref" />Pesquisa com referência
 
-A pesquisa com referencia será feita usando um item especifico, ou seja, primeiro você precisa localizar o item desejado e a partir dele será feito a pesquisa desejada.
+A pesquisa com referência será feita usando um item especifico, ou seja, primeiro você precisa localizar o item desejado e a partir dele será feito a pesquisa desejada.
 
 [Clique aqui](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-with-references) para saber mais sobre esse tipo de pesquisa.
 
@@ -355,7 +355,7 @@ Property.Class2_Prop2
 ```
 
 * Note que a única mudança foi utilizar o item raiz como referência (`First()`) e isso fez eliminar as duplicidades sem a necessidade do uso do método `Distinct`.
-* Isso ocorreu porque apenas um item foi analisado (o item raiz). Na pesquisa sem referencias, todos os itens foram analisados fazendo com que o item `Property.Class1_Prop2` também retornasse o mesmo resultado do item raiz.
+* Isso ocorreu porque apenas um item foi analisado (o item raiz). Na pesquisa sem referências, todos os itens foram analisados fazendo com que o item `Property.Class1_Prop2` também retornasse o mesmo resultado do item raiz.
 * De preferência para esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
 * A entidade raiz é a melhor opção para isso.
 
@@ -373,18 +373,18 @@ Por padrão, esse projeto trás os seguintes tipos de pesquisas:
 
 Todos esses tipos de pesquisas estão disponíveis para qualquer objeto dos tipos:
 
-* `GraphExpression.EntityItem<T>`: Pesquisa com referencia
-* `IEnumerable<GraphExpression.EntityItem<T>>`: Pesquisa sem referencia
+* `GraphExpression.EntityItem<T>`: Pesquisa com referência
+* `IEnumerable<GraphExpression.EntityItem<T>>`: Pesquisa sem referência
 
 Também é possível criar pesquisas customizadas usando os métodos de extensões do C#.
 
-**Sem referencias:**
+**Sem referências:**
 
 ```csharp
 public static IEnumerable<EntityItem<T>> Custom<T>(this IEnumerable<EntityItem<T>> references)
 ```
 
-**Com referencias:**
+**Com referências:**
 
 ```csharp
 public static IEnumerable<EntityItem<T>> Custom<T>(this EntityItem<T> references)
@@ -416,7 +416,7 @@ IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate2<T> filter = null,
 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no item raiz. A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até o item raiz.
-* `depthStart`: Determina a profundidade de inicio que a pesquisa deve começar
+* `depthStart`: Determina a profundidade de início que a pesquisa deve começar
 * `depthEnd`: Determina a profundidade de fim que a pesquisa deve parar
 
 Nesse exemplo, vamos retornar todos os antepassados do último item da expressão, lembrando que a estrutura é a mesma do exemplo `GraphComplex`:
@@ -461,7 +461,7 @@ public void Ancertor1()
 }
 ```
 
-_A primeira saída exibe todos os pais do item referencia._
+_A primeira saída exibe todos os pais do item referência._
 
 ```
 Property.Class1_Prop2
@@ -470,7 +470,7 @@ Class1
 
 * A ordem de retorno será sempre do antepassado mais próximo, ou seja, o primeiro item da lista de retorno será sempre o pai do item referência.
 
-_A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referencia:_
+_A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referência:_
 
 ```
 Property.Class1_Prop2
@@ -482,7 +482,7 @@ Property.Class1_Prop2
 IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de início e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
@@ -518,7 +518,7 @@ IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate2<T> filter = nul
 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no último item. A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até o último item.
-* `depthStart`: Determina a profundidade de inicio que a pesquisa deve começar
+* `depthStart`: Determina a profundidade de início que a pesquisa deve começar
 * `depthEnd`: Determina a profundidade de fim que a pesquisa deve parar
 
 Nesse exemplo, vamos retornar todos os descendentes do item raiz cujo a profundidade inicial e final seja igual a `2`, vamos utilizar a mesma estrutura do exemplo `GraphComplex`:
@@ -567,7 +567,7 @@ Field.Class2_Field1
 IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de início e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthStart, int depthEnd)
@@ -647,13 +647,13 @@ IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no último irmão ou no primeiro (depende do parâmetro `direction`). A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até chegar no último irmão ou no primeiro (depende do parâmetro `direction`).
 * `direction`: Esse parâmetro determina em qual direção a navegação deverá ir:
-  * `Start`: Determina que a navegação deve iniciar no primeiro irmão à esquerda do item referencia e ir até o último irmão à direita.
+  * `Start`: Determina que a navegação deve iniciar no primeiro irmão à esquerda do item referência e ir até o último irmão à direita.
   * `Next`: Determina que a navegação deve iniciar no próximo item e seguir até o último irmão à direita.
   * `Previous`: Determina que a navegação deve iniciar no item anterior e seguir até o primeiro irmão à esquerda.
-* `positionStart`: Determina a posição de inicio que a pesquisa deve começar.
-  * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão à esquerda do item referencia.
-  * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão à direita do item referencia.
-  * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão à esquerda do item referencia.
+* `positionStart`: Determina a posição de início que a pesquisa deve começar.
+  * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão à esquerda do item referência.
+  * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão à direita do item referência.
+  * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão à esquerda do item referência.
 * `positionEnd`: Determina a posição de fim que a pesquisa deve parar.
 
 Nesse exemplo vamos retornar os irmãos do item cujo o valor é igual a `C` em todas as direções.
@@ -725,7 +725,7 @@ A: A
 IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
 ```
 
-**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim na direção especificada.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de início e fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
@@ -751,12 +751,12 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, Entit
 
 # <a name="impl-factory-expression-complex" />Customizando expressões complexas
 
-O método `object.AsExpression` é o meio mais rápido para criar uma expressão de grafos. Quando chamado sem nenhum parâmetro, ele criará uma instância do objeto `Expression<object>` que representa uma expressão de grafos complexa.
+O método `object.AsExpression` é o meio mais rápido para criar uma expressão de grafo. Quando chamado sem nenhum parâmetro, ele criará uma instância do objeto `Expression<object>` que representa uma expressão de grafo complexa.
 
 Esse método está localizado na classe estática `GraphExpression.ComplexExpressionExtensions` e contém os seguintes parâmetros:
 
 * `this object entityRoot`: O objeto que será estendido para comportar o novo método e também para ser a raiz da expressão.
-* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafos complexa.
+* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafo complexa.
 * `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
 
 A classe `GraphExpression.ComplexExpressionFactory` é a classe responsável pela criação/customização de uma expressão complexa. Ela dispõe de algumas propriedades que potencializam a criação da expressão:
@@ -920,11 +920,11 @@ public class CollectionReader : IEntityReader
 }
 ```
 
-# <a name="impl-factory-entity-circular" />Criando entidades circulares com expressão de grafos e a matemática
+# <a name="impl-factory-entity-circular" />Criando entidades circulares com expressão de grafo e a matemática
 
-Uma das vantagens da linguagem `C#` é que ela permite sobrescrever os operadores da matemática deixando a ação da operação para o programador. Com essa ação delegada ao programador é possível utilizar o conceito de expressão de grafos para inserir ou remover uma entidade da outra.
+Uma das vantagens da linguagem `C#` é que ela permite sobrescrever os operadores da matemática deixando a ação da operação para o programador. Com essa ação delegada ao programador é possível utilizar o conceito de expressão de grafo para inserir ou remover uma entidade da outra.
 
-Se você já leu a documentação sobre o conceito de expressão de grafos então você já sabe que a entidade da esquerda da operação é a entidade pai e a entidade da direita da operação é a entidade filha.
+Se você já leu a documentação sobre o conceito de expressão de grafo então você já sabe que a entidade da esquerda da operação é a entidade pai e a entidade da direita da operação é a entidade filha.
 
 Com isso em mente, vamos demostrar uma forma de criar **grafos circulares** usando apenas CSharp e a matemática.
 
@@ -997,17 +997,17 @@ _A estrutura final da entidade `A` será:_
     [2] => C
 ```
 
-_A expressão de grafos final, após a remoção, ficaria assim:_
+_A expressão de grafo final, após a remoção, ficaria assim:_
 
 ```
 A + B + C
 ```
 
-# <a name="impl-factory-entity-complex" />Criando entidades complexas com expressão de grafos e a matemática
+# <a name="impl-factory-entity-complex" />Criando entidades complexas com expressão de grafo e a matemática
 
-Criar entidades complexas com expressão de grafos não é uma tarefa simples como vimos nos grafos circulares. É necessário uma estrutura de classes robusta e o uso de reflexão para compor as entidades.
+Criar entidades complexas com expressão de grafo não é uma tarefa simples como vimos nos grafos circulares. É necessário uma estrutura de classes robusta e o uso de reflexão para compor as entidades.
 
-Vejamos um exemplo de como criar uma classe complexa do tipo `CircularEntity` usando apenas expressão de grafos. A ideia será atribuir um valor na propriedade `Name`.
+Vejamos um exemplo de como criar uma classe complexa do tipo `CircularEntity` usando apenas expressão de grafo. A ideia será atribuir um valor na propriedade `Name`.
 
 ```csharp
 public void EntityFactory()
@@ -1088,7 +1088,7 @@ Entity(string name, string value)
 
 É importante destacar que membros que não são públicos também podem ter valores atribuídos. E no nosso próximo exemplo vamos demostrar como atribuir um valor no campo privado `_intValue`.
 
-Notem também que o valor está em forma de texto e isso é importante porque o construtor que aceita um valor inteiro é exclusivo para atribuir referencias e não valores primitivos.
+Notem também que o valor está em forma de texto e isso é importante porque o construtor que aceita um valor inteiro é exclusivo para atribuir referências e não valores primitivos.
 
 ```csharp
 public void EntityFactory3()
@@ -1239,7 +1239,7 @@ Namespace.MyClass.MyProperty
 
 Para criar itens em uma coleção ou array é necessário que o nome do membro indique a posição do item dentro de colchetes: `[{position}]: Value`
 
-No exemplo abaixo veremos como criar um array de inteiro usando expressão de grafos. Note que no lugar do nome do membro, usamos os colchetes como indicativo de um item de coleção.
+No exemplo abaixo veremos como criar um array de inteiro usando expressão de grafo. Note que no lugar do nome do membro, usamos os colchetes como indicativo de um item de coleção.
 
 ```csharp
 public void EntityFactory5()
@@ -1291,7 +1291,7 @@ Temos algumas propriedades que ajudarão na criação e customização das entid
 
 Por fim, temos alguns métodos que são usados durante a criação:
 
-* `ComplexEntityFactory Build()`: Esse método é responsável por gerar o grafo. Ele retorna a propria classe para manter a fluência.
+* `ComplexEntityFactory Build()`: Esse método é responsável por gerar o grafo. Ele retorna a própria classe para manter a fluência.
 * `void AddMapType<TFrom, TTo>()`: Esse método deve ser usado antes do método `Build` e ele determina o mapeamento dos tipos.
 * `void AddError(string err)`
 
@@ -1449,7 +1449,7 @@ Por padrão, temos alguns atribuidores definidos e todos eles já estão ordenad
 
 # <a name="impl-serialization" />Serialização
 
-A serialização é o processo de transformação de uma entidade para expressão de grafos em forma de texto. Dividimos a serialização em dois tipos: **serialização de entidades circulares** e **serialização de entidades complexas**.
+A serialização é o processo de transformação de uma entidade para expressão de grafo em forma de texto. Dividimos a serialização em dois tipos: **serialização de entidades circulares** e **serialização de entidades complexas**.
 
 Isso é interessante, pois entidades circulares são mais simples e precisam apenas de um nome para representa-las, ao contrário de entidades complexas que podem conter diversas propriedades.
 
@@ -1457,7 +1457,7 @@ Isso é interessante, pois entidades circulares são mais simples e precisam ape
 
 A serialização de entidades circulares é feita pela classe `CircularEntityExpressionSerializer`.
 
-Essa classe herda da classe abstrata `ExpressionSerializerBase<T>` que tem como responsabilidade compor a base matemática de uma expressão de grafos seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
+Essa classe herda da classe abstrata `ExpressionSerializerBase<T>` que tem como responsabilidade compor a base matemática de uma expressão de grafo seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
 
 A classe `CircularEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
 
@@ -1551,7 +1551,7 @@ expression.GetSerializer<CircularEntityExpressionSerializer<CircularEntity>>();
 
 A serialização de entidades complexas é feita pela classe `ComplexEntityExpressionSerializer`. Essa classe deve respeitar as regras que vimos nos tópicos [Entidades complexas em forma de texto - Tipos primitivos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-primitive), [Entidades complexas em forma de texto - Tipos complexos](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-complex) e [Entidades complexas em forma de texto - Coleções e arrays](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex-collections).
 
-Essa classe herda da classe abstrata `ExpressionSerializerBase<object>` que tem como responsabilidade compor a base matemática de uma expressão de grafos seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
+Essa classe herda da classe abstrata `ExpressionSerializerBase<object>` que tem como responsabilidade compor a base matemática de uma expressão de grafo seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
 
 A classe `ComplexEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
 
@@ -1745,7 +1745,7 @@ A saída mostra que o novo serializador de métodos exibiu o nome do método no 
 
 # <a name="impl-deserialization" />Desserialização
 
-A desserialização é o processo de transformação de expressão de grafos em forma de texto para uma entidade especificada. Dividimos a desserialização em dois tipos: **desserialização de entidades circulares** e **desserialização de entidades complexas**.
+A desserialização é o processo de transformação de expressão de grafo em forma de texto para uma entidade especificada. Dividimos a desserialização em dois tipos: **desserialização de entidades circulares** e **desserialização de entidades complexas**.
 
 O processo de desserialização utiliza como base o compilador `Roslyn` da linguagem `C#`. Isso tem prós e contras.
 
@@ -1893,7 +1893,7 @@ public object Deserialize(string expression, Type type = null);
 public async Task<object> DeserializeAsync(string expression, Type type = null);
 ```
 
-**3)** O terceiro método recebe o parâmetro `factory`, esse parâmetro deve ser usado se for necessário alguma customização na criação das entidades complexas. Em resumo, esse processo é exatamente igual ao tópico [Criando entidades complexas com expressão de grafos e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex). Internamente, o compilador transformará cada item da expressão na classe `Entity` e depois seguirá os mesmos passos que já vimos nesse tópico:
+**3)** O terceiro método recebe o parâmetro `factory`, esse parâmetro deve ser usado se for necessário alguma customização na criação das entidades complexas. Em resumo, esse processo é exatamente igual ao tópico [Criando entidades complexas com expressão de grafo e a matemática](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md#impl-factory-entity-complex). Internamente, o compilador transformará cada item da expressão na classe `Entity` e depois seguirá os mesmos passos que já vimos nesse tópico:
 
 ```csharp
 public T Deserialize<T>(string expression, ComplexEntityFactory factory);
@@ -1938,7 +1938,7 @@ A classe `Expression<T>` trás a propriedade `Graph` que isola as informações 
 * `IReadOnlyList<Path<T>> Paths`: Contém a lista de todos os caminhos finais do grafo
   * `class Path<T>`: Representa um caminho que parte da raiz até chegar no vértice
     * `IEnumerable<EntityItem<T>> Items`: Lista todos os itens do caminho partindo do item raiz até o item da instância.
-    * `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e útiliza-se do seguinte padrão:
+    * `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e utiliza-se do seguinte padrão:
       * Formato: [id-root].[id-parent].[id-instance]
       * Exemplo: [0].[1].[2]
     * `PathType PathType`: Determina o tipo do caminho

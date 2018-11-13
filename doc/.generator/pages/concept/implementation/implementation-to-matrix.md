@@ -1,6 +1,6 @@
 ## Criando uma matriz de informações a partir de um grafo <header-set anchor-name="implementation-to-matrix" />
 
-No exemplo anterior vimos como gerar uma expressão de grafos a partir de uma matriz de informação manual e que foi representada pela classe `Expression`. 
+No exemplo anterior vimos como gerar uma expressão de grafo a partir de uma matriz de informação manual e que foi representada pela classe `Expression`. 
 
 Nesse exemplo, vamos abordar uma implementação que cria essa matriz de forma automática.
 
@@ -158,4 +158,4 @@ Index    | Entity  | Level    | Level Index     | LevelAtExpression
 * Se a propriedade `Deep` for `false`, então devemos apenas verificar se a entidade já foi percorrida em algum momento da expressão, se foi, então não continuamos.
 * A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai somando-se `+1` quando a entidade tiver filhos e não somando nada quando não tiver.
 
-Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafos**.
+Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafo**.

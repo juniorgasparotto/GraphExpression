@@ -1,6 +1,6 @@
 # Grafos circulares <header-set anchor-name="impl-graph-circular" />
 
-Chamamos de grafos circulares aqueles que contém tipo definido, ou seja, todos os itens são definidos com o mesmo tipo `T`. 
+Definimos os grafos circulares como sendo aqueles que contêm um tipo definido, ou seja, todos os itens são definidos com o mesmo tipo `T`. 
 
 Esse tipo de grafo é presentado pela classe:
 
@@ -8,7 +8,7 @@ Esse tipo de grafo é presentado pela classe:
 GraphExpression.Expression<T> : List<EntityItem<T>>
 ```
 
-Essa classe herda de `List<EntityItem<T>>`, ou seja, ela também é uma coleção da classe `EntityItem<T>`.
+Essa classe herda de `List<EntityItem<T>>`, ou seja, também é uma coleção da classe: `EntityItem<T>`.
 
 No exemplo a seguir vamos converter o objeto para o tipo `Expression<CircularEntity>` e mostrar como ficou a estrutura convertida:
 
@@ -50,7 +50,7 @@ public class CircularEntity
 }
 ```
 
-**1)** A primeira saída exibe os itens do objeto `expression` que representam como ficou a hierarquia do objeto `A` após a sua criação:
+**1)** Na primeira saída, vemos os itens do objeto `expression`, representando a hierarquia do objeto `A`:
 
 ```
 [0] => Item: A, Parent: , Previous: , Next: B, Level: 1
@@ -59,7 +59,7 @@ public class CircularEntity
     [3] => Item: D, Parent: C, Previous: C, Next: , Level: 3
 ```
 
-**2)** A segunda saída mostra como ficou a expressão de grafos do objeto `A`:
+**2)** Na segunda saída, veremos a expressão de grafo do objeto `A`:
 
 <anchor-get name="impl-serialization-circular">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos circulares.
 
@@ -71,12 +71,12 @@ O método de extensão `AsExpression<T>` é o responsável pela criação da exp
 
 * `Func<T, IEnumerable<T>> childrenCallback`: Esse parâmetro determina quais serão os filhos das entidades. É esse parâmetro que vai determinar a continuidade da execução. Todas as entidades do grafo chamarão esse método até que todos sejam navegados. A execução só será interrompida em caso de relações cíclicas.
 * `Func<T, object> entityNameCallback`: Esse parâmetro é o responsável por determinar qual será o nome da entidade na serialização ou no modo de depuração. Em nosso exemplo, usamos a propriedade `Name`. Caso esse parâmetro não seja passado, será usado o método `ToString()`.
-* `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
+* `bool deep = false`: Quando `true`, a expressão será profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
 
-Esse método está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
+Esse método está disponível em todos os objetos .NET, basta apenas adicionar a referência do namespace: `using GraphExpression`.
 
 **Conclusão:**
 
-Nesse tópico vimos como é simples navegar em objetos circulares abrindo caminhos para outras funcionalidades como pesquisas e serializações.
+Nesse tópico vimos como é simples navegar em objetos circulares, abrindo caminhos para pesquisas e serializações.
 
 Vejam também o tópico <anchor-get name="impl-factory-entity-circular" />, isso mostrará uma outra forma de criar objetos circulares sem a utilização do método `Add()`.

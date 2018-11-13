@@ -1,8 +1,8 @@
-# Compreendendo uma expressão de grafos <header-set anchor-name="intro" />
+# Compreendendo uma expressão de grafo <header-set anchor-name="intro" />
 
-Uma expressão de grafos é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
+Uma expressão de grafo é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
 
-**Expressão de grafos - Exemplo:**
+**expressão de grafo - Exemplo:**
 
 ```
 (A + B + C + D)
@@ -17,7 +17,7 @@ Os elementos que compõe uma expressão são:
     * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade. 
-    * Em expressão de grafos são denominados: **Grupo de expressão**.
+    * Em expressão de grafo são denominados: **Grupo de expressão**.
 
 Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
 
@@ -78,7 +78,7 @@ Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas repre
 
 ## Operador de soma <header-set anchor-name="intro-plus" />
 
-A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafos, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
+A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafo, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
 
 * A entidade da esquerda pode adicionar a sí mesma quantas vezes for preciso:
 
@@ -105,7 +105,7 @@ Graph:
 
 ## Operador de subtração <header-set anchor-name="intro-subtract" />
 
-A operação de subtração usa o operador `-`. Em expressão de grafos, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha. 
+A operação de subtração usa o operador `-`. Em expressão de grafo, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha. 
 
 A cada operação de subtração apenas uma ocorrência será removida por vez, mesmo que a entidade da esquerda tenha mais de uma filha da mesma entidade. Por exemplo:
 

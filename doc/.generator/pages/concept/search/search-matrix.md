@@ -1,8 +1,8 @@
 ### Matriz de informação <header-set anchor-name="search-matrix-of-information" />
 
-Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão. 
+Podemos representar uma expressão de grafo em uma matriz vertical com todas as informações de uma expressão. 
 
-Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos. 
+Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafo. 
 
 Vejamos um exemplo:
 

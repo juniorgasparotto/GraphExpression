@@ -2,7 +2,7 @@
 
 A serialização de entidades circulares é feita pela classe `CircularEntityExpressionSerializer`. 
 
-Essa classe herda da classe abstrata `ExpressionSerializerBase<T>` que tem como responsabilidade compor a base matemática de uma expressão de grafos seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
+Essa classe herda da classe abstrata `ExpressionSerializerBase<T>` que tem como responsabilidade compor a base matemática de uma expressão de grafo seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
 
 A classe `CircularEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
 

@@ -1,28 +1,28 @@
 # Customizando expressões complexas <header-set anchor-name="impl-factory-expression-complex" />
 
-O método `object.AsExpression` é o meio mais rápido para criar uma expressão de grafos. Quando chamado sem nenhum parâmetro, ele criará uma instância do objeto `Expression<object>` que representa uma expressão de grafos complexa.
+O método `object.AsExpression` é o meio mais rápido para criar uma expressão de grafo. Quando chamado sem nenhum parâmetro, ele criará uma instância do objeto `Expression<object>` que representa uma expressão de grafo complexa.
 
 Esse método está localizado na classe estática `GraphExpression.ComplexExpressionExtensions` e contém os seguintes parâmetros:
 
 * `this object entityRoot`: O objeto que será estendido para comportar o novo método e também para ser a raiz da expressão.
-* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafos complexa.
-* `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
+* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafo complexa.
+* `bool deep = false`: Quando `true`, a expressão será profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas.
 
-A classe `GraphExpression.ComplexExpressionFactory` é a classe responsável pela criação/customização de uma expressão complexa. Ela dispõe de algumas propriedades que potencializam a criação da expressão:
+A classe `GraphExpression.ComplexExpressionFactory` é a classe responsável pela criação/customização de uma expressão complexa. Essa classe dispõe de algumas propriedades que aumentam o poder de criação da expressão:
 
 * `List<IEntityReader> Readers`: Com essa lista é possível criar ou trocar a leitura de entidades para determinados tipos de objetos.
 * `List<IMemberReader> MemberReaders`: Com essa lista é possível criar ou trocar os leitores de membros.
-* `Func<object, IEnumerable<PropertyInfo>> GetProperties`: Método que delega ao usuário determinar quais propriedades serão carregadas. Por padrão, será usado a chamada: `entity.GetType().GetProperties()`.
-* `Func<object, IEnumerable<FieldInfo>> GetFields`: Método que delega ao usuário determinar quais campos serão carregadas. Por padrão, será usado a chamada: `entity.GetType().GetFields()`.
+* `Func<object, IEnumerable<PropertyInfo>> GetProperties`: Método que delega ao usuário a opção de determinar quais propriedades serão carregadas. Por padrão, será usado: `entity.GetType().GetProperties()`.
+* `Func<object, IEnumerable<FieldInfo>> GetFields`: Método que delega ao usuário a opção de determinar quais campos serão carregadas. Por padrão, será usado: `entity.GetType().GetFields()`.
 
-Você pode usar a instância dessa classe no parâmetro `factory` do método `object.AsExpression` ou simplesmente chamar o método `Build` que retornará a instância da classe `Expression<object>` chegando no mesmo objetivo.
+Você pode usar a instância dessa classe no parâmetro `factory` do método `object.AsExpression` ou simplesmente chamar o método `Build` que retornará a instância da classe `Expression<object>`, chegando no mesmo objetivo.
 
 ```csharp
 Expression<object> Build(object entityRoot, bool deep = false)
 ```
 
 * `entityRoot`: Entidade que será a raiz da expressão.
-* `deep`: Quando `true`, a expressão será criada de forma profunda.
+* `deep`: Quando `true`, a expressão será profunda.
 
 No exemplo abaixo, vamos criar um novo leitor de membros (`MethodReader`)  que terá como objetivo invocar o método `HelloWorld` da classe `Model`. Vamos criar também um novo tipo de entidade complexa (`MethodEntity`) para armazenar o resultado do método. 
 
@@ -95,7 +95,7 @@ MethodEntity.HelloWorld(value1, value2)
 
 ## Leitores de membros
 
-Os leitores de membros herdam da classe `IMemberReader` e tem como principal objetivo ler os membros de uma instância e retornar para a expressão.
+Os "leitores de membros" herdam da classe `IMemberReader`. Seu principal objetivo é ler os membros de uma instância e retornar para a expressão.
 
 ```csharp
 public interface IMemberReader
@@ -113,7 +113,7 @@ _Atenção: Os leitores de membros devem ser usados pelos leitores de entidades.
 
 ## Leitores de entidades
 
-Os leitores de entidades são os principais responsáveis pela criação da expressão complexa e a propriedade `Readers` será usada para encontrar o melhor leitor para cada entidade da iteração.
+Os "leitores de entidades" são os principais responsáveis pela criação da expressão complexa e a propriedade `Readers` será usada para encontrar o melhor leitor para cada entidade da iteração.
 
 Os leitores de entidades devem herdar da interface `IEntityReader` e o método `CanRead` é o responsável por determinar se a entidade pode ou não ser lida pelo leitor. Quando o método `CanRead` retornar `true` então o método `GetChildren` será chamado e é nesse momento que os itens da expressão serão efetivamente criados.
 
@@ -125,17 +125,17 @@ public interface IEntityReader
 }
 ```
 
-A ordem dos leitores é de extrema importância, isso porque o último leitor será usado em caso de desempate, ou seja, se três leitores retornarem `true`, o último será usado.
+A ordem dos leitores é de extrema importância, uma vez que o último leitor da lista será usado em caso de empate, ou seja, se três leitores retornarem `true`, o último da lista será usado.
 
-Por padrão, temos alguns leitores de entidades definidos e todos eles já estão ordenados na propriedade `Readers` para que não aja erros de leitura.
+Por padrão, temos alguns leitores de entidades definidos e todos eles já estão ordenados na propriedade `Readers` para evitar erros de leitura.
  
-1. `DefaultReader`: Esse é o leitor padrão de todas as entidades. Sua função é ler os membros de qualquer tipo, com exceção dos tipos que estão nos namespaces `System` e `Microsoft`. Ele é o primeiro leitor, ou seja, se houver algum outro que retorne `true` no método `CanRead`, então esse será ignorado.
-2. `CollectionReader`: Esse leitor é responsável por ler objetos que herdam do tipo `ICollection`. Ele é o segundo leitor e sempre deve estar acima dos leitores `ArrayReader` e `DictionaryReader`. Isso é necessário pois objetos dos tipos `Array` e `IDictionary` também herdam de `ICollection` e esses leitores devem ter prioridade sobre este.
+1. `DefaultReader`: Essa é a classe padrão para todas as entidades. Sua função é ler os membros de qualquer tipo, com exceção dos tipos que estão nos namespaces `System` e `Microsoft`. Ele é o primeiro leitor, ou seja, se houver algum outro que retorne `true` no método `CanRead`, então essa classe será ignorada.
+2. `CollectionReader`: Esse leitor é responsável por ler objetos que herdam do tipo `ICollection`. Ele é o segundo e sempre deve estar acima dos leitores `ArrayReader` e `DictionaryReader`. Isso é necessário pois objetos dos tipos `Array` e `IDictionary` também herdam de `ICollection` e esses leitores devem ter prioridade sobre este.
 3. `ArrayReader`: Esse leitor é responsável por ler objetos do tipo `Array`
 4. `DictionaryReader`: Esse leitor é responsável por ler objetos que herdam do tipo `IDictionary`
 5. `DynamicReader`: Esse leitor é responsável por ler objetos que herdam do tipo `ExpandoObject`. Esse leitor deve ter prioridade sobre o leitor `DictionaryReader`, por isso ele está posicionado abaixo deste leitor.
 
-Os leitores de entidades são os únicos responsáveis por lerem os membros, ou seja, se o seu leitor customizado quiser manter os membros da entidade, então não esqueça de iterar sobre a propriedade `MemberReaders` e fazer o devido retorno. 
+Os leitores de entidades são os únicos responsáveis por lerem os membros, ou seja, se o seu "leitor de entidade" customizado quiser manter os membros da entidade, então não esqueça de iterar sobre a propriedade `MemberReaders` e fazer o devido retorno. 
 
 Veja um exemplo de como usar a propriedade `MemberReaders` dentro dos leitores de entidades. Esse código pertence ao leitor: `CollectionReader`
 

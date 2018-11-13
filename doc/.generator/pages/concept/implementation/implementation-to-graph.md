@@ -8,9 +8,9 @@ Esse tópico vai demostrar na prática alguns exemplos de implementações de al
 
 Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
-## Criando grafos com expressão de grafos <header-set anchor-name="implementation-to-graph" />
+## Criando grafos com expressão de grafo <header-set anchor-name="implementation-to-graph" />
 
-Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafos da forma mais simples e objetiva possível.
+Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafo da forma mais simples e objetiva possível.
 
 Será usado uma **entidade circular**, ou seja, uma entidade que se relaciona com ela mesma. 
 
@@ -38,7 +38,7 @@ public class Entity : List<Entity>
 * A classe herda de uma lista genérica da própria classe, nossa intenção é criar uma instância hierárquica.
 * A classe exige um nome como parâmetro de entrada, será o nome da entidade
 * Os operadores `+` e `-` foram sobrescritos, agora essa entidade pode ser utilizada dentro de uma expressão.
-    * Quando houver uma soma (`+`), a entidade da direita será adicionada na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado. Essa é a base do conceito de expressão de grafos.
+    * Quando houver uma soma (`+`), a entidade da direita será adicionada na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado. Essa é a base do conceito de expressão de grafo.
     * Quando houver uma subtração (`-`), a entidade da direita será removida na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado.
 
 Para usar é simples, basta pensar no conceito explicado e usar como se fosse uma expressão matemática dentro do `C#`:

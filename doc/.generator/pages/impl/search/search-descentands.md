@@ -1,4 +1,4 @@
-### Descendentes <header-set anchor-name="impl-search-descentands" />
+### `Descendants` <header-set anchor-name="impl-search-descentands" />
 
 A pesquisa de descendentes é útil para encontrar os filhos ou todos os descendentes de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -10,8 +10,8 @@ IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate2<T> filter = nul
 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no último item. A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até o último item.
-* `depthStart`: Determina a profundidade de inicio que a pesquisa deve começar
-* `depthEnd`: Determina a profundidade de fim que a pesquisa deve parar
+* `depthStart`: Determina a profundidade inicial para a pesquisa começar
+* `depthEnd`: Determina a profundidade final que a pesquisa deve parar
 
 Nesse exemplo, vamos retornar todos os descendentes do item raiz cujo a profundidade inicial e final seja igual a `2`, vamos utilizar a mesma estrutura do exemplo `GraphComplex`:
 
@@ -59,19 +59,19 @@ Field.Class2_Field1
 IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de início e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthStart, int depthEnd)
 ```
 
-**4)** A quarta sobrecarga filtra apenas pela profundidade de fim.
+**4)** A quarta sobrecarga filtra apenas pela profundidade final.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthEnd)
 ```
 
-**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os descendentes até que algum descendente retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até chegar no último item. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os descendentes até que algum descendente retorne negativo no parâmetro "stop". Do contrário será retornado todos os itens até chegar no último item. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)

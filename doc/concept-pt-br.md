@@ -5,9 +5,9 @@
 ![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
-# <a name="concept" />Expressão de grafos
+# <a name="concept" />expressão de grafo
 
-O conceito de **expressão de grafos** foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão matemática.
+O conceito de **expressão de grafo** foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão matemática.
 
 O conceito tem como objetivo explorar os benefícios de uma expressão matemática trocando os números por entidades. Com isso, podemos criar uma nova maneira de transportar dados e, principalmente, criar um novo meio de pesquisa transversal em grafos complexos ou circulares.
 
@@ -15,7 +15,7 @@ O conceito tem como objetivo explorar os benefícios de uma expressão matemáti
 
 # <a name="index" />Índice
 
-* [Compreendendo uma expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#intro)
+* [Compreendendo uma expressão de grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#intro)
   * [Resolução da expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-execution-order)
   * [Entidade e suas ocorrências](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-and-occurrence)
   * [Operador de soma](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#intro-plus)
@@ -58,15 +58,15 @@ O conceito tem como objetivo explorar os benefícios de uma expressão matemáti
     * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-ascending)
     * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parent)
 * [Implementações](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation)
-  * [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-graph)
+  * [Criando grafos com expressão de grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-graph)
   * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-expression)
   * [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-matrix)
 
-# <a name="intro" />Compreendendo uma expressão de grafos
+# <a name="intro" />Compreendendo uma expressão de grafo
 
-Uma expressão de grafos é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
+Uma expressão de grafo é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
 
-**Expressão de grafos - Exemplo:**
+**expressão de grafo - Exemplo:**
 
 ```
 (A + B + C + D)
@@ -81,7 +81,7 @@ Os elementos que compõe uma expressão são:
   * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
 * **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
 * **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
-  * Em expressão de grafos são denominados: **Grupo de expressão**.
+  * Em expressão de grafo são denominados: **Grupo de expressão**.
 
 Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
 
@@ -142,7 +142,7 @@ Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas repre
 
 ## <a name="intro-plus" />Operador de soma
 
-A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafos, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
+A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafo, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
 
 * A entidade da esquerda pode adicionar a sí mesma quantas vezes for preciso:
 
@@ -169,7 +169,7 @@ Graph:
 
 ## <a name="intro-subtract" />Operador de subtração
 
-A operação de subtração usa o operador `-`. Em expressão de grafos, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha.
+A operação de subtração usa o operador `-`. Em expressão de grafo, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha.
 
 A cada operação de subtração apenas uma ocorrência será removida por vez, mesmo que a entidade da esquerda tenha mais de uma filha da mesma entidade. Por exemplo:
 
@@ -559,8 +559,8 @@ A + F + G + (B + E + (C + D))
     ^   ^        ^    
 ```
 
-* Note que as entidades `F` e `G` foram para o ínicio do seu grupo de expressão.
-* A entidade `E` também foi reorganizada para o ínicio do seu grupo de expressão.
+* Note que as entidades `F` e `G` foram para o início do seu grupo de expressão.
+* A entidade `E` também foi reorganizada para o início do seu grupo de expressão.
 
 ## <a name="normalization-3" />Normalização - tipo 3
 
@@ -587,7 +587,7 @@ A + (B + F) + (C + (G + F) + B) + G
 A + G + (B + F) + (C + B + (G + F))
 ```
 
-* Note que agora a entidade `G` que estava no final da expressão foi movido para o inicio. Sendo assim, devemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3):
+* Note que agora a entidade `G` que estava no final da expressão foi movido para o início. Sendo assim, devemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3):
 
 ```
 A + (G + F) + (B + F) + (C + B + G)
@@ -649,15 +649,15 @@ Portanto, não podemos considerar que uma expressão desnormalizada seja usada c
 
 # <a name="search" />Pesquisas em expressões de grafos
 
-A pesquisa em expressão de grafos pode ser dividida em dois tipos: **Pesquisa superficial** e **Pesquisa profunda**.
+A pesquisa em expressão de grafo pode ser dividida em dois tipos: **Pesquisa superficial** e **Pesquisa profunda**.
 
 Nos próximos tópicos vamos abordar a diferença entre esses tipos de pesquisas, mas antes, será preciso entender o que é uma **matriz de informação** que é o tema comum entre os dois tipos de pesquisa.
 
 ### <a name="search-matrix-of-information" />Matriz de informação
 
-Podemos representar uma expressão de grafos em uma matriz vertical com todas as informações de uma expressão.
+Podemos representar uma expressão de grafo em uma matriz vertical com todas as informações de uma expressão.
 
-Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafos.
+Com a visão em forma de matriz conseguimos uma melhor visualização do grafo e entendemos melhor como funciona a pesquisa em grafos complexos usando o conceito de expressão de grafo.
 
 Vejamos um exemplo:
 
@@ -1192,15 +1192,15 @@ Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocor
 
 Esse tópico vai demostrar na prática alguns exemplos de implementações de alguns dos conceitos que estudamos.
 
-* [Criando grafos com expressão de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-graph)
+* [Criando grafos com expressão de grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-graph)
 * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-expression)
 * [Criando uma matriz de informações a partir de um grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-matrix)
 
 Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarregar operadores matemáticos.
 
-## <a name="implementation-to-graph" />Criando grafos com expressão de grafos
+## <a name="implementation-to-graph" />Criando grafos com expressão de grafo
 
-Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafos da forma mais simples e objetiva possível.
+Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafo da forma mais simples e objetiva possível.
 
 Será usado uma **entidade circular**, ou seja, uma entidade que se relaciona com ela mesma.
 
@@ -1228,7 +1228,7 @@ public class Entity : List<Entity>
 * A classe herda de uma lista genérica da própria classe, nossa intenção é criar uma instância hierárquica.
 * A classe exige um nome como parâmetro de entrada, será o nome da entidade
 * Os operadores `+` e `-` foram sobrescritos, agora essa entidade pode ser utilizada dentro de uma expressão.
-  * Quando houver uma soma (`+`), a entidade da direita será adicionada na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado. Essa é a base do conceito de expressão de grafos.
+  * Quando houver uma soma (`+`), a entidade da direita será adicionada na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado. Essa é a base do conceito de expressão de grafo.
   * Quando houver uma subtração (`-`), a entidade da direita será removida na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado.
 
 Para usar é simples, basta pensar no conceito explicado e usar como se fosse uma expressão matemática dentro do `C#`:
@@ -1287,9 +1287,9 @@ Para entidades de maior complexidade, não seria possível o uso dos operadores 
 
 ## <a name="implementation-to-expression" />Convertendo uma matriz de informação para expressões de grafos
 
-Nesse exemplo veremos como converter uma matriz de informação de volta para expressão de grafos.
+Nesse exemplo veremos como converter uma matriz de informação de volta para expressão de grafo.
 
-É importante destacar que esse código é simples e específico para o nosso exemplo. Embora ele possa ser útil para diversos propósitos devido a sua capacidade de identificar os momentos corretos de inicio e fim de uma iteração de uma entidade.
+É importante destacar que esse código é simples e específico para o nosso exemplo. Embora ele possa ser útil para diversos propósitos devido a sua capacidade de identificar os momentos corretos de início e fim de uma iteração de uma entidade.
 
 ```csharp
 [DebuggerDisplay("{Entity.Name}")]
@@ -1418,7 +1418,7 @@ No método `Main` temos a chamada da nossa função, note que estamos criando a 
 
 A função `ToExpressionAsString` será responsável por fazer toda a iteração e chegar em nosso objetivo que é devolver uma `string` contendo nossa expressão.
 
-* A classe `Expression` representa uma expressão de grafos como um todo. Ela herda de uma lista do tipo `EntityItem` para fazer jus ao que ela é dentro do conceito: Um conjunto de ocorrências de entidades com suas informações.
+* A classe `Expression` representa uma expressão de grafo como um todo. Ela herda de uma lista do tipo `EntityItem` para fazer jus ao que ela é dentro do conceito: Um conjunto de ocorrências de entidades com suas informações.
 * O método `ToExpressionAsString` retorna uma string que será a nossa expressão.
 * A lista contendo todas as ocorrências das entidades será percorrida completamente. Da posição 0 até o final da lista. Cada iteração pode conter diversos níveis da expressão.
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
@@ -1430,11 +1430,11 @@ A função `ToExpressionAsString` será responsável por fazer toda a iteração
   * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
     * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-last-at-group-expression)
 
-Com esses trechos de códigos vimos como é simples iterar em uma expressão de grafos e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafos.**
+Com esses trechos de códigos vimos como é simples iterar em uma expressão de grafo e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafo.**
 
 ## <a name="implementation-to-matrix" />Criando uma matriz de informações a partir de um grafo
 
-No exemplo anterior vimos como gerar uma expressão de grafos a partir de uma matriz de informação manual e que foi representada pela classe `Expression`.
+No exemplo anterior vimos como gerar uma expressão de grafo a partir de uma matriz de informação manual e que foi representada pela classe `Expression`.
 
 Nesse exemplo, vamos abordar uma implementação que cria essa matriz de forma automática.
 
@@ -1592,4 +1592,4 @@ Index    | Entity  | Level    | Level Index     | LevelAtExpression
 * Se a propriedade `Deep` for `false`, então devemos apenas verificar se a entidade já foi percorrida em algum momento da expressão, se foi, então não continuamos.
 * A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai somando-se `+1` quando a entidade tiver filhos e não somando nada quando não tiver.
 
-Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafos**.
+Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafo**.

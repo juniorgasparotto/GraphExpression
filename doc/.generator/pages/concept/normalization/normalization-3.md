@@ -23,7 +23,7 @@ A + (B + F) + (C + (G + F) + B) + G
 A + G + (B + F) + (C + B + (G + F))
 ```
 
-* Note que agora a entidade `G` que estava no final da expressão foi movido para o inicio. Sendo assim, devemos aplicar novamente a <anchor-get name="normalization-3" />:
+* Note que agora a entidade `G` que estava no final da expressão foi movido para o início. Sendo assim, devemos aplicar novamente a <anchor-get name="normalization-3" />:
 
 ```
 A + (G + F) + (B + F) + (C + B + G)

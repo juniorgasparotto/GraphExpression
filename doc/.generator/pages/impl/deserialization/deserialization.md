@@ -1,6 +1,6 @@
 # Desserialização <header-set anchor-name="impl-deserialization" />
 
-A desserialização é o processo de transformação de expressão de grafos em forma de texto para uma entidade especificada. Dividimos a desserialização em dois tipos: **desserialização de entidades circulares** e **desserialização de entidades complexas**.
+A desserialização é o processo de transformação de expressão de grafo em forma de texto para uma entidade especificada. Dividimos a desserialização em dois tipos: **desserialização de entidades circulares** e **desserialização de entidades complexas**.
 
 O processo de desserialização utiliza como base o compilador `Roslyn` da linguagem `C#`. Isso tem prós e contras. 
 

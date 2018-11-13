@@ -1,15 +1,15 @@
-# Criando entidades circulares com expressão de grafos e a matemática <header-set anchor-name="impl-factory-entity-circular" />
+# Criando entidades circulares com expressão de grafo e a matemática <header-set anchor-name="impl-factory-entity-circular" />
 
-Uma das vantagens da linguagem `C#` é que ela permite sobrescrever os operadores da matemática deixando a ação da operação para o programador. Com essa ação delegada ao programador é possível utilizar o conceito de expressão de grafos para inserir ou remover uma entidade da outra.
+Uma das vantagens da linguagem `C#` é que ela permite sobrescrever os operadores da matemática deixando a ação da operação para o programador. Com essa ação delegada ao programador é possível utilizar o conceito de expressão de grafo para inserir ou remover uma entidade da outra.
 
-Se você já leu a documentação sobre o conceito de expressão de grafos então você já sabe que a entidade da esquerda da operação é a entidade pai e a entidade da direita da operação é a entidade filha. 
+Se você já leu a documentação sobre o conceito de expressão de grafo então você já sabe que a entidade da esquerda da operação é a entidade pai e a entidade da direita da operação é a entidade filha. 
 
 Com isso em mente, vamos demostrar uma forma de criar **grafos circulares** usando apenas CSharp e a matemática.
 
 No código de exemplo, vamos sobrescrever os operadores `+` e `-` e delegar a eles as seguintes ações:
 
-* `+`: Adicionar a entidade da direita como sendo filha da entidade da esquerda.
-* `-`: Remover a entidade da direita da lista filhos da entidade da esquerda.
+* `+`: Adicionar a "entidade da direita" como sendo filha da "entidade da esquerda".
+* `-`: Remover a "entidade da direita" da lista filhos da "entidade da esquerda".
 
 A entidade da esquerda da operação é representada pelo parâmetro `a` e a entidade da direita da operação é representada pelo parâmetro `b`.
 
@@ -75,7 +75,7 @@ _A estrutura final da entidade `A` será:_
     [2] => C
 ```
 
-_A expressão de grafos final, após a remoção, ficaria assim:_
+_A expressão de grafo final, após a remoção, ficaria assim:_
 
 ```
 A + B + C

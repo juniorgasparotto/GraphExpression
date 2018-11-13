@@ -1,8 +1,8 @@
-# Criando entidades complexas com expressão de grafos e a matemática <header-set anchor-name="impl-factory-entity-complex" />
+# Criando entidades complexas com expressão de grafo e a matemática <header-set anchor-name="impl-factory-entity-complex" />
 
-Criar entidades complexas com expressão de grafos não é uma tarefa simples como vimos nos grafos circulares. É necessário uma estrutura de classes robusta e o uso de reflexão para compor as entidades.
+Criar entidades complexas com expressão de grafo não é uma tarefa simples como vimos nos grafos circulares. É necessário uma estrutura de classes robusta e o uso de reflexão para compor as entidades.
 
-Vejamos um exemplo de como criar uma classe complexa do tipo `CircularEntity` usando apenas expressão de grafos. A ideia será atribuir um valor na propriedade `Name`.
+Vejamos um exemplo de como criar uma classe complexa do tipo `CircularEntity` usando apenas expressão de grafo. A ideia será atribuir um valor na propriedade `Name`.
 
 ```csharp
 public void EntityFactory()
@@ -24,9 +24,9 @@ A saída mostra que a propriedade `Name` foi preenchida:
 Entity name ;)
 ```
 
-Note que estamos usando expressões matemáticas e montamos a entidade do tipo `CircularEntity` sem usar o comando `new` do `C#`.
+Note que estamos usando expressões matemáticas e montamos a entidade do tipo `CircularEntity` sem usar o comando `new`.
 
-A ordem da expressão é a mesma das entidades circulares, ou seja, o item da esquerda da expressão é o item pai do item da direita da expressão. Por ser um tipo complexo, o item da esquerda é a instância e o item da direita é o membro. 
+A ordem da expressão é a mesma que vimos nas entidades circulares, ou seja, o item da esquerda da expressão é o item pai do item da direita da expressão. Por ser um tipo complexo, o item da esquerda é a instância e o item da direita é o membro. 
 
 Na linguagem `C#` temos dois tipos de membros: **Propriedades** e **Campos** e ambas podem ser utilizadas na expressão independente da sua visibilidade.
 
@@ -40,7 +40,7 @@ Essa classe representa uma entidade do grafo e o local onde ela pode estar. Cada
 Entity(int complexEntityId)
 ```
 
-**2)** O segundo construtor cria uma entidade no qual o seu local será um membro, ou seja, pode ser uma propriedade ou um campo. O parâmetro `Name` vai definir o nome do membro. O parâmetro `complexEntityId` vai atribuir a esse membro a entidade que corresponde a esse ID. 
+**2)** O segundo construtor cria uma entidade localizado em um membro, ou seja, pode ser uma propriedade ou um campo. O parâmetro `Name` vai definir o nome do membro. O parâmetro `complexEntityId` vai atribuir a esse membro a entidade que corresponde a esse ID. 
 
 ```csharp
 Entity(string name, int complexEntityId)
@@ -83,7 +83,7 @@ Entity(string name, string value)
 
 É importante destacar que membros que não são públicos também podem ter valores atribuídos. E no nosso próximo exemplo vamos demostrar como atribuir um valor no campo privado `_intValue`.
 
-Notem também que o valor está em forma de texto e isso é importante porque o construtor que aceita um valor inteiro é exclusivo para atribuir referencias e não valores primitivos.
+Notem também que o valor está em forma de texto e isso é importante porque o construtor que aceita um valor inteiro é exclusivo para atribuir referências e não valores primitivos.
 
 ```csharp
 public void EntityFactory3()
@@ -105,7 +105,7 @@ Essa saída vai produzir o valor abaixo e foi necessário obter o valor via refl
 1000
 ```
 
-**4)** O último construtor contém apenas o parâmetro `string raw`. O valor desse parâmetro deve estar no formato de **entidades complexas em forma de texto**.
+**4)** O último construtor contém apenas o parâmetro: `string raw`. O valor desse parâmetro deve estar no formato de **entidades complexas em forma de texto**.
 
 ```csharp
 Entity(string raw)
@@ -154,7 +154,7 @@ Esse formato é dividido em dois: **Tipos primitivos** e **Tipos complexos** e v
 
 ## Entidades complexas em forma de texto - Tipos primitivos <header-set anchor-name="impl-factory-entity-complex-primitive" />
 
-Para tipos primitivos temos o seguinte formato:
+Para tipos primitivos, temos o seguinte formato:
 
 ```
 [TypeName].[MemberName]: [Value]
@@ -164,9 +164,9 @@ Os colchetes indicam que a parte não é obrigatória, no formato acima vemos qu
 
 A segunda parte não deve existir para a entidade que está localizada na raiz da expressão, afinal se ela está na raiz ela não tem pai. 
 
-A partir da segunda entidade da expressão, a segunda parte é obrigatória e indica o nome do membro que pode ser uma propriedade ou um campo.
+Da segunda entidade em diante, a segunda parte é obrigatória e indica o nome do membro que pode ser uma propriedade ou um campo.
 
-A próxima parte é o separador `: ` que separa o membro do valor. Se o valor do membro for nulo, então o separador não será exibido. 
+A próxima parte é o separador `: ` que divide o nome do membro e seu valor. Se o valor do membro for nulo, o separador não será exibido.
 
 **Vejamos alguns exemplos:**
 
@@ -176,19 +176,19 @@ _Exibe o tipo e o valor da entidade primitiva que está localizada na raiz. Por 
 System.String: Value
 ```
 
-_Exibe o tipo, o membro e valor da entidade primitiva que está localizada na segunda posição em diante:_
+_Exibe o tipo, o membro e valor da entidade primitiva que está localizada da segunda posição em diante:_
 
 ```
 System.String.StrValue: Value
 ```
 
-_Exibe o tipo, o membro e um valor vazio da entidade primitiva que está localizada na segunda posição em diante:_
+_Exibe o tipo, o membro e um valor vazio da entidade primitiva que está localizada da segunda posição em diante:_
 
 ```
 System.String.StrValue: 
 ```
 
-_Exibe o tipo e o membro quando o valor for nulo. Não exibe o separador, esse é o indicativo que o valor é nulo:_
+_Exibe o tipo e o membro quando o valor for nulo. Não exibe o "separador", esse é o indicativo que o valor é nulo:_
 
 ```
 System.String.StrValue
@@ -196,7 +196,7 @@ System.String.StrValue
 
 ## Entidades complexas em forma de texto - Tipos complexos <header-set anchor-name="impl-factory-entity-complex-complex" />
 
-Para tipos complexos temos o seguinte formato:
+Para tipos complexos, temos o seguinte formato:
 
 ```
 [TypeName].[MemberName].EntityID
@@ -206,7 +206,7 @@ Os colchetes indicam que a parte não é obrigatória, no formato acima vemos qu
 
 A segunda parte não deve existir para a entidade que está localizada na raiz da expressão, afinal se ela está na raiz ela não tem pai. 
 
-A partir da segunda entidade da expressão, a segunda parte é obrigatória e indica o nome do membro que pode ser uma propriedade ou um campo.
+Da segunda entidade em diante, a segunda parte é obrigatória e indica o nome do membro que pode ser uma propriedade ou um campo.
 
 A próxima parte é a identificação da entidade no grafo. Essa identificação deve ser um número inteiro e é ela que garante a possibilidade de usar referências da mesma entidade em outros pontos do grafo.
 
@@ -232,9 +232,9 @@ Namespace.MyClass.MyProperty
 
 ## Entidades complexas em forma de texto - Coleções e arrays <header-set anchor-name="impl-factory-entity-complex-collections" />
 
-Para criar itens em uma coleção ou array é necessário que o nome do membro indique a posição do item dentro de colchetes: `[{position}]: Value`
+Para criar itens em uma coleção ou array, o nome do membro deve ser uma posição dentro dos colchetes: `[{position}]: Value`
 
-No exemplo abaixo veremos como criar um array de inteiro usando expressão de grafos. Note que no lugar do nome do membro, usamos os colchetes como indicativo de um item de coleção.
+No exemplo abaixo veremos como criar um array de inteiros usando apenas expressão de grafo. Note que no lugar do nome do membro, usamos os colchetes como indicativo de um item de coleção.
 
 ```csharp
 public void EntityFactory5()
@@ -267,18 +267,18 @@ ComplexEntityFactory(Type type, Entity root = null)
 ```
 
 * `type`: Esse parâmetro determina o tipo da entidade raiz.
-* `root`: Esse parâmetro determina qual é a entidade raiz. Ele não é obrigatório, pois essa classe também é usada na desserialização e lá a entidade raiz é obtida tardiamente.
+* `root`: Esse parâmetro determina qual é a entidade raiz. Ele não é obrigatório, pois essa classe também é usada na desserialização onde a entidade raiz é obtida tardiamente.
 
 Temos algumas propriedades que ajudarão na criação e customização das entidades:
 
 * `IReadOnlyList<Entity> Entities`: Propriedade que armazena todas as entidades do grafo e sem repeti-las.
 * `bool IsTyped`: Propriedade que indica se a criação tem um tipo definido.
-* `IReadOnlyDictionary<Type, Type> MapTypes`: Propriedade que contém os mapas de criação para interfaces ou classes abstratas, ou até mesmo para classes concretas caso seja necessário trocar um tipo por outro.
+* `IReadOnlyDictionary<Type, Type> MapTypes`: Propriedade que contém os mapas de criação para interfaces ou classes abstratas, ou até mesmo para classes concretas caso seja necessário.
 * `IReadOnlyList<string> Errors`: Propriedade que armazena os erros.
 * `bool IgnoreErrors`: Propriedade que indica se os erros serão ignorados. Do contrário será enviado uma exceção.
 * `List<ITypeDiscovery> TypeDiscovery`: Propriedade que contém uma lista de classes de descoberta de tipos.
-* `List<IValueLoader> ValueLoader`: Propriedade que contém uma lista de classes para carregar valores.
-* `List<IMemberInfoDiscovery> MemberInfoDiscovery`: Propriedade que contém uma lista de classes para descoberta de membros.
+* `List<IValueLoader> ValueLoader`: Propriedade que contém uma lista de classes para inicializar valores.
+* `List<IMemberInfoDiscovery> MemberInfoDiscovery`: Propriedade que contém uma lista de classes para descobrir membros.
 * `List<ISetChild> SetChildAction`: Propriedade que contém uma lista de classes que fazem as atribuições das entidades filhas nas entidades pais.
 * `Entity Root`: Propriedade que indica a entidade raiz.
 * `Type RootType`: Propriedade que indica o tipo da entidade raiz.
@@ -286,11 +286,11 @@ Temos algumas propriedades que ajudarão na criação e customização das entid
 
 Por fim, temos alguns métodos que são usados durante a criação:
 
-* `ComplexEntityFactory Build()`: Esse método é responsável por gerar o grafo. Ele retorna a propria classe para manter a fluência.
+* `ComplexEntityFactory Build()`: Esse método é responsável por gerar o grafo. Esse método deve retornar a própria classe para manter a fluência.
 * `void AddMapType<TFrom, TTo>()`: Esse método deve ser usado antes do método `Build` e ele determina o mapeamento dos tipos.
 * `void AddError(string err)`
 
-Existe também uma variação dessa classe que possibilita trabalhar de forma genérica e isso facilita o uso da propriedade `Value` que já estará tipada.
+Existe também uma variação dessa classe que possibilita trabalhar de forma genérica e isso facilita o uso da propriedade `Value` que já estará com tipo definido.
 
 ```csharp
 ComplexEntityFactory<T>()
@@ -329,7 +329,7 @@ ImplementAbstractAndInterface
 
 ## Descobridores de tipos <header-set anchor-name="impl-factory-entity-complex-discovery-types" />
 
-Os descobridores de tipos tem como principal objetivo descobrir o tipo da entidade. A propriedade `TypeDiscovery` será usada para encontrar o melhor descobridor para cada entidade.
+Os "descobridores de tipos" tem como principal objetivo descobrir o tipo da entidade. A propriedade `TypeDiscovery` será usada para encontrar a melhor opção para cada entidade.
 
 Os descobridores de tipos devem herdar da interface `ITypeDiscovery` e o método `CanDiscovery` é o responsável por determinar se a entidade pode ou não ser descoberta. Quando o método `CanDiscovery` retornar `true` então o método `GetEntityType` será chamado e é nesse momento que o tipo da entidade será retornado.
 
@@ -341,18 +341,18 @@ public interface ITypeDiscovery
 }
 ```
 
-A ordem dos descobridores é de extrema importância, isso porque o último será usado em caso de desempate, ou seja, se três retornarem `true`, o último será usado.
+A ordem dos descobridores é de extrema importância, uma vez que o último da lista será usado em caso de empate, ou seja, se três retornarem `true`, o último da lista será usado.
 
-Por padrão, temos alguns descobridores de tipos definidos e todos eles já estão ordenados na propriedade `TypeDiscovery` para que não aja erros.
+Por padrão, temos alguns descobridores de tipos definidos e todos eles já estão ordenados na propriedade `TypeDiscovery` para evitar erros.
 
 1. `DictionaryItemTypeDiscovery`: Essa classe é responsável por descobrir o tipo de um item no dicionário. O método `CanDiscovery` verifica se o tipo pai é um dicionário, se for, então o método `GetEntityType` será chamado retornando o tipo `KeyValuePair<,>`.
-2. `MemberInfoTypeDiscovery`: Essa classe é responsável por descobrir o tipo do membro. O método `CanDiscovery` verifica se a entidade tem um nome de membro definido, se tiver, então o método `GetEntityType` será chamado para obter o tipo do membro.
+2. `MemberInfoTypeDiscovery`: Essa classe é responsável por descobrir o tipo do membro. O método `CanDiscovery` verifica se a entidade contém um nome de membro, se tiver, então o método `GetEntityType` será chamado para obter o tipo do membro.
 3. `ListItemTypeDiscovery`: Essa classe é responsável por descobrir o tipo de um item em uma lista. O método `CanDiscovery` verifica se o tipo pai é um `IList`, se for, então o método `GetEntityType` será chamado para obter o tipo da lista.
 4. `ArrayItemTypeDiscovery`: Essa classe é responsável por descobrir o tipo de um item no array. O método `CanDiscovery` verifica se o tipo pai é um array, se for, então o método `GetEntityType` será chamado para obter o tipo do array.
 
 ## Descobridores de membros <header-set anchor-name="impl-factory-entity-complex-discovery-members" />
 
-Os descobridores de membros tem o objetivo de descobrir o membro da entidade. A propriedade `MemberInfoDiscovery` será usada para encontrar o melhor descobridor de membros de cada entidade.
+Os "descobridores de membros" tem o objetivo de descobrir o membro da entidade. A propriedade `MemberInfoDiscovery` será usada para encontrar a melhor opção de membros de cada entidade.
 
 Os descobridores de membros devem herdar da interface `IMemberInfoDiscovery` e o método `CanDiscovery` é o responsável por determinar se a entidade pode ou não ter seu membro descoberto. Quando o método `CanDiscovery` retornar `true` então o método `GetMemberInfo` será chamado para retornar o `MemberInfo`.
 
@@ -364,13 +364,13 @@ public interface IMemberInfoDiscovery
 }
 ```
 
-Por padrão, temos apenas um descobridor de membro definido na propriedade `MemberInfoDiscovery`. 
+Por padrão, temos apenas um classe definida em: `MemberInfoDiscovery`. 
 
 ```csharp
 class MemberInfoDiscovery : IMemberInfoDiscovery
 ```
 
-Caso queria substitui-lo, basta adicionar um novo descobridor de membro na propriedade `MemberInfoDiscovery`. 
+Caso queria substitui-lo, basta adicionar um nova classe na propriedade `MemberInfoDiscovery`. 
 
 Apenas garanta que o método `CanDiscovery` tenha a seguinte implementação: 
 
@@ -389,13 +389,13 @@ Esse código garante que:
 1. `item.Factory.IsTyped`: Exista um tipo definido para a entidade raiz. É a partir dela que encontramos todos os tipos do grafo.
 2. `item.Name != null`: Exista um nome para o membro
 3. `!item.Name.StartsWith(Constants.INDEXER_START)`: O nome do membro não pode ser uma representação de posição de coleções, ou seja, não pode iniciar com `[`.
-3. `item.Parent.Type != null`: Exista um tipo para a entidade pai, é com esse tipo mais o nome do membro que obtemos o tipo do membro.
+3. `item.Parent.Type != null`: Existe um tipo para a entidade pai. É com esse tipo e o nome do membro que obtemos o tipo do membro.
 
-## Carregadores de valores <header-set anchor-name="impl-factory-entity-complex-value-loaders" />
+## Inicializadores de valores <header-set anchor-name="impl-factory-entity-complex-value-loaders" />
 
-Os carregadores de valores tem o objetivo de criar as entidades primitivas e complexas. A propriedade `ValueLoader` será usada para encontrar o melhor carregador de valor para cada entidade. Entenda o termo "valor" como sendo a entidade que será criada.
+Os "inicializadores de valores" tem o objetivo de criar as entidades primitivas e complexas. A propriedade `ValueLoader` será usada para encontrar a melhor opção para cada entidade. Entenda o termo "valor" como sendo a entidade que será criada.
 
-Os carregadores de valores devem herdar da interface `IValueLoader` e o método `CanLoad` é o responsável por determinar se o tipo da entidade pode ou não ser carregado. Quando o método `CanLoad` retornar `true` então o método `GetValue` será chamado para obter o valor que será a entidade.
+Os "inicializadores de valores" devem herdar da interface `IValueLoader` e o método `CanLoad` é o responsável por determinar se o tipo da entidade pode ou não ser inicializado. Quando o método `CanLoad` retornar `true` então o método `GetValue` será chamado para obter o valor que será a entidade.
 
 ```csharp
 public interface IValueLoader
@@ -405,24 +405,24 @@ public interface IValueLoader
 }
 ```
 
-A ordem dos carregadores é de extrema importância, isso porque o último será usado em caso de desempate, ou seja, se três retornarem `true`, o último será usado.
+A ordem dos "inicializadores" é de extrema importância, uma vez que o último da lista será usado em caso de empate, ou seja, se três retornarem `true`, o último da lista será usado.
 
-Por padrão, temos alguns carregadores de valores definidos e todos eles já estão ordenados na propriedade `ValueLoader` para que não aja erros.
+Por padrão, temos alguns "inicializadores de valores" definidos e todos eles já estão ordenados na propriedade `ValueLoader` para evitar erros.
 
-1. `PrimitiveValueLoader`: Esse carregador inicializa os tipos primitivos.
-2. `ComplexEntityValueLoader`: Esse inicializador carrega os tipos complexos. Caso o tipo tenha um construtor sem parâmetros então esse construtor será usado, do contrário a instância será criada sem chamar o construtor, ou seja, usando o método `FormatterServices.GetUninitializedObject(typeof(T))`. Esse carregador só é utilizado quando a propriedade `ComplexEntityId` da classe `Entity` estiver preenchida, ou seja, se a entidade tiver identificação é porque ela é complexa.
-3. `ArrayValueLoader`: Esse carregador é utilizado quando a entidade é um array independente da quantidade de dimensões.
-4. `ExpandoObjectValueLoader`: Esse carregador é usado para tipos anônimos ou do tipo `ExpandoObject`.
+1. `PrimitiveValueLoader`: Inicializa os tipos primitivos.
+2. `ComplexEntityValueLoader`: Inicializa os tipos complexos. Caso o tipo tenha um construtor sem parâmetros então esse construtor será usado, do contrário a instância será criada sem chamar o construtor, ou seja, usando o método `FormatterServices.GetUninitializedObject(typeof(T))`. Esse inicializador só é utilizado quando a propriedade `ComplexEntityId` estiver preenchida, ou seja, se a entidade tiver identificação é porque ela é complexa.
+3. `ArrayValueLoader`: Esse inicializador é utilizado quando a entidade é um array. Independente da quantidade de dimensões.
+4. `ExpandoObjectValueLoader`: Esse inicializador é usado para tipos anônimos ou do tipo `ExpandoObject`.
 
 **Importante:**
 
 O tipo `ExpandoObject` será usado em todos os níveis quando a classe `ComplexEntityFactory` não tiver um tipo definido.
 
-## Atribuidores de filhos <header-set anchor-name="impl-factory-entity-complex-child-assign" />
+## Atribuição de filhos <header-set anchor-name="impl-factory-entity-complex-child-assign" />
 
-Os atribuidores de filhos tem o objetivo de adicionar uma entidade filha em sua entidade pai, ou seja, atribuir um valor em um membro da instância pai, ou um item em uma lista por exemplo. A propriedade `SetChildAction` será usada para encontrar o melhor atribuidor para cada entidade.
+A atribuição tem o objetivo de adicionar uma entidade filha em sua entidade pai, ou seja, atribuir um valor em um membro da instância pai, ou um item em uma lista por exemplo. A propriedade `SetChildAction` será usada para encontrar a melhor opção para cada entidade.
 
-Os atribuidores de filhos devem herdar da interface `ISetChild` e o método `CanSet` é o responsável por determinar se o item filho pode ou não ser atribuído ao item pai. Quando o método `CanSet` retornar `true` então o método `SetChild` será chamado para fazer a atribuição.
+Uma classe que faz atribuição de filhos deve herdar da interface `ISetChild`, e o método `CanSet` é o responsável por determinar se o item filho pode ou não ser atribuído ao item pai. Quando o método `CanSet` retornar `true` então o método `SetChild` será chamado para fazer a atribuição.
 
 ```csharp
 public interface ISetChild 
@@ -432,12 +432,12 @@ public interface ISetChild
 }
 ```
 
-A ordem dos atribuidores é de extrema importância, isso porque o último será usado em caso de desempate, ou seja, se três retornarem `true`, o último será usado.
+A ordem é de extrema importância, uma vez que o último da lista será usado em caso de empate, ou seja, se três retornarem `true`, o último da lista será usado.
 
-Por padrão, temos alguns atribuidores definidos e todos eles já estão ordenados na propriedade `SetChildAction` para que não aja erros.
+Por padrão, temos algumas classes de atribuição definidas e todas elas já estão ordenados na propriedade `SetChildAction` para evitar erros.
 
-1. `MemberInfoSetChild`: Esse atribuidor será utilizado quando a entidade filha tiver um membro definido.
-2. `DictionarySetChild`: Esse atribuidor será utilizado quando a entidade pai for um dicionário e a entidade filha tiver o nome do membro iniciado pelo caractere `[`. Isso significa que a entidade filha é um item e não uma propriedade da entidade pai.
-3. `ExpandoObjectSetChild`: Esse atribuidor é utilizado quando a entidade pai for do tipo `ExpandoObject`.
-4. `ArraySetChild`: Esse atribuidor é utilizado quando a entidade pai for do tipo `Array` e a entidade filha tiver o nome do membro iniciado pelo caractere `[`.
-5. `ListSetChild`: Esse atribuidor é utilizado quando a entidade pai for do tipo `IList` e a entidade filha tiver o nome do membro iniciado pelo caractere `[`.
+1. `MemberInfoSetChild`: Essa classe será utilizada quando a entidade filha tiver um membro definido.
+2. `DictionarySetChild`: Essa classe será utilizada quando a entidade pai for um dicionário e a entidade filha tiver o nome do membro iniciado pelo caractere `[`. Isso significa que a entidade filha é um item e não uma propriedade da entidade pai.
+3. `ExpandoObjectSetChild`: Essa classe é utilizada quando a entidade pai for do tipo `ExpandoObject`.
+4. `ArraySetChild`: Essa classe é utilizada quando a entidade pai for do tipo `Array` e a entidade filha tiver o nome do membro iniciado pelo caractere `[`.
+5. `ListSetChild`: Essa classe é utilizada quando a entidade pai for do tipo `IList` e a entidade filha tiver o nome do membro iniciado pelo caractere `[`.

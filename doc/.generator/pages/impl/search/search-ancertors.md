@@ -1,4 +1,4 @@
-### Antepassados <header-set anchor-name="impl-search-ancertors" />
+### `Ancestors` <header-set anchor-name="impl-search-ancertors" />
 
 A pesquisa de antepassados é útil para encontrar o pai ou os pais de um item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -10,8 +10,8 @@ IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate2<T> filter = null,
 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no item raiz. A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até o item raiz.
-* `depthStart`: Determina a profundidade de inicio que a pesquisa deve começar
-* `depthEnd`: Determina a profundidade de fim que a pesquisa deve parar
+* `depthStart`: Determina a profundidade inicial para a pesquisa começar
+* `depthEnd`: Determina a profundidade final que a pesquisa deve parar
 
 Nesse exemplo, vamos retornar todos os antepassados do último item da expressão, lembrando que a estrutura é a mesma do exemplo `GraphComplex`:
 
@@ -55,7 +55,7 @@ public void Ancertor1()
 }
 ```
 
-_A primeira saída exibe todos os pais do item referencia._
+_A primeira saída exibe todos os pais do item referência._
 
 ```
 Property.Class1_Prop2
@@ -64,7 +64,7 @@ Class1
 
 * A ordem de retorno será sempre do antepassado mais próximo, ou seja, o primeiro item da lista de retorno será sempre o pai do item referência.
 
-_A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referencia:_
+_A segunda saída exibe apenas o antepassado cujo a profundidade é igual a `1`, ou seja, nesse caso seria o item pai do item referência:_
 
 ```
 Property.Class1_Prop2
@@ -76,19 +76,19 @@ Property.Class1_Prop2
 IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, int? depthStart = null, int? depthEnd = null)
 ```
 
-**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de início e fim.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
 ```
 
-**4)** A quarta sobrecarga filtra apenas pela profundidade de fim.
+**4)** A quarta sobrecarga filtra apenas pela profundidade final.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthEnd)
 ```
 
-**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os antepassados até que algum antepassado retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até a raiz. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os antepassados até que algum antepassado retorne negativo no parâmetro `stop`. Do contrário será retornado todos os itens até chegar na raiz. Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)

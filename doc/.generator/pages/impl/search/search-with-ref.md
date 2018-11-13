@@ -1,6 +1,6 @@
 ## Pesquisa com referência <header-set anchor-name="impl-search-with-ref" />
 
-A pesquisa com referencia será feita usando um item especifico, ou seja, primeiro você precisa localizar o item desejado e a partir dele será feito a pesquisa desejada.
+A "pesquisa com referência" será feita usando um item especifico, ou seja, primeiro você precisa localizar o item desejado e a partir dele será feito a pesquisa desejada.
 
 <anchor-get name="search-with-references">Clique aqui</anchor-get> para saber mais sobre esse tipo de pesquisa.
 
@@ -36,6 +36,6 @@ Property.Class2_Prop2
 ```
 
 * Note que a única mudança foi utilizar o item raiz como referência (`First()`) e isso fez eliminar as duplicidades sem a necessidade do uso do método `Distinct`.
-* Isso ocorreu porque apenas um item foi analisado (o item raiz). Na pesquisa sem referencias, todos os itens foram analisados fazendo com que o item `Property.Class1_Prop2` também retornasse o mesmo resultado do item raiz.
-* De preferência para esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
+* Isso ocorreu porque apenas um item foi testado (o item raiz). Na "pesquisa sem referência", todos os itens foram analisados fazendo com que o item `Property.Class1_Prop2` também retornasse o mesmo resultado do item raiz.
+* Quando possível, utilize esse tipo de pesquisa, isso tornará a pesquisa mais rápida.
 * A entidade raiz é a melhor opção para isso.

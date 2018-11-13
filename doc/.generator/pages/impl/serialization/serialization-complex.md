@@ -2,7 +2,7 @@
 
 A serialização de entidades complexas é feita pela classe `ComplexEntityExpressionSerializer`. Essa classe deve respeitar as regras que vimos nos tópicos <anchor-get name="impl-factory-entity-complex-primitive" />, <anchor-get name="impl-factory-entity-complex-complex" /> e <anchor-get name="impl-factory-entity-complex-collections" />.
 
-Essa classe herda da classe abstrata `ExpressionSerializerBase<object>` que tem como responsabilidade compor a base matemática de uma expressão de grafos seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
+Essa classe herda da classe abstrata `ExpressionSerializerBase<object>` que tem como responsabilidade compor a base matemática de uma expressão de grafo seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
 
 A classe `ComplexEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
 

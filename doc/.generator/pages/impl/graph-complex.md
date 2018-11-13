@@ -8,9 +8,9 @@ Esse tipo de grafo é presentado pela classe:
 GraphExpression.Expression<object> : List<EntityItem<object>>
 ```
 
-Essa classe herda de `List<EntityItem<object>>`, ou seja, ela também é uma coleção da classe `EntityItem<object>`. A classe `EntityItem<object>` representa um item dentro da lista, é nela que existem todas as informações da entidade no grafo.
+Essa classe herda de `List<EntityItem<object>>`, ou seja, ela também é uma coleção da classe `EntityItem<object>`. A classe `EntityItem<object>` representa um item dentro da lista, é nessa classe que existem todas as informações da entidade no grafo.
 
-No exemplo a seguir vamos converter um objeto do tipo `Class1` para o objeto `Expression<object>` e exibir todos os `EntityItem<object>` da estrutura do tipo `Class1`. Na última saída, vamos exibir como ficaria esse objeto no formato de expressão de grafos:
+No exemplo a seguir vamos converter um objeto do tipo `Class1` para o objeto `Expression<object>` e exibir todos os `EntityItem<object>` da estrutura do tipo `Class1`. Na última saída, vamos exibir como ficaria esse objeto no formato de expressão de grafo:
 
 ```csharp
 public void GraphComplex()
@@ -67,7 +67,7 @@ public class Class2
 }
 ```
 
-**1)** Na primeira saída podemos visualizar todas as informações da estrutura do tipo `Class1` e também as informações: `Index`, `Parent`, `Next`, `Previous` e `Level` que compõem uma expressão de grafos:
+**1)** Na primeira saída, podemos visualizar todas as informações do tipo `Class1` e também as informações da expressão de grafo: `Index`, `Parent`, `Next`, `Previous` e `Level`:
 
 ```
   [0] => Item: Class1, Parent: , Previous: , Next: Property.Class1_Prop1, Level: 1
@@ -77,10 +77,10 @@ public class Class2
       [4] => Item: Field.Class2_Field1, Parent: Property.Class1_Prop2, Previous: Property.Class2_Prop2, Next: , Level: 3
 ```
 
-* A propriedade `Level` é a responsável por informar em qual nível do grafo está cada item da iteração, possibilitando criar uma saída identada que representa a hierarquia do objeto `model`.
+* A propriedade `Level` é a responsável por informar em qual nível do grafo está cada item, possibilitando criar uma saída identada que representa a hierarquia do objeto `model`.
 * O método `GetEntity` é apenas um ajudante que imprime o tipo do item e o nome do membro que pode ser uma propriedade ou um campo. Poderíamos também retornar o valor do membro, mas para deixar mais limpo a saída, eliminamos essa informação.
 
-**2)** Na segunda saída podemos ver como ficou a representação desse objeto em expressão de grafos:
+**2)** Na segunda saída, veremos como ficou a expressão de grafo desse objeto:
 
 <anchor-get name="impl-serialization-complex">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos complexos.
 
@@ -90,18 +90,18 @@ public class Class2
 
 O método de extensão `AsExpression` é o responsável pela criação da expressão complexa. Esse método vai navegar por todos os nós partindo da raiz até o último descendente. Esse método contem os seguintes parâmetros:
 
-* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafos complexa. O tópico <anchor-get name="impl-factory-expression-complex" /> trás todas as informações de como estender o comportamento padrão.
-* `bool deep = false`: Quando `true`, a expressão será criada de forma profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas. Veja o tópico <anchor-get name="search-deep" /> para entender o propósito dessa funcionalidade.
+* `ComplexExpressionFactory factory = null`: Esse parâmetro deve ser utilizado quando for necessário trocar ou estender o comportamento padrão de criação de uma expressão de grafo complexa. O tópico <anchor-get name="impl-factory-expression-complex" /> trás todas as informações de como estender o comportamento padrão.
+* `bool deep = false`: Quando `true`, a expressão será profunda, ou seja, quando possível, vai repetir entidades que já foram navegadas. Veja o tópico <anchor-get name="search-deep" /> para entender o propósito dessa funcionalidade.
 
-Esse método está disponível em todos os objetos .NET, basta referenciar o namespace `using GraphExpression`.
+Esse método está disponível em todos os objetos .NET, basta apenas adicionar a referência do namespace: `using GraphExpression`.
 
 **Conclusão:**
 
-Nesse tópico vimos como é simples navegar em objetos complexos abrindo caminhos para outras funcionalidades como pesquisas e serializações. 
+Nesse tópico vimos como é simples navegar em objetos complexos, abrindo caminhos para pesquisas e serializações.
 
 Vejam também o tópico <anchor-get name="impl-factory-entity-complex" />, isso mostrará uma outra forma de criar objetos complexos.
 
-## Elementos padrão de uma expressão de grafos para tipos complexos
+## Elementos padrão de uma expressão de grafo para tipos complexos
 
 Os elementos de uma expressão complexa (`Expression<object>`) podem variar entre os seguintes tipos:
 
@@ -114,4 +114,4 @@ Os elementos de uma expressão complexa (`Expression<object>`) podem variar entr
 
 Todos esses tipos herdam de `ComplexEntity` que por sua vez herda de `EntityItem<object>`, portanto, além de suas propriedades especificas ainda terão as informações do item na expressão.
 
-Ainda é possível estender a criação de uma expressões complexas, para sabe mais veja o tópico <anchor-get name="impl-factory-expression-complex" />
+Ainda é possível estender a criação de uma expressões complexas. Para sabe mais veja o tópico <anchor-get name="impl-factory-expression-complex" />

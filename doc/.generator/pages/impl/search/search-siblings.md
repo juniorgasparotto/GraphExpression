@@ -1,4 +1,4 @@
-### Irmãos <header-set anchor-name="impl-search-siblings" />
+### `Siblings` <header-set anchor-name="impl-search-siblings" />
 
 Essa pesquisa encontra os irmãos de um determinado item. Temos algumas sobrecargas que serão explicadas a seguir:
 
@@ -11,13 +11,13 @@ IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, 
 * `filter`: Não retorna itens quando o filtro retornar negativo, mas continua a busca até chegar no último irmão ou no primeiro (depende do parâmetro `direction`). A pesquisa utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 * `stop`: Determina quando a navegação deve parar, do contrário a navegação deverá ir até chegar no último irmão ou no primeiro (depende do parâmetro `direction`).
 * `direction`: Esse parâmetro determina em qual direção a navegação deverá ir:
-    * `Start`: Determina que a navegação deve iniciar no primeiro irmão à esquerda do item referencia e ir até o último irmão à direita.
-    * `Next`: Determina que a navegação deve iniciar no próximo item e seguir até o último irmão à direita.
-    * `Previous`: Determina que a navegação deve iniciar no item anterior e seguir até o primeiro irmão à esquerda.
-* `positionStart`: Determina a posição de inicio que a pesquisa deve começar. 
-    * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão à esquerda do item referencia.
-    * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão à direita do item referencia.
-    * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão à esquerda do item referencia.
+    * `Start`: Determina que a navegação deve começar no primeiro irmão posicionado à esquerda do item de referência e ir até o último irmão à direita.
+    * `Next`: Determina que a navegação deve começar no próximo irmão posicionado à direita do item de referência e ir até o último irmão à direita.
+    * `Previous`: Determina que a navegação deve começar no próximo irmão posicionado à esquerda do item de referência e ir até o primeiro irmão à esquerda.
+* `positionStart`: Determina a posição de início que a pesquisa deve começar. 
+    * Quando a direção for igual a `Start`, a posição `1` será do primeiro irmão à esquerda do item referência.
+    * Quando a direção for igual a `Next`, a posição `1` será do próximo irmão à direita do item referência.
+    * Quando a direção for igual a `Previous`, a posição `1` será do próximo irmão à esquerda do item referência.
 * `positionEnd`: Determina a posição de fim que a pesquisa deve parar.
 
 Nesse exemplo vamos retornar os irmãos do item cujo o valor é igual a `C` em todas as direções.
@@ -89,19 +89,19 @@ A: A
 IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
 ```
 
-**3)** A terceira sobrecarga filtra apenas pela profundidade de inicio e fim na direção especificada.
+**3)** A terceira sobrecarga filtra apenas pela profundidade de início e fim na direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-**4)** A quarta sobrecarga filtra apenas pela profundidade de fim na direção especificada.
+**4)** A quarta sobrecarga filtra apenas pela profundidade final da direção especificada.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os irmãos até que algum irmão retorne negativo no parâmetro `stop`. Do contrário será retornado todos os irmãos até chegar no último ou no primeiro (depende do parâmetro `direction`). Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
+**5)** Esse método tem a mesma utilidade da sobrecarga padrão, contudo ele é um simplificador para recuperar todos os irmãos até que algum irmão retorne negativo no parâmetro "stop". Do contrário será retornado todos os irmãos até chegar no último ou no primeiro (depende do parâmetro `direction`). Ele utiliza o delegate `EntityItemFilterDelegate2`, ou seja, temos a informação da profundidade do item para usar na pesquisa.
 
 ```csharp
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Start)

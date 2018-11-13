@@ -29,7 +29,7 @@ A classe `Expression<T>` trás a propriedade `Graph` que isola as informações 
 * `IReadOnlyList<Path<T>> Paths`: Contém a lista de todos os caminhos finais do grafo
     * `class Path<T>`: Representa um caminho que parte da raiz até chegar no vértice
         * `IEnumerable<EntityItem<T>> Items`: Lista todos os itens do caminho partindo do item raiz até o item da instância.
-        *  `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e útiliza-se do seguinte padrão: 
+        *  `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e utiliza-se do seguinte padrão: 
             * Formato: [id-root].[id-parent].[id-instance]
             * Exemplo: [0].[1].[2]
         * `PathType PathType`: Determina o tipo do caminho
