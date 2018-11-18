@@ -4,7 +4,7 @@ A serialização de entidades complexas é feita pela classe `ComplexEntityExpre
 
 Essa classe herda da classe abstrata `ExpressionSerializerBase<object>` que tem como responsabilidade compor a base matemática de uma expressão de grafo seja ela circular ou complexa. Essa composição é feita pelo método `Serialize()`. Ele é o responsável por criar os parenteses, adicionar os caracteres de soma e etc.
 
-A classe `ComplexEntityExpressionSerializer` ao implementar essa classe base deve obrigatoriamente sobrescrever o método `SerializeItem` que será o responsável por serializar cada item da expressão.
+A classe `ComplexEntityExpressionSerializer` sobrescreve o método `SerializeItem` que será o responsável por serializar cada item da expressão.
 
 O construtor obriga que seja passado uma instância de uma expressão.
 
@@ -47,7 +47,7 @@ Algumas propriedades de customizações podem ser utilizadas antes da serializa�
 * `bool EncloseParenthesisInRoot`: Tem a mesma função das expressões circulares.
 * `bool ForceQuoteEvenWhenValidIdentified`:  Tem a mesma função das expressões circulares.
 * `IValueFormatter ValueFormatter`: Tem a mesma função das expressões circulares.
-* `GetEntityIdCallback`: Propriedade que retorna a identificação de uma entidade, por padrão, usamos o método `GetHashCode()` do próprio `C#`.
+* `GetEntityIdCallback`: Propriedade que retorna a identificação de uma entidade, por padrão, usamos o método `GetHashCode()`.
 * `ItemsSerialize`: Propriedade que contém uma lista da interface `IEntitySerialize`. Essa propriedade é a principal alternativa para customizar a serialização e veremos isso nos próximos tópicos.
 * `ShowType`: Determina como será a exibição do tipo em cada item da expressão
     * `None`: Não exibe o tipo para nenhum item.
@@ -86,7 +86,7 @@ A saída abaixo mostra como ficou nossa customização, note que o valor da prop
 ("<>f__AnonymousType0`5.-438126044" + "String.A: A" + "String.B: B" + "String.C: C" + "String.D: D" + "String.E: BIG")
 ```
 
-Destacamos que quando uma expressão é criada usando o método `AsExpression()`, teremos na propriedade `DefaultSerialize` uma instância da classe `ComplexEntityExpressionSerializer<T>` pré-configurada.
+Por fim, destacamos que quando uma expressão é criada usando o método `AsExpression()`, teremos na propriedade `DefaultSerialize` uma instância pré-configurada da classe: `ComplexEntityExpressionSerializer<T>`.
 
 ### Customizando a serialização dos itens <header-set anchor-name="impl-serialization-complex-itens-serialize" />
 
@@ -105,18 +105,22 @@ public interface IEntitySerialize
 }
 ```
 
-A ordem dos itens de serialização é de extrema importância, isso porque o último serializador será usado em caso de desempate, ou seja, se três serializadores retornarem `true`, o último será usado.
+A ordem dos itens de serialização é de extrema importância, uma vez que o último da lista será usado em caso de empate, ou seja, se três retornarem `true`, o último da lista será usado.
 
-Por padrão, temos alguns serializadores de itens definidos e todos eles já estão ordenados na propriedade `ItemsSerialize` para que não aja erros de serialização.
+Por padrão, temos alguns serializadores definidos e todos eles já estão ordenados na propriedade `ItemsSerialize` para evitar erros.
 
 1. `ObjectSerialize`: É a classe de serialização padrão, caso nenhum outro seja encontrado, este será usado. Ele retorna o tipo da entidade e o valor `null` para a propriedade `ContainerName`.
-1. `PropertySerialize`: Esse classe é usada para itens que derivam de propriedades. Será usado o tipo da propriedade e o seu nome como retorno.
-1. `FieldSerialize`: Esse classe é usada para itens que derivam de campos. Será usado o tipo do campo e o seu nome como retorno.
-1. `ArrayItemSerialize`: Esse classe é usada para itens que derivam de arrays. Ela retorna na propriedade `ContainerName` a posição do item no array no formato: `[{position1},{position2}]`
+1. `PropertySerialize`: Esse classe é usada para itens que derivam de propriedades. O tipo da propriedade e o seu nome serão usados.
+1. `FieldSerialize`: Esse classe é usada para itens que derivam de campos. O tipo do campo e o seu nome serão usados.
+1. `ArrayItemSerialize`: Esse classe é usada para itens que derivam de `array`. Ela retorna na propriedade `ContainerName` a posição do item no formato: `[{position1},{position2}]`
 1. `DynamicItemSerialize`: Essa classe é usada para itens que derivam de classes dinâmicas.
-1. `CollectionItemSerialize`: Essa classe é usada para itens que derivam de coleções. Ela retorna na propriedade `ContainerName` a posição do item na coleção no formato: `[{position1},{position2}]`
+1. `CollectionItemSerialize`: Essa classe é usada para itens que derivam de coleções. Ela retorna na propriedade `ContainerName` a posição no formato: `[{position1},{position2}]`
 
-No exemplo a seguir veremos a criação de um novo leitor de membro chamado `MethodReader` que será responsável por ler o método `HelloWorld` e criar um novo tipo de entidade na expressão chamado `MethodEntity`. Com base nesse novo tipo de entidade vamos criar um serializador chamado `MethodSerialize` que terá a função de serializar os itens dos tipos `MethodEntity` para o formato: `MethodName(parameters)`:
+No exemplo a seguir veremos a criação de um novo leitor de membro chamado `MethodReader` que será responsável por ler o método `HelloWorld` e criar um novo tipo de entidade na expressão chamado `MethodEntity`. Com base nesse novo tipo de entidade vamos criar um serializador chamado `MethodSerialize` que terá a função de serializar o novo tipo para o seguinte formato: 
+
+```
+MethodName(parameters)
+```
 
 ```csharp
 public void SerializationComplex3()

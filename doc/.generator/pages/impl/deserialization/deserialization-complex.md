@@ -1,6 +1,6 @@
 ## Desserialização complexa <header-set anchor-name="impl-deserialization-complex" />
 
-A desserialização de entidades complexas é feita pela classe `ComplexEntityExpressionDeserializer`. O método `Deserialize` é o responsável pela desserialização. Existem algumas variações desse método e cada uma tem sua utilidade:
+A desserialização de entidades complexas é feita pela classe `ComplexEntityExpressionDeserializer`. O método `Deserialize` é o responsável pela desserialização. Existem algumas variações desse método:
 
 **1)** O primeiro método necessita apenas da expressão em forma de texto. Com base nessa expressão e no tipo inferido no método `Deserialize` é possível fazer a desserialização. Existem duas variantes desse método, uma síncrona e outra assíncrona.
 
@@ -23,14 +23,14 @@ public void DeserializationComplex1()
 }
 ```
 
-**2)** O segundo método tem o mesmo objetivo do primeiro, a única diferença é que o tipo não será inferido no método e sim no parâmetro `type`:
+**2)** O segundo método tem o mesmo objetivo do primeiro método, a única diferença é que o tipo não será inferido no método e sim no parâmetro `type`:
 
 ```csharp
 public object Deserialize(string expression, Type type = null);
 public async Task<object> DeserializeAsync(string expression, Type type = null);
 ```
 
-**3)** O terceiro método recebe o parâmetro `factory`, esse parâmetro deve ser usado se for necessário alguma customização na criação das entidades complexas. Em resumo, esse processo é exatamente igual ao tópico <anchor-get name="impl-factory-entity-complex" />. Internamente, o compilador transformará cada item da expressão na classe `Entity` e depois seguirá os mesmos passos que já vimos nesse tópico:
+**3)** O terceiro método recebe o parâmetro `factory`, esse parâmetro deve ser usado se for necessário alguma customização na criação das entidades complexas. Em resumo, esse processo é exatamente igual ao processo do tópico <anchor-get name="impl-factory-entity-complex" />. Internamente, o compilador transformará cada item da expressão na classe `Entity` e depois seguirá os mesmos passos que já vimos nesse tópico:
 
 ```csharp
 public T Deserialize<T>(string expression, ComplexEntityFactory factory);

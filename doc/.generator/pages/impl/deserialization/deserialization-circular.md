@@ -1,12 +1,12 @@
 ## Desserialização circular <header-set anchor-name="impl-deserialization-circular" />
 
-A desserialização de entidades circulares é feita pela classe `CircularEntityExpressionDeserializer<T>`. O método `Deserialize` é o responsável pela desserialização. Existem algumas variações desse método e cada uma tem sua utilidade:
+A desserialização de entidades circulares é feita pela classe `CircularEntityExpressionDeserializer<T>`. O método `Deserialize` é o responsável pela desserialização. Existem algumas variações desse método:
 
-O tipo inferido `T` deve obrigatoriamente conter uma sobrecarga do operador `+`, pois é nesse operador que ficará a sua lógica de soma ou subtração.
+O tipo inferido `T` deve obrigatoriamente conter uma sobrecarga do operador `+`, pois é nesse operador que a lógica da soma ou subtração estará contida.
 
 **1)**  O primeiro método necessita apenas da expressão em forma de texto. Com base nessa expressão e no tipo inferido na classe `CircularEntityExpressionDeserializer` é possível fazer a desserialização. Existem duas variantes desse método, uma síncrona e outra assíncrona.
 
-O tipo inferido deve ter obrigatoriamente um parâmetro em seu construtor do tipo `string`. Esse parâmetro será o nome da entidade.
+O tipo inferido deve ter (obrigatoriamente) um parâmetro em seu construtor do tipo: `string`. Esse parâmetro será o nome da entidade.
 
 ```csharp
 public T Deserialize(string expression);
@@ -57,14 +57,14 @@ C
 D
 ```
 
-**2)**  A segunda sobrecarga desse método necessita da expressão e de um método que será a fábrica da entidade circular, ou seja, com essa sobrecarga a sua classe circular não precisa necessariamente ter um construtor com um parâmetro do tipo `string`, pois quem fará a criação da classe será esse método. Existem duas variantes desse método, uma síncrona e outra assíncrona.
+**2)**  A segunda sobrecarga necessita da expressão e de um método que será a "fábrica da entidade circular", ou seja, com essa sobrecarga a sua classe circular não precisa ser obrigada a ter um construtor com um parâmetro, pois a criação da classe será feita nesse método. Existem duas variantes desse método, uma síncrona e outra assíncrona.
 
 ```csharp
 public T Deserialize(string expression, Func<string, T> createEntityCallback);
 public async Task<T> DeserializeAsync(string expression, Func<string, T> createEntityCallback);
 ```
 
-**3)**  A terceira sobrecarga desse método necessita da expressão e de uma instância da classe `CircularEntityFactory<T>`. Essa classe pode ser utilizada para potencializar uma expressão em forma de `string`. Isso quer dizer que você pode criar funções nessa classe e utiliza-la na expressão em forma de texto. Existem duas variantes desse método, uma síncrona e outra assíncrona.
+**3)**  A terceira sobrecarga desse método necessita da expressão e de uma instância da classe `CircularEntityFactory<T>`. Essa classe possibilita que funções customizadas sejam utilizadas na expressão em forma de texto. Existem duas variantes desse método, uma síncrona e outra assíncrona.
 
 ```csharp
 public T Deserialize(string expression, CircularEntityFactory<T> factory);

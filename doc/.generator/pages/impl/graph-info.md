@@ -1,15 +1,15 @@
 # Informações do grafo de uma entidade <header-set anchor-name="impl-graph-info" />
 
-As classes `Expression<T>` e `EntityItem<T>` trazem algumas informações da teoria de grafos que ajudam a compreender um pouco a relação entre as entidades.
+As classes: `Expression<T>` e `EntityItem<T>` trazem algumas informações da teoria de grafos que ajudam a compreender um pouco a relação entre as entidades.
 
-A classe `Expression<T>` trás a propriedade `Graph` que isola as informações gerais do grafo, ela contém as seguintes propriedades e definições:
+**1)** `Expression<T>`: Contém a propriedade `Graph` que isola as informações gerais do grafo, ela contém as seguintes propriedades e definições:
 
 * `IReadOnlyList<Edge<T>> Edges`: Essa propriedade contém todas as arestas do grafo.
     * `class Edge<T>`: Essa classe representa uma conexão entre duas entidades (A e B), nela temos algumas propriedades e um método que ajudam a extrair algumas informações da ligação.
-        * `decimal Weight`: Determina o peso da ligação, caso necessário, faça o preenchimento dela após a criação da expressão.
-        * `EntityItem<T> Source`: Determina o item pai da ligação
-        * `EntityItem<T> Target`: Determina o item filho da ligação
-        * `IsLoop`: Determina se o `Source` é igual ao `Target`, se sim, essa ligação está em looping.
+        * `decimal Weight`: Determina o peso da aresta, caso necessário, faça o preenchimento após a criação da expressão.
+        * `EntityItem<T> Source`: Determina o item pai da aresta
+        * `EntityItem<T> Target`: Determina o item filho da aresta
+        * `IsLoop`: Determina se o `Source` é igual ao `Target`, se sim, essa aresta está em looping.
         * `bool IsAntiparallel(Edge<T> compare)`: Determina se duas arestas são antiparalelas, ou seja, se uma aresta comparada com a outra tem as mesmas entidades, porém, em ordem invertida:
             * `A -> B`
             * `B -> A`
@@ -27,26 +27,26 @@ A classe `Expression<T>` trás a propriedade `Graph` que isola as informações 
         * `bool IsSource`: Verifica se o vértice é a raiz do grafo.
         * `bool IsIsolated`: Verifica se o vértice não contém pai e nem filhos, ou seja, é um item raiz sem filhos.
 * `IReadOnlyList<Path<T>> Paths`: Contém a lista de todos os caminhos finais do grafo
-    * `class Path<T>`: Representa um caminho que parte da raiz até chegar no vértice
-        * `IEnumerable<EntityItem<T>> Items`: Lista todos os itens do caminho partindo do item raiz até o item da instância.
+    * `class Path<T>`: Representa um caminho que começa na raiz e vai até o vértice.
+        * `IEnumerable<EntityItem<T>> Items`: Lista todos os itens do caminho que começa na raiz e vai até o vértice.
         *  `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e utiliza-se do seguinte padrão: 
             * Formato: [id-root].[id-parent].[id-instance]
             * Exemplo: [0].[1].[2]
         * `PathType PathType`: Determina o tipo do caminho
-            * `Circuit`: Ocorre quando o vértice raiz é igual vértice da instância
-            * `Circle`: Ocorre quando o vértice pai é igual ao vértice da instância
+            * `Circuit`: Ocorre quando o vértice raiz é igual ao vértice atual.
+            * `Circle`: Ocorre quando o vértice pai é igual ao vértice atual.
             * `Simple`: É tipo padrão, ou seja, quando não é circuito e nem circular
-        * `bool ContainsPath(Path<T> pathTest)`: Verifica se um caminho existe dentro do caminho da instância. Basicamente, esse método faz uma comparação entre strings usado a propriedade `Identity`, ou seja, se um caminho conter a identificação de outro caminho é porque esse caminho está contido no outro.
-            * Caminho 1: [0].[1].[2].[3]
-            * Caminho 2: [2].[3]
-            * O caminho 2 está contido no caminho 1 usando apenas uma verificação de strings: 
+        * `bool ContainsPath(Path<T> pathTest)`: Verifica se um caminho existe dentro do caminho da instância. Basicamente, esse método faz uma comparação na propriedade `Identity` dos dois caminhos, ou seja, se um caminho conter a identificação do outro caminho é porque esse caminho está contido no outro. Exemplo:
+            * `Path 1`: [0].[1].[2].[3]
+            * `Path 2`: [2].[3]
+            * Usando a comparação de texto, vemos que o segundo caminho está contido no primeiro caminho: 
                 * `"[0].[1].[2].[3]".Constains("[2].[3]") = true`
 
-A classe `EntityItem<T>` trás as seguintes propriedades:
+**2)** `EntityItem<T>`: Contém as seguintes propriedades:
 
-* `Vertex<T> Vertex`: Representa o vértice do item
-* `Edge<T> Edge`: Representa a aresta do item
-* `Path<T> Path`: Representa o caminho do item
+* `Vertex<T> Vertex`: Representa o vértice do item da expressão.
+* `Edge<T> Edge`: Representa a aresta do item da expressão.
+* `Path<T> Path`: Representa o caminho do item do item da expressão.
 
 No exemplo abaixo vamos exibir as principais informações do grafo. Não vamos demostrar todas as informações, pois muitas são auto explicativas:
 
@@ -81,14 +81,14 @@ A, C
 C, D
 ```
 
-A segunda saída vemos todos os caminhos finais do grafo, ou seja, da raiz até as extremidades:
+Na segunda saída, vemos todos os caminhos finais do grafo, ou seja, da raiz até as extremidades:
 
 ```
 [A].[B]
 [A].[C].[D]
 ```
 
-A terceira saída vemos todos os caminhos de todos os itens:
+Na terceira saída, vemos todos os caminhos de todos os itens:
 
 ```
 A => [A]
@@ -137,7 +137,7 @@ public void GraphRemoveCoexistents()
 }
 ```
 
-A primeira saída mostra como ficou os caminhos do grafo `A`:
+Na primeira saída, vemos os caminhos do grafo `A`:
 
 ```
 -> A: HashCode: 32854180
@@ -145,7 +145,7 @@ A primeira saída mostra como ficou os caminhos do grafo `A`:
 [A].[C].[D]
 ```
 
-A segunda saída mostra como ficou os caminhos do grafo `B`:
+Na segunda saída, vemos os caminhos do grafo `B`:
 
 ```
 -> B: HashCode: 27252167
@@ -153,7 +153,7 @@ A segunda saída mostra como ficou os caminhos do grafo `B`:
 
 ```
 
-A terceira saída mostra quais grafos sobraram após a remoção da coexistência. Como o grafo `A` continha o grafo `C`, então apenas ele sobrou: 
+A terceira saída mostra quais grafos foram mantidos após a remoção da coexistência. Como o grafo `A` continha o grafo `C`, então apenas o grafo `A` foi mantido.
 
 ```
 -> HashCode not duplicates: 32854180
@@ -180,6 +180,6 @@ Planejo no futuro remover essa propriedade estática e troca-la por uma instânc
 
 ## Desativando as informações de grafos
 
-A propriedade `GraphExpression.Expression<T>.EnableGraphInfo` determina se a coleta das informações de grafos estão ou não ligadas. Por padrão, ela está ligada, mas em caso de problemas de performance é possível desativa-la de forma global. 
+A propriedade `GraphExpression.Expression<T>.EnableGraphInfo` determina se a coleta das informações de grafos está ativada. Por padrão, ela está ligada, mas em caso de problemas de performance é possível desativa-la.
 
 Lembrando que ao fazer isso, todas as informações dos grafos estarão nulas.
