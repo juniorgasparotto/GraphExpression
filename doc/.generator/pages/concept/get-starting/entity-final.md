@@ -8,7 +8,7 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 (A + B + C + (D + E))
 ```
 
-* As entidades `B`, `C` e `E` são entidades finais.
+* As entidades "B", "C" e "E" são entidades finais.
 
 **Entidade final com filhos:**
 
@@ -16,5 +16,5 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 (A + (B + C) + (D + B))
 ```
 
-* A entidade `C` é final e não contém filhos
-* A última ocorrência da entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
+* A entidade "C" é final e não contém filhos
+* A última ocorrência da entidade "B", do grupo de expressão da entidade "D", também é final, mas ela contém filhos.

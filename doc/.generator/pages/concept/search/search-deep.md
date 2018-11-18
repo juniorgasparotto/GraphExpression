@@ -35,8 +35,8 @@ A (Level Index: 0)
     ----Z (Level Index: 2)
 ```
 
-* Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão redeclarado dentro da entidade `G`.
-* Após a desnormalização um novo caminho foi criado para a entidade `Y`:
+* Foi aplicada a desnormalização e a entidade "C" teve seu grupo de expressão redeclarado dentro da entidade "G".
+* Após a desnormalização um novo caminho foi criado para a entidade "Y":
     * Antes:
         * _Ocorrência 1_: A.C.Y
         * _Ocorrência 2_: A.D.F.G.Y
@@ -66,4 +66,4 @@ Index   | Entity | Level | Level Index
 #12     | Z      | 3     | 2 
 ```
 
-* Foi criado uma nova linha com relação a versão original: A linha `#10` contém o novo caminho.
+* Foi criado uma nova linha com relação a versão original: A linha "#10" contém o novo caminho.

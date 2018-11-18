@@ -6,17 +6,17 @@ Toda entidade contém um caminho que deve ser percorrido até chegar em sua posi
 A.B.C.D
 ```
 
-Essa notação indica a localização da entidade `D` dentro da expressão abaixo:
+Essa notação indica a localização da entidade "D" dentro da expressão abaixo:
 
 ```
 A + (B + (C + D))
 ```
 
-* A entidade `D` é filha da entidade `C`
-* A entidade `C` é filha da entidade `B`
-* A entidade `B` é filha da entidade `A`
+* A entidade "D" é filha da entidade "C"
+* A entidade "C" é filha da entidade "B"
+* A entidade "B" é filha da entidade "A"
 
-A notação utiliza o caractere `.` entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha.
+A notação utiliza o caractere "." entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha.
 
 **Outras exemplos:**
 
@@ -48,5 +48,5 @@ Note que o grafo contém dois caminhos cíclicos:
 A + A + B + (C + A)
 ```
 
-* Uma direta (`A + A`): onde a entidade `A` é pai dela mesma.
-* Uma indireta (`C + A`): Onde `C` é pai de uma entidade ascendente, no caso a entidade `A`.
+* Uma direta (`A + A`): onde a entidade "A" é pai dela mesma.
+* Uma indireta (`C + A`): Onde "C" é pai de uma entidade ascendente, no caso a entidade "A".

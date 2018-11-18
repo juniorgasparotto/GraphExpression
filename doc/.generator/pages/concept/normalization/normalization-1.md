@@ -9,14 +9,14 @@ A + (B + Y) + (D + (B + C))
      ^              ^
 ```
 
-Note que na expressão acima, a entidade `B` tem dois grupos de expressão em lugares distintos. Na prática, isso não tem nenhum problema, mas será visualmente melhor se aplicarmos a normalização eliminando um dos grupos da entidade `B`, veja:
+Note que na expressão acima, a entidade "B" tem dois grupos de expressão em lugares distintos. Na prática, isso não tem nenhum problema, mas será visualmente melhor se aplicarmos a normalização eliminando um dos grupos da entidade "B", veja:
 
 
 ```
 A + (B + Y + C) + (D + B)
 ```
 
-É preciso dizer que nenhuma alteração na expressão deve modificar o seu grafo final. É perceptível que no exemplo isso não ocorreu, as entidades apenas foram reoganizadas.
+É preciso dizer que nenhuma alteração na expressão deve modificar o seu grafo final. É perceptível que no exemplo isso não ocorreu, as entidades apenas foram reorganizadas.
 
 Já no próximo exemplo, veremos uma expressão que pode gerar confusão no momento da normalização:
 
@@ -25,7 +25,7 @@ A + (B + Y) + (D + (B + Y))
      ^              ^
 ```
 
-Nesse exemplo, é natural pensar que um dos grupos da entidade `B` pode ser eliminado por serem iguais, mas esse pensamento está errado. Se eliminarmos um dos grupos, estaremos modificando o grafo final e esse não é o objetivo. 
+Nesse exemplo, é natural pensar que um dos grupos da entidade "B" pode ser eliminado por serem iguais, mas esse pensamento está errado. Se eliminarmos um dos grupos, estaremos modificando o grafo final e esse não é o objetivo. 
 
 **Errado:**
 

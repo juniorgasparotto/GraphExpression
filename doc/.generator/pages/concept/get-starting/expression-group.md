@@ -10,7 +10,7 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 (A + B + C)
 ```
 
-* A entidade `A` é a entidade pai de seu grupo de expressão e a entidade `B` e `C` são suas filhas.
+* A entidade "A" é a entidade pai de seu grupo de expressão e a entidade "B" e "C" são suas filhas.
 
 **Exemplo 2:**
 
@@ -18,8 +18,8 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 (A + B + (C + D))
 ```
 
-* A entidade `A` é a entidade pai de seu grupo de expressão e a entidade `B` e `C` são suas filhas.
-* A entidade `C` é a entidade pai de seu grupo de expressão e a entidade `D` é sua filha.
+* A entidade "A" é a entidade pai de seu grupo de expressão e a entidade "B" e "C" são suas filhas.
+* A entidade "C" é a entidade pai de seu grupo de expressão e a entidade "D" é sua filha.
 
 ### Grupo de expressão raiz <header-set anchor-name="expression-group-root" />
 
@@ -43,7 +43,7 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 `(A + B + (C + D))`
 
-Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
+Nesse exemplo a entidade "A" será pai das entidades "B" e "C" e a entidade "C" será pai da entidade "D".
 
 ### Declarações de entidades <header-set anchor-name="entity-declaration" />
 
@@ -53,13 +53,13 @@ Caso essa entidade contenha filhos devemos declarar todo o seu grupo de express�
 
 Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira mais rápida. 
 
-Por exemplo, para descobrir se a entidade `B` contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
+Por exemplo, para descobrir se a entidade "B" contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
 
 ```
 A + B + (C + (B + D)) + B
 ```
 
-Agora, se soubermos que os grupos de expressões foram escritos sempre nas primeiras ocorrências, então podemos verificar apenas a primeira ocorrência da entidade `B` para saber se ela contém ou não filhos:
+Agora, se soubermos que os grupos de expressões foram escritos sempre nas primeiras ocorrências, então podemos verificar apenas a primeira ocorrência da entidade "B" para saber se ela contém ou não filhos:
 
 ```
 A + (B + D) + (C + B) + B
@@ -75,8 +75,8 @@ Por exemplo:
 A + B + (C + D + E) + (I + C)
 ```
 
-* A entidade `C` tem os filhos `D` e `E`
-* A entidade `I` tem como filha a entidade `C`, porém não é necessário redeclarar as entidades filhas de `C`.
+* A entidade "C" tem os filhos "D" e "E"
+* A entidade "I" tem como filha a entidade "C", porém não é necessário redeclarar as entidades filhas de "C".
 
 **Errado:**
 
@@ -92,5 +92,5 @@ Por exemplo:
 
 `(A + B + (C + D))`
 
-* Nesse exemplo, temos duas entidades pai: `A` e `C`.
-* O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
+* Nesse exemplo, temos duas entidades pai: "A" e "C".
+* O elemento "+" é utilizado como simbolo de atribuição de uma entidade filha em seu pai.

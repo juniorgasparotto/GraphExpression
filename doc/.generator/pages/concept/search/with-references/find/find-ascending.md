@@ -29,27 +29,27 @@ Parents of Y:   J, A
 
 **Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
 
-Por exemplo, se quisermos pegar os ascendentes da entidade `C` considerando todas as suas ocorrências:
+Por exemplo, se quisermos pegar os ascendentes da entidade "C" considerando todas as suas ocorrências:
 
 **Ocorrência 1:**
 
-* A entidade `C` da linha `#02` tem o nível geral igual a `2`.
-* `#01`: A entidade `B` tem o nível geral igual a `2`, não é ascendente.
-* `#00`: **A entidade `A` tem o nível geral igual a `1`, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível `1` e não mais o nível `2`**.
+* A entidade "C" da linha "#02" tem o nível geral igual a "2".
+* `#01`: A entidade "B" tem o nível geral igual a "2", não é ascendente.
+* `#00`: **A entidade "A" tem o nível geral igual a "1", é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível "1" e não mais o nível "2"**.
 
 Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
 
 **Ocorrência 2:**
 
-* A entidade `C` da linha `#09` tem o nível geral igual a `5`.
-* `#08`: A entidade `B` tem o nível geral igual a `5`, não é ascendente.
-* `#07`: **A entidade `G` tem o nível geral igual a `4`, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível `4` e não mais o nível `5`**.
-* `#06`: **A entidade `F` tem o nível geral igual a `3`, é menor que o nível geral da entidade `G`, portanto é uma ascendente. Agora o nível a ser considerado será o nível `3` e não mais o nível `4`**.
-* `#05`: A entidade `E` tem o nível geral igual a `3`, não é uma ascendente.
-* `#04`: **A entidade `D` tem o nível geral igual a `2`, é uma ascendente. Agora o nível a ser considerado será o nível `2` e não mais o nível `3`**.
-* `#03`: A entidade `Y` tem o nível geral igual a `3`, não é uma ascendente.
-* `#02`: A entidade `C` tem o nível geral igual a `2`, não é uma ascendente.
-* `#01`: A entidade `B` tem o nível geral igual a `2`, não é uma ascendente.
-* `#00`: **A entidade `A` tem o nível geral igual a `1`, é uma ascendente. Agora o nível a ser considerado será o nível `1` e não mais o nível `2`**.
+* A entidade "C" da linha "#09" tem o nível geral igual a "5".
+* `#08`: A entidade "B" tem o nível geral igual a "5", não é ascendente.
+* `#07`: **A entidade "G" tem o nível geral igual a "4", é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível "4" e não mais o nível "5"**.
+* `#06`: **A entidade "F" tem o nível geral igual a "3", é menor que o nível geral da entidade "G", portanto é uma ascendente. Agora o nível a ser considerado será o nível "3" e não mais o nível "4"**.
+* `#05`: A entidade "E" tem o nível geral igual a "3", não é uma ascendente.
+* `#04`: **A entidade "D" tem o nível geral igual a "2", é uma ascendente. Agora o nível a ser considerado será o nível "2" e não mais o nível "3"**.
+* `#03`: A entidade "Y" tem o nível geral igual a "3", não é uma ascendente.
+* `#02`: A entidade "C" tem o nível geral igual a "2", não é uma ascendente.
+* `#01`: A entidade "B" tem o nível geral igual a "2", não é uma ascendente.
+* `#00`: **A entidade "A" tem o nível geral igual a "1", é uma ascendente. Agora o nível a ser considerado será o nível "1" e não mais o nível "2"**.
 
-Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`.
+Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G, F, D, A`

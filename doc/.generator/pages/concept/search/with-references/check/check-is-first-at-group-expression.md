@@ -11,7 +11,7 @@ Level:  1   2     2   3      2   3
 Index:  0   1     2   3      4   5
 ```
 
-No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á `2` e a sua próxima entidade `Y` tem o nível geral igual á `3`, sendo assim, ela é a primeira dentro de seu parênteses.
+No exemplo acima, a entidade "C", do índice "#02", tem o nível geral igual á "2" e a sua próxima entidade "Y" tem o nível geral igual á "3", sendo assim, ela é a primeira dentro de seu parênteses.
 
 **Observação:**
 

@@ -1,10 +1,10 @@
 ### Encontrando a entidade raiz da expressão <header-set anchor-name="search-find-root" />
 
-Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual `0`.
+Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual "0".
 
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
-Com base na expressão a seguir, podemos afirmar que a entidade `A` é a **entidade raiz** da expressão.
+Com base na expressão a seguir, podemos afirmar que a entidade "A" é a **entidade raiz** da expressão.
 
 ```
         A + B + C

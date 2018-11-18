@@ -127,7 +127,7 @@ class Program
 }
 ```
 
-O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade `A`, teremos a seguinte matriz de informação:
+O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade "A", teremos a seguinte matriz de informação:
 
 ```
 Index    | Entity  | Level    | Level Index     | LevelAtExpression 

@@ -14,6 +14,6 @@ A + F + G + (B + E + (C + D))
     ^   ^        ^    
 ```
 
-* Note que as entidades `F` e `G` foram para o início do seu grupo de expressão.
-* A entidade `E` também foi reorganizada para o início do seu grupo de expressão.
+* Note que as entidades "F" e "G" foram para o início do seu grupo de expressão.
+* A entidade "E" também foi reorganizada para o início do seu grupo de expressão.
 

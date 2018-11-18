@@ -10,7 +10,7 @@ Considere a seguinte expressão original:
 A + (B + D) + (E + B)
 ```
 
-* Note que a entidade `B` tem dois pais: `A` e `E`
+* Note que a entidade "B" tem dois pais: "A" e "E"
 * Após a desnormalização teremos a seguinte expressão:
 
 ```
@@ -18,7 +18,7 @@ A + (B + D) + (E + (B + D))
                     ^
 ```
 
-* Após a desnormalização a entidade `B` teve seu grupo de expressão redeclarado por completo quando foi utilizada novamente como filha da entidade `D`.
+* Após a desnormalização a entidade "B" teve seu grupo de expressão redeclarado por completo quando foi utilizada novamente como filha da entidade "D".
 
 Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma _expressão original_ é igual a sua _expressão desnormalizada_. 
 
