@@ -4,13 +4,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <Authors>Glauber Donizeti Gasparotto Junior</Authors>
-    <PackageIconUrl>https://raw.githubusercontent.com/juniorgasparotto/ExpressionGraph/master/doc/img/icon.ico</PackageIconUrl>
-    <PackageLicenseUrl>https://github.com/juniorgasparotto/ExpressionGraph/blob/master/README.md</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/juniorgasparotto/ExpressionGraph</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/juniorgasparotto/ExpressionGraph</RepositoryUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/juniorgasparotto/GraphExpression/master/doc/img/icon.ico</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/juniorgasparotto/GraphExpression/blob/master/README.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/juniorgasparotto/GraphExpression</PackageProjectUrl>
+    <Description>This framework aims to implement the concept of graph expression in the .NET language. With this framework it is possible to create any kind of searches on complex or circular objects in a way similar to what JQUERY does in JavaScript.</Description>
+    <RepositoryUrl>https://github.com/juniorgasparotto/GraphExpression</RepositoryUrl>    
     <Company>Glauber Donizeti Gasparotto Junior</Company>
-    <PackageTags>jquery complex-types expression-graph mathematical-expressions search traverse search-traversal object-search serialization deserialization graph-expression descendants ascending children siblings graph graph-theory</PackageTags>
+    <PackageTags>jquery complex-types graph-expression mathematical-expressions search traverse search-traversal object-search serialization deserialization graph-expression descendants ascending children siblings graph graph-theory</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
