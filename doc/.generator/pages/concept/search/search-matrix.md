@@ -53,6 +53,6 @@ Perceba que a expressão mudou da _orientação horizontal_ para a _orientação
 
 Inclusive, essa é uma regra importante: _Nunca alterar a ordem das linhas, isso altera completamente o grafo._
 
-Os _elementos de soma_ e _parênteses_ foram removidos, eles não são necessários na matriz, pois somente com as informações de _índices_ e _níveis_, é possível identificar todos os _grupos de expressões_.
+Os _elementos de soma_ e _parênteses_ foram removidos, eles não são necessários, pois somente com as informações de _índices_ e _níveis_, é possível identificar todos os _grupos de expressões_.
 
-E é com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aqueles que estão posicionados na sua esquerda ou na sua direita, independentemente do nível, que podemos criar meios de pesquisas e navegações.
+E é com base nessa matriz de informação e também pelo conhecimento das entidades vizinhas, ou seja, aqueles que estão posicionados na sua esquerda ou na sua direita, independentemente do nível, que podemos criar pesquisas e navegações.

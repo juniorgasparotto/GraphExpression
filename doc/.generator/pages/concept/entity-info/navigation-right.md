@@ -1,4 +1,4 @@
-## Navegação para a direita (Próxima entidade) <header-set anchor-name="entity-next" />
+## Navegação para a direita <header-set anchor-name="entity-next" />
 
 Toda entidade, com exceção da última da expressão, tem conhecimento da próxima entidade na expressão. 
 

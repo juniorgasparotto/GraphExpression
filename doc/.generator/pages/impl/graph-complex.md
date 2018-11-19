@@ -82,7 +82,7 @@ public class Class2
 
 **2)** Na segunda saída, veremos como ficou a expressão de grafo desse objeto:
 
-<anchor-get name="impl-serialization-complex">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos complexos.
+<anchor-get name="impl-serialization-complex">Clique aqui</anchor-get> para entender como funciona a serialização de objetos complexos.
 
 ```
 "Class1.32854180" + "Class1_Prop1: Value1" + ("Class1_Prop2.36849274" + "Class2_Prop2: Value2" + "Class2_Field1: 1000")

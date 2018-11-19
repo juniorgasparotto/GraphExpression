@@ -38,12 +38,12 @@ A (Level Index: 0)
 * Foi aplicada a desnormalização e a entidade "C" teve seu grupo de expressão redeclarado dentro da entidade "G".
 * Após a desnormalização um novo caminho foi criado para a entidade "Y":
     * Antes:
-        * _Ocorrência 1_: A.C.Y
-        * _Ocorrência 2_: A.D.F.G.Y
+        * _Primeira ocorrência_: `A.C.Y`
+        * _Segunda ocorrência_: `A.D.F.G.Y`
     * Depois:
-        * _Ocorrência 1_: A.C.Y
-        * **_Ocorrência 2_: A.D.F.G.C.Y**
-        * _Ocorrência 3_: A.D.F.G.Y
+        * _Primeira ocorrência_: `A.C.Y`
+        * **_Segunda ocorrência_**: `A.D.F.G.C.Y`
+        * _Terceira ocorrência_: `A.D.F.G.Y`
 
 **<anchor-set name="sample-matrix-desnormalizated">Matriz desnormalizada</anchor-set>:**
 

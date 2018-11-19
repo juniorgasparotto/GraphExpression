@@ -5,7 +5,7 @@ Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte 
 1. Recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a "0".
 2. Para cada linha encontrada, retornamos a sua **entidade anterior** que será sempre uma **entidade pai**.
 
-**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em casos de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
+**Atenção:** Essa pesquisa apresenta diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em casos de grupos de expressões que foram declarados mais de uma vez. Será necessário remover as duplicações.
 
 **Pesquisa profunda**
 
@@ -28,7 +28,7 @@ Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz
     * `#07 (G)` -> `#08 (B)`: Retorna a entidade "G" como sendo sua anterior
     * `#09 (C)` -> `#10 (Y)`: Retorna a entidade "C" como sendo sua anterior
 
-Com isso, após removermos as repetições (no caso, a entidade "C" que aparece nas linhas "#2" e "#09"), obtemos como resultado final as entidades "A", "C", "D", "F" e "G" como sendo as únicas entidades com filhos na expressão.
+Com isso, após removermos as repetições (no caso, a entidade "C" que aparece nas linhas "#2" e "#09"), obtemos como resultado as entidades "A", "C", "D", "F" e "G" como sendo as únicas entidades com filhos na expressão.
 
 **Pesquisa superficial**
 

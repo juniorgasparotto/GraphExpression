@@ -6,4 +6,4 @@ A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expr
 A + B + (C + A)
 ```
 
-* A entidade "A" é a entidade raiz de toda expressão acima e será o topo do grafo.
+* A entidade "A" é a entidade raiz da expressão e será o topo do grafo.

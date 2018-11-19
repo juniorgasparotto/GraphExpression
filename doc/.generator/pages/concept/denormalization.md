@@ -1,8 +1,8 @@
 # Desnormalizando expressões <header-set anchor-name="desnormalization" />
 
-O objetivo da **desnormalização** é gerar uma nova expressão onde os <anchor-get name="expression-group">grupos de expressões</anchor-get> sejam redeclarados toda vez que a sua entidade pai for utilizada. 
+O objetivo da **desnormalização** é gerar uma nova expressão onde os <anchor-get name="expression-group">grupos de expressões</anchor-get> são declarados todas as vezes que a sua entidade pai for utilizada.
 
-Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
+Após a desnormalização será impossível voltar na expressão original, esse processo não tem volta.
 
 Considere a seguinte expressão original:
 
@@ -18,7 +18,7 @@ A + (B + D) + (E + (B + D))
                     ^
 ```
 
-* Após a desnormalização a entidade "B" teve seu grupo de expressão redeclarado por completo quando foi utilizada novamente como filha da entidade "D".
+* Após a desnormalização a entidade "B" teve seu grupo de expressão redeclarado por completo quando foi utilizada novamente como filho da entidade "D".
 
 Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma _expressão original_ é igual a sua _expressão desnormalizada_. 
 

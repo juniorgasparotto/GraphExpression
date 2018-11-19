@@ -29,4 +29,4 @@ A + G + (B + F) + (C + B + (G + F))
 A + (G + F) + (B + F) + (C + B + G)
 ```
 
-Com isso concluímos a normalização e temos acima uma expressão muito mais legível.
+Com isso concluímos a normalização e obtemos uma expressão muito mais legível.

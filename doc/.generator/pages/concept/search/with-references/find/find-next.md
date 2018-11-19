@@ -1,8 +1,8 @@
 ### Encontrando a próxima entidade <header-set anchor-name="search-find-next" />
 
-Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** em "+1". 
+Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** mais um ("+1"). 
 
-**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**.
 
 Usaremos nesse exemplo a <anchor-get name="sample-matrix-desnormalizated">matriz desnormalizada</anchor-get> do tópico sobre <anchor-get name="search-deep" />.
 

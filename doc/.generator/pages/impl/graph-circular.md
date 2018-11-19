@@ -61,7 +61,7 @@ public class CircularEntity
 
 **2)** Na segunda saída, veremos a expressão de grafo do objeto `A`:
 
-<anchor-get name="impl-serialization-circular">Clique aqui</anchor-get> para entender como funciona a serialiação de objetos circulares.
+<anchor-get name="impl-serialization-circular">Clique aqui</anchor-get> para entender como funciona a serialização de objetos circulares.
 
 ```
 A + B + (C + D)

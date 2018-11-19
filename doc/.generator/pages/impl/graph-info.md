@@ -30,15 +30,15 @@ As classes: `Expression<T>` e `EntityItem<T>` trazem algumas informações da te
     * `class Path<T>`: Representa um caminho que começa na raiz e vai até o vértice.
         * `IEnumerable<EntityItem<T>> Items`: Lista todos os itens do caminho que começa na raiz e vai até o vértice.
         *  `string Identity`: Essa é a identificação do caminho, essa identificação utiliza o `Id` de cada vértice e utiliza-se do seguinte padrão: 
-            * Formato: [id-root].[id-parent].[id-instance]
-            * Exemplo: [0].[1].[2]
+            * Formato: `[id-root].[id-parent].[id-instance]`
+            * Exemplo: `[0].[1].[2]`
         * `PathType PathType`: Determina o tipo do caminho
             * `Circuit`: Ocorre quando o vértice raiz é igual ao vértice atual.
             * `Circle`: Ocorre quando o vértice pai é igual ao vértice atual.
             * `Simple`: É tipo padrão, ou seja, quando não é circuito e nem circular
         * `bool ContainsPath(Path<T> pathTest)`: Verifica se um caminho existe dentro do caminho da instância. Basicamente, esse método faz uma comparação na propriedade `Identity` dos dois caminhos, ou seja, se um caminho conter a identificação do outro caminho é porque esse caminho está contido no outro. Exemplo:
-            * `Path 1`: [0].[1].[2].[3]
-            * `Path 2`: [2].[3]
+            * `Path 1`: `[0].[1].[2].[3]`
+            * `Path 2`: `[2].[3]`
             * Usando a comparação de texto, vemos que o segundo caminho está contido no primeiro caminho: 
                 * `"[0].[1].[2].[3]".Constains("[2].[3]") = true`
 

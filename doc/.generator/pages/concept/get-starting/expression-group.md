@@ -51,9 +51,9 @@ Chamamos de "**declaração**" o primeiro momento em que uma entidade é escrita
 
 Caso essa entidade contenha filhos devemos declarar todo o seu grupo de expressão no mesmo momento, ou seja, adicionando seus filhos dentro dos parenteses.
 
-Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira mais rápida. 
+Não existe uma obrigatoriedade para a declaração do grupo na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira mais rápida. 
 
-Por exemplo, para descobrir se a entidade "B" contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
+Por exemplo, para descobrir se a entidade "B" contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em quais ocorrências o seu grupo foi declarado.
 
 ```
 A + B + (C + (B + D)) + B
@@ -67,7 +67,7 @@ A + (B + D) + (C + B) + B
 
 ### Repetições de grupo de expressão <header-set anchor-name="expression-group-repeat" />
 
-Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
+Um grupo de expressão não pode ser declarado mais de uma vez na expressão.
 
 Por exemplo: 
 
@@ -86,11 +86,11 @@ A + B + (C + D + E) + (I + (C + D + E))
 
 ### Entidade pai <header-set anchor-name="entity-parent" />
 
-A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo. 
+A entidade pai é sempre a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo. 
 
 Por exemplo:
 
 `(A + B + (C + D))`
 
 * Nesse exemplo, temos duas entidades pai: "A" e "C".
-* O elemento "+" é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
+* O elemento "+" é utilizado como simbolo de atribuição de uma entidade (filho) em outra entidade (pai).

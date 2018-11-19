@@ -16,7 +16,7 @@ A + (B + (C + D))
 * A entidade "C" é filha da entidade "B"
 * A entidade "B" é filha da entidade "A"
 
-A notação utiliza o caractere "." entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha.
+A notação utiliza o caractere "." entre a entidade pai e a entidade filho. A entidade da esquerda será a pai e a entidade da direita será o filho.
 
 **Outras exemplos:**
 
@@ -40,7 +40,7 @@ _Caminhos da entidade `B`:_
 
 ### Caminhos cíclicos <header-set anchor-name="paths-cyclic" />
 
-Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação cíclica.
+Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é o suficiente para descobrir que existe uma situação cíclica.
 
 Note que o grafo contém dois caminhos cíclicos:
 

@@ -2,7 +2,7 @@
 
 Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
-O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo. O nível inicia-se em "1" e é incrementado "+1" até chegar no último nível.
+O **nível geral** é o nível em relação à hierarquia do gráfico. O nível inicia-se em "1" e é incrementado "+1" até chegar no último nível.
 
 Por exemplo:
 
@@ -16,7 +16,7 @@ A (Level: 1)
     ----A (Level: 3)
 ```
 
-O **nível na expressão** determina em qual nível a entidade está com relação a expressão. O nível inicia-se em "1" e é incrementado "+1" até chegar no último nível.
+O **nível na expressão** determina em qual nível a entidade está relacionada à expressão. O nível inicia-se em "1" e é incrementado "+1" até chegar no último nível.
 
 Por exemplo:
 

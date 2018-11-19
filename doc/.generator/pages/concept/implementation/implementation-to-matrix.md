@@ -150,12 +150,12 @@ Index    | Entity  | Level    | Level Index     | LevelAtExpression
 
 * A classe recebe em seu construtor a **entidade raiz**. A partir dessa instância, vamos navegar em seu grafo por completo.
 * O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico <anchor-get name="search-deep" />
-* O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas, uma vez que por ser a entidade raiz, serão os valores inicias.
+* O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas (por ser a entidade raiz), serão os valores inicias.
 * Na segunda parte da função, iniciamos a leitura dos filhos da entidade `parent`. 
 * Será incrementado `+1` no **nível geral** conforme se aprofunda na entidade. Esse valor é passado por parâmetro, pois ele transcende todo o grafo.
 * Será incrementado `+1` no **índice do nível**. Esse valor está fechado apenas no escopo do `foreach`, ou seja, apenas para os filhos da entidade.
 * Para cada interação, é verificado se a propriedade `Deep` é `true`, se for, devemos manter a navegação mesmo se entidade corrente já foi percorrida por completo em algum momento da expressão. Contudo, a única situação que limita a continuação é se a entidade corrente tiver relações com ela mesma em um de seus ascendentes. Se tiver, é interrompida a continuação.
 * Se a propriedade `Deep` for `false`, então devemos apenas verificar se a entidade já foi percorrida em algum momento da expressão, se foi, então não continuamos.
-* A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai somando-se `+1` quando a entidade tiver filhos e não somando nada quando não tiver.
+* A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai. Soma-se "+1" quando a entidade tiver filhos e não soma nada quando não tiver.
 
 Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafo**.

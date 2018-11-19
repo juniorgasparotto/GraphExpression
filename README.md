@@ -5,17 +5,17 @@
 ![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
-# <a name="implementation" />Expression of graphs
+# <a name="implementation" />Expression of graph
 
 This framework aims to implement the concept of graph expression on .NET language.
 
-In short, the concept of **graph expression** aims to explore the benefits of a mathematical expression swapping numbers for entities. With this, we can create a new way to carry data and especially create a new means of cross research in complex or circular graphs.
+In short, the concept of **graph expression** aims to explore the benefits of a mathematical expression swapping numbers for entities. With this, we can create a new way to carry data and especially create a new kind of research in complex or circular graphs.
 
-With respect to research in graph theory, this project was inspired by the `JQuery` implementation for HTML elements (Sun), joining thus the concept of graph expression with the `JQuery` ease-of-use for cross-cutting research.
+With respect to research, this project was inspired by the `JQuery` implementation for HTML elements, so the concept of graph expression with the `JQuery` ease-of-use for research in graph theory.
 
 _Attention: This document will explain the concept of graph expression, he will focus only on the framework `GraphExpression` ._
 
-**[Click here](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#concept) if you want to know more about the concept of graph expression.**
+**[Click here](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#concept) if you want to know more about the concept of expression of graph.**
 
 # Installation
 
@@ -30,13 +30,13 @@ Install-Package GraphExpression
 * [Complex graphs](https://github.com/juniorgasparotto/GraphExpression#impl-graph-complex)
 * [Circular graphs](https://github.com/juniorgasparotto/GraphExpression#impl-graph-circular)
 * [Searching](https://github.com/juniorgasparotto/GraphExpression#impl-search)
-  * [Research without references](https://github.com/juniorgasparotto/GraphExpression#impl-search-without-ref)
+  * [Unreferenced research](https://github.com/juniorgasparotto/GraphExpression#impl-search-without-ref)
   * [Search with reference](https://github.com/juniorgasparotto/GraphExpression#impl-search-with-ref)
   * [Types of searches](https://github.com/juniorgasparotto/GraphExpression#impl-search-kind)
-    * [Ancestors](https://github.com/juniorgasparotto/GraphExpression#impl-search-ancertors)
-    * [Descendants](https://github.com/juniorgasparotto/GraphExpression#impl-search-descentands)
-    * [Kids](https://github.com/juniorgasparotto/GraphExpression#impl-search-children)
-    * [Brothers](https://github.com/juniorgasparotto/GraphExpression#impl-search-siblings)
+    * [`Ancestors`](https://github.com/juniorgasparotto/GraphExpression#impl-search-ancertors)
+    * [`Descendants`](https://github.com/juniorgasparotto/GraphExpression#impl-search-descentands)
+    * [`Children`](https://github.com/juniorgasparotto/GraphExpression#impl-search-children)
+    * [`Siblings`](https://github.com/juniorgasparotto/GraphExpression#impl-search-siblings)
 * [Customizing complex expressions](https://github.com/juniorgasparotto/GraphExpression#impl-factory-expression-complex)
 * [Creating circular entities with graph and mathematical expression](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-circular)
 * [Creating complex entities with graph and mathematical expression](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex)
@@ -47,8 +47,8 @@ Install-Package GraphExpression
   * [Understanding `ComplexEntityFactory` class](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex-class-complex-factory)
   * [Discoverers of types](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex-discovery-types)
   * [Discoverers of members](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex-discovery-members)
-  * [Chargers of values](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex-value-loaders)
-  * [Atribuidores of children](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex-child-assign)
+  * [Value initializers](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex-value-loaders)
+  * [Assignment of children](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex-child-assign)
 * [Serialization](https://github.com/juniorgasparotto/GraphExpression#impl-serialization)
   * [Circular serialization](https://github.com/juniorgasparotto/GraphExpression#impl-serialization-circular)
   * [Complex Serialization](https://github.com/juniorgasparotto/GraphExpression#impl-serialization-complex)
@@ -70,9 +70,9 @@ This type of graph is presented by class:
 GraphExpression.Expression<object> : List<EntityItem<object>>
 ```
 
-This class inherits from `List<EntityItem<object>>` , that is, it is also a collection `EntityItem<object>` class. The class `EntityItem<object>` represents an item within the list, is it that there are all the information of the entity in the graph.
+This class inherits from `List<EntityItem<object>>` , that is, it is also a collection `EntityItem<object>` class. The class `EntityItem<object>` represents an item in the list, this is the class that there are all the information of the entity in the graph.
 
-In the following example we will convert an object of the `Class1` type for the `Expression<object>` object and display all `EntityItem<object>` of the structure `Class1` type. In last exit, we display how would this object in the form of expression of graphs:
+In the following example we will convert an object of the `Class1` type for the `Expression<object>` object and display all `EntityItem<object>` of the structure `Class1` type. In last exit, we display how would this object in the form of expression of graph:
 
 ```csharp
 public void GraphComplex()
@@ -129,7 +129,7 @@ public class Class2
 }
 ```
 
-**1)** on the first date we can visualize all the information of the `Class1` type and also the information: `Index` `Parent` , `Next` ,, `Previous` and `Level` composing an expression of graphs:
+**1)** at the first exit, we can visualize all the type information `Class1` and also information from the graph: expression `Index` , `Parent` , `Next` , `Previous` and `Level` :
 
 ```
   [0] => Item: Class1, Parent: , Previous: , Next: Property.Class1_Prop1, Level: 1
@@ -139,12 +139,12 @@ public class Class2
       [4] => Item: Field.Class2_Field1, Parent: Property.Class1_Prop2, Previous: Property.Class2_Prop2, Next: , Level: 3
 ```
 
-* The property `Level` is responsible for reporting on what level of the graph is each item of the iteration, making it possible to create a identada output that represents the hierarchy of the `model` object.
+* The property `Level` is responsible for reporting on what level of the graph is each item, making it possible to create a identada output that represents the hierarchy of the `model` object.
 * The method `GetEntity` is just a helper that prints the item type and the name of the Member that can be a property or a field. We could also return the value of the Member, but to leave cleaner output, we eliminate this information.
 
-**2)** On second output can look the representation of this object in expression of graphs:
+**2)** On second output, see how was the expression of this graph object:
 
-[Click here](https://github.com/juniorgasparotto/GraphExpression#impl-serialization-complex) to understand the serialiação of complex objects.
+[Click here](https://github.com/juniorgasparotto/GraphExpression#impl-serialization-complex) to understand how the serialization of complex objects.
 
 ```
 "Class1.32854180" + "Class1_Prop1: Value1" + ("Class1_Prop2.36849274" + "Class2_Prop2: Value2" + "Class2_Field1: 1000")
@@ -152,18 +152,18 @@ public class Class2
 
 The extension method `AsExpression` is responsible for creating the complex expression. This method will browse through all the nodes from the root to the last descendant. This method contains the following parameters:
 
-* `ComplexExpressionFactory factory = null`: This parameter must be used when you need to change or extend the default behavior of creating an expression of complex graphs. The topic [Customizing complex expressions](https://github.com/juniorgasparotto/GraphExpression#impl-factory-expression-complex) back all the information of how to extend the default behavior.
-* `bool deep = false`: When `true` the expression will be set so deep, that is, when possible, will repeat entities that have already been navigated. See the topic [Deep search](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#search-deep) to understand the purpose of this functionality.
+* `ComplexExpressionFactory factory = null`: This parameter must be used when you need to change or extend the default behavior of creating a complex graph. The topic [Customizing complex expressions](https://github.com/juniorgasparotto/GraphExpression#impl-factory-expression-complex) back all the information of how to extend the default behavior.
+* `bool deep = false`: When `true` the expression will be deep, that is, when possible, will repeat entities that have already been navigated. See the topic [Deep search](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#search-deep) to understand the purpose of this functionality.
 
-This method is available in all .NET objects, simply reference the `using GraphExpression` namespace.
+This method is available in all .NET objects, simply add the namespace reference: `using GraphExpression` .
 
 **Conclusion:**
 
-In this topic we saw how simple it is to navigate complex objects opening paths for other features like polls and into.
+In this topic we saw how simple it is to navigate complex objects, opening paths to research into and.
 
 See also the topic [Creating complex entities with graph and mathematical expression](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex), it will show another way to create complex objects.
 
-## Standard elements of an expression of graphs to complex types
+## Standard elements of a graph for complex types
 
 The elements of a complex expression ( `Expression<object>` ) can vary between the following types:
 
@@ -176,11 +176,11 @@ The elements of a complex expression ( `Expression<object>` ) can vary between t
 
 All of these types inherit from `ComplexEntity` that for your time inherits from `EntityItem<object>` , so in addition to its specific properties still have the item information in the expression.
 
-It is still possible to extend to create a complex expressions, to know more see the topic[Customizing complex expressions](https://github.com/juniorgasparotto/GraphExpression#impl-factory-expression-complex)
+It is still possible to extend to create a complex expression. To know more see the topic[Customizing complex expressions](https://github.com/juniorgasparotto/GraphExpression#impl-factory-expression-complex)
 
 # <a name="impl-graph-circular" />Circular graphs
 
-We call those circular graphs that contains type defined, that is, all items are set to the same `T` type.
+We define the circular graphs as being those that contain a defined type, i.e. all items are set to the same `T` type.
 
 This type of graph is presented by class:
 
@@ -188,7 +188,7 @@ This type of graph is presented by class:
 GraphExpression.Expression<T> : List<EntityItem<T>>
 ```
 
-This class inherits from `List<EntityItem<T>>` , that is, it is also a collection `EntityItem<T>` class.
+This class inherits from `List<EntityItem<T>>` , that is, it is also a collection of class: `EntityItem<T>` .
 
 In the following example we will convert the object to the `Expression<CircularEntity>` type and show you how was the converted structure:
 
@@ -230,7 +230,7 @@ public class CircularEntity
 }
 ```
 
-**1)** the first output displays the items in the `expression` object representing how did the object hierarchy `A` after your creation:
+**1)** at the first exit, we see the items `expression` object, representing the object hierarchy `A` :
 
 ```
 [0] => Item: A, Parent: , Previous: , Next: B, Level: 1
@@ -239,9 +239,9 @@ public class CircularEntity
     [3] => Item: D, Parent: C, Previous: C, Next: , Level: 3
 ```
 
-**2)** the second output shows as was the graph `A` object expression:
+**2)** On second output, we can see the expression of the graph `A` object:
 
-[Click here](https://github.com/juniorgasparotto/GraphExpression#impl-serialization-circular) to understand the serialiação of circular objects.
+[Click here](https://github.com/juniorgasparotto/GraphExpression#impl-serialization-circular) to understand how the serialization of circular objects.
 
 ```
 A + B + (C + D)
@@ -251,27 +251,27 @@ The extension method `AsExpression<T>` is responsible for creating the circular 
 
 * `Func<T, IEnumerable<T>> childrenCallback`: This parameter determines which are the children of the entities. Is this parameter that will determine the continuity of the implementation. All entities of the graph will call this method until all are navigated. The execution will only be interrupted in case of cyclic relations.
 * `Func<T, object> entityNameCallback`: This parameter is responsible for determining what will be the name of the entity in the serialization or in debug mode. In our example, we use the property `Name` . If this parameter is not passed, the `ToString()` method will be used.
-* `bool deep = false`: When `true` the expression will be set so deep, that is, when possible, will repeat entities that have already been navigated.
+* `bool deep = false`: When `true` the expression will be deep, that is, when possible, will repeat entities that have already been navigated.
 
-This method is available in all .NET objects, simply reference the `using GraphExpression` namespace.
+This method is available in all .NET objects, simply add the namespace reference: `using GraphExpression` .
 
 **Conclusion:**
 
-In this topic we saw how simple it is to navigate in circular objects opening paths for other features like polls and into.
+In this topic we saw how simple it is to navigate in circular objects, opening paths to research into and.
 
 See also the topic [Creating circular entities with graph and mathematical expression](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-circular), it will show another way to create circular objects without the use of the method `Add()` .
 
 # <a name="impl-search" />Searching
 
-There are two types of searches in the concept of graph expression: **searches without references** and **research with references**.
+There are two types of searches in the concept of graph expression: **unreferenced Research** and **reference search**.
 
 _Attention: in this topic, we will use the model of complex graphs due to your increased complexity._
 
-**[Click here](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#search) to better understand how search works in expression of graphs**
+**[Click here](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#search) to better understand how search works in expression of graph**
 
-## <a name="impl-search-without-ref" />Research without references
+## <a name="impl-search-without-ref" />Unreferenced research
 
-The research without references will be made into a collection of entities, i.e., each item in the collection will be tested and returned on success. By repeating the same search in all items in the list, this kind of research can bring duplicates.
+The "unreferenced" will be made into a collection of entities, i.e., each item in the collection will be tested. By repeating the same search in all items in the list, this kind of research can bring duplicates.
 
 [Click here](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#search-without-references) to learn more about this type of research.
 
@@ -306,10 +306,10 @@ Property.Class2_Prop2
 Property.Class2_Prop2
 ```
 
-* This was why the first entity (root) had all his descendants tested by `filter` and obtained the item: `Property.Class2_Prop2` .
-* After the second `Property.Class1_Prop1` entity was tested too, but she has no descendants.
-* The third `Property.Class1_Prop2` entity had all of its descendants tested and also obtained the item: `Property.Class2_Prop2` .
-* The fourth entity on any other returned positive.
+* The first entity (root) had all his descendants tested by filter and following descendant had positive feedback: `Property.Class2_Prop2` .
+* The second `Property.Class1_Prop1` principal was also tested, but she has no descendants.
+* The third `Property.Class1_Prop2` entity had all of its descendants tested and also returned the item: `Property.Class2_Prop2` .
+* The fourth entity on, none returned positive.
 
 If you want to eliminate repetitions in this type of search (with collections), use the `Linq` function:
 
@@ -319,7 +319,7 @@ Distinct();
 
 ## <a name="impl-search-with-ref" />Search with reference
 
-The survey of references will be made using a specific item, that is, first you need to locate the desired item and from it will be done the research you want.
+The "reference search" will be made using a specific item, that is, first you need to locate the desired item and from it will be done the research you want.
 
 [Click here](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept.md#search-with-references) to learn more about this type of research.
 
@@ -355,8 +355,8 @@ Property.Class2_Prop2
 ```
 
 * Note that the only change was to use the root item as reference ( `First()` ) and it did eliminate duplicates without the need of using the `Distinct` method.
-* This occurred because only one item was reviewed (the root item). In research without references, all items were reviewed and the `Property.Class1_Prop2` item also returns the same result as the root item.
-* For this type of research, this will make the search faster.
+* This was because only one item was tested (the root item). On "research without reference", all items were reviewed and the `Property.Class1_Prop2` item also returns the same result as the root item.
+* When possible, use this type of search, this will make the search faster.
 * The entity root is the best option for this.
 
 ## <a name="impl-search-kind" />Types of searches
@@ -374,7 +374,7 @@ By default, this project brings the following types of searches:
 All these types of searches are available for any of the object types:
 
 * `GraphExpression.EntityItem<T>`: Search with reference
-* `IEnumerable<GraphExpression.EntityItem<T>>`: Research without references
+* `IEnumerable<GraphExpression.EntityItem<T>>`: Search without reference
 
 You can also create custom searches using C # Extensions methods.
 
@@ -402,9 +402,9 @@ public delegate bool EntityItemFilterDelegate2<T>(EntityItem<T> item, int depth)
 * `EntityItem<T> item`: This parameter means the current item during the search.
 * `int depth`: Determines the depth of the current item in relation to your position.
 
-You can use the classes `Func<EntityItem<T>>` and `Func<EntityItem<T>, int>` to simplify the use of these delegates.
+You can use the classes `Func<EntityItem<T>>` and `Func<EntityItem<T>, int>` to simplify use.
 
-### <a name="impl-search-ancertors" />Ancestors
+### <a name="impl-search-ancertors" />`Ancestors`
 
 The search for ancestors is useful to find the father or the parents of an item. We have a few overloads that will be explained below:
 
@@ -416,8 +416,8 @@ IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate2<T> filter = null,
 
 * `filter`: Does not return items when the filter return negative but continues searching until you reach the root item. The research uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
 * `stop`: Determines when the navigation must stop, otherwise the navigation should go to the root item.
-* `depthStart`: Determines the depth of the search should start
-* `depthEnd`: Determines the depth of the search should stop
+* `depthStart`: Determines the depth to the research begin
+* `depthEnd`: Determines the depth that the search should stop
 
 In this example, we will return all the ancestors of the last item of expression, noting that the structure is the same as the example `GraphComplex` :
 
@@ -461,7 +461,7 @@ public void Ancertor1()
 }
 ```
 
-_The first output displays all parents of the item references._
+_The first output displays all parents of the item reference._
 
 ```
 Property.Class1_Prop2
@@ -470,7 +470,7 @@ Class1
 
 * Return order will always be the nearest ancestor, that is, the first item in the return list will always be the father of the item reference.
 
-_The second output displays only the ancestor whose depth is equal to `1` , or is, in this case would be the parent item of the item references:_
+_The second output displays only the ancestor whose depth is equal to `1` , or is, in this case would be the parent item of the item reference:_
 
 ```
 Property.Class1_Prop2
@@ -488,13 +488,13 @@ IEnumerable<EntityItem<T>> Ancestors(EntityItemFilterDelegate<T> filter, EntityI
 IEnumerable<EntityItem<T>> Ancestors(int depthStart, int depthEnd)
 ```
 
-**4)** the fourth overload only filters by depth of order.
+**4)** the fourth overload only the final depth filters.
 
 ```csharp
 IEnumerable<EntityItem<T>> Ancestors(int depthEnd)
 ```
 
-**5)** this method has the same usefulness of standard overload, however he is a simplifier to retrieve all ancestors until any negative `stop` parameter return ancestor. Otherwise it returns all items to the root. He uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
+**5)** this method has the same usefulness of standard overload, however he is a simplifier to retrieve all ancestors until any negative `stop` parameter return ancestor. Otherwise it returns all items until you reach the root. He uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
 
 ```csharp
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
@@ -506,7 +506,7 @@ IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate2<T> stop, Ent
 IEnumerable<EntityItem<T>> AncestorsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-### <a name="impl-search-descentands" />Descendants
+### <a name="impl-search-descentands" />`Descendants`
 
 The descendants search is useful to find the children or all descendants of an item. We have a few overloads that will be explained below:
 
@@ -518,8 +518,8 @@ IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate2<T> filter = nul
 
 * `filter`: Does not return items when the filter return negative but continues searching until you get to the last item. The research uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
 * `stop`: Determines when the navigation must stop, otherwise the navigation should go to the last item.
-* `depthStart`: Determines the depth of the search should start
-* `depthEnd`: Determines the depth of the search should stop
+* `depthStart`: Determines the depth to the research begin
+* `depthEnd`: Determines the depth that the search should stop
 
 In this example, we will return all descendants of the root item whose initial and final depth is equal to `2` , we will use the same structure of the example `GraphComplex` :
 
@@ -573,13 +573,13 @@ IEnumerable<EntityItem<T>> Descendants(EntityItemFilterDelegate<T> filter, Entit
 IEnumerable<EntityItem<T>> Descendants(int depthStart, int depthEnd)
 ```
 
-**4)** the fourth overload only filters by depth of order.
+**4)** the fourth overload only the final depth filters.
 
 ```csharp
 IEnumerable<EntityItem<T>> Descendants(int depthEnd)
 ```
 
-**5)** this method has the same usefulness of standard overload, however he is a simplifier to retrieve all descendants until any negative `stop` parameter return descendant. Otherwise it returns all items until you get to the last item. He uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
+**5)** this method has the same usefulness of standard overload, however he is a simplifier to retrieve all descendants until some descendant return negative in the parameter "stop". Otherwise it returns all items until you get to the last item. He uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
 
 ```csharp
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null)
@@ -591,7 +591,7 @@ IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate2<T> stop, E
 IEnumerable<EntityItem<T>> DescendantsUntil(EntityItemFilterDelegate<T> stop, EntityItemFilterDelegate<T> filter = null)
 ```
 
-### <a name="impl-search-children" />Kids
+### <a name="impl-search-children" />`Children`
 
 To return the children of an item just use the method:
 
@@ -634,7 +634,7 @@ Property.Class1_Prop2
 * This method has no parameters, simply use the `Linq` functions if you need some filtering.
 * This method is a `Descendants(int depthStart, int depthEnd)` method alias, which will be passed the fixed values `Descendants(1, 1)` .
 
-### <a name="impl-search-siblings" />Brothers
+### <a name="impl-search-siblings" />`Siblings`
 
 This search finds the brothers of a given item. We have a few overloads that will be explained below:
 
@@ -647,13 +647,13 @@ IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate2<T> filter = null, 
 * `filter`: Does not return items when the filter return negative but continues searching until the last brother or first (depends on the `direction` parameter). The research uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
 * `stop`: Determines when the navigation must stop, otherwise the navigation should go until the last brother or first (depends on the `direction` parameter).
 * `direction`: This parameter determines in which direction navigation should go:
-  * `Start`: Determines which navigation should start on the first sibling to the left of the item references and go until the last sibling to the right.
-  * `Next`: Determines which navigation should start on the next item and follow until the last sibling to the right.
-  * `Previous`: Determines which navigation should start in the previous item and follow until the first brother left.
-* `positionStart`: Determines the start position that the search should start.
-  * When the direction is equal to `Start` , the position `1` will be the first sibling to the left of the item references.
-  * When the direction is equal to `Next` , the position `1` will be the next sibling to the right of the item references.
-  * When the direction is equal to `Previous` , the position `1` will be the next sibling to the left of the item references.
+  * `Start`: Determines which navigation should start on the first brother positioned to the left of the reference item and go to the last brother to the right.
+  * `Next`: Determines which navigation should start next brother positioned to the right of the item and go to the last brother to the right.
+  * `Previous`: Determines which navigation should start next brother positioned to the left of the reference item and go to the first brother left.
+* `positionStart`: Determines the initial position that the search should start.
+  * When the direction is equal to `Start` , the position `1` will be the first sibling to the left of the reference item.
+  * When the direction is equal to `Next` , the position `1` will be the next sibling to the right of the item reference.
+  * When the direction is equal to `Previous` , the position `1` will be the next sibling to the left of the reference item.
 * `positionEnd`: Determines the end position that the search should stop.
 
 In this example we will return the item whose brothers value is equal `C` in all directions.
@@ -725,19 +725,19 @@ A: A
 IEnumerable<EntityItem<T>> Siblings(EntityItemFilterDelegate<T> filter, EntityItemFilterDelegate<T> stop = null, SiblingDirection direction = SiblingDirection.Start, int? positionStart = null, int? positionEnd = null)
 ```
 
-**3)** the third overload filters only by the depth of start and end in the specified direction.
+**3)** the third overload filters only by the depth of beginning and end in the specified direction.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionStart, int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-**4)** the fourth overload only filters by depth of order in the specified direction.
+**4)** the fourth overload only the final depth of filters specified direction.
 
 ```csharp
 IEnumerable<EntityItem<T>> Siblings(int positionEnd, SiblingDirection direction = SiblingDirection.Start)
 ```
 
-**5)** this method has the same usefulness of standard overload, however he is a simplifier to retrieve all the brothers until a brother return negative `stop` parameter. Otherwise be returned all the brothers until the last or the first (depends on the `direction` parameter). He uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
+**5)** this method has the same usefulness of standard overload, however he is a simplifier to retrieve all the brothers until a brother return negative in the parameter "stop". Otherwise be returned all the brothers until the last or the first (depends on the `direction` parameter). He uses the delegate `EntityItemFilterDelegate2` , that is, we have the depth information of the item to use in the search.
 
 ```csharp
 IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate2<T> stop, EntityItemFilterDelegate2<T> filter = null, SiblingDirection direction = SiblingDirection.Start)
@@ -751,29 +751,29 @@ IEnumerable<EntityItem<T>> SiblingsUntil(EntityItemFilterDelegate<T> stop, Entit
 
 # <a name="impl-factory-expression-complex" />Customizing complex expressions
 
-The method `object.AsExpression` is the fastest way to create a graph expression. When called without any parameters, it will create an instance of the object `Expression<object>` that represents an expression of complex graphs.
+The method `object.AsExpression` is the fastest way to create a graph. When called without any parameters, it will create an instance of the object `Expression<object>` that represents an expression of complex graph.
 
 This method is located in the static class `GraphExpression.ComplexExpressionExtensions` and contains the following parameters:
 
 * `this object entityRoot`: The object that will be extended to accommodate the new method and also to be the root of the expression.
-* `ComplexExpressionFactory factory = null`: This parameter must be used when you need to change or extend the default behavior of creating an expression of complex graphs.
-* `bool deep = false`: When `true` the expression will be set so deep, that is, when possible, will repeat entities that have already been navigated.
+* `ComplexExpressionFactory factory = null`: This parameter must be used when you need to change or extend the default behavior of creating a complex graph.
+* `bool deep = false`: When `true` the expression will be deep, that is, when possible, will repeat entities that have already been navigated.
 
-The class `GraphExpression.ComplexExpressionFactory` is the class responsible for creating/customizing a complex expression. She has some properties that leverage the creation of expression:
+The class `GraphExpression.ComplexExpressionFactory` is the class responsible for creating/customizing a complex expression. This class has some properties that increase the power of creation of the expression:
 
 * `List<IEntityReader> Readers`: With this list you can create or change the reading of entities for certain types of objects.
 * `List<IMemberReader> MemberReaders`: With this list you can create or change the readers of members.
-* `Func<object, IEnumerable<PropertyInfo>> GetProperties`: Method that delegates to the user to determine which properties will be loaded. By default, will be used to call: `entity.GetType().GetProperties()` .
-* `Func<object, IEnumerable<FieldInfo>> GetFields`: Method that delegates to the user to determine which fields are loaded. By default, will be used to call: `entity.GetType().GetFields()` .
+* `Func<object, IEnumerable<PropertyInfo>> GetProperties`: Method that delegates to the user the option to determine which properties will be loaded. By default, will be used: `entity.GetType().GetProperties()` .
+* `Func<object, IEnumerable<FieldInfo>> GetFields`: Method that delegates to the user the option to determine which fields are loaded. By default, will be used: `entity.GetType().GetFields()` .
 
-You can use the instance of this class in the parameter `factory` of the method `object.AsExpression` or simply call the method `Build` that returns the instance of the `Expression<object>` class coming in the same goal.
+You can use the instance of this class in the parameter `factory` of the method `object.AsExpression` or simply call the method `Build` that returns the instance of the `Expression<object>` class, arriving at the same goal.
 
 ```csharp
 Expression<object> Build(object entityRoot, bool deep = false)
 ```
 
 * `entityRoot`: Entity that will be the root of the expression.
-* `deep`: When `true` the expression will be created.
+* `deep`: When `true` the expression will be profound.
 
 In the example below, we will create a new reader of members ( `MethodReader` ) that have as objective to invoke the method `HelloWorld` of the class `Model` . We will create a new entity type complex ( `MethodEntity` ) to store the result of the method.
 
@@ -846,7 +846,7 @@ MethodEntity.HelloWorld(value1, value2)
 
 ## Readers of members
 
-Readers of class members `IMemberReader` and its main objective is to read the members of an instance and return to the expression.
+The readers of members "inherit from the `IMemberReader` class. Its main purpose is to read the members of an instance and return to the expression.
 
 ```csharp
 public interface IMemberReader
@@ -864,7 +864,7 @@ _Attention: readers of members must be used by the readers of entities. If your 
 
 ## Readers of entities
 
-Readers are the main entities responsible for creation of complex expression and the property `Readers` will be used to find the best reader for each entity of the iteration.
+The "principal players" are mainly responsible for the creation of complex expression and the property `Readers` will be used to find the best reader for each entity of the iteration.
 
 Readers of entities must inherit from `IEntityReader` interface and the method `CanRead` is responsible for determining if the entity may or may not be read by the reader. When the method `CanRead` returns `true` then the method `GetChildren` will be called and it is at this point that the items of the expression will be effectively created.
 
@@ -876,17 +876,17 @@ public interface IEntityReader
 }
 ```
 
-The order of the readers is of extreme importance, because the last reader will be used in the event of a tie-breaker, that is, three readers return `true` , the last one will be used.
+The order of the readers is of the utmost importance, since the last reader of the list will be used in the event of a tie, in other words, if three readers return `true` , the last on the list will be used.
 
-By default, we have some readers of defined entities and all of them are already sorted on the property `Readers` so don't act read errors.
+By default, we have some readers of defined entities and all of them are already sorted on the property `Readers` to prevent reading errors.
 
-1. `DefaultReader`: This is the default player for all entities. Its function is to read the members of any type, with the exception of types that are in `System` and `Microsoft` . He is the first reader, i.e. If there is some other that returns `true` in the method `CanRead` , then this will be ignored.
-2. `CollectionReader`: This reader is responsible for reading objects that inherit from the `ICollection` type. He is the second player and should always be up `ArrayReader` and `DictionaryReader` readers. This is necessary because the objects `Array` types and `IDictionary` also inherit from `ICollection` and these readers must have priority over this.
+1. `DefaultReader`: This is the default class for all entities. Its function is to read the members of any type, with the exception of types that are in `System` and `Microsoft` . He is the first reader, i.e. If there is some other that returns `true` in the method `CanRead` , then this class is ignored.
+2. `CollectionReader`: This reader is responsible for reading objects that inherit from the `ICollection` type. He is the second and must always be above `ArrayReader` and `DictionaryReader` readers. This is necessary because the objects `Array` types and `IDictionary` also inherit from `ICollection` and these readers must have priority over this.
 3. `ArrayReader`: This reader is responsible for reading objects of type`Array`
 4. `DictionaryReader`: This reader is responsible for reading objects that inherit from the type`IDictionary`
 5. `DynamicReader`: This reader is responsible for reading objects that inherit from the `ExpandoObject` type. This reader must have priority over the reader `DictionaryReader` , so it is positioned below this reader.
 
-Readers of entities are solely responsible for reading the members, that is, if your custom player you want to keep the members of the entity, so don't forget to iterate over the property `MemberReaders` and do the due return.
+Readers of entities are solely responsible for reading the members, that is, if your "principal player" customized you want to keep the members of the entity, so don't forget to iterate over the property `MemberReaders` and do the due return.
 
 Here is an example of how to use the property `MemberReaders` within the readers of entities. This code belongs to the reader:`CollectionReader`
 
@@ -924,14 +924,14 @@ public class CollectionReader : IEntityReader
 
 One of the advantages of `C#` language is that it allows you to override mathematical operators leaving the operation to the programmer. With this action delegated to the programmer it is possible to use the concept of graph expression to insert or remove an entity from the other.
 
-If you have read the documentation on the concept of graph expression then you already know that the entity of the left of the operation is the parent entity and the entity of the right side of the operation is the daughter.
+If you have read the documentation on the expression of concept graph then you already know that the entity of the left of the operation is the parent entity and the entity of the right side of the operation is the daughter.
 
 With that in mind, we will show a way to create **circular graphs** using only C # and mathematics.
 
 In the sample code, we will overwrite `+` and operators `-` and delegate to them the following actions:
 
-* `+`: Add the right entity as being the daughter of the entity.
-* `-`: Remove the entity from the right of the list of children of the entity left.
+* `+`: Add the "right" entity as being the daughter of "the left".
+* `-`: Remove the "right-hand entity" sons of "entity list of the left".
 
 To the left of the operation entity is represented by the parameter `a` and the entity of the right side of the operation is represented by the parameter `b` .
 
@@ -997,7 +997,7 @@ _The final structure of the entity `A` will be:_
     [2] => C
 ```
 
-_The final graphs expression, after removal, would look like this:_
+_The final graph expression, after removal, would look like this:_
 
 ```
 A + B + C
@@ -1029,9 +1029,9 @@ The output shows that the property `Name` has been filled:
 Entity name ;)
 ```
 
-Note that we're using mathematical expressions and assemble the entity `CircularEntity` type without using `new` the command `C#` .
+Note that we're using mathematical expressions and assemble the entity `CircularEntity` type without using the command `new` .
 
-The order of the expression is the same circular entities, that is, the item on the left of the expression is the parent item of the item on the right of expression. Because it is a complex type, the item on the left is the instance and the item on the right is the Member.
+The order of the expression is the same as we saw in the circular bodies, namely, the item on the left of the expression is the parent item of the item on the right of expression. Because it is a complex type, the item on the left is the instance and the item on the right is the Member.
 
 In the language `C#` we have two types of members: **Properties** and **Fields** and both can be used in the expression independent of your visibility.
 
@@ -1045,7 +1045,7 @@ This class represents an entity of the graph and the place where she might be. E
 Entity(int complexEntityId)
 ```
 
-**2)** the second constructor creates an entity in which your site will be a member, that is, can be a property or a field. The `Name` parameter will set the name of the Member. The `complexEntityId` parameter will assign this member the entity which corresponds to that ID.
+**2)** the second constructor creates an entity located in a member, that is, can be a property or a field. The `Name` parameter will set the name of the Member. The `complexEntityId` parameter will assign this member the entity which corresponds to that ID.
 
 ```csharp
 Entity(string name, int complexEntityId)
@@ -1110,7 +1110,7 @@ This output will produce the value below and it was necessary to obtain the valu
 1000
 ```
 
-**4)** the last contains only the constructor `string raw` parameter. The value of this parameter must be in the form of **complex entities in text form**.
+**4)** the last contains only the constructor parameter: `string raw` . The value of this parameter must be in the form of **complex entities in text form**.
 
 ```csharp
 Entity(string raw)
@@ -1159,7 +1159,7 @@ This format is divided into two: **primitive types** and **complex types** and s
 
 ## <a name="impl-factory-entity-complex-primitive" />Complex entities in text form-primitive types
 
-For primitive types have the following format:
+For primitive types, we have the following format:
 
 ```
 [TypeName].[MemberName]: [Value]
@@ -1169,9 +1169,9 @@ The square brackets indicate that the part is not mandatory, in the format above
 
 The second part should not exist for the entity that is located at the root of the expression, after all if she is at the root she has no father.
 
-From the second entity of the expression, the second part is mandatory and indicates the name of the Member that can be a property or a field.
+The second entity in the second part is mandatory and indicates the name of the Member that can be a property or a field.
 
-The next part is the `:` separator between the Member of the value. If the value is null, then the tab will not be displayed.
+The next part is the `:` separator that divides the member name and your value. If the value of the Member is null, the tab will not be displayed.
 
 **Let's see some examples:**
 
@@ -1181,19 +1181,19 @@ _Displays the type and the value of primitive entity that is located in the root
 System.String: Value
 ```
 
-_Displays the type, the value of the entity and primitive Member which is located in second position on:_
+_Displays the type, the value of the entity and primitive Member that is in the second position on:_
 
 ```
 System.String.StrValue: Value
 ```
 
-_Displays the type, Member, and an empty value of primitive entity which is located in second position on:_
+_Displays the type, Member, and an empty value of primitive entity that is in the second position on:_
 
 ```
 System.String.StrValue: 
 ```
 
-_Displays the type and the Member when the value is null. Does not display the tab, this is indicative that the value is null:_
+_Displays the type and the Member when the value is null. Does not display the "separator", this is indicative that the value is null:_
 
 ```
 System.String.StrValue
@@ -1201,7 +1201,7 @@ System.String.StrValue
 
 ## <a name="impl-factory-entity-complex-complex" />Complex entities in text-form complex types
 
-For complex types have the following format:
+For complex types, we have the following format:
 
 ```
 [TypeName].[MemberName].EntityID
@@ -1211,7 +1211,7 @@ The square brackets indicate that the part is not mandatory, in the format above
 
 The second part should not exist for the entity that is located at the root of the expression, after all if she is at the root she has no father.
 
-From the second entity of the expression, the second part is mandatory and indicates the name of the Member that can be a property or a field.
+The second entity in the second part is mandatory and indicates the name of the Member that can be a property or a field.
 
 The next part is the ID of the entity in the graph. This ID must be an integer and it is she who ensures the possibility to use the same entity references in other parts of the graph.
 
@@ -1237,9 +1237,9 @@ Namespace.MyClass.MyProperty
 
 ## <a name="impl-factory-entity-complex-collections" />Complex entities in text form-Collections and arrays
 
-To create items in a collection or array is the name of the Member State the position of the item within square brackets:`[{position}]: Value`
+To create items in a collection or array, the name of the Member must be a position within the brackets:`[{position}]: Value`
 
-In the example below we will see how to create an array of integer by using the expression graph. Note that instead of the member name, use the brackets as indicative of a collection item.
+In the example below we will see how to create an array of integers using only graph expression. Note that instead of the member name, use the brackets as indicative of a collection item.
 
 ```csharp
 public void EntityFactory5()
@@ -1272,18 +1272,18 @@ ComplexEntityFactory(Type type, Entity root = null)
 ```
 
 * `type`: This parameter determines the type of the root entity.
-* `root`: This parameter determines which is the root entity. It is not mandatory, because this class is also used in deserialization and the root entity there is obtained.
+* `root`: This parameter determines which is the root entity. It is not mandatory, because this class is also used in deserialization where the root entity is obtained.
 
 We have some properties that will help in the creation and customization of the entities:
 
 * `IReadOnlyList<Entity> Entities`: Property that stores all the entities of the graph and without repeating them.
 * `bool IsTyped`: Property that indicates whether the creation has a defined type.
-* `IReadOnlyDictionary<Type, Type> MapTypes`: Property that contains the maps for interfaces or abstract classes, or even to concrete classes if you need to change a type on the other.
+* `IReadOnlyDictionary<Type, Type> MapTypes`: Property that contains the maps for interfaces or abstract classes, or even to concrete classes if necessary.
 * `IReadOnlyList<string> Errors`: Property that stores the errors.
 * `bool IgnoreErrors`: Property that indicates whether errors are ignored. Otherwise an exception will be sent.
 * `List<ITypeDiscovery> TypeDiscovery`: Property that contains a list of discovery classes.
-* `List<IValueLoader> ValueLoader`: Property that contains a list of classes to load values.
-* `List<IMemberInfoDiscovery> MemberInfoDiscovery`: Property that contains a list of classes for members.
+* `List<IValueLoader> ValueLoader`: Property that contains a list of classes to initialize values.
+* `List<IMemberInfoDiscovery> MemberInfoDiscovery`: Property that contains a list of classes to find members.
 * `List<ISetChild> SetChildAction`: Property that contains a list of classes that make the assignments of the daughters in the parent entities.
 * `Entity Root`: Property that indicates the root entity.
 * `Type RootType`: Property that indicates the type of the root entity.
@@ -1291,11 +1291,11 @@ We have some properties that will help in the creation and customization of the 
 
 Finally, we have some methods that are used when creating:
 
-* `ComplexEntityFactory Build()`: This method is responsible for generating the graph. He returns to his own class to maintain fluency.
+* `ComplexEntityFactory Build()`: This method is responsible for generating the graph. This method should return the class itself to maintain fluency.
 * `void AddMapType<TFrom, TTo>()`: This method must be used before the method `Build` and it determines the mapping of types.
 * `void AddError(string err)`
 
-There is also a variation of this class that allows you to work in a generic way and this facilitates the use of `Value` property that is already typed.
+There is also a variation of this class that allows you to work in a generic way and this facilitates the use of `Value` property which will already be with type set.
 
 ```csharp
 ComplexEntityFactory<T>()
@@ -1334,7 +1334,7 @@ ImplementAbstractAndInterface
 
 ## <a name="impl-factory-entity-complex-discovery-types" />Discoverers of types
 
-The discoverers of types has as main objective to find out the type of the entity. The property `TypeDiscovery` will be used to find the best Finder for each entity.
+The "discoverers of types ' main objective is to find out the type of the entity. The property `TypeDiscovery` will be used to find the best option for each entity.
 
 The discoverers of types must inherit from `ITypeDiscovery` interface and the method `CanDiscovery` is responsible for determining if the entity may or may not be discovered. When the method `CanDiscovery` returns `true` then the method `GetEntityType` is called and this is where the type of the entity is returned.
 
@@ -1346,18 +1346,18 @@ public interface ITypeDiscovery
 }
 ```
 
-The order of discovery is of extreme importance, because the latter will be used in the event of a tie-breaker, that is, three return `true` , the last one will be used.
+The order of discovery is of the utmost importance, since the last of the list will be used in the event of a tie, in other words, if three return `true` , the last on the list will be used.
 
-By default, we have some discoverers of types defined and all of them are already sorted on the property `TypeDiscovery` so don't act errors.
+By default, we have some discoverers of types defined and all of them are already sorted on the property `TypeDiscovery` to prevent errors.
 
 1. `DictionaryItemTypeDiscovery`: This class is responsible for finding out the type of an item in the dictionary. The method `CanDiscovery` checks whether the parent type is a dictionary, if it is, then the method `GetEntityType` will be called by returning the `KeyValuePair<,>` type.
-2. `MemberInfoTypeDiscovery`: This class is responsible for finding out the type of the Member. The method `CanDiscovery` checks whether the entity has a member set, if you have, then the method `GetEntityType` will be called to get the type of the Member.
+2. `MemberInfoTypeDiscovery`: This class is responsible for finding out the type of the Member. The method `CanDiscovery` checks if the entity contains a member name, if it does, then the method `GetEntityType` will be called to get the type of the Member.
 3. `ListItemTypeDiscovery`: This class is responsible for finding out the type of an item in a list. The method `CanDiscovery` checks whether the father is a type `IList` , if it is, then the method `GetEntityType` will be invoked to get the type of the list.
 4. `ArrayItemTypeDiscovery`: This class is responsible for finding out the type of an item in the array. The method `CanDiscovery` checks whether the parent type is an array, if it is, then the method `GetEntityType` will be invoked to get the type of the array.
 
 ## <a name="impl-factory-entity-complex-discovery-members" />Discoverers of members
 
-The discoverers of members aims to discover the entity member. The property `MemberInfoDiscovery` will be used to find the greatest discoverer of members of each entity.
+The "discoverers of members" aims to discover the entity member. The property `MemberInfoDiscovery` will be used to find the best option for members of each entity.
 
 The discoverers of members must inherit from `IMemberInfoDiscovery` interface and the method `CanDiscovery` is responsible for determining if the entity may or may not have your Member discovered. When the method `CanDiscovery` returns `true` then the method `GetMemberInfo` is called to return the `MemberInfo` .
 
@@ -1369,13 +1369,13 @@ public interface IMemberInfoDiscovery
 }
 ```
 
-By default, we have only one member set on the property Finder `MemberInfoDiscovery` .
+By default, we only have one class defined in: `MemberInfoDiscovery` .
 
 ```csharp
 class MemberInfoDiscovery : IMemberInfoDiscovery
 ```
 
-If you want to replace it, simply add a new member `MemberInfoDiscovery` Property Finder.
+If you want to replace it, just add a new class in the property `MemberInfoDiscovery` .
 
 Just make sure that the method `CanDiscovery` has the following implementation:
 
@@ -1394,13 +1394,13 @@ This code ensures that:
 1. `item.Factory.IsTyped`: There is a type defined for the root entity. It is from her that we found all kinds of graph.
 2. `item.Name != null`: There is a name for the Member
 3. `!item.Name.StartsWith(Constants.INDEXER_START)`: The name of the Member cannot be a positional representation of collections, that is, cannot start with `[` .
-4. `item.Parent.Type != null`: There is a type for the parent entity, that's more the name of the Member to obtain the type of the Member.
+4. `item.Parent.Type != null`: There is a type for the parent entity. It is with this type and member name that we obtain the type of the Member.
 
-## <a name="impl-factory-entity-complex-value-loaders" />Chargers of values
+## <a name="impl-factory-entity-complex-value-loaders" />Value initializers
 
-The Chargers of values aims to create primitive and complex entities. The property `ValueLoader` will be used to find the best value charger for each entity. Understand the term "value" as being the entity that will be created.
+The "values initializers" aims to create the primitive and complex entities. The property `ValueLoader` will be used to find the best option for each entity. Understand the term "value" as being the entity that will be created.
 
-The Chargers of values must inherit from `IValueLoader` interface and the method `CanLoad` is responsible for determining if the entity type may or may not be loaded. When the method `CanLoad` returns `true` then the method `GetValue` is called to get the value that will be the entity.
+The "values initializers" must inherit from `IValueLoader` interface and the method `CanLoad` is responsible for determining if the entity type may or may not be initialized. When the method `CanLoad` returns `true` then the method `GetValue` is called to get the value that will be the entity.
 
 ```csharp
 public interface IValueLoader
@@ -1410,24 +1410,24 @@ public interface IValueLoader
 }
 ```
 
-The order of the Chargers is extremely important, because the latter will be used in the event of a tie-breaker, that is, three return `true` , the last one will be used.
+The order of the "initializer" is of the utmost importance, since the last of the list will be used in the event of a tie, in other words, if three return `true` , the last on the list will be used.
 
-By default, we have some Chargers of values defined and all of them are already sorted on the property `ValueLoader` so don't act errors.
+By default, we have some "initializers of values" defined and all of them are already sorted on the property `ValueLoader` to prevent errors.
 
-1. `PrimitiveValueLoader`: This loader Initializes the primitive types.
-2. `ComplexEntityValueLoader`: This carries the Launcher complex types. If the type has a constructor that takes no parameters, then this constructor will be used, otherwise the instance will be created without calling the constructor, that is, using the `FormatterServices.GetUninitializedObject(typeof(T))` method. This charger is only used when the `ComplexEntityId` `Entity` class property is populated, i.e. If the entity has ID is because she is complex.
-3. `ArrayValueLoader`: This charger is used when the entity is independent of the number of array dimensions.
-4. `ExpandoObjectValueLoader`: This charger is used for anonymous types or `ExpandoObject` type.
+1. `PrimitiveValueLoader`: Initializes the primitive types.
+2. `ComplexEntityValueLoader`: Initializes the complex types. If the type has a constructor that takes no parameters, then this constructor will be used, otherwise the instance will be created without calling the constructor, that is, using the `FormatterServices.GetUninitializedObject(typeof(T))` method. This initializer is only used when the property `ComplexEntityId` is populated, i.e. If the entity has ID is because she is complex.
+3. `ArrayValueLoader`: This initializer is used when the entity is an array. Independent of the number of dimensions.
+4. `ExpandoObjectValueLoader`: This initializer is used for anonymous types or `ExpandoObject` type.
 
 **Important:**
 
 The `ExpandoObject` type will be used at all levels when the class `ComplexEntityFactory` does not have a defined type.
 
-## <a name="impl-factory-entity-complex-child-assign" />Atribuidores of children
+## <a name="impl-factory-entity-complex-child-assign" />Assignment of children
 
-The atribuidores of children is intended to add a child entity in your parent entity, i.e., assign a value in a parent instance member, or an item in a list for example. The property `SetChildAction` will be used to find the best allocator for each entity.
+The award is intended to add a child entity in your parent entity, i.e., assign a value in a parent instance member, or an item in a list for example. The property `SetChildAction` will be used to find the best option for each entity.
 
-The atribuidores of children must inherit from `ISetChild` interface and the method `CanSet` is responsible for determining whether the child item may or may not be attributed to the parent item. When the method `CanSet` returns `true` then the method `SetChild` will be called to do the assignment.
+A class that makes assignment of children must inherit from the `ISetChild` interface, and the method `CanSet` is responsible for determining whether the child item may or may not be attributed to the parent item. When the method `CanSet` returns `true` then the method `SetChild` will be called to do the assignment.
 
 ```csharp
 public interface ISetChild 
@@ -1437,19 +1437,19 @@ public interface ISetChild
 }
 ```
 
-The order of atribuidores is of extreme importance, because the latter will be used in the event of a tie-breaker, that is, three return `true` , the last one will be used.
+The order is of extreme importance, once the last of the list will be used in the event of a tie, in other words, if three return `true` , the last on the list will be used.
 
-By default, we have some atribuidores and they all are ordered on the property `SetChildAction` so don't act errors.
+By default, we have some classes of attribution set and all of them are already sorted on the property `SetChildAction` to prevent errors.
 
-1. `MemberInfoSetChild`: This will be used when the allocator daughter entity has a member set.
-2. `DictionarySetChild`: This will be used when the allocator parent entity for a dictionary and daughter have the member name started by the character `[` . This means that the child is an item and not a property of the parent entity.
-3. `ExpandoObjectSetChild`: This is used when the allocator parent entity is of type `ExpandoObject` .
-4. `ArraySetChild`: This is used when the allocator parent entity is of type `Array` and daughter have the member name started by the character `[` .
-5. `ListSetChild`: This is used when the allocator parent entity is of type `IList` and daughter have the member name started by the character `[` .
+1. `MemberInfoSetChild`: This class will be used when the child entity has a member set.
+2. `DictionarySetChild`: This class will be used when the parent entity is a dictionary and daughter have the member name started by the character `[` . This means that the child is an item and not a property of the parent entity.
+3. `ExpandoObjectSetChild`: This class is used when the parent entity is of type `ExpandoObject` .
+4. `ArraySetChild`: This class is used when the parent entity is of type `Array` and daughter have the member name started by the character `[` .
+5. `ListSetChild`: This class is used when the parent entity is of type `IList` and daughter have the member name started by the character `[` .
 
 # <a name="impl-serialization" />Serialization
 
-Serialization is the process of transformation of an entity to graph expression in text form. We split the serialization into two kinds: **circular entity serialization** and **serialization of complex entities**.
+Serialization is the process of transformation of entity to text. We split the serialization into two kinds: **circular entity serialization** and **serialization of complex entities**.
 
 That's interesting, because circular entities are simpler and require only a name to represent them, unlike complex entities that can contain several properties.
 
@@ -1457,11 +1457,11 @@ That's interesting, because circular entities are simpler and require only a nam
 
 Serialization of circular entities is made by `CircularEntityExpressionSerializer` class.
 
-This class inherits from the abstract class `ExpressionSerializerBase<T>` which has the responsibility to write the mathematical basis of a graph expression either circular or complex. This is done by the method `Serialize()` . He is responsible for creating the parentheses, adding the characters of sum and etc.
+This class inherits from the abstract class `ExpressionSerializerBase<T>` which has the responsibility to write the mathematical basis of a graph. This is done by the method `Serialize()` . He is responsible for creating the parentheses, add "+" characters among other things.
 
-The class `CircularEntityExpressionSerializer` to implement this base class must override the method `SerializeItem` that is responsible for serializing each item of expression.
+The class `CircularEntityExpressionSerializer` overrides the method `SerializeItem` that is responsible for serializing each item of expression.
 
-The constructor requires 2 parameters are passed:
+The constructor requires two parameters:
 
 ```csharp
 CircularEntityExpressionSerializer(Expression<T> expression, Func<T, object> entityNameCallback)
@@ -1499,12 +1499,12 @@ A + B + (C + D)
 Some properties of customizations can be used before the serialization. All these properties are in the base class, that is, they apply to complex expressions too.
 
 * `bool EncloseParenthesisInRoot`: This property determines if there is a root entity encompassing parentheses, the default is to not exist.
-* `bool ForceQuoteEvenWhenValidIdentified`: This property forces the use of quotation marks even when the name of the entity is a valid name. We consider a valid name that does not contain spaces or special characters that the language `C#` does not support in variable names. Names that reference terms reserved the `C#` are also considered invalid, for example: `bool` , `while` and etc. If a name is invalid then the use of quotation marks will be used, if a name is valid then the use of quotation marks will depend on the value of this property.
+* `bool ForceQuoteEvenWhenValidIdentified`: This property forces the use of quotation marks even when the name of the entity is a valid name. A valid name cannot contain spaces or special characters that the language `C#` does not support in variable names. Names that reference terms reserved the `C#` are also considered invalid, for example: `bool` , `while` and etc. If a name is invalid then the use of quotation marks will be used, if a name is valid then the use of quotation marks will depend on the value of this property.
   * `true`: Forces the use of quotation marks even for valid names
   * `false`: Displays the quotes only for invalid names. This is the default value of this property.
 * `IValueFormatter ValueFormatter`: This property indicates what will be the value formatter for each item of expression, by default we only have two, but is it possible to create a custom formatter using the interface `IValueFormatter` .
   * `DefaultValueFormatter`: This formatter is used as the default for any primitive type.
-    * To date the pattern used is`yyyy-MM-ddTHH:mm:ss.fffzzz`
+    * The types of "date" will have the following format:`yyyy-MM-ddTHH:mm:ss.fffzzz`
     * For Boolean types the default will be`true|false`
     * Other types will be converted to text using the culture: `CultureInfo.InvariantCulture` .
   * `TruncateFormatter`: This formatter can be used when the name of the entity is too large and need to truncate it. This means that many big names will be reduced according to the specified size. This formatter can only be applied to types of texts ( `string` ).
@@ -1539,9 +1539,9 @@ The output below shows how was our customization, note that the name `BigName` w
 ("A" + "B" + ("C" + "Big"))
 ```
 
-Finally, we highlight that when an expression is created using the method `AsExpression(c => c.Children)` , we have `DefaultSerialize` an instance of the property class pre-configured `CircularEntityExpressionSerializer<T>` .
+Finally, we highlight that when an expression is created using the method `AsExpression(c => c.Children)` , we will have on `DefaultSerialize` property a pre-configured instance of class: `CircularEntityExpressionSerializer<T>` .
 
-However, this property returns the type of `ISerialize<T>` interface being necessary to do the conversion for the circular serializer or use the method below that will do the conversion for you:
+However, this property returns the type of interface: `ISerialize<T>` . Therefore, you must cast to the circular or serializer using the method below that will do the conversion for you:
 
 ```csharp
 expression.GetSerializer<CircularEntityExpressionSerializer<CircularEntity>>();
@@ -1553,7 +1553,7 @@ Serialization of complex entities is made by the class `ComplexEntityExpressionS
 
 This class inherits from the abstract class `ExpressionSerializerBase<object>` which has the responsibility to write the mathematical basis of a graph expression either circular or complex. This is done by the method `Serialize()` . He is responsible for creating the parentheses, adding the characters of sum and etc.
 
-The class `ComplexEntityExpressionSerializer` to implement this base class must override the method `SerializeItem` that is responsible for serializing each item of expression.
+The class `ComplexEntityExpressionSerializer` overrides the method `SerializeItem` that is responsible for serializing each item of expression.
 
 The constructor requires to be passed an instance of an expression.
 
@@ -1596,7 +1596,7 @@ Some properties of customizations can be used before the serialization:
 * `bool EncloseParenthesisInRoot`: Has the same function of the circular expressions.
 * `bool ForceQuoteEvenWhenValidIdentified`: Has the same function of the circular expressions.
 * `IValueFormatter ValueFormatter`: Has the same function of the circular expressions.
-* `GetEntityIdCallback`: Property that returns the ID of an entity, by default, we use the method `GetHashCode()` of his own `C#` .
+* `GetEntityIdCallback`: Property that returns the ID of an entity, by default, use the method `GetHashCode()` .
 * `ItemsSerialize`: Property that contains a list of the interface `IEntitySerialize` . This property is the main alternative to customize the serialization and see that in the next topics.
 * `ShowType`: Determines how will be the display of type in each item of expression
   * `None`: Does not display the type for any item.
@@ -1635,7 +1635,7 @@ The output below shows how was our customization, note that the value of the `E`
 ("<>f__AnonymousType0`5.-438126044" + "String.A: A" + "String.B: B" + "String.C: C" + "String.D: D" + "String.E: BIG")
 ```
 
-We highlight that when an expression is created using the method `AsExpression()` , we have `DefaultSerialize` an instance of the property class pre-configured `ComplexEntityExpressionSerializer<T>` .
+Finally, we highlight that when an expression is created using the method `AsExpression()` , we will have on `DefaultSerialize` property a pre-configured instance of class: `ComplexEntityExpressionSerializer<T>` .
 
 ### <a name="impl-serialization-complex-itens-serialize" />Customizing the serialization of the items
 
@@ -1653,18 +1653,22 @@ public interface IEntitySerialize
 }
 ```
 
-The order of serialization items is extremely important, because the last serializer will be used in the event of a tie-breaker, that is, if three serializers return `true` , the last one will be used.
+The order of serialization items is of the utmost importance, since the last of the list will be used in the event of a tie, in other words, if three return `true` , the last on the list will be used.
 
-By default, we have some serializers to items set and all of them are already sorted on the property `ItemsSerialize` so don't act serialization errors.
+By default, we have some serializers are defined and all of them are already sorted on the property `ItemsSerialize` to prevent errors.
 
 1. `ObjectSerialize`: Is the default serialization class, if no other is found, this will be used. It returns the entity type and the value `null` for the property `ContainerName` .
-2. `PropertySerialize`: This class is used for items that derive from the properties. The type of the property and your name to return.
-3. `FieldSerialize`: This class is used for items that are derived from the fields. The type of the field and your name to return.
-4. `ArrayItemSerialize`: This class is used for items that derive from arrays. She returns in `ContainerName` the position property of the item in the array of the form:`[{position1},{position2}]`
+2. `PropertySerialize`: This class is used for items that derive from the properties. The type of the property and your name will be used.
+3. `FieldSerialize`: This class is used for items that are derived from the fields. The type of the field and your name will be used.
+4. `ArrayItemSerialize`: This class is used for items that derive from `array` . She returns in `ContainerName` the position property of the item in the form:`[{position1},{position2}]`
 5. `DynamicItemSerialize`: This class is used for items that derive from dynamic classes.
-6. `CollectionItemSerialize`: This class is used for items that derive from Collections. She returns in `ContainerName` the position property of the item in the collection in the format:`[{position1},{position2}]`
+6. `CollectionItemSerialize`: This class is used for items that derive from Collections. She returns in `ContainerName` the position property in the format:`[{position1},{position2}]`
 
-In the following example we will see the creation of a new member named reader `MethodReader` that will be responsible for reading the method `HelloWorld` and create a new entity type in the expression called `MethodEntity` . Based on this new type of entity we create a serializer called `MethodSerialize` which will have the function to serialize the items of `MethodEntity` types: format `MethodName(parameters)` :
+In the following example we will see the creation of a new member named reader `MethodReader` that will be responsible for reading the method `HelloWorld` and create a new entity type in the expression called `MethodEntity` . Based on this new type of entity we create a serializer called `MethodSerialize` which will have the function to serialize the new type to the following format:
+
+```
+MethodName(parameters)
+```
 
 ```csharp
 public void SerializationComplex3()
@@ -1745,9 +1749,9 @@ The output shows that the new methods serializer displayed the name of the metho
 
 # <a name="impl-deserialization" />Deserialization
 
-Deserialization is the process of transformation of graph expression in the form of text to a specified entity. We split it up deserialization into two types: **deserialization circular entity** and **deserialization of complex entities**.
+Deserialization is the process of transformation of a text to a specified entity. We split it up deserialization into two types: **deserialization circular entity** and **deserialization of complex entities**.
 
-The deserialization process uses as a basis the `Roslyn` `C#` language compiler. This has pros and cons.
+The deserialization process uses as a base the compiler `Roslyn` . This has pros and cons.
 
 The good part is that we don't have to reimplement the reading of mathematical expressions, because with the Roslyn is possible convert `string` , which is a mathematical expression, in a `SystaxTree` and do the build for a mathematical expression.
 
@@ -1759,13 +1763,13 @@ The downside of this approach is that there is a slowness in this process in you
 
 ## <a name="impl-deserialization-circular" />Deserialization circular
 
-Deserialization of circular entities is made by the class `CircularEntityExpressionDeserializer<T>` . The method `Deserialize` is responsible for deserializing. There are a few variations of this method, and each one has your utility:
+Deserialization of circular entities is made by the class `CircularEntityExpressionDeserializer<T>` . The method `Deserialize` is responsible for deserializing. There are a few variations of this method:
 
-The inferred type `T` must contain an `+` operator overload, because it is this operator that your logic is going to sum or subtract.
+The inferred type `T` must contain an `+` operator overload, because that is the operator that the logic of the sum or subtraction will be contained.
 
 **1)** the first method requires only the expression in text form. Based on this expression and the inferred type in `CircularEntityExpressionDeserializer` class it is possible to make deserialization. There are two variants of this method, a synchronous and another asynchronously.
 
-The inferred type must have a parameter in your `string` type's constructor. This parameter is the name of the entity.
+The inferred type must have (necessarily) a parameter in your constructor of type: `string` . This parameter is the name of the entity.
 
 ```csharp
 public T Deserialize(string expression);
@@ -1816,14 +1820,14 @@ C
 D
 ```
 
-**2)** the second overload of this method requires the expression and a method that is the circular entity, i.e. with this overload to your circular class need not necessarily have a constructor with a parameter of type `string` , for who will the creation of class will be this method. There are two variants of this method, a synchronous and another asynchronously.
+**2)** the second overload requires the expression and a method that is the "circular entity factory", that is, with this overload to your circular class does not need to be forced to have a constructor with a parameter, since the creation of the class will be made in this method. There are two variants of this method, a synchronous and another asynchronously.
 
 ```csharp
 public T Deserialize(string expression, Func<string, T> createEntityCallback);
 public async Task<T> DeserializeAsync(string expression, Func<string, T> createEntityCallback);
 ```
 
-**3)** the third overload of this method requires the expression and an instance of the class `CircularEntityFactory<T>` . This class can be used to enhance an expression in the form of `string` . That means you can create functions in this class and use it in the expression in text form. There are two variants of this method, a synchronous and another asynchronously.
+**3)** the third overload of this method requires the expression and an instance of the class `CircularEntityFactory<T>` . This class allows custom functions are used in the expression in text form. There are two variants of this method, a synchronous and another asynchronously.
 
 ```csharp
 public T Deserialize(string expression, CircularEntityFactory<T> factory);
@@ -1863,7 +1867,7 @@ my entity name2
 
 ## <a name="impl-deserialization-complex" />Deserialization complex
 
-Deserialization of complex entities is made by the class `ComplexEntityExpressionDeserializer` . The method `Deserialize` is responsible for deserializing. There are a few variations of this method, and each one has your utility:
+Deserialization of complex entities is made by the class `ComplexEntityExpressionDeserializer` . The method `Deserialize` is responsible for deserializing. There are a few variations of this method:
 
 **1)** the first method requires only the expression in text form. Based on this expression and the inferred type in the method `Deserialize` it is possible to make deserialization. There are two variants of this method, a synchronous and another asynchronously.
 
@@ -1886,14 +1890,14 @@ public void DeserializationComplex1()
 }
 ```
 
-**2)** the second method has the same purpose of the first, the only difference is that the guy won't be inferred in the method and the `type` parameter:
+**2)** the second method has the same purpose of the first method, the only difference is that the guy won't be inferred in the method and the `type` parameter:
 
 ```csharp
 public object Deserialize(string expression, Type type = null);
 public async Task<object> DeserializeAsync(string expression, Type type = null);
 ```
 
-**3)** the third method receives the parameter `factory` , this parameter should be used if you need some customization in the creation of complex entities. In short, this process is exactly the same as the topic [Creating complex entities with graph and mathematical expression](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex). Internally, the compiler will transform each item of expression in the class `Entity` and then follow the same steps that we've seen in this topic:
+**3)** the third method receives the parameter `factory` , this parameter should be used if you need some customization in the creation of complex entities. In short, this process is exactly the same as the process of the topic [Creating complex entities with graph and mathematical expression](https://github.com/juniorgasparotto/GraphExpression#impl-factory-entity-complex). Internally, the compiler will transform each item of expression in the class `Entity` and then follow the same steps that we've seen in this topic:
 
 ```csharp
 public T Deserialize<T>(string expression, ComplexEntityFactory factory);
@@ -1909,16 +1913,16 @@ public async Task<object> DeserializeAsync(string expression, ComplexEntityFacto
 
 # <a name="impl-graph-info" />Information from the graph of an entity
 
-`Expression<T>`Classes and `EntityItem<T>` bring some information of graph theory to help understand a little the relationship between the entities.
+Classes: `Expression<T>` and `EntityItem<T>` bring some information of graph theory to help understand a little the relationship between the entities.
 
-The class `Expression<T>` back to `Graph` property that isolates the General information of the graph, it contains the following properties and definitions:
+**1)** `Expression<T>` : Contains the property `Graph` that isolates the General information of the graph, it contains the following properties and definitions:
 
 * `IReadOnlyList<Edge<T>> Edges`: This property contains all the edges of the graph.
   * `class Edge<T>`: This class represents a connection between two entities (A and B), we have some properties and a method that help extract some information.
-    * `decimal Weight`: Determines the weight, if necessary, make filling her after the creation of the expression.
-    * `EntityItem<T> Source`: Determines the parent item's link
-    * `EntityItem<T> Target`: Determines the item child binding
-    * `IsLoop`: Determines if the `Source` equals `Target` , if that call is in looping.
+    * `decimal Weight`: Determines the weight of the edge, if necessary, do the padding after the creation of the expression.
+    * `EntityItem<T> Source`: Determines the parent item of the edge
+    * `EntityItem<T> Target`: Determines the child item of the edge
+    * `IsLoop`: Determines if the `Source` equals `Target` , if yes, this edge is in looping.
     * `bool IsAntiparallel(Edge<T> compare)`: Determines if two edges are antiparallel, meaning if an edge compared to the other has the same entities, however, in reverse order:
       * `A -> B`
       * `B -> A`
@@ -1936,26 +1940,26 @@ The class `Expression<T>` back to `Graph` property that isolates the General inf
     * `bool IsSource`: Checks if the vertex is the root of the graph.
     * `bool IsIsolated`: Checks if the vertex does not contain father and no children, that is, it is a root item.
 * `IReadOnlyList<Path<T>> Paths`: Contains a list of all the paths end of graph
-  * `class Path<T>`: Represents a way that part of the root to get at the apex
-    * `IEnumerable<EntityItem<T>> Items`: Lists all the items in the path from the root item until the item of the instance.
-    * `string Identity`: This is the identification of the way, this ID uses the `Id` of each vertex and útiliza the following pattern:
-      * Format: [id-root]. [id-parent]. [instance-id]
-      * Example: [0]. [1]. [2]
+  * `class Path<T>`: Represents a path that starts at the root and goes up to the vertex.
+    * `IEnumerable<EntityItem<T>> Items`: Lists all the items in the path that begins at the root to the vertex.
+    * `string Identity`: This is the identification of the way, this ID uses the `Id` of each vertex and use the following pattern:
+      * Format:`[id-root].[id-parent].[id-instance]`
+      * Example:`[0].[1].[2]`
     * `PathType PathType`: Determines the type of the path
-      * `Circuit`: Occurs when the root vertex is equal to the vertex instance
-      * `Circle`: Occurs when the parent vertex is equal to the vertex of the instance
+      * `Circuit`: Occurs when the root vertex is equal to the current vertex.
+      * `Circle`: Occurs when the parent vertex is equal to the current vertex.
       * `Simple`: Is default type, i.e. when it is not and not circular circuit
-    * `bool ContainsPath(Path<T> pathTest)`: Checks whether a path exists within the path of the instance. Basically, this method makes a comparison between strings used the property `Identity` , that is, if a path contain the ID of another way is because this path is contained in another.
-      * Way 1: [0]. [1]. [2]. [3]
-      * Way 2: [2]. [3]
-      * The way 2 is contained in 1 path using only a strings:
+    * `bool ContainsPath(Path<T> pathTest)`: Checks whether a path exists within the path of the instance. Basically, this method makes a comparison at the property `Identity` of the two paths, i.e. If a path contain the ID of the other path is because this path is contained in another. Example:
+      * `Path 1`:`[0].[1].[2].[3]`
+      * `Path 2`:`[2].[3]`
+      * Using text comparison, we see that the second path is contained in the first path:
         * `"[0].[1].[2].[3]".Constains("[2].[3]") = true`
 
-The class `EntityItem<T>` behind the following properties:
+**2)** `EntityItem<T>` : Contains the following properties:
 
-* `Vertex<T> Vertex`: Represents the apex of the item
-* `Edge<T> Edge`: Represents the edge of the item
-* `Path<T> Path`: Represents the path of the item
+* `Vertex<T> Vertex`: Represents the apex of the item of expression.
+* `Edge<T> Edge`: Represents the edge of the item of expression.
+* `Path<T> Path`: Represents the path of the item in the item of expression.
 
 In the example below we display the main information of the graph. We're not going to show all the information, since many are self explanatory:
 
@@ -1990,14 +1994,14 @@ A, C
 C, D
 ```
 
-The second output we see all paths end of graph, i.e. from root to ends:
+The second output, we see all the paths end of graph, i.e. from root to ends:
 
 ```
 [A].[B]
 [A].[C].[D]
 ```
 
-The third exit see all paths of all items:
+At the third exit, we see all the paths of all items:
 
 ```
 A => [A]
@@ -2046,7 +2050,7 @@ public void GraphRemoveCoexistents()
 }
 ```
 
-The first output shows how did the `A` graph:
+The first exit, we see the `A` graph:
 
 ```
 -> A: HashCode: 32854180
@@ -2054,7 +2058,7 @@ The first output shows how did the `A` graph:
 [A].[C].[D]
 ```
 
-The second output shows as was the `B` graph:
+The second output, see the `B` graph:
 
 ```
 -> B: HashCode: 27252167
@@ -2062,7 +2066,7 @@ The second output shows as was the `B` graph:
 
 ```
 
-The third output shows which graphs are left after removing the coexistence. As the `A` graph contained the `C` graph, so only he's left:
+The third output shows which graph were maintained after removal of coexistence. As the `A` graph contained the `C` graph, then only the `A` graph was maintained.
 
 ```
 -> HashCode not duplicates: 32854180
@@ -2089,7 +2093,7 @@ I plan in the future to remove this static property and exchange it for an insta
 
 ## Disabling the graph information
 
-The property `GraphExpression.Expression<T>.EnableGraphInfo` determines whether the collection of information from graphs or not connected. By default it is on, but performance issues, it is possible to disable her holistically.
+The property `GraphExpression.Expression<T>.EnableGraphInfo` determines whether the graph information collection is enabled. By default it is on, but performance issues, you can disable it.
 
 Recalling that by doing this, all the information of the graphs will be nil.
 

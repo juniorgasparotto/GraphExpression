@@ -5,13 +5,13 @@
 ![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
-# <a name="concept" />expressão de grafo
+# <a name="concept" />Expressão de grafo
 
 O conceito de **expressão de grafo** foi criado em 2015 por _Glauber Donizeti Gasparotto Junior_ e tem como objetivo a representação de um grafo em forma de expressão matemática.
 
-O conceito tem como objetivo explorar os benefícios de uma expressão matemática trocando os números por entidades. Com isso, podemos criar uma nova maneira de transportar dados e, principalmente, criar um novo meio de pesquisa transversal em grafos complexos ou circulares.
+O conceito tem como objetivo explorar os benefícios de uma expressão matemática trocando os números por entidades. Com isso, podemos criar uma nova maneira de transportar dados e principalmente criar um novo meio de pesquisa em grafos complexos ou circulares.
 
-É importante destacar que o conceito como um todo não tem o objetivo de ser performático ou ser melhor ou pior que outros já existentes. O objetivo é ser apenas uma nova forma de enxergar um grafo e suas informações.
+É importante destacar que o conceito não tem o objetivo de ser melhor ou pior que outros já existentes. O objetivo é ser apenas uma nova forma de ver um grafo e suas informações.
 
 # <a name="index" />Índice
 
@@ -33,14 +33,14 @@ O conceito tem como objetivo explorar os benefícios de uma expressão matemáti
 * [Informações de uma ocorrência](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-info)
   * [Níveis](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#levels)
   * [Índices](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#indexes)
-  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-next)
-  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-previous)
+  * [Navegação para a direita](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-next)
+  * [Navegação para a esquerda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-previous)
 * [Normalizando expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-formatters)
   * [Normalização - tipo 1](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-1)
   * [Normalização - tipo 2](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-2)
   * [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3)
 * [Desnormalizando expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#desnormalization)
-* [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search)
+* [Pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search)
     * [Matriz de informação](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-matrix-of-information)
   * [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep)
   * [Pesquisa superficial](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-surface)
@@ -56,7 +56,7 @@ O conceito tem como objetivo explorar os benefícios de uma expressão matemáti
     * [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-descendants)
     * [Encontrando os filhos de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-children)
     * [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-ascending)
-    * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parent)
+    * [Encontrando o pai de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parent)
 * [Implementações](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation)
   * [Criando grafos com expressão de grafo](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-graph)
   * [Convertendo uma matriz de informação para expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#implementation-to-expression)
@@ -64,9 +64,9 @@ O conceito tem como objetivo explorar os benefícios de uma expressão matemáti
 
 # <a name="intro" />Compreendendo uma expressão de grafo
 
-Uma expressão de grafo é composta por 4 elementos básicos e diversas informações que vamos detalhar nesse documento.
+Uma expressão de grafo é composta por 4 elementos básicos e diversas informações que veremos nesse documento.
 
-**expressão de grafo - Exemplo:**
+**Exemplo 1:**
 
 ```
 (A + B + C + D)
@@ -75,15 +75,15 @@ Uma expressão de grafo é composta por 4 elementos básicos e diversas informa�
 Os elementos que compõe uma expressão são:
 
 * **Entidade**: É o elemento fundamental da expressão, determina uma unidade, um vértice na teoria de grafo.
-  * São únicos, mas podem aparecer `N` vezes na expressão em diferentes posições.
-  * São representados por um literal, no caso acima, as letras: `A`, `B`, `C` e `D`.
-* **Operador de soma `+`**: É o elemento que adiciona uma entidade em outra entidade.
-  * Fazendo uma analogia com a teoria de grafos, o operador de `+` pode ser visto como uma **aresta**.
-* **Operador de subtração `-`**: É o elemento que remove uma entidade de outra entidade.
-* **Parenteses `(` e `)`**: São usados para determinar um grupo de entidades filhas de uma determina entidade.
-  * Em expressão de grafo são denominados: **Grupo de expressão**.
+  * São únicos, mas podem aparecer "N" vezes na expressão e em diferentes posições.
+  * São representados por um literal, no caso acima, as letras: "A", "B", "C" e "D".
+* **Operador de soma**: É o elemento que adiciona uma entidade em outra entidade.
+  * Fazendo uma analogia com a teoria de grafos, o operador de "+" pode ser visto como uma **aresta**.
+* **Operador de subtração**: É o elemento que remove uma entidade de outra entidade.
+* **Parenteses**: São usados para agrupar as entidades filhas de uma determina entidade.
+  * Em expressão de grafo, são denominados: **Grupo de Expressão**.
 
-Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas uma nas outras. Além disso, o objetivo do resultado tem suas diferenças.
+Esses elementos, são os mesmos de uma expressão matemática, a diferença é que no lugar de números teremos entidades que vão ser adicionas ou removidas. Além disso, o objetivo do resultado tem suas diferenças.
 
 Essa expressão representa o seguinte grafo:
 
@@ -110,7 +110,7 @@ A
 ----B
 ```
 
-**Exemplo composto (Etapas simbólicas da resolução):**
+**Exemplo complexo (Etapas simbólicas da resolução):**
 
 1. `(A + B + C + D)`
 2. `(A + C + D)`
@@ -126,7 +126,7 @@ A
 ----D
 ```
 
-Vimos que a cada etapa da resolução de uma expressão a entidade da direita desaparece e a entidade da esquerda prevalece até não restarem entidades a sua direita.
+Vimos que a cada etapa da resolução a entidade da "direita" desaparece e a entidade da "esquerda" prevalece até não restarem entidades a sua direita.
 
 É óbvio que a cada etapa da resolução a entidade da esquerda é alterada internamente, ela adiciona a entidade da direita.
 
@@ -138,11 +138,11 @@ Em um grafo, as entidades são únicas, porém elas podem estar em vários lugar
 (A + (B + C + A) + C)
 ```
 
-Note que na expressão acima as entidades `A` e `C` estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição. Veremos isso no tópico [Informações de uma ocorrência](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-info).
+Note que as entidades "A" e "C" estão repetidas. Elas representam a mesma entidade, porém em posições diferentes. Cada ocorrência contém algumas informações que são únicas daquela posição. Veremos isso no tópico [Informações de uma ocorrência](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-info).
 
 ## <a name="intro-plus" />Operador de soma
 
-A operação de soma usa o operador `+`, como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafo, dizemos que a entidade da esquerda adiciona a entidade da direita e sem limitações, por exemplo:
+A operação de soma usa o operador "+", como dito, ela funciona como uma aresta que liga um vértice a outro vértice. Em expressão de grafo, dizemos que a entidade da "esquerda" adiciona a entidade da "direita" e sem restrições, por exemplo:
 
 * A entidade da esquerda pode adicionar a sí mesma quantas vezes for preciso:
 
@@ -155,7 +155,7 @@ Graph:
             ----A
 ```
 
-* A entidade `X` pode adicionar a entidade `Y` e a entidade `Y` pode adicionar a entidade `X` quantas vezes for necessário.
+* A entidade "X" pode adicionar a entidade "Y" e a entidade "Y" pode adicionar a entidade "X" quantas vezes for necessário.
 
 ```
 Expression: X + (Y + X + X) + Y
@@ -169,11 +169,11 @@ Graph:
 
 ## <a name="intro-subtract" />Operador de subtração
 
-A operação de subtração usa o operador `-`. Em expressão de grafo, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha.
+A operação de subtração usa o operador "-". Em expressão de grafo, dizemos que a entidade da esquerda remove a entidade da direita fazendo com que a entidade da direita deixe de ser sua filha.
 
-A cada operação de subtração apenas uma ocorrência será removida por vez, mesmo que a entidade da esquerda tenha mais de uma filha da mesma entidade. Por exemplo:
+Para cada operação de subtração, apenas uma ocorrência será removida por vez, mesmo se a entidade à esquerda tiver mais de uma filha da mesma entidade. Por exemplo:
 
-* A entidade da esquerda remove uma das filhas `B`
+* A entidade da esquerda remove uma das filhas "B"
 
 ```
 Graph 1:
@@ -190,7 +190,7 @@ Graph 2:
             ----B
 ```
 
-Note que uma das ocorrências da entidade `B` foi removida da entidade `A`. Com base no mesmo exemplo, se quiséssemos remover todas as ocorrências da entidade `B` teríamos que fazer a operação de subtração 3 vezes, que é equivalente a quantidade de vezes que entidade `B` existe dentro da entidade `A`.
+Note que uma das ocorrências da entidade "B" foi removida da entidade "A". Com base no mesmo exemplo, se quiséssemos remover todas as ocorrências da entidade "B" teríamos que fazer a operação de subtração 3 vezes, que é equivalente a quantidade de vezes que entidade "B" existe dentro da entidade "A".
 
 Ainda é possível misturar as operações de soma e subtração.
 
@@ -209,7 +209,7 @@ Graph 2:
                 ----Y
 ```
 
-Nesse exemplo, removemos todas as ocorrências da entidade `B` da entidade `A` e adicionamos uma nova filha `C` que contém a entidade `Y`.
+Nesse exemplo, removemos todas as ocorrências da entidade "B" da entidade "A" e adicionamos uma nova filha ("C") que contém a entidade "Y".
 
 ## <a name="expression-group" />Grupo de expressão
 
@@ -223,7 +223,7 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 (A + B + C)
 ```
 
-* A entidade `A` é a entidade pai de seu grupo de expressão e a entidade `B` e `C` são suas filhas.
+* A entidade "A" é a entidade pai de seu grupo de expressão e a entidade "B" e "C" são suas filhas.
 
 **Exemplo 2:**
 
@@ -231,8 +231,8 @@ A primeira entidade do grupo de expressão (após abrir parenteses) determina a 
 (A + B + (C + D))
 ```
 
-* A entidade `A` é a entidade pai de seu grupo de expressão e a entidade `B` e `C` são suas filhas.
-* A entidade `C` é a entidade pai de seu grupo de expressão e a entidade `D` é sua filha.
+* A entidade "A" é a entidade pai de seu grupo de expressão e a entidade "B" e "C" são suas filhas.
+* A entidade "C" é a entidade pai de seu grupo de expressão e a entidade "D" é sua filha.
 
 ### <a name="expression-group-root" />Grupo de expressão raiz
 
@@ -256,7 +256,7 @@ Um grupo de expressão pode conter outros grupos de expressão dentro dele e a l
 
 `(A + B + (C + D))`
 
-Nesse exemplo a entidade `A` será pai das entidades `B` e `C` e a entidade `C` será pai da entidade `D`.
+Nesse exemplo a entidade "A" será pai das entidades "B" e "C" e a entidade "C" será pai da entidade "D".
 
 ### <a name="entity-declaration" />Declarações de entidades
 
@@ -264,15 +264,15 @@ Chamamos de "**declaração**" o primeiro momento em que uma entidade é escrita
 
 Caso essa entidade contenha filhos devemos declarar todo o seu grupo de expressão no mesmo momento, ou seja, adicionando seus filhos dentro dos parenteses.
 
-Não existe uma obrigatoriedade para a declaração do grupo de expressão ser na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira mais rápida.
+Não existe uma obrigatoriedade para a declaração do grupo na primeira ocorrência, mas isso ajuda a simplificar a descoberta de algumas informações de uma maneira mais rápida.
 
-Por exemplo, para descobrir se a entidade `B` contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em qual das ocorrências o seu grupo de expressão foi declarado.
+Por exemplo, para descobrir se a entidade "B" contém filhos na expressão a seguir, será necessário verificar todas as suas ocorrências, pois não é possível dizer em quais ocorrências o seu grupo foi declarado.
 
 ```
 A + B + (C + (B + D)) + B
 ```
 
-Agora, se soubermos que os grupos de expressões foram escritos sempre nas primeiras ocorrências, então podemos verificar apenas a primeira ocorrência da entidade `B` para saber se ela contém ou não filhos:
+Agora, se soubermos que os grupos de expressões foram escritos sempre nas primeiras ocorrências, então podemos verificar apenas a primeira ocorrência da entidade "B" para saber se ela contém ou não filhos:
 
 ```
 A + (B + D) + (C + B) + B
@@ -280,7 +280,7 @@ A + (B + D) + (C + B) + B
 
 ### <a name="expression-group-repeat" />Repetições de grupo de expressão
 
-Um grupo de expressão não pode ser redeclarado na próxima vez que a entidade pai do grupo for utilizada.
+Um grupo de expressão não pode ser declarado mais de uma vez na expressão.
 
 Por exemplo:
 
@@ -288,8 +288,8 @@ Por exemplo:
 A + B + (C + D + E) + (I + C)
 ```
 
-* A entidade `C` tem os filhos `D` e `E`
-* A entidade `I` tem como filha a entidade `C`, porém não é necessário redeclarar as entidades filhas de `C`.
+* A entidade "C" tem os filhos "D" e "E"
+* A entidade "I" tem como filha a entidade "C", porém não é necessário redeclarar as entidades filhas de "C".
 
 **Errado:**
 
@@ -299,14 +299,14 @@ A + B + (C + D + E) + (I + (C + D + E))
 
 ### <a name="entity-parent" />Entidade pai
 
-A entidade pai é a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo.
+A entidade pai é sempre a primeira do grupo de expressão, ela que dá origem ao grafo daquele grupo.
 
 Por exemplo:
 
 `(A + B + (C + D))`
 
-* Nesse exemplo, temos duas entidades pai: `A` e `C`.
-* O elemento `+` é utilizado como simbolo de atribuição de uma entidade filha em seu pai.
+* Nesse exemplo, temos duas entidades pai: "A" e "C".
+* O elemento "+" é utilizado como simbolo de atribuição de uma entidade (filho) em outra entidade (pai).
 
 ## <a name="entity-root" />Entidade raiz
 
@@ -316,7 +316,7 @@ A primeira entidade da expressão é a **entidade raiz** da expressão. Uma expr
 A + B + (C + A)
 ```
 
-* A entidade `A` é a entidade raiz de toda expressão acima e será o topo do grafo.
+* A entidade "A" é a entidade raiz da expressão e será o topo do grafo.
 
 ## <a name="entity-final" />Entidade final
 
@@ -328,7 +328,7 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 (A + B + C + (D + E))
 ```
 
-* As entidades `B`, `C` e `E` são entidades finais.
+* As entidades "B", "C" e "E" são entidades finais.
 
 **Entidade final com filhos:**
 
@@ -336,8 +336,8 @@ Uma entidade que não possui grupos de expressão em seu nível é chamada de **
 (A + (B + C) + (D + B))
 ```
 
-* A entidade `C` é final e não contém filhos
-* A última ocorrência da entidade `B`, do grupo de expressão da entidade `D`, também é final, mas ela contém filhos.
+* A entidade "C" é final e não contém filhos
+* A última ocorrência da entidade "B", do grupo de expressão da entidade "D", também é final, mas ela contém filhos.
 
 ## <a name="paths" />Caminhos
 
@@ -347,17 +347,17 @@ Toda entidade contém um caminho que deve ser percorrido até chegar em sua posi
 A.B.C.D
 ```
 
-Essa notação indica a localização da entidade `D` dentro da expressão abaixo:
+Essa notação indica a localização da entidade "D" dentro da expressão abaixo:
 
 ```
 A + (B + (C + D))
 ```
 
-* A entidade `D` é filha da entidade `C`
-* A entidade `C` é filha da entidade `B`
-* A entidade `B` é filha da entidade `A`
+* A entidade "D" é filha da entidade "C"
+* A entidade "C" é filha da entidade "B"
+* A entidade "B" é filha da entidade "A"
 
-A notação utiliza o caractere `.` entre a entidade pai e a entidade filha. A entidade da esquerda será a pai e a entidade da direita será a filha.
+A notação utiliza o caractere "." entre a entidade pai e a entidade filho. A entidade da esquerda será a pai e a entidade da direita será o filho.
 
 **Outras exemplos:**
 
@@ -381,7 +381,7 @@ _Caminhos da entidade `B`:_
 
 ### <a name="paths-cyclic" />Caminhos cíclicos
 
-Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é suficiente para saber que existe uma situação cíclica.
+Quando uma entidade é pai de si mesma, ou uma entidade descendente é pai de alguma entidade ascendente, isso determina que existe um caminho cíclico entre as entidades. Nesse caso, a expressão deve apenas repetir o nome da entidade ascendente, isso é o suficiente para descobrir que existe uma situação cíclica.
 
 Note que o grafo contém dois caminhos cíclicos:
 
@@ -389,26 +389,26 @@ Note que o grafo contém dois caminhos cíclicos:
 A + A + B + (C + A)
 ```
 
-* Uma direta (`A + A`): onde a entidade `A` é pai dela mesma.
-* Uma indireta (`C + A`): Onde `C` é pai de uma entidade ascendente, no caso a entidade `A`.
+* Uma direta (`A + A`): onde a entidade "A" é pai dela mesma.
+* Uma indireta (`C + A`): Onde "C" é pai de uma entidade ascendente, no caso a entidade "A".
 
 # <a name="entity-info" />Informações de uma ocorrência
 
-Uma entidade pode aparecer diversas vezes dentro de uma expressão e para cada uma dessas ocorrências temos um conjunto de informações que serão vistas neste tópico.
+Uma entidade pode aparecer diversas vezes dentro de uma expressão e para cada ocorrência temos um conjunto de informações que serão vistas neste tópico.
 
-Essas informações são de extrema importância e veremos exemplos disso no tópico [Pesquisas em expressões de grafos](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search).
+Essas informações são muito importantes e veremos exemplos disso no tópico [Pesquisas](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search).
 
 * [Níveis](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#levels)
 * [Índices](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#indexes)
 * Entidades vizinhas:
-  * [Navegação para a esquerda (Entidade anterior)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-previous)
-  * [Navegação para a direita (Próxima entidade)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-next)
+  * [Navegação para a esquerda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-previous)
+  * [Navegação para a direita](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-next)
 
 ## <a name="levels" />Níveis
 
 Uma expressão tem dois tipos de níveis: **Nível geral** e **Nível na expressão**.
 
-O **nível geral** determina em qual nível a entidade está com relação a hierarquia do grafo. O nível inicia-se em `1` e é incrementado `+1` até chegar no último nível.
+O **nível geral** é o nível em relação à hierarquia do gráfico. O nível inicia-se em "1" e é incrementado "+1" até chegar no último nível.
 
 Por exemplo:
 
@@ -422,7 +422,7 @@ A (Level: 1)
     ----A (Level: 3)
 ```
 
-O **nível na expressão** determina em qual nível a entidade está com relação a expressão. O nível inicia-se em `1` e é incrementado `+1` até chegar no último nível.
+O **nível na expressão** determina em qual nível a entidade está relacionada à expressão. O nível inicia-se em "1" e é incrementado "+1" até chegar no último nível.
 
 Por exemplo:
 
@@ -438,7 +438,7 @@ Note que o _nível da expressão_ é bem similar ao _nível geral_. A única dif
 
 Uma expressão tem dois tipos de índices: **Índice na expressão** e **Índice do nível**.
 
-O **Índice da expressão** determina em qual posição a entidade está com relação a expressão. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade da expressão.
+O **Índice da expressão** determina em qual posição a entidade está com relação a expressão. O índice inicia-se em "0" e é incrementado "+1" até chegar na última entidade da expressão.
 
 Por exemplo:
 
@@ -447,7 +447,7 @@ A + B + C + ( D + E + ( F  + G ) )
 0   1   2     3   4     5    6
 ```
 
-O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia-se em `0` e é incrementado `+1` até chegar na última entidade do mesmo nível.
+O **Índice do nível** determina em qual posição a entidade está com relação ao seu nível. O índice inicia-se em "0" e é incrementado "+1" até chegar na última entidade do mesmo nível.
 
 Por exemplo:
 
@@ -468,16 +468,16 @@ A (Level Index: 0)
         ----Y (Level Index: 1)
 ```
 
-* A entidade `A` é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.
-* A entidade `B` é a primeira do segundo nível e terá a posição zero. Ela é filha da entidade `A`.
-* A entidade `C` é a segunda do segundo nível e terá a posição 1. Ela é filha da entidade `A`.
-* A entidade `D` é a terceira do segundo nível e terá a posição 2. Ela é filha da entidade `A`.
-* A entidade `E` é a primeira do terceiro nível e terá a posição 0. Ela é filha da entidade `D`.
-* A entidade `F` é a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade `D`.
-* A entidade `G` é a primeira do quarto nível e terá a posição 0. Ela é filha da entidade `F`.
-* A entidade `Y` é a segunda do quarto nível e terá a posição 1. Ela é filha da entidade `F`.
+* A entidade "A" é a raiz da expressão e seu "índice no nível" será zero. Note que por ser a entidade raiz, ela não terá outras entidades em seu nível.
+* A entidade "B" é a primeira do segundo nível e terá a posição zero. Ela é filha da entidade "A".
+* A entidade "C" é a segunda do segundo nível e terá a posição 1. Ela é filha da entidade "A".
+* A entidade "D" é a terceira do segundo nível e terá a posição 2. Ela é filha da entidade "A".
+* A entidade "E" é a primeira do terceiro nível e terá a posição 0. Ela é filha da entidade "D".
+* A entidade "F" é a segunda do terceiro nível e terá a posição 1. Ela é filha da entidade "D".
+* A entidade "G" é a primeira do quarto nível e terá a posição 0. Ela é filha da entidade "F".
+* A entidade "Y" é a segunda do quarto nível e terá a posição 1. Ela é filha da entidade "F".
 
-## <a name="entity-next" />Navegação para a direita (Próxima entidade)
+## <a name="entity-next" />Navegação para a direita
 
 Toda entidade, com exceção da última da expressão, tem conhecimento da próxima entidade na expressão.
 
@@ -488,9 +488,9 @@ A + B + C + ( D + E + ( F + G ) )
 B   C   D     E   F     G
 ```
 
-No exemplo, a entidade `A` tem conhecimento da entidade `B`. Note que a entidade `B` é filha de `A`, mas isso não influência, pois a ideia é conhecer a próxima entidade da expressão e não do seu nível.
+No exemplo, a entidade "A" tem conhecimento da entidade "B". Note que a entidade "B" é filha de "A", mas isso não influência, pois a ideia é conhecer a próxima entidade da expressão e não do seu nível.
 
-## <a name="entity-previous" />Navegação para a esquerda (Entidade anterior)
+## <a name="entity-previous" />Navegação para a esquerda
 
 Toda entidade, com exceção da primeira da expressão (a entidade raiz), tem conhecimento da entidade anterior na expressão. No exemplo abaixo, temos um mapa de conhecimento de todas as entidades a esquerda da entidade corrente:
 
@@ -514,13 +514,13 @@ A + (B + Y) + (D + (B + C))
      ^              ^
 ```
 
-Note que na expressão acima, a entidade `B` tem dois grupos de expressão em lugares distintos. Na prática, isso não tem nenhum problema, mas será visualmente melhor se aplicarmos a normalização eliminando um dos grupos da entidade `B`, veja:
+Note que na expressão acima, a entidade "B" tem dois grupos de expressão em lugares distintos. Na prática, isso não tem nenhum problema, mas será visualmente melhor se aplicarmos a normalização eliminando um dos grupos da entidade "B", veja:
 
 ```
 A + (B + Y + C) + (D + B)
 ```
 
-É preciso dizer que nenhuma alteração na expressão deve modificar o seu grafo final. É perceptível que no exemplo isso não ocorreu, as entidades apenas foram reoganizadas.
+É preciso dizer que nenhuma alteração na expressão deve modificar o seu grafo final. É perceptível que no exemplo isso não ocorreu, as entidades apenas foram reorganizadas.
 
 Já no próximo exemplo, veremos uma expressão que pode gerar confusão no momento da normalização:
 
@@ -529,7 +529,7 @@ A + (B + Y) + (D + (B + Y))
      ^              ^
 ```
 
-Nesse exemplo, é natural pensar que um dos grupos da entidade `B` pode ser eliminado por serem iguais, mas esse pensamento está errado. Se eliminarmos um dos grupos, estaremos modificando o grafo final e esse não é o objetivo.
+Nesse exemplo, é natural pensar que um dos grupos da entidade "B" pode ser eliminado por serem iguais, mas esse pensamento está errado. Se eliminarmos um dos grupos, estaremos modificando o grafo final e esse não é o objetivo.
 
 **Errado:**
 
@@ -559,8 +559,8 @@ A + F + G + (B + E + (C + D))
     ^   ^        ^    
 ```
 
-* Note que as entidades `F` e `G` foram para o início do seu grupo de expressão.
-* A entidade `E` também foi reorganizada para o início do seu grupo de expressão.
+* Note que as entidades "F" e "G" foram para o início do seu grupo de expressão.
+* A entidade "E" também foi reorganizada para o início do seu grupo de expressão.
 
 ## <a name="normalization-3" />Normalização - tipo 3
 
@@ -574,32 +574,32 @@ A + B + (C + G + (B + F)) + (G + F)
              ^               ^
 ```
 
-Note que as entidades `B` e `G` são utilizadas antes que seus grupos sejam declarados e após a normalização teremos:
+Note que as entidades "B" e "G" são utilizadas antes que seus grupos sejam declarados e após a normalização teremos:
 
 ```
 A + (B + F) + (C + (G + F) + B) + G
 ```
 
-* Após a normalização, os grupos das entidades `B` e `G` foram declarados no primeiro momento que foram utilizadas.
-* A entidade `B`, dentro do grupo `C`, e a entidade `G` que está solitária no final da expressão, se transformaram em [Entidade final](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-final) e devido a isso, podemos aplicar a [Normalização - tipo 2](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-2) para melhorar a visualização, veja:
+* Após a normalização, os grupos das entidades "B" e "G" foram declarados no primeiro momento que foram utilizadas.
+* A entidade "B", dentro do grupo "C", e a entidade "G" que está solitária no final da expressão, se transformaram em [Entidade final](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#entity-final) e devido a isso, podemos aplicar a [Normalização - tipo 2](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-2) para melhorar a visualização, veja:
 
 ```
 A + G + (B + F) + (C + B + (G + F))
 ```
 
-* Note que agora a entidade `G` que estava no final da expressão foi movido para o início. Sendo assim, devemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3):
+* Note que agora a entidade "G" que estava no final da expressão foi movido para o início. Sendo assim, devemos aplicar novamente a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3):
 
 ```
 A + (G + F) + (B + F) + (C + B + G)
 ```
 
-Com isso concluímos a normalização e temos acima uma expressão muito mais legível.
+Com isso concluímos a normalização e obtemos uma expressão muito mais legível.
 
 # <a name="desnormalization" />Desnormalizando expressões
 
-O objetivo da **desnormalização** é gerar uma nova expressão onde os [grupos de expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group) sejam redeclarados toda vez que a sua entidade pai for utilizada.
+O objetivo da **desnormalização** é gerar uma nova expressão onde os [grupos de expressões](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group) são declarados todas as vezes que a sua entidade pai for utilizada.
 
-Após a desnormalização será impossível voltar na expressão original, esse é um caminho sem volta.
+Após a desnormalização será impossível voltar na expressão original, esse processo não tem volta.
 
 Considere a seguinte expressão original:
 
@@ -607,7 +607,7 @@ Considere a seguinte expressão original:
 A + (B + D) + (E + B)
 ```
 
-* Note que a entidade `B` tem dois pais: `A` e `E`
+* Note que a entidade "B" tem dois pais: "A" e "E"
 * Após a desnormalização teremos a seguinte expressão:
 
 ```
@@ -615,7 +615,7 @@ A + (B + D) + (E + (B + D))
                     ^
 ```
 
-* Após a desnormalização a entidade `B` teve seu grupo de expressão redeclarado por completo quando foi utilizada novamente como filha da entidade `D`.
+* Após a desnormalização a entidade "B" teve seu grupo de expressão redeclarado por completo quando foi utilizada novamente como filho da entidade "D".
 
 Como dito, é impossível voltar na expressão original, pois não conseguimos distinguir quais grupos de expressões eram da expressão original. Sendo assim, não podemos dizer que uma _expressão original_ é igual a sua _expressão desnormalizada_.
 
@@ -647,11 +647,11 @@ Final Graph:
 
 Portanto, não podemos considerar que uma expressão desnormalizada seja usada como uma expressão original, isso altera o grafo final. Além do mais, ela infringe a regra do tópico [Repetições de grupo de expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#expression-group-repeat).
 
-# <a name="search" />Pesquisas em expressões de grafos
+# <a name="search" />Pesquisas
 
 A pesquisa em expressão de grafo pode ser dividida em dois tipos: **Pesquisa superficial** e **Pesquisa profunda**.
 
-Nos próximos tópicos vamos abordar a diferença entre esses tipos de pesquisas, mas antes, será preciso entender o que é uma **matriz de informação** que é o tema comum entre os dois tipos de pesquisa.
+Nos próximos tópicos vamos abordar a diferença entre esses tipos de pesquisas, mas antes, será preciso entender o que é uma **matriz de informação**. Esse é um assunto comum entre ambos os tipos de pesquisas.
 
 ### <a name="search-matrix-of-information" />Matriz de informação
 
@@ -708,9 +708,9 @@ Perceba que a expressão mudou da _orientação horizontal_ para a _orientação
 
 Inclusive, essa é uma regra importante: _Nunca alterar a ordem das linhas, isso altera completamente o grafo._
 
-Os _elementos de soma_ e _parênteses_ foram removidos, eles não são necessários na matriz, pois somente com as informações de _índices_ e _níveis_, é possível identificar todos os _grupos de expressões_.
+Os _elementos de soma_ e _parênteses_ foram removidos, eles não são necessários, pois somente com as informações de _índices_ e _níveis_, é possível identificar todos os _grupos de expressões_.
 
-E é com base nessa matriz de informação e ao fato das entidades conhecerem os seus _vizinhos_, ou seja, aqueles que estão posicionados na sua esquerda ou na sua direita, independentemente do nível, que podemos criar meios de pesquisas e navegações.
+E é com base nessa matriz de informação e também pelo conhecimento das entidades vizinhas, ou seja, aqueles que estão posicionados na sua esquerda ou na sua direita, independentemente do nível, que podemos criar pesquisas e navegações.
 
 ## <a name="search-deep" />Pesquisa profunda
 
@@ -749,15 +749,15 @@ A (Level Index: 0)
     ----Z (Level Index: 2)
 ```
 
-* Foi aplicada a desnormalização e a entidade `C` teve seu grupo de expressão redeclarado dentro da entidade `G`.
-* Após a desnormalização um novo caminho foi criado para a entidade `Y`:
+* Foi aplicada a desnormalização e a entidade "C" teve seu grupo de expressão redeclarado dentro da entidade "G".
+* Após a desnormalização um novo caminho foi criado para a entidade "Y":
   * Antes:
-    * _Ocorrência 1_: A.C.Y
-    * _Ocorrência 2_: A.D.F.G.Y
+    * _Primeira ocorrência_: `A.C.Y`
+    * _Segunda ocorrência_: `A.D.F.G.Y`
   * Depois:
-    * _Ocorrência 1_: A.C.Y
-    * **_Ocorrência 2_: A.D.F.G.C.Y**
-    * _Ocorrência 3_: A.D.F.G.Y
+    * _Primeira ocorrência_: `A.C.Y`
+    * **_Segunda ocorrência_**: `A.D.F.G.C.Y`
+    * _Terceira ocorrência_: `A.D.F.G.Y`
 
 **<a name="sample-matrix-desnormalizated" />Matriz desnormalizada:**
 
@@ -780,13 +780,13 @@ Index   | Entity | Level | Level Index
 #12     | Z      | 3     | 2 
 ```
 
-* Foi criado uma nova linha com relação a versão original: A linha `#10` contém o novo caminho.
+* Foi criado uma nova linha com relação a versão original: A linha "#10" contém o novo caminho.
 
 ## <a name="search-surface" />Pesquisa superficial
 
-Na **Pesquisa superficial** não consideramos os caminhos que já foram declarados (ou percorridos), ou seja, não usamos a técnica da **desnormalização** para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas em alguns casos não terá a mesma precisão da _Pesquisa profunda_.
+Na **Pesquisa superficial** não consideramos os caminhos que já foram declarados (ou percorridos), ou seja, não é aplicado a **desnormalização** para criar esses novos caminhos. Isso reduz muito o tempo da pesquisa, mas em alguns casos não terá a mesma precisão da _Pesquisa profunda_.
 
-Por exemplo, se quisermos retornar todas as ocorrências da entidade `Y`, teríamos a seguinte diferença entre os tipos de pesquisas:
+Por exemplo, se quisermos retornar todas as ocorrências da entidade "Y", teríamos a seguinte diferença entre os tipos de pesquisas:
 
 _Expressão de exemplo:_
 
@@ -802,32 +802,30 @@ Primeiro, aplica-se a desnormalização:
 A + B + ( C + Y ) + ( D + E + ( F + ( G + B + ( C + Y ) ) + Y ) + Z )
 ```
 
-* _Ocorrência 1_: A.C.Y
-* _Ocorrência 2_: A.D.F.G.C.Y -> Novo caminho
-* _Ocorrência 3_: A.D.F.G.Y
+* _Primeira ocorrência_: `A.C.Y`
+* _Segunda ocorrência_: `A.D.F.G.C.Y` -> Novo caminho
+* _Terceira ocorrência_: `A.D.F.G.Y`
 
 **Pesquisa superficial:**
 
 Utiliza a expressão original:
 
-* _Ocorrência 1_: A.C.Y
-* _Ocorrência 2_: A.D.F.G.Y
+* _Primeira ocorrência_: `A.C.Y`
+* _Segunda ocorrência_: `A.D.F.G.Y`
 
 ## <a name="search-without-references" />Pesquisas sem referência
 
-A **pesquisa sem referência** busca encontrar entidades ou informações dentro da matriz de informação.
-
-Nesse tipo de pesquisa não temos nenhuma entidade como referência e a busca será feita em todo a matriz de acordo com a necessidade.
+Nesse tipo de pesquisa não temos nenhuma entidade como referência e a busca será feita em toda a matriz.
 
 Como existem infinitas opção de pesquisas dentro de um grafo, abordaremos apenas alguns exemplos de _pesquisa sem referência_.
 
 ### <a name="search-find-root" />Encontrando a entidade raiz da expressão
 
-Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual `0`.
+Para encontrar a **entidade raiz** da expressão, precisamos retornar a entidade que tem o **índice geral** igual "0".
 
 **Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
 
-Com base na expressão a seguir, podemos afirmar que a entidade `A` é a **entidade raiz** da expressão.
+Com base na expressão a seguir, podemos afirmar que a entidade "A" é a **entidade raiz** da expressão.
 
 ```
         A + B + C
@@ -838,10 +836,10 @@ Index:  0   1   2
 
 Para encontrar todas as **entidades pais** do grafo, devemos aplicar a seguinte técnica:
 
-1. Recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a `0`.
+1. Recuperar as **entidades anteriores** de todas as entidades cujo o **índice do nível** seja igual a "0".
 2. Para cada linha encontrada, retornamos a sua **entidade anterior** que será sempre uma **entidade pai**.
 
-**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em casos de grupos de expressões que foram redeclarados e será necessário remover as duplicações.
+**Atenção:** Essa pesquisa apresenta diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar entidades duplicadas em casos de grupos de expressões que foram declarados mais de uma vez. Será necessário remover as duplicações.
 
 **Pesquisa profunda**
 
@@ -857,14 +855,14 @@ Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgaspar
   * `#10 (Y)`
 2. Para cada linha encontrada, retornamos a sua entidade anterior que será uma entidade pai:
   * `NULL` -> `#00 (A)`: Não contém entidade anterior, portanto não retorna nada.
-  * `#00 (A)` -> `#01 (B)`: Retorna a entidade `A` como sendo sua anterior
-  * `#02 (C)` -> `#03 (Y)`: Retorna a entidade `C` como sendo sua anterior
-  * `#04 (D)` -> `#05 (E)`: Retorna a entidade `D` como sendo sua anterior
-  * `#06 (F)` -> `#07 (G)`: Retorna a entidade `F` como sendo sua anterior
-  * `#07 (G)` -> `#08 (B)`: Retorna a entidade `G` como sendo sua anterior
-  * `#09 (C)` -> `#10 (Y)`: Retorna a entidade `C` como sendo sua anterior
+  * `#00 (A)` -> `#01 (B)`: Retorna a entidade "A" como sendo sua anterior
+  * `#02 (C)` -> `#03 (Y)`: Retorna a entidade "C" como sendo sua anterior
+  * `#04 (D)` -> `#05 (E)`: Retorna a entidade "D" como sendo sua anterior
+  * `#06 (F)` -> `#07 (G)`: Retorna a entidade "F" como sendo sua anterior
+  * `#07 (G)` -> `#08 (B)`: Retorna a entidade "G" como sendo sua anterior
+  * `#09 (C)` -> `#10 (Y)`: Retorna a entidade "C" como sendo sua anterior
 
-Com isso, após removermos as repetições (no caso, a entidade `C` que aparece nas linhas `#2` e `#09`), obtemos como resultado final as entidades `A`, `C`, `D`, `F` e `G` como sendo as únicas entidades com filhos na expressão.
+Com isso, após removermos as repetições (no caso, a entidade "C" que aparece nas linhas "#2" e "#09"), obtemos como resultado as entidades "A", "C", "D", "F" e "G" como sendo as únicas entidades com filhos na expressão.
 
 **Pesquisa superficial**
 
@@ -872,7 +870,7 @@ A lógica será a mesma da **pesquisa profunda**, contudo não teremos as duplic
 
 ## <a name="search-with-references" />Pesquisas com referência
 
-A **pesquisa com referência** parte do princípio que a _entidade_ ou uma de suas _ocorrências_ já foi encontrada e com base nisso podemos tomar ações como: _verificações_, _navegações_ ou pesquisas em seus _ascendentes_ e _descendentes_.
+A **pesquisa com referência** parte do princípio que a _entidade_ ou uma de suas _ocorrências_ já foi encontrada. Com base nisso, podemos tomar ações como: _verificações_, _navegações_ ou pesquisas em seus _ascendentes_ e _descendentes_.
 
 Como existem infinitas opção de pesquisas usando uma entidade, abordaremos apenas alguns exemplos de _pesquisas com referências_.
 
@@ -889,7 +887,7 @@ Level:  1   2     2   3      2   3
 Index:  0   1     2   3      4   5
 ```
 
-No exemplo acima, a entidade `C`, do índice `#02`, tem o nível geral igual á `2` e a sua próxima entidade `Y` tem o nível geral igual á `3`, sendo assim, ela é a primeira dentro de seu parênteses.
+No exemplo acima, a entidade "C" do índice "#02", tem o nível geral igual á "2" e a sua próxima entidade "Y" tem o nível geral igual á "3", e é por este motivo que ela é a primeira dentro de seu parênteses.
 
 **Observação:**
 
@@ -908,19 +906,19 @@ Level:  1   2     2   3      2   3    2
 Index:  0   1     2   3      4   5    6
 ```
 
-No exemplo acima, a entidade `Y`, do índice `#03`, tem o nível geral igual á `3` e a sua próxima entidade `D` tem o nível geral igual á `2`, sendo assim, ela é a última dentro de seu parênteses.
+No exemplo acima, a entidade "Y" do índice "#03", tem o nível geral igual á "3" e a sua próxima entidade "D" tem o nível geral igual á "2", e é por este motivo que ela é a última dentro de seu parênteses.
 
-* A entidade `U` do índice `#06` não tem uma próxima entidade, portanto ela é a última de seu grupo de expressão, embora ele esteja omitido por estarmos no **grupo de expressão raiz**.
+* A entidade "U" do índice "#06" não tem uma próxima entidade, portanto ela é a última de seu grupo de expressão, embora ele esteja omitido por estarmos no **grupo de expressão raiz**.
 
 ### <a name="search-find-previous" />Encontrando a entidade anterior
 
-Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o seu **índice geral** em `-1`.
+Para retornar a entidade anterior de uma determinada entidade, devemos subtrair o seu **índice geral** menos um ("-1").
 
-**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**
 
 Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
-1. Para obter a entidade anterior da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`), e subtraímos `-1`. Com o resultado (`2`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `C`.
+1. Para obter a entidade anterior da entidade "Y" da linha "#03", pegamos seu índice geral ("3"), e subtraímos "-1". Com o resultado ("2"), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade "C".
 
 ```
 Index   | Entity | Level | Level Index
@@ -928,17 +926,17 @@ Index   | Entity | Level | Level Index
 #03     | Y      | 3     | 0 
 ```
 
-* Se o resultado for menor que zero, é porque estamos na **entidade raiz** e não existe entidade anterior.
+* Se o resultado for menor que zero, é porque estamos na **entidade raiz** e não existe a entidade anterior.
 
 ### <a name="search-find-next" />Encontrando a próxima entidade
 
-Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** em `+1`.
+Para retornar a próxima entidade de uma determinada entidade, devemos somar o seu **índice geral** mais um ("+1").
 
-**Atenção:** Essa pesquisa não apresenta diferenças entre os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**.
+**Atenção:** Essa pesquisa não apresenta diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**.
 
 Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
-1. Para obter a próxima entidade da entidade `Y` da linha `#03`, pegamos seu índice geral (`3`) e somamos `+1`. Com o resultado (`4`), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade `D`.
+1. Para obter a próxima entidade da entidade "Y" da linha "#03", pegamos seu índice geral ("3") e somamos "+1". Com o resultado ("4"), encontramos na matriz a entidade que está nessa posição, nesse caso, retornaríamos a entidade "D".
 
 ```
 Index   | Entity | Level | Level Index
@@ -950,9 +948,9 @@ Index   | Entity | Level | Level Index
 
 ### <a name="search-find-occurrences" />Encontrando todas as ocorrências de uma entidade
 
-Para encontrar todas as ocorrências de uma entidade, devemos percorrer toda a matriz partindo do índice `0` até última posição da matriz.
+Para encontrar todas as ocorrências de uma entidade, devemos percorrer toda a matriz partindo do índice "0" até última posição da matriz.
 
-**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+**Atenção:** Essa pesquisa apresenta diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre porque, nesse tipo de pesquisa, os grupos de expressões são declarados todas as vezes que a entidade pai é usada.
 
 Sendo assim, é recomendado o uso da **pesquisa profunda** caso a sua necessidade seja obter o maior número possível de caminhos.
 
@@ -960,7 +958,7 @@ Sendo assim, é recomendado o uso da **pesquisa profunda** caso a sua necessidad
 
 Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
-1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
+1. Se quisermos buscar todas as ocorrências da entidade "Y" dentro do grafo, encontraríamos as linhas:
   * `#03 (Y)`
   * `#10 (Y)`: Essa ocorrência é derivada da **desnormalização**.
   * `#11 (Y)`
@@ -971,14 +969,14 @@ A lógica será a mesma da **pesquisa profunda**, contudo não teremos as ocorr�
 
 Usaremos nesse exemplo a [matriz original](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix) do tópico sobre [Matriz de informação](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-matrix-of-information).
 
-1. Se quisermos buscar todas as ocorrências da entidade `Y` dentro do grafo, encontraríamos as linhas:
+1. Se quisermos buscar todas as ocorrências da entidade "Y" dentro do grafo, encontraríamos as linhas:
   * `#03 (Y)`
   * `#10 (Y)`
 * Note que foi encontrado uma ocorrência a menos que na _pesquisa profunda_.
 
 ### <a name="search-find-descendants" />Encontrando todos os descendentes de uma entidade
 
-Se quisermos encontrar os descendentes de uma entidade, devemos verificar se o seu **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression).
+Se quisermos encontrar os descendentes de uma entidade, verificamos se o **nível geral** é menor que o nível geral da **próxima entidade**, se for, essa entidade é uma descendente da entidade corrente. Essa é a mesma técnica usada no tópico [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression).
 
 Devemos continuar navegando para frente até quando a próxima entidade tiver o **nível geral** igual ou menor ao **nível geral** da entidade corrente ou se a expressão não tiver mais entidades.
 
@@ -986,9 +984,9 @@ Devemos continuar navegando para frente até quando a próxima entidade tiver o 
 
 **Entidade com caminho cíclico:**
 
-Devemos ter alguns cuidados para encontrar os descendentes de entidades com caminhos cíclicos. Isso ocorre porque os grupos de expressões não podem ser redeclarados nessas situações.
+Devemos ter alguns cuidados para encontrar os descendentes de entidades com caminhos cíclicos. Isso ocorre porque os grupos de expressões não podem ser declarados novamente.
 
-Por exemplo, como podemos encontrar os descendentes da entidade `A` que está no índice `#05`?
+Por exemplo, como podemos encontrar os descendentes da entidade "A" que está no índice "#05"?
 
 ```
         A + B + (C + Y) + (D + A + C)
@@ -997,29 +995,29 @@ Level:  1   2    2   3     2   3   3
 Index:  0   1    2   3     4   5   6
 ```
 
-* A entidade `A` que está no índice `#05` não foi redeclarada para evitar um **caminho cíclico**.
-* Note que a entidade `A` contém descendentes (é a entidade raiz), mas é impossível descobrir isso se analisarmos a sua ocorrência do índice `#05`.
+* A entidade "A" que está no índice "#05" não foi declarada novamente para evitar um **caminho cíclico**.
+* Note que a entidade "A" contém descendentes (é a entidade raiz), mas é impossível saber disso analisando somente a ocorrência do índice "#05".
 
 A resposta seria:
 
-* Encontrar todas as ocorrências da entidade `A`.
-* Dentre as ocorrências encontradas, devemos encontrar e utilizar a primeira que tem descendentes e ignorar as demais.
+* Encontrar todas as ocorrências da entidade "A".
+* Dentre as ocorrências encontradas, devemos encontrar e utilizar a primeira que contenha descendentes e ignorar as demais.
   * _Ocorrência 1_:
-    * `#00`: A entidade `A` tem o nível geral igual a `1`.
-    * `#01`: **A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
-    * Pronto! Encontramos a ocorrência que tem a declaração do grupo de expressão da entidade `A`.
+    * `#00`: A entidade "A" tem o nível geral igual a "1".
+    * `#01`: **A entidade "B" é a próxima entidade depois de "A" e o seu nível geral é "2", é descendente**.
+    * Pronto! Encontramos a ocorrência que tem a declaração do grupo de expressão da entidade "A".
   * _Ocorrência 2_:
-    * `#05`: Não é preciso verificar a segunda ocorrência da entidade `A`, pois já encontramos a sua declaração.
-* Retornar os descendentes da entidade `A` do índice `#00`:
-  * `#00`: A entidade `A` tem o nível geral igual a `1`.
-  * `#01`: **A entidade `B` é a próxima entidade depois de `A` e o seu nível geral é `2`, é descendente**.
-  * `#02`: **A entidade `C` é a próxima entidade depois de `B` e o seu nível geral é `2`, é descendente**.
-  * `#03`: **A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
-  * `#04`: **A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, é descendente**.
-  * `#05`: **A entidade `A` é a próxima entidade depois de `D` e o seu nível geral é `3`, é descendente**.
-  * `#06`: **A entidade `C` é a próxima entidade depois de `A` e o seu nível geral é `3`, é descendente**.
-  * A expressão terminou.
-  * Foram encontradas as seguintes entidades: `A, B, C, Y, D, A, C`.
+    * `#05`: Não é preciso verificar a segunda ocorrência da entidade "A", pois já encontramos a sua declaração.
+* Retornar os descendentes da entidade "A" do índice "#00":
+  * `#00`: A entidade "A" tem o nível geral igual a "1".
+  * `#01`: **A entidade "B" é a próxima entidade depois de "A" e o seu nível geral é "2", é descendente**.
+  * `#02`: **A entidade "C" é a próxima entidade depois de "B" e o seu nível geral é "2", é descendente**.
+  * `#03`: **A entidade "Y" é a próxima entidade depois de "C" e o seu nível geral é "3", é descendente**.
+  * `#04`: **A entidade "D" é a próxima entidade depois de "Y" e o seu nível geral é "2", é descendente**.
+  * `#05`: **A entidade "A" é a próxima entidade depois de "D" e o seu nível geral é "3", é descendente**.
+  * `#06`: **A entidade "C" é a próxima entidade depois de "A" e o seu nível geral é "3", é descendente**.
+  * Acabou a expressão
+  * As seguintes entidades foram encontradas: `A, B, C, Y, D, A, C`.
 * Remover as ocorrências que estão duplicadas: `C`
 * Retornar o resultado: `A, B, C, Y, D, A`
 
@@ -1029,9 +1027,9 @@ Se uma entidade não tiver um **caminho cíclico**, podemos simplesmente continu
 
 **Pesquisa superficial**
 
-Na pesquisa superficial devemos ter alguns cuidados. Notem que na expressão abaixo chegamos em um cenário muito parecido com as **entidades com caminhos cíclicos**.
+Na pesquisa superficial, alguns cuidados são necessários. Observe que na expressão abaixo chegamos em um cenário semelhante ao cenário de **entidades com caminhos cíclicos**.
 
-Por exemplo, como podemos retornar os descendentes da entidade `C` do índice `#02`?
+Por exemplo, como podemos retornar os descendentes da entidade "C" do índice "#02"?
 
 ```
         A + B + C + (D + A + (C + Y)) + Z
@@ -1040,31 +1038,31 @@ Level:  1   2   2    2   3    3   4     2
 Index:  0   1   2    3   4    5   6     7
 ```
 
-* A entidade `C` que está no índice `#02` não foi redeclarada, pois estamos usando a pesquisa superficial.
-* Essa expressão não esta **normalizada**, a entidade `C` deveria ter sido declarada o mais rápido possível, mas isso não ocorreu.
-* A entidade `C` contém descendentes. Seu grupo de expressão é declarado no índice `#05`.
+* A entidade "C" que está no índice "#02" não foi declarada novamente, pois estamos usando a pesquisa superficial.
+* Essa expressão não esta **normalizada**, a entidade "C" deveria ter sido declarada o mais rápido possível, mas isso não ocorreu.
+* A entidade "C" contém descendentes. Seu grupo de expressão é declarado no índice "#05".
 
 Nesse caso temos duas opções:
 
 **Opção 1:**
 
-Utilizar a mesma lógica que foi explicada para **entidades com caminhos cíclicos**. Com isso será avaliado todas as ocorrências da entidade `C` até encontrarmos a ocorrência que declara o seu grupo de expressão.
+Utilizar a mesma lógica que foi explicada para **entidades com caminhos cíclicos**. Com isso será avaliado todas as ocorrências da entidade "C" até encontrarmos a ocorrência que declara o seu grupo de expressão.
 
-* Seria encontrado a ocorrência do índice `#05` e a ocorrência do índice `#02` seria descartada.
+* Seria encontrado a ocorrência do índice "#05" e a ocorrência do índice "#02" seria descartada.
 * Agora que achamos a ocorrência correta, devemos retornar os descendentes:
-  * `#05`: A entidade `C` tem o nível geral igual a `3`.
-  * `#06`:**A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `4`, é descendente**.
-  * `#07`: A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
-  * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#07`.
-  * Foram encontradas as seguintes entidades: `Y`.
-* Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
+  * `#05`: A entidade "C" tem o nível geral igual a "3".
+  * `#06`:**A entidade "Y" é a próxima entidade depois de "C" e o seu nível geral é "4", é descendente**.
+  * `#07`: A entidade "Z" é a próxima entidade depois de "Y" e o seu nível geral é "2", ela não é descendente.
+  * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice "#07".
+  * A seguinte entidade foi encontrada: `Y`.
+* Remover as ocorrências que estão duplicadas, nesse caso, não tivemos nenhuma.
 * Retornar o resultado: `Y`
 
 **Opção 2:**
 
-A segunda opção pode apresentar uma melhor performance se a expressão nascer de forma normalizada, se isso estiver garantido, não precisamos executar o primeiro passo.
+A segunda opção pode apresentar uma melhor performance se a expressão já estiver normalizada, se isso estiver garantido, não precisamos executar o primeiro passo.
 
-* Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão nascer normalizada.
+* Aplicar a [Normalização - tipo 3](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#normalization-3) para garantir que todas as entidades estão sendo declaradas logo na primeira utilização. Esse passo não é necessário se a expressão já estiver normalizada.
 
 ```
         A + B + (C + Y) + (D + A + C) + Z
@@ -1073,14 +1071,14 @@ Level:  1   2    2   3     2   3   3    2
 Index:  0   1    2   3     4   5   6    7
 ```
 
-* Localizar a primeira ocorrência da entidade `C`. Após a normalização, devemos encontrar a ocorrência que está no índice `#02`.
-* Recuperar os descendentes da primeira ocorrência da entidade `C` do índice `#02`.
-  * `#02`: A entidade `C` tem o nível geral igual a `2`.
-  * `#03`: **A entidade `Y` é a próxima entidade depois de `C` e o seu nível geral é `3`, é descendente**.
-  * `#04`: A entidade `D` é a próxima entidade depois de `Y` e o seu nível geral é `2`, ela não é descendente.
-  * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice `#04`.
-  * Foram encontradas as seguintes entidades: `Y`.
-* Remover as ocorrências que estão duplicadas, nesse caso não tivemos nenhuma.
+* Localizar a primeira ocorrência da entidade "C". Após a normalização, encontraremos a ocorrência que está no índice "#02".
+* Recuperar os descendentes da primeira ocorrência da entidade "C" do índice "#02".
+  * `#02`: A entidade "C" tem o nível geral igual a "2".
+  * `#03`: **A entidade "Y" é a próxima entidade depois de "C" e o seu nível geral é "3", é descendente**.
+  * `#04`: A entidade "D" é a próxima entidade depois de "Y" e o seu nível geral é "2", ela não é descendente.
+  * A expressão não terminou, mas foi interrompida depois do resultado negativo do índice "#04".
+  * A seguinte entidade foi encontrada: `Y`.
+* Remover as ocorrências que estão duplicadas, nesse caso, não tivemos nenhuma.
 * Retornar o resultado: `Y`
 
 Por fim, é possível dizer que não precisamos atribuir um tratamento especial para **entidades com caminhos cíclicos** se estivemos usando uma _pesquisa superficial_. Vimos que a solução é a mesma nas duas situações.
@@ -1091,23 +1089,23 @@ Esse tema também foi abordado, de forma superficial, no tópico [Declarações 
 
 Para iniciar esse tópico é preciso entender por completo o tópico [Encontrando todos os descendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-descendants).
 
-A lógica é exatamente a mesma da pesquisa de descendentes, a única diferença é que o **nível geral** será limitado á: _[nível geral da entidade corrente] + 1_
+A lógica é exatamente a mesma da pesquisa de descendentes, a única diferença está no limite do **nível geral**: _[nível geral da entidade corrente] + 1_
 
 Usaremos nesse exemplo a [matriz desnormalizada](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#sample-matrix-desnormalizated) do tópico sobre [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep).
 
-Com base nessa matriz, se quisermos encontrar todas as filhas da entidade `D` da linha `#04`:
+Com base nessa matriz, se quisermos encontrar todas as filhas da entidade "D" da linha "#04":
 
-* A entidade `D` tem o nível geral igual a `2`.
-* **A entidade `E` é a próxima entidade depois de `D` e o seu nível geral é 3, é filha de `D`**.
-* **A entidade `F` é a próxima entidade depois de `E` e o seu nível geral também é 3, é filha de `D`**.
-* As próximas entidades depois de `F` são: `G`, `B`, `C`, `Y` e `Y`, todas tem níveis maiores que 3, então serão ignoradas.
-* **A entidade `Z` é a próxima entidade depois de `Y` e o seu nível geral também é 3, é filha de `D`**.
+* A entidade "D" tem o nível geral igual a "2".
+* **A entidade "E" é a próxima entidade depois de "D" e o seu nível geral é 3, é filha de "D"**.
+* **A entidade "F" é a próxima entidade depois de "E" e o seu nível geral também é 3, é filha de "D"**.
+* As próximas entidades depois de "F" são: "G", "B", "C", "Y" e "Y", todas tem níveis maiores que 3, então serão ignoradas.
+* **A entidade "Z" é a próxima entidade depois de "Y" e o seu nível geral também é 3, é filha de "D"**.
 
-Acabou a expressão e no final teremos o resultado: `E, F, Z`
+A expressão chegou ao fim e no final teremos o resultado: `E, F, Z`
 
 ### <a name="search-find-ascending" />Encontrando todos os ascendentes de uma entidade
 
-Se quisermos encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada, se tiver, essa entidade é uma ascendente.
+Para encontrar os ascendentes de uma entidade, devemos verificar se a entidade anterior tem seu **nível geral** menor que o **nível geral** da entidade desejada. Se tiver, essa entidade é uma ascendente.
 
 ```
                 A + B
@@ -1125,7 +1123,7 @@ Level:          1   2   2
 Parent of J:    A
 ```
 
-Após encontrar a primeira ascendência, deve-se continuar navegando para trás, porém o **nível geral** a ser considerado agora será o da primeira ascendência e não mais da entidade desejada. Esse processo deve continuar até chegar na entidade raiz.
+Após encontrar o primeiro ancestral, deve-se continuar navegando para trás, porém o **nível geral** a ser considerado agora será o do primeiro ancestral e não mais da entidade desejada. Esse processo deve continuar até chegar na entidade raiz.
 
 ```
                 A + B + (J + Y)
@@ -1134,59 +1132,59 @@ Level:          1   2    2   3
 Parents of Y:   J, A
 ```
 
-**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+**Atenção:** Essa pesquisa tem diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são declarados todas as vezes que a entidade pai for utilizada.
 
-Por exemplo, se quisermos pegar os ascendentes da entidade `C` considerando todas as suas ocorrências:
+Por exemplo, se quisermos pegar os ascendentes da entidade "C" considerando todas as suas ocorrências:
 
-**Ocorrência 1:**
+**Primeira ocorrência:**
 
-* A entidade `C` da linha `#02` tem o nível geral igual a `2`.
-* `#01`: A entidade `B` tem o nível geral igual a `2`, não é ascendente.
-* `#00`: **A entidade `A` tem o nível geral igual a `1`, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível `1` e não mais o nível `2`**.
+* A entidade "C" da linha "#02" tem o nível geral igual a "2".
+* `#01`: A entidade "B" tem o nível geral igual a "2". Não é um ascendente.
+* `#00`: **A entidade "A" tem o nível geral igual a "1" (é menor), portanto, é a primeira ascendente (entidade pai). Agora o nível a ser considerado será o nível "1" e não mais o nível "2"**.
 
-Acabou a expressão e teremos as seguintes entidades ascendentes: `A`
+A expressão chegou a fim e teremos as seguintes entidades ascendentes: `A`
 
-**Ocorrência 2:**
+**Segunda ocorrência:**
 
-* A entidade `C` da linha `#09` tem o nível geral igual a `5`.
-* `#08`: A entidade `B` tem o nível geral igual a `5`, não é ascendente.
-* `#07`: **A entidade `G` tem o nível geral igual a `4`, é menor, portanto é a primeira ascendente, nesse caso a entidade pai. Agora o nível a ser considerado será o nível `4` e não mais o nível `5`**.
-* `#06`: **A entidade `F` tem o nível geral igual a `3`, é menor que o nível geral da entidade `G`, portanto é uma ascendente. Agora o nível a ser considerado será o nível `3` e não mais o nível `4`**.
-* `#05`: A entidade `E` tem o nível geral igual a `3`, não é uma ascendente.
-* `#04`: **A entidade `D` tem o nível geral igual a `2`, é uma ascendente. Agora o nível a ser considerado será o nível `2` e não mais o nível `3`**.
-* `#03`: A entidade `Y` tem o nível geral igual a `3`, não é uma ascendente.
-* `#02`: A entidade `C` tem o nível geral igual a `2`, não é uma ascendente.
-* `#01`: A entidade `B` tem o nível geral igual a `2`, não é uma ascendente.
-* `#00`: **A entidade `A` tem o nível geral igual a `1`, é uma ascendente. Agora o nível a ser considerado será o nível `1` e não mais o nível `2`**.
+* A entidade "C" da linha "#09" tem o nível geral igual a "5".
+* `#08`: A entidade "B" tem o nível geral igual a "5", não é uma ascendente.
+* `#07`: **A entidade "G" tem o nível geral igual a "4" (é menor), portanto, é a primeira ascendente (entidade pai). Agora o nível a ser considerado será o nível "4" e não mais o nível "5"**.
+* `#06`: **A entidade "F" tem o nível geral igual a "3". Ela tem o nível geral menor que a entidade "G", portanto, é uma ascendente. Agora o nível a ser considerado será o nível "3" e não mais o nível "4"**.
+* `#05`: A entidade "E" tem o nível geral igual a "3". Não é uma ascendente.
+* `#04`: **A entidade "D" tem o nível geral igual a "2". Ela é uma ascendente. Agora o nível a ser considerado será o nível "2" e não mais o nível "3"**.
+* `#03`: A entidade "Y" tem o nível geral igual a "3". Não é uma ascendente.
+* `#02`: A entidade "C" tem o nível geral igual a "2". Não é uma ascendente.
+* `#01`: A entidade "B" tem o nível geral igual a "2". Não é uma ascendente.
+* `#00`: **A entidade "A" tem o nível geral igual a "1". Ela é uma ascendente. Agora o nível a ser considerado será o nível "1" e não mais o nível "2"**.
 
-Acabou a expressão e no final teremos as seguintes entidades ascendentes: `G`, `F`, `D` e `A`.
+A expressão chegou ao fim e teremos as seguintes entidades ascendentes: `G, F, D, A`
 
-### <a name="search-find-parent" />Encontrando os pais de uma entidade
+### <a name="search-find-parent" />Encontrando o pai de uma entidade
 
-Seguindo a lógica do tópico [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-ascending), para encontrar apenas o pai da entidade `Y`, precisaríamos limitar o **nível geral** dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o **nível geral** menor que a entidade desejada.
+Seguindo a lógica do tópico [Encontrando todos os ascendentes de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-ascending), para encontrar apenas o pai da entidade "Y", precisaríamos limitar o **nível geral** dos ascendentes á: _[nível geral da entidade corrente] - 1_; ou a primeira entidade com o **nível geral** menor que a entidade desejada.
 
-**Atenção:** Essa pesquisa pode ser feita usando os dois tipos de pesquisa: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre por que nesse tipo de pesquisa os grupos de expressões são redeclarados.
+**Atenção:** Essa pesquisa apresenta diferenças nos tipos: **Pesquisa profunda** e **Pesquisa superficial**. Contudo, a _pesquisa profunda_ pode retornar uma quantidade maior de ocorrências. Isso ocorre porque, nesse tipo de pesquisa, os grupos de expressões são declarados todas as vezes que a entidade pai é usada.
 
-Como existem 3 ocorrências da entidade `Y`, teremos uma _entidade pai_ por ocorrência:
+Como existem 3 ocorrências da entidade "Y", teremos uma _entidade pai_ por ocorrência:
 
-**Ocorrência 1:**
+**Primeira ocorrência:**
 
-* A entidade `Y` da linha `#3` tem o nível geral igual a `3`.
-* `#02`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `2`, portanto, ela é pai da entidade `Y`**.
+* A entidade "Y" da linha "#3" tem o nível geral igual a "3".
+* `#02`: **A entidade "C" é a entidade anterior a "Y" e tem o nível geral igual a "2", portanto, ela é pai da entidade "Y"**.
 
-**Ocorrência 2:**
+**Segunda ocorrência:**
 
-* A entidade `Y` da linha `#10` tem o nível geral igual a `6`.
-* `#09`: **A entidade `C` é a entidade anterior a `Y` e tem o nível geral igual a `5`, portanto, ela é pai da entidade `Y`**.
+* A entidade "Y" da linha "#10" tem o nível geral igual a "6".
+* `#09`: **A entidade "C" é a entidade anterior a "Y" e tem o nível geral igual a "5", portanto, ela é pai da entidade "Y"**.
 
-**Ocorrência 3:**
+**Terceira ocorrência:**
 
-* A entidade `Y` da linha `#11` tem o nível geral igual a `4`.
-* `#10`: A entidade `Y` tem o nível geral igual a `6`, não é uma ascendente.
-* `#09`: A entidade `C` tem o nível geral igual a `5`, não é uma ascendente.
-* `#08`: A entidade `B` tem o nível geral igual a `5`, não é uma ascendente.
-* `#07`: A entidade `G` tem o nível geral igual a `4`, não é uma ascendente.
-* `#06`: **A entidade `F` é a entidade anterior a `G` e tem o nível geral igual a `3`, portanto, ela é pai da entidade `Y`**.
+* A entidade "Y" da linha "#11" tem o nível geral igual a "4".
+* `#10`: A entidade "Y" tem o nível geral igual a "6". Não é uma ascendente.
+* `#09`: A entidade "C" tem o nível geral igual a "5". Não é uma ascendente.
+* `#08`: A entidade "B" tem o nível geral igual a "5". Não é uma ascendente.
+* `#07`: A entidade "G" tem o nível geral igual a "4". Não é uma ascendente.
+* `#06`: **A entidade "F" é a entidade anterior da entidade "G" e tem o nível geral igual a "3", portanto, ela é pai da entidade "Y"**.
 
 # <a name="implementation" />Implementações
 
@@ -1200,7 +1198,7 @@ Usaremos a linguagem de programação `C#` devido a sua capacidade de sobrecarre
 
 ## <a name="implementation-to-graph" />Criando grafos com expressão de grafo
 
-Nesse exemplo vamos demostrar como criar um grafo usando apenas expressão de grafo da forma mais simples e objetiva possível.
+Nesse exemplo, vamos demostrar como criar um grafo usando apenas expressão de grafo. Nós faremos isso da maneira mais simples e objetiva possível.
 
 Será usado uma **entidade circular**, ou seja, uma entidade que se relaciona com ela mesma.
 
@@ -1225,13 +1223,13 @@ public class Entity : List<Entity>
 }
 ```
 
-* A classe herda de uma lista genérica da própria classe, nossa intenção é criar uma instância hierárquica.
+* A classe herda de uma lista genérica da própria classe, nossa intenção é criar uma instância cíclica.
 * A classe exige um nome como parâmetro de entrada, será o nome da entidade
-* Os operadores `+` e `-` foram sobrescritos, agora essa entidade pode ser utilizada dentro de uma expressão.
-  * Quando houver uma soma (`+`), a entidade da direita será adicionada na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado. Essa é a base do conceito de expressão de grafo.
-  * Quando houver uma subtração (`-`), a entidade da direita será removida na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado.
+* Os operadores "+" e "-" foram sobrescritos, agora essa entidade pode ser utilizada dentro de uma expressão.
+  * Quando houver uma soma ("+"), a entidade da direita será adicionada na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado. Essa é a base do conceito de expressão de grafo.
+  * Quando houver uma subtração ("-"), a entidade da direita será removida na lista da entidade da esquerda, e a entidade da esquerda será devolvida como resultado.
 
-Para usar é simples, basta pensar no conceito explicado e usar como se fosse uma expressão matemática dentro do `C#`:
+Para usar é simples, basta usar como se fosse uma expressão matemática:
 
 ```csharp
 class Program
@@ -1256,7 +1254,7 @@ class Program
 }
 ```
 
-Após a execução da primeira expressão temos o seguinte grafo:
+Após executar a primeira expressão, teremos o seguinte grafo:
 
 ```
 A
@@ -1269,7 +1267,7 @@ A
     ----H
 ```
 
-Após a execução da segunda expressão, vemos que a entidade `D` não tem mais a entidade `E` como filha, ela foi subtraída/removida:
+Após a execução da segunda expressão, vemos que a entidade "D" não tem mais a entidade "E" como filha, ela foi subtraída/removida:
 
 ```
 A
@@ -1283,7 +1281,7 @@ A
 
 Note que a expressão é exatamente igual a todas as expressões que vimos durante esse estudo. Isso mostra que para entidades circulares é possível usufruir desse conceito sem o uso de grandes blocos de código.
 
-Para entidades de maior complexidade, não seria possível o uso dos operadores de forma tão simples, haveria a necessidade de criar mecanismos de reflexão e o uso de `strings` para a criação e processamento da expressão. Além do mais, não recomendamos esse esforço, não é o objetivo desse conceito criar mecanismo de serialização e deserialização de entidades, para isso existe meios melhores como: `XML` e `JSON`.
+Para entidades de maior complexidade, não seria tão simples o uso dos operadores. haveria a necessidade de criar mecanismos de reflexão e o uso de `string` para a criação e processamento da expressão.
 
 ## <a name="implementation-to-expression" />Convertendo uma matriz de informação para expressões de grafos
 
@@ -1331,7 +1329,7 @@ public class EntityItem
 * Nas propriedades `Previous`, `Next` e `Parent`, estamos implementando, respectivamente, as técnicas:
   * [Encontrando a entidade anterior](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-previous)
   * [Encontrando a próxima entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-next)
-  * [Encontrando os pais de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parent)
+  * [Encontrando o pai de uma entidade](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-parent)
 
 ```csharp
 public class Expression : List<EntityItem>
@@ -1410,24 +1408,24 @@ class Program
 }
 ```
 
-No método `Main` temos a chamada da nossa função, note que estamos criando a matriz de informação de forma manual. Essa matriz deve representar a seguinte expressão:
+No método `Main` temos a chamada da nossa função. Note que estamos criando a matriz de informação de forma manual. Essa matriz deve representar a seguinte expressão:
 
 ```
 (A + B + (C + Y) + (D + E + (F + (G + B + C) + Y) + Z))
 ```
 
-A função `ToExpressionAsString` será responsável por fazer toda a iteração e chegar em nosso objetivo que é devolver uma `string` contendo nossa expressão.
+A função `ToExpressionAsString` será responsável por fazer toda a iteração e chegar em nosso objetivo: Retornar uma `string` contendo nossa expressão.
 
-* A classe `Expression` representa uma expressão de grafo como um todo. Ela herda de uma lista do tipo `EntityItem` para fazer jus ao que ela é dentro do conceito: Um conjunto de ocorrências de entidades com suas informações.
+* A classe `Expression` representa uma expressão de grafo como um todo. Essa classe herda de uma lista do tipo `EntityItem`. Isso aproxima essa classe do conceito: Um conjunto de ocorrências de entidades com suas informações.
 * O método `ToExpressionAsString` retorna uma string que será a nossa expressão.
-* A lista contendo todas as ocorrências das entidades será percorrida completamente. Da posição 0 até o final da lista. Cada iteração pode conter diversos níveis da expressão.
+* A lista (contendo todas as ocorrências das entidades) será percorrida completamente. Da posição zero até o final da lista. Cada iteração pode conter diversos níveis da expressão.
 * A variável `parenthesisToClose` armazena uma lista de todos os parênteses que foram abertos e precisam ser fechados. A lista tem que estar no formato: último a entrar, primeiro a sair.
 * Para cada iteração:
   * Se a entidade for a entidade raiz, não adiciona o sinal de `+`.
     * [Encontrando a entidade raiz da expressão](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-find-root)
   * Se a entidade for a primeira do grupo de expressão, adiciona o caractere `(`
     * [Verificando se uma entidade é a primeira do grupo de expressão (primeira dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-first-at-group-expression)
-  * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere `)`. Como diversos parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
+  * Se a entidade for a última do seu grupo de expressão (última dentro dos parênteses), então feche com o caractere ")". Como vários parênteses podem ter sido abertos nas iterações anteriores, então devemos calcular a quantidade de parênteses que precisam ser fechados e fecha-los. A variável `parenthesisToClose` contém a entidade que está sendo fechada, isso pode ser útil para alguma lógica.
     * [Verificando se uma entidade é a última do grupo de expressão (última dentro dos parêntese)](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-check-is-last-at-group-expression)
 
 Com esses trechos de códigos vimos como é simples iterar em uma expressão de grafo e entender seus momentos. Além de abrir caminhos para implementações mais completas como: **pesquisa em expressão de grafo.**
@@ -1561,7 +1559,7 @@ class Program
 }
 ```
 
-O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade `A`, teremos a seguinte matriz de informação:
+O método `ToMatrixAsString` será usado para verificarmos o resultado de nosso exemplo. E após o processamento do grafo da entidade "A", teremos a seguinte matriz de informação:
 
 ```
 Index    | Entity  | Level    | Level Index     | LevelAtExpression 
@@ -1584,12 +1582,12 @@ Index    | Entity  | Level    | Level Index     | LevelAtExpression
 
 * A classe recebe em seu construtor a **entidade raiz**. A partir dessa instância, vamos navegar em seu grafo por completo.
 * O parâmetro `Deep` determina se a varredura será profunda ou não e que foi explicado no tópico [Pesquisa profunda](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/concept-pt-br.md#search-deep)
-* O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas, uma vez que por ser a entidade raiz, serão os valores inicias.
+* O primeiro `if` dentro da função `Build` verifica se é a entidade raiz, se for, devemos criar o primeiro item. Nesse ponto, as informações são fixas (por ser a entidade raiz), serão os valores inicias.
 * Na segunda parte da função, iniciamos a leitura dos filhos da entidade `parent`.
 * Será incrementado `+1` no **nível geral** conforme se aprofunda na entidade. Esse valor é passado por parâmetro, pois ele transcende todo o grafo.
 * Será incrementado `+1` no **índice do nível**. Esse valor está fechado apenas no escopo do `foreach`, ou seja, apenas para os filhos da entidade.
 * Para cada interação, é verificado se a propriedade `Deep` é `true`, se for, devemos manter a navegação mesmo se entidade corrente já foi percorrida por completo em algum momento da expressão. Contudo, a única situação que limita a continuação é se a entidade corrente tiver relações com ela mesma em um de seus ascendentes. Se tiver, é interrompida a continuação.
 * Se a propriedade `Deep` for `false`, então devemos apenas verificar se a entidade já foi percorrida em algum momento da expressão, se foi, então não continuamos.
-* A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai somando-se `+1` quando a entidade tiver filhos e não somando nada quando não tiver.
+* A propriedade `LevelAtExpression` (**nível da expressão**) é preenchida com o **nível de expressão** da entidade pai. Soma-se "+1" quando a entidade tiver filhos e não soma nada quando não tiver.
 
 Com isso, concluímos os três principais exemplos do conceito e que podem ser base para implementações mais complexas como a **pesquisa em expressão de grafo**.
