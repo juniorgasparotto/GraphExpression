@@ -5,7 +5,7 @@
 ![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
-# <a name="concept" />Expression of graph
+# <a name="concept" />Graph Expression
 
 The concept of **graph expression** was created in 2015 by _Glauber Donizeti Gasparotto Junior_ and aims at the representation of a graph in the form of a mathematical expression.
 

@@ -5,7 +5,7 @@
 ![Português](https://github.com/juniorgasparotto/GraphExpression/blob/master/doc/img/pt-br.png)
 ](https://github.com/juniorgasparotto/GraphExpression/blob/master/readme-pt-br.md)
 
-# <a name="implementation" />Expression of graph
+# <a name="implementation" />Graph Expression
 
 This framework aims to implement the concept of graph expression on .NET language.
 
