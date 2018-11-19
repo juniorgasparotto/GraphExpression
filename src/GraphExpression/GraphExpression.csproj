@@ -9,6 +9,8 @@
     <PackageProjectUrl>https://github.com/juniorgasparotto/ExpressionGraph</PackageProjectUrl>
     <RepositoryUrl>https://github.com/juniorgasparotto/ExpressionGraph</RepositoryUrl>
     <Company>Glauber Donizeti Gasparotto Junior</Company>
+    <PackageTags>jquery complex-types expression-graph mathematical-expressions search traverse search-traversal object-search serialization deserialization graph-expression descendants ascending children siblings graph graph-theory</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
